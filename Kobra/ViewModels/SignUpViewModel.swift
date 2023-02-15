@@ -43,14 +43,14 @@ class SignUpViewModel: ObservableObject{
     
     private var passwordRequiredPublisher: AnyPublisher<(password: String, isValid: Bool), Never> {
         return $password
-            .map {(password: $0, isValid: !$0.isEmpty)}
+            .map { (password: $0, isValid: !$0.isEmpty) }
             .eraseToAnyPublisher()
     }
     
     private var passwordValidPublisher: AnyPublisher<Bool, Never> {
         return passwordRequiredPublisher
-            .filter{ $0.isValid}
-            .map { !$0.password.isValidPassword() }
+            .filter{ $0.isValid }
+            .map { $0.password.isValidPassword() }
             .eraseToAnyPublisher()
     }
     
@@ -80,7 +80,7 @@ class SignUpViewModel: ObservableObject{
             .store(in: &cancellableBag)
         passwordValidPublisher
             .receive(on: RunLoop.main)
-            .map { $0 ? "" : "Password must be 8 characters with 1 uppercase and 1 number"}
+            .map { $0 ? "" : "Password is not Valid"}
             .assign(to: \.passwordError, on: self)
             .store(in: &cancellableBag)
     }

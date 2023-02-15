@@ -68,9 +68,9 @@
 		45E5ABD9299D8AC300DFFDC8 /* Kobra */ = {
 			isa = PBXGroup;
 			children = (
+				45E9848E299D909D00B3A56A /* Views */,
 				45E98489299D8C1100B3A56A /* Info.plist */,
 				45E5ABDA299D8AC300DFFDC8 /* KobraApp.swift */,
-				45E5ABDC299D8AC300DFFDC8 /* SignUpView.swift */,
 				45E5ABDE299D8AC500DFFDC8 /* Assets.xcassets */,
 				45E5ABE0299D8AC500DFFDC8 /* Preview Content */,
 			);
@@ -108,6 +108,14 @@
 				45E98488299D8BFD00B3A56A /* Exo-VariableFont_wght.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		45E9848E299D909D00B3A56A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				45E5ABDC299D8AC300DFFDC8 /* SignUpView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		6FEC5DEDE9A84101A8A15B16 /* Pods */ = {
