@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		45A34163299EE27200F164CE /* AuthHttpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A34162299EE27200F164CE /* AuthHttpRouter.swift */; };
 		45A34165299EE28200F164CE /* AuthHttpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A34164299EE28200F164CE /* AuthHttpService.swift */; };
+		45A34167299EE47200F164CE /* AuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A34166299EE47200F164CE /* AuthModel.swift */; };
+		45A34169299EE54000F164CE /* HttpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A34168299EE54000F164CE /* HttpRouter.swift */; };
+		45A3416B299EE5A800F164CE /* HttpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A3416A299EE5A800F164CE /* HttpService.swift */; };
 		45E5ABDB299D8AC300DFFDC8 /* KobraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E5ABDA299D8AC300DFFDC8 /* KobraApp.swift */; };
 		45E5ABDD299D8AC300DFFDC8 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E5ABDC299D8AC300DFFDC8 /* SignUpView.swift */; };
 		45E5ABDF299D8AC500DFFDC8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45E5ABDE299D8AC500DFFDC8 /* Assets.xcassets */; };
@@ -23,6 +26,9 @@
 		4416BB8B9604E5EFA9033790 /* Pods-Kobra.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kobra.release.xcconfig"; path = "Target Support Files/Pods-Kobra/Pods-Kobra.release.xcconfig"; sourceTree = "<group>"; };
 		45A34162299EE27200F164CE /* AuthHttpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHttpRouter.swift; sourceTree = "<group>"; };
 		45A34164299EE28200F164CE /* AuthHttpService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHttpService.swift; sourceTree = "<group>"; };
+		45A34166299EE47200F164CE /* AuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModel.swift; sourceTree = "<group>"; };
+		45A34168299EE54000F164CE /* HttpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpRouter.swift; sourceTree = "<group>"; };
+		45A3416A299EE5A800F164CE /* HttpService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpService.swift; sourceTree = "<group>"; };
 		45E5ABD7299D8AC300DFFDC8 /* Kobra.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kobra.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45E5ABDA299D8AC300DFFDC8 /* KobraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KobraApp.swift; sourceTree = "<group>"; };
 		45E5ABDC299D8AC300DFFDC8 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
@@ -53,6 +59,8 @@
 			children = (
 				45A34162299EE27200F164CE /* AuthHttpRouter.swift */,
 				45A34164299EE28200F164CE /* AuthHttpService.swift */,
+				45A34168299EE54000F164CE /* HttpRouter.swift */,
+				45A3416A299EE5A800F164CE /* HttpService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -103,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				45E9848C299D8C7700B3A56A /* ColorCodes.swift */,
+				45A34166299EE47200F164CE /* AuthModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -265,7 +274,10 @@
 			files = (
 				45E9848D299D8C7700B3A56A /* ColorCodes.swift in Sources */,
 				45A34165299EE28200F164CE /* AuthHttpService.swift in Sources */,
+				45A34167299EE47200F164CE /* AuthModel.swift in Sources */,
 				45E5ABDD299D8AC300DFFDC8 /* SignUpView.swift in Sources */,
+				45A34169299EE54000F164CE /* HttpRouter.swift in Sources */,
+				45A3416B299EE5A800F164CE /* HttpService.swift in Sources */,
 				45A34163299EE27200F164CE /* AuthHttpRouter.swift in Sources */,
 				45E9848B299D8C6B00B3A56A /* SignUpViewModel.swift in Sources */,
 				45E5ABDB299D8AC300DFFDC8 /* KobraApp.swift in Sources */,
