@@ -1,6 +1,7 @@
 # Kobra
 
-- The IOS app counterpart of https://kobracoding.com
+- The IOS application counterpart of https://kobracoding.com
+- Currently being developed by the co-creators of Kobra Coding / https://kobracoding.com
 
 # Final Goal
 
