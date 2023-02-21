@@ -1,4 +1,4 @@
-# Kobra - the IOS mobile-application counterpart of https://kobracoding.com
+# Kobra - the IOS app counterpart of https://kobracoding.com
 
 # Final Goal
 
