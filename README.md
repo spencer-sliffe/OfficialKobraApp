@@ -6,7 +6,7 @@
 
 - A mobile application that shares data with "kobracoding.com"
 - Streamline the accessibility of https://kobracoding.com/Market/Market.html and expand its functionality
-- Kobra Account Database 
+- Kobra Account Database Transaction capablity on website and app
 
 # Functionality 
 
