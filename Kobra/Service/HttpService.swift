@@ -2,12 +2,16 @@
 //  HttpService.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 2/16/23.
+//  Created by Spencer Sliffe on 2/16/23.
 //
-
+import Foundation
 import Alamofire
 
 protocol HttpService {
-    var sessionManager: Session { get set }
-    func request( urlRequest: URLRequestConvertible) -> DataRequest
+    var sessionManger: Session { get set }
+    func request(_ urlRequest: URLRequestConvertible) -> DataRequest
+}
+
+extension HttpService {
+    var sessionManager: Session {return Session.default}
 }

@@ -2,7 +2,7 @@
 //  SignUpViewModel.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 2/15/23.
+//  Created by Spencer Sliffe on 2/15/23.
 //
 import Foundation
 import Combine
