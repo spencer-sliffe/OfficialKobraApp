@@ -11,7 +11,7 @@
 
 # Functionality 
 
-- Account creation
+- Account creation (Complete)
 - Sign in
 - Log out
 - (View) Account Details
