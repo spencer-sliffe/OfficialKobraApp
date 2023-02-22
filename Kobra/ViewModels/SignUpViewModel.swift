@@ -7,33 +7,25 @@
 import Foundation
 import Combine
 class SignUpViewModel: ObservableObject{
+    private let authApi: AuthAPI
+    private let authServiceParser: AuthServiceParseable
     private var cancellableBag = Set<AnyCancellable>()
     
-    @Published  var name: String = ""
-    var nameError: String = ""
     @Published var username: String = ""
-    var usernameError: String = ""
+    @Published var usernameError: String = ""
     @Published var email: String = ""
-    var emailError: String = ""
+    @Published var emailError: String = ""
     @Published var password: String = ""
-    var passwordError: String = ""
+    @Published var passwordError: String = ""
     @Published var confirmPassword: String = ""
-    var confirmPasswordError: String = ""
-    @Published var phone: String = ""
-    var phoneError: String = ""
-    
+    @Published var confirmPasswordError: String = ""
+   
     private var usernameValidPublisher: AnyPublisher<Bool, Never> {
         return $username
             .map {!$0.isEmpty}
             .eraseToAnyPublisher()
     }
-    
-    private var nameValidPublisher: AnyPublisher<Bool, Never> {
-        return $name
-            .map {!$0.isEmpty}
-            .eraseToAnyPublisher()
-    }
-    
+   
     private var emailRequiredPublisher: AnyPublisher<(email: String, isValid: Bool), Never> {
         return $email
             .map {(email: $0 , isValid: !$0.isEmpty)}
@@ -47,16 +39,13 @@ class SignUpViewModel: ObservableObject{
             .eraseToAnyPublisher()
     }
     
-    private var phoneRequiredPublisher: AnyPublisher<(phone: String, isValid: Bool), Never> {
-        return $phone
-            .map {(phone: $0 , isValid: !$0.isEmpty)}
-            .eraseToAnyPublisher()
-    }
-    
-    private var phoneValidPublisher: AnyPublisher<Bool, Never> {
-        return phoneRequiredPublisher
+    private var emailServerValidPublisher: AnyPublisher<Bool, Never> {
+        return emailRequiredPublisher
             .filter{ $0.isValid}
-            .map { $0.phone.isValidPhone()  }
+            .map { $0.email }
+            .debounce(for: 0.5, scheduler: RunLoop.main)
+            .removeDuplicates()
+            .flatMap { [authApi] in authApi.checkEmail(email: $0) }
             .eraseToAnyPublisher()
     }
     
@@ -88,13 +77,11 @@ class SignUpViewModel: ObservableObject{
             .eraseToAnyPublisher()
     }
     
-    init() {
-        nameValidPublisher
-            .receive(on: RunLoop.main)
-            .dropFirst()
-            .map { $0 ? "" : "Name is Required"}
-            .assign(to: \.nameError, on: self)
-            .store(in: &cancellableBag)
+    init(authApi: AuthAPI, authServiceParser: AuthServiceParseable) {
+        self.authApi = authApi
+        self.authServiceParser = authServiceParser
+        
+        
         usernameValidPublisher
             .receive(on: RunLoop.main)
             .dropFirst()
@@ -112,16 +99,10 @@ class SignUpViewModel: ObservableObject{
             .map { $0.isValid ? "" : "Email is not Valid"}
             .assign(to: \.emailError, on: self)
             .store(in: &cancellableBag)
-        phoneRequiredPublisher
+        emailServerValidPublisher
             .receive(on: RunLoop.main)
-            .dropFirst()
-            .map { $0.isValid ? "" : "Phone Number is Required"}
-            .assign(to: \.phoneError, on: self)
-            .store(in: &cancellableBag)
-        phoneValidPublisher
-            .receive(on: RunLoop.main)
-            .map { $0 ? "" : "Phone Number is not Valid"}
-            .assign(to: \.phoneError, on: self)
+            .map { $0 ? "" : "Email is already in use"}
+            .assign(to: \.emailError, on: self)
             .store(in: &cancellableBag)
         passwordRequiredPublisher
             .receive(on: RunLoop.main)
@@ -161,10 +142,5 @@ extension String {
     func isValidPassword(pattern: String = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$") -> Bool {
         let passwordRegEx = pattern
         return NSPredicate(format:"SELF MATCHES %@", passwordRegEx).evaluate(with: self)
-    }
-    
-    func isValidPhone(pattern: String = "^\\d{3}-\\d{3}-\\d{4}$") -> Bool {
-        let phoneRegEx = pattern
-        return NSPredicate(format:"SELF MATCHES %@", phoneRegEx).evaluate(with: self)
     }
 }

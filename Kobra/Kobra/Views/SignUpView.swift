@@ -24,9 +24,7 @@ struct SignUpView: View {
                     .padding(.bottom, 20.0)
                     .multilineTextAlignment(.center)
                 
-                AuthTextField(title: "Name", textValue: $viewModel.name, errorValue: viewModel.nameError )
                 AuthTextField(title: "Email", textValue: $viewModel.email, errorValue: viewModel.emailError, keyboardType: .emailAddress )
-                AuthTextField(title: "Phone #", textValue: $viewModel.phone, errorValue: viewModel.phoneError, keyboardType: .phonePad )
                 AuthTextField(title: "Username", textValue: $viewModel.username, errorValue: viewModel.usernameError )
                 AuthTextField(title: "Password", textValue: $viewModel.password, errorValue: viewModel.passwordError , isSecured: true)
                 AuthTextField(title: "Confirm Password", textValue: $viewModel.confirmPassword, errorValue: viewModel.confirmPasswordError , isSecured: true)
@@ -49,7 +47,7 @@ struct SignUpView: View {
 }
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = SignUpViewModel()
+        let viewModel = SignUpViewModel(authApi: AuthService.shared, authServiceParser: AuthServiceParser.shared) 
         SignUpView(viewModel: viewModel)
     }
 }

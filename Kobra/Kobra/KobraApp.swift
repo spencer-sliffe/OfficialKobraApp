@@ -11,7 +11,7 @@ import SwiftUI
 struct KobraApp: App {
     var body: some Scene {
         WindowGroup {
-            let viewModel = SignUpViewModel()
+            let viewModel = SignUpViewModel(authApi: AuthService.shared, authServiceParser: AuthServiceParser.shared)
             SignUpView(viewModel: viewModel)
         }
     }
