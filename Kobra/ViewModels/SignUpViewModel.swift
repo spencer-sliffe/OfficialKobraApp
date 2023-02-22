@@ -34,14 +34,14 @@ class SignUpViewModel: ObservableObject{
     
     private var emailValidPublisher: AnyPublisher<(email: String, isValid: Bool), Never> {
         return emailRequiredPublisher
-            .filter{ $0.isValid}
+            .filter{ $0.isValid }
             .map { (email: $0.email, isValid: $0.email.isValidEmail()) }
             .eraseToAnyPublisher()
     }
     
     private var emailServerValidPublisher: AnyPublisher<Bool, Never> {
-        return emailRequiredPublisher
-            .filter{ $0.isValid}
+        return emailValidPublisher
+            .filter{ $0.isValid }
             .map { $0.email }
             .debounce(for: 0.5, scheduler: RunLoop.main)
             .removeDuplicates()
