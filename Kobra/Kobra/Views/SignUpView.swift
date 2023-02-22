@@ -28,9 +28,11 @@ struct SignUpView: View {
                 AuthTextField(title: "Username", textValue: $viewModel.username, errorValue: viewModel.usernameError )
                 AuthTextField(title: "Password", textValue: $viewModel.password, errorValue: viewModel.passwordError , isSecured: true)
                 AuthTextField(title: "Confirm Password", textValue: $viewModel.confirmPassword, errorValue: viewModel.confirmPasswordError , isSecured: true)
-                Button(action: signUp){
+                Button(action: signUp) {
                     Text("Sign Up")
-                }.frame(minWidth: 0.0, maxWidth: .infinity)
+                }
+                .disabled(!viewModel.enableSignUp)
+                    .frame(minWidth: 0.0, maxWidth: .infinity)
                     .foregroundColor(Color.white)
                     .padding()
                     .background(Color.blue)
@@ -47,7 +49,7 @@ struct SignUpView: View {
 }
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = SignUpViewModel(authApi: AuthService.shared, authServiceParser: AuthServiceParser.shared) 
+        let viewModel = SignUpViewModel(authApi: AuthService.shared, authServiceParser: AuthServiceParser.shared)
         SignUpView(viewModel: viewModel)
     }
 }

@@ -19,6 +19,7 @@ class SignUpViewModel: ObservableObject{
     @Published var passwordError: String = ""
     @Published var confirmPassword: String = ""
     @Published var confirmPasswordError: String = ""
+    @Published var enableSignUp: Bool = false
    
     private var usernameValidPublisher: AnyPublisher<Bool, Never> {
         return $username
