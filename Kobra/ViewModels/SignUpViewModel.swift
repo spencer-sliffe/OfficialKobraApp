@@ -6,6 +6,18 @@
 //
 import Foundation
 import Combine
+
+class StatusViewModel: ObservableObject {
+    
+    var title: String
+    var color: ColorCodes
+    
+    init(title: String, color: ColorCodes) {
+        self.title = title
+        self.color = color
+    }
+}
+
 class SignUpViewModel: ObservableObject{
     private let authApi: AuthAPI
     private let authServiceParser: AuthServiceParseable
@@ -20,6 +32,7 @@ class SignUpViewModel: ObservableObject{
     @Published var confirmPassword: String = ""
     @Published var confirmPasswordError: String = ""
     @Published var enableSignUp: Bool = false
+    @Published var statusViewModel: StatusViewModel = StatusViewModel(title: "", color: .success)
    
     private var usernameValidPublisher: AnyPublisher<Bool, Never> {
         return $username
@@ -127,12 +140,49 @@ class SignUpViewModel: ObservableObject{
             .map { $0 ? "" : "Passwords do not Match"}
             .assign(to: \.confirmPasswordError, on: self)
             .store(in: &cancellableBag)
+        
+        Publishers.CombineLatest4(usernameValidPublisher,
+                                  emailServerValidPublisher,
+                                  passwordValidPublisher,
+                                  passwordEqualPublisher)
+            .map { username, email, password, confirm in
+                return username && email && password && confirm
+            }
+            .receive(on: RunLoop.main)
+            .assign(to: \.enableSignUp, on: self)
+            .store(in: &cancellableBag)
     }
+    
+    
     
     deinit {
         cancellableBag.removeAll()
     }
 }
+
+extension SignUpViewModel{
+    func signUp() -> Void {
+        
+        authApi
+            .signUp(username: username, email: email, password: password)
+            .flatMap { [authServiceParser] in
+                authServiceParser.parseSignUpResponse(statusCode: $0.statusCode, data: $0.data)
+            }
+            .map { result in
+                switch(result) {
+                case .success:
+                    return StatusViewModel(title: "Sign Up is Successful", color: ColorCodes.success)
+                case .failure:
+                    return StatusViewModel(title: "Sign Up failed", color: ColorCodes.failure)
+                }
+            }
+            .receive(on: RunLoop.main)
+            .replaceError(with: StatusViewModel(title: "Sign Up failed", color: ColorCodes.failure))
+            .assign(to: \.statusViewModel, on: self)
+            .store(in: &cancellableBag)
+    }
+}
+
 extension String {
     func isValidEmail() -> Bool {
         let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"

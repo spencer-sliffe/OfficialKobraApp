@@ -28,24 +28,26 @@ struct SignUpView: View {
                 AuthTextField(title: "Username", textValue: $viewModel.username, errorValue: viewModel.usernameError )
                 AuthTextField(title: "Password", textValue: $viewModel.password, errorValue: viewModel.passwordError , isSecured: true)
                 AuthTextField(title: "Confirm Password", textValue: $viewModel.confirmPassword, errorValue: viewModel.confirmPasswordError , isSecured: true)
-                Button(action: signUp) {
+                Button(action: viewModel.signUp) {
                     Text("Sign Up")
                 }
                 .disabled(!viewModel.enableSignUp)
                     .frame(minWidth: 0.0, maxWidth: .infinity)
                     .foregroundColor(Color.white)
                     .padding()
-                    .background(Color.blue)
+                    .background(viewModel.enableSignUp ?
+                                Color.black : Color.gray)
                     .cornerRadius(.infinity)
+                    .padding(.top, 20.0)
+                    
+                    Text("Failure")
+                    .font(.headline)
+                    .fontWeight(.light)
+                    .padding(.top)
                 
             }.padding(60.0)
         }
     }
-    
-    func signUp() -> Void{
-        print("Sign Up Clicked!")
-    }
-    
 }
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
