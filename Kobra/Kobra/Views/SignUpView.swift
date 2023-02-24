@@ -40,9 +40,10 @@ struct SignUpView: View {
                     .cornerRadius(.infinity)
                     .padding(.top, 20.0)
                     
-                    Text("Failure")
+                Text(viewModel.statusViewModel.title)
                     .font(.headline)
                     .fontWeight(.light)
+                    .foregroundColor(viewModel.statusViewModel.color.color())
                     .padding(.top)
                 
             }.padding(60.0)

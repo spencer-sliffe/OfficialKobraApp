@@ -178,6 +178,14 @@ extension SignUpViewModel{
             }
             .receive(on: RunLoop.main)
             .replaceError(with: StatusViewModel(title: "Sign Up failed", color: ColorCodes.failure))
+            .handleEvents(receiveOutput: {
+                 [weak self] _ in
+                self?.username = ""
+                self?.email = ""
+                self?.password = ""
+                self?.confirmPassword = ""
+                
+            })
             .assign(to: \.statusViewModel, on: self)
             .store(in: &cancellableBag)
     }
