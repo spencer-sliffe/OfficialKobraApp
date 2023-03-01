@@ -6,6 +6,7 @@
 //
 import Foundation
 import Combine
+import Firebase
 
 class StatusViewModel: ObservableObject {
     
@@ -53,7 +54,7 @@ class SignUpViewModel: ObservableObject{
             .eraseToAnyPublisher()
     }
     
-    private var emailServerValidPublisher: AnyPublisher<Bool, Never> {
+   /* private var emailServerValidPublisher: AnyPublisher<Bool, Never> {
         return emailValidPublisher
             .filter{ $0.isValid }
             .map { $0.email }
@@ -61,7 +62,7 @@ class SignUpViewModel: ObservableObject{
             .removeDuplicates()
             .flatMap { [authApi] in authApi.checkEmail(email: $0) }
             .eraseToAnyPublisher()
-    }
+    } */
     
     private var passwordRequiredPublisher: AnyPublisher<(password: String, isValid: Bool), Never> {
         return $password
@@ -113,11 +114,11 @@ class SignUpViewModel: ObservableObject{
             .map { $0.isValid ? "" : "Email is not Valid"}
             .assign(to: \.emailError, on: self)
             .store(in: &cancellableBag)
-        emailServerValidPublisher
+       /* emailServerValidPublisher
             .receive(on: RunLoop.main)
             .map { $0 ? "" : "Email is already in use"}
             .assign(to: \.emailError, on: self)
-            .store(in: &cancellableBag)
+            .store(in: &cancellableBag)*/
         passwordRequiredPublisher
             .receive(on: RunLoop.main)
             .dropFirst()
@@ -141,12 +142,12 @@ class SignUpViewModel: ObservableObject{
             .assign(to: \.confirmPasswordError, on: self)
             .store(in: &cancellableBag)
         
-        Publishers.CombineLatest4(usernameValidPublisher,
-                                  emailServerValidPublisher,
+        Publishers.CombineLatest3(usernameValidPublisher,
+                                  //emailServerValidPublisher,
                                   passwordValidPublisher,
                                   passwordEqualPublisher)
-            .map { username, email, password, confirm in
-                return username && email && password && confirm
+            .map { username, password, confirm in
+                return username && password && confirm
             }
             .receive(on: RunLoop.main)
             .assign(to: \.enableSignUp, on: self)
@@ -161,6 +162,14 @@ class SignUpViewModel: ObservableObject{
 }
 
 extension SignUpViewModel{
+    func register(){
+        Auth.auth().createUser(withEmail: email, password: password) { result, error in
+            if error != nil {
+                print(error!.localizedDescription)
+            }
+            
+        }
+    }
     func signUp() -> Void {
         
         authApi

@@ -5,6 +5,8 @@
 //  Created by Spencer SLiffe on 2/7/23.
 //
 import SwiftUI
+import Firebase
+
 struct SignUpView: View {
     
     @ObservedObject private var viewModel : SignUpViewModel
@@ -28,7 +30,7 @@ struct SignUpView: View {
                 AuthTextField(title: "Username", textValue: $viewModel.username, errorValue: viewModel.usernameError )
                 AuthTextField(title: "Password", textValue: $viewModel.password, errorValue: viewModel.passwordError , isSecured: true)
                 AuthTextField(title: "Confirm Password", textValue: $viewModel.confirmPassword, errorValue: viewModel.confirmPasswordError , isSecured: true)
-                Button(action: viewModel.signUp) {
+                Button(action: viewModel.register) {
                     Text("Sign Up")
                 }
                 .disabled(!viewModel.enableSignUp)
@@ -49,6 +51,8 @@ struct SignUpView: View {
             }.padding(60.0)
         }
     }
+    
+   
 }
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

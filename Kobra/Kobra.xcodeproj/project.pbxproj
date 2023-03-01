@@ -12,6 +12,9 @@
 		45518A1A29A3FC6B006CDB81 /* AuthServiceParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45518A1929A3FC6B006CDB81 /* AuthServiceParser.swift */; };
 		458D23CE29A52B5E00205AAE /* TokenResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458D23CD29A52B5E00205AAE /* TokenResponseModel.swift */; };
 		458D23D029A52DBB00205AAE /* SignUpErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458D23CF29A52DBB00205AAE /* SignUpErrorModel.swift */; };
+		459180FE29AECC63000FB066 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 459180FD29AECC63000FB066 /* FirebaseAuth */; };
+		4591810029AECC63000FB066 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 459180FF29AECC63000FB066 /* FirebaseFirestore */; };
+		4591810229AECFD3000FB066 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4591810129AECFD3000FB066 /* GoogleService-Info.plist */; };
 		45A34163299EE27200F164CE /* AuthHttpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A34162299EE27200F164CE /* AuthHttpRouter.swift */; };
 		45A34165299EE28200F164CE /* AuthHttpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A34164299EE28200F164CE /* AuthHttpService.swift */; };
 		45A34167299EE47200F164CE /* AuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A34166299EE47200F164CE /* AuthModel.swift */; };
@@ -34,6 +37,7 @@
 		45518A1929A3FC6B006CDB81 /* AuthServiceParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthServiceParser.swift; sourceTree = "<group>"; };
 		458D23CD29A52B5E00205AAE /* TokenResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenResponseModel.swift; sourceTree = "<group>"; };
 		458D23CF29A52DBB00205AAE /* SignUpErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpErrorModel.swift; sourceTree = "<group>"; };
+		4591810129AECFD3000FB066 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		45A34162299EE27200F164CE /* AuthHttpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHttpRouter.swift; sourceTree = "<group>"; };
 		45A34164299EE28200F164CE /* AuthHttpService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHttpService.swift; sourceTree = "<group>"; };
 		45A34166299EE47200F164CE /* AuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModel.swift; sourceTree = "<group>"; };
@@ -58,6 +62,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C2EDBE2FC9B2C688571E1EC /* Pods_Kobra.framework in Frameworks */,
+				459180FE29AECC63000FB066 /* FirebaseAuth in Frameworks */,
+				4591810029AECC63000FB066 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,6 +109,7 @@
 		45E5ABD9299D8AC300DFFDC8 /* Kobra */ = {
 			isa = PBXGroup;
 			children = (
+				4591810129AECFD3000FB066 /* GoogleService-Info.plist */,
 				45E9848E299D909D00B3A56A /* Views */,
 				45E98489299D8C1100B3A56A /* Info.plist */,
 				45E5ABDA299D8AC300DFFDC8 /* KobraApp.swift */,
@@ -191,6 +198,10 @@
 			dependencies = (
 			);
 			name = Kobra;
+			packageProductDependencies = (
+				459180FD29AECC63000FB066 /* FirebaseAuth */,
+				459180FF29AECC63000FB066 /* FirebaseFirestore */,
+			);
 			productName = Kobra;
 			productReference = 45E5ABD7299D8AC300DFFDC8 /* Kobra.app */;
 			productType = "com.apple.product-type.application";
@@ -219,6 +230,9 @@
 				Base,
 			);
 			mainGroup = 45E5ABCE299D8AC300DFFDC8;
+			packageReferences = (
+				459180FC29AECC63000FB066 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 45E5ABD8299D8AC300DFFDC8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -235,6 +249,7 @@
 			files = (
 				45E5ABE2299D8AC500DFFDC8 /* Preview Assets.xcassets in Resources */,
 				45E5ABDF299D8AC500DFFDC8 /* Assets.xcassets in Resources */,
+				4591810229AECFD3000FB066 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,9 +445,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Kobra/Preview Content\"";
+				DEVELOPMENT_TEAM = R3X7JY5628;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Kobra/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Kobra;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -459,9 +477,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Kobra/Preview Content\"";
+				DEVELOPMENT_TEAM = R3X7JY5628;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Kobra/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Kobra;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -501,6 +522,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		459180FC29AECC63000FB066 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		459180FD29AECC63000FB066 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 459180FC29AECC63000FB066 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		459180FF29AECC63000FB066 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 459180FC29AECC63000FB066 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 45E5ABCF299D8AC300DFFDC8 /* Project object */;
 }
