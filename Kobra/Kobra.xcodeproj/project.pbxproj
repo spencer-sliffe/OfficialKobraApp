@@ -15,6 +15,8 @@
 		459180FE29AECC63000FB066 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 459180FD29AECC63000FB066 /* FirebaseAuth */; };
 		4591810029AECC63000FB066 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 459180FF29AECC63000FB066 /* FirebaseFirestore */; };
 		4591810229AECFD3000FB066 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4591810129AECFD3000FB066 /* GoogleService-Info.plist */; };
+		4594203B29AEDC5400A100F1 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4594203A29AEDC5400A100F1 /* LoginViewModel.swift */; };
+		4594203D29AEDCB100A100F1 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4594203C29AEDCB100A100F1 /* LoginView.swift */; };
 		45A34163299EE27200F164CE /* AuthHttpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A34162299EE27200F164CE /* AuthHttpRouter.swift */; };
 		45A34165299EE28200F164CE /* AuthHttpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A34164299EE28200F164CE /* AuthHttpService.swift */; };
 		45A34167299EE47200F164CE /* AuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A34166299EE47200F164CE /* AuthModel.swift */; };
@@ -38,6 +40,8 @@
 		458D23CD29A52B5E00205AAE /* TokenResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenResponseModel.swift; sourceTree = "<group>"; };
 		458D23CF29A52DBB00205AAE /* SignUpErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpErrorModel.swift; sourceTree = "<group>"; };
 		4591810129AECFD3000FB066 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		4594203A29AEDC5400A100F1 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		4594203C29AEDCB100A100F1 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		45A34162299EE27200F164CE /* AuthHttpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHttpRouter.swift; sourceTree = "<group>"; };
 		45A34164299EE28200F164CE /* AuthHttpService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHttpService.swift; sourceTree = "<group>"; };
 		45A34166299EE47200F164CE /* AuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModel.swift; sourceTree = "<group>"; };
@@ -142,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				45E9848A299D8C6B00B3A56A /* SignUpViewModel.swift */,
+				4594203A29AEDC5400A100F1 /* LoginViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -159,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				45E5ABDC299D8AC300DFFDC8 /* SignUpView.swift */,
+				4594203C29AEDCB100A100F1 /* LoginView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -310,11 +316,13 @@
 				45518A1829A3ED57006CDB81 /* AuthService.swift in Sources */,
 				458D23CE29A52B5E00205AAE /* TokenResponseModel.swift in Sources */,
 				45A3416B299EE5A800F164CE /* HttpService.swift in Sources */,
+				4594203B29AEDC5400A100F1 /* LoginViewModel.swift in Sources */,
 				45518A1629A3ED47006CDB81 /* AuthAPI.swift in Sources */,
 				45A34163299EE27200F164CE /* AuthHttpRouter.swift in Sources */,
 				458D23D029A52DBB00205AAE /* SignUpErrorModel.swift in Sources */,
 				45E9848B299D8C6B00B3A56A /* SignUpViewModel.swift in Sources */,
 				45518A1A29A3FC6B006CDB81 /* AuthServiceParser.swift in Sources */,
+				4594203D29AEDCB100A100F1 /* LoginView.swift in Sources */,
 				45E5ABDB299D8AC300DFFDC8 /* KobraApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
