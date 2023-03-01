@@ -1,60 +1,59 @@
 //
-//  SignUpView.swift
+//  LoginView.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 2/7/23.
+//  Created by Saje on 2/28/23.
 //
+
 import SwiftUI
-struct SignUpView: View {
+struct LoginView: View {
     
-    @ObservedObject private var viewModel : SignUpViewModel
+    @ObservedObject private var viewModel : LoginViewModel
     
-    init(viewModel: SignUpViewModel){
+    init(viewModel: LoginViewModel){
         self.viewModel = viewModel
     }
     
     var body: some View {
         ZStack{
-            ColorCodes.primary.signUpColor().edgesIgnoringSafeArea(.all)
+            ColorCodes.primary.loginColor().edgesIgnoringSafeArea(.all)
             VStack{
-                Text("Create Account")
+                Text("Sign In")
                     .font(Font
                         .custom("Exo-VariableFont_wght.ttf", size: 35))
                     .foregroundColor(Color.white)
                     .padding(.bottom, 20.0)
                     .multilineTextAlignment(.center)
                 
-                SignUpAuthTextField(title: "Name", textValue: $viewModel.name, errorValue: viewModel.nameError )
                 SignUpAuthTextField(title: "Email", textValue: $viewModel.email, errorValue: viewModel.emailError, keyboardType: .emailAddress )
-                SignUpAuthTextField(title: "Phone #", textValue: $viewModel.phone, errorValue: viewModel.phoneError, keyboardType: .phonePad )
-                SignUpAuthTextField(title: "Username", textValue: $viewModel.username, errorValue: viewModel.usernameError )
-                SignUpAuthTextField(title: "Password", textValue: $viewModel.password, errorValue: viewModel.passwordError , isSecured: true)
-                SignUpAuthTextField(title: "Confirm Password", textValue: $viewModel.confirmPassword, errorValue: viewModel.confirmPasswordError , isSecured: true)
-                Button(action: signUp){
-                    Text("Sign Up")
-                    
+                LoginAuthTextField(title: "Password", textValue: $viewModel.password, errorValue: viewModel.passwordError , isSecured: true)
+                Button(action: Login){
+                    Text("Login")
                 }.frame(minWidth: 0.0, maxWidth: .infinity)
                     .foregroundColor(Color.white)
                     .padding()
                     .background(Color.blue)
                     .cornerRadius(.infinity)
-                
+                            
+                HStack{
+                Text("Don't have an account? Sign Up")
+                }
             }.padding(60.0)
         }
     }
     
-    func signUp() -> Void{
-        print("Sign Up Clicked!")
+    func Login() -> Void{
+        print("Logging you in!")
     }
     
 }
-struct SignUpContentView_Previews: PreviewProvider {
+struct LoginContentView_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = SignUpViewModel()
-        SignUpView(viewModel: viewModel)
+        let viewModel = LoginViewModel()
+        LoginView(viewModel: viewModel)
     }
 }
-struct SignUpAuthTextField: View{
+struct LoginAuthTextField: View{
     var title: String
     @Binding var textValue: String
     var errorValue: String
@@ -65,21 +64,21 @@ struct SignUpAuthTextField: View{
             if isSecured{
                 SecureField(title, text: $textValue)
                     .textFieldStyle(.roundedBorder)
-                    .background(ColorCodes.background.signUpColor())
+                    .background(ColorCodes.background.loginColor())
                     .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                     .cornerRadius(5.0)
                     .keyboardType(keyboardType)
             }else{
                 TextField(title, text: $textValue)
                     .textFieldStyle(.roundedBorder)
-                    .background(ColorCodes.background.signUpColor())
+                    .background(ColorCodes.background.loginColor())
                     .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                     .keyboardType(keyboardType)
                     .cornerRadius(5.0)
             }
             Text(errorValue)
                 .fontWeight(.light)
-                .foregroundColor(ColorCodes.failure.signUpColor())
+                .foregroundColor(ColorCodes.failure.loginColor())
                 .frame(minWidth: 0, maxWidth: .infinity, alignment: .trailing)
                 .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
             
@@ -87,7 +86,7 @@ struct SignUpAuthTextField: View{
     }
 }
 extension ColorCodes{
-    func signUpColor() -> Color{
+    func loginColor() -> Color{
         switch self{
         case .primary:
             return Color(red: 82/255,

@@ -24,6 +24,8 @@
 		45E9848B299D8C6B00B3A56A /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E9848A299D8C6B00B3A56A /* SignUpViewModel.swift */; };
 		45E9848D299D8C7700B3A56A /* ColorCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E9848C299D8C7700B3A56A /* ColorCodes.swift */; };
 		9C2EDBE2FC9B2C688571E1EC /* Pods_Kobra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB1B9B802468CF3E0175C93 /* Pods_Kobra.framework */; };
+		CE82D95F29AEBB99000E037C /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82D95E29AEBB99000E037C /* LoginViewModel.swift */; };
+		CE82D96129AEBD90000E037C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE82D96029AEBD90000E037C /* LoginView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +52,8 @@
 		45E9848A299D8C6B00B3A56A /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		45E9848C299D8C7700B3A56A /* ColorCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCodes.swift; sourceTree = "<group>"; };
 		7DB1B9B802468CF3E0175C93 /* Pods_Kobra.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kobra.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE82D95E29AEBB99000E037C /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		CE82D96029AEBD90000E037C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				45E9848A299D8C6B00B3A56A /* SignUpViewModel.swift */,
+				CE82D95E29AEBB99000E037C /* LoginViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -152,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				45E5ABDC299D8AC300DFFDC8 /* SignUpView.swift */,
+				CE82D96029AEBD90000E037C /* LoginView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -295,11 +301,13 @@
 				45518A1829A3ED57006CDB81 /* AuthService.swift in Sources */,
 				458D23CE29A52B5E00205AAE /* TokenResponseModel.swift in Sources */,
 				45A3416B299EE5A800F164CE /* HttpService.swift in Sources */,
+				CE82D95F29AEBB99000E037C /* LoginViewModel.swift in Sources */,
 				45518A1629A3ED47006CDB81 /* AuthAPI.swift in Sources */,
 				45A34163299EE27200F164CE /* AuthHttpRouter.swift in Sources */,
 				458D23D029A52DBB00205AAE /* SignUpErrorModel.swift in Sources */,
 				45E9848B299D8C6B00B3A56A /* SignUpViewModel.swift in Sources */,
 				45518A1A29A3FC6B006CDB81 /* AuthServiceParser.swift in Sources */,
+				CE82D96129AEBD90000E037C /* LoginView.swift in Sources */,
 				45E5ABDB299D8AC300DFFDC8 /* KobraApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

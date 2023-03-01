@@ -168,3 +168,7 @@ extension String {
         return NSPredicate(format:"SELF MATCHES %@", phoneRegEx).evaluate(with: self)
     }
 }
+
+extension String {
+
+    }

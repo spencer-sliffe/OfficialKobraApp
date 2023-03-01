@@ -11,8 +11,8 @@ import SwiftUI
 struct KobraApp: App {
     var body: some Scene {
         WindowGroup {
-            let viewModel = SignUpViewModel()
-            SignUpView(viewModel: viewModel)
+            let viewModel = LoginViewModel()
+            LoginView(viewModel: viewModel)
         }
     }
 }
