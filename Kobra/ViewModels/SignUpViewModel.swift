@@ -167,7 +167,6 @@ extension SignUpViewModel{
             if error != nil {
                 print(error!.localizedDescription)
             }
-            
         }
     }
     func signUp() -> Void {

@@ -10,12 +10,22 @@ import Firebase
 struct LoginView: View {
     
     @ObservedObject private var viewModel : LoginViewModel
+    @State private var userIsLoggedIn : Bool = false
     
     init(viewModel: LoginViewModel){
         self.viewModel = viewModel
     }
     
     var body: some View {
+        if userIsLoggedIn {
+            HomePageView()
+        }
+        else {
+            content
+        }
+    }
+    
+    var content: some View {
         ZStack{
             ColorCodes.primary.loginColor().edgesIgnoringSafeArea(.all)
             VStack{
@@ -29,17 +39,24 @@ struct LoginView: View {
                 LoginAuthTextField(title: "Email", textValue: $viewModel.email, errorValue: viewModel.emailError, keyboardType: .emailAddress )
                 LoginAuthTextField(title: "Password", textValue: $viewModel.password, errorValue: viewModel.passwordError , isSecured: true)
                 Button(action: viewModel.Login){
-                    Text("Login")
+                    Text("Sign In")
                 }.frame(minWidth: 0.0, maxWidth: .infinity)
                     .foregroundColor(Color.white)
                     .padding()
                     .background(Color.blue)
                     .cornerRadius(.infinity)
-                            
                 HStack{
-                Text("Don't have an account? Sign Up")
+                    Text("Don't have an account? Sign Up")
                 }
-            }.padding(60.0)
+            }
+            .padding(60.0)
+            .onAppear {
+                Auth.auth().addStateDidChangeListener { auth, user in
+                    if user != nil {
+                        userIsLoggedIn.toggle()
+                    }
+                }
+            }
         }
     }
 }
