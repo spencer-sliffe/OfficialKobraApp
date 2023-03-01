@@ -2,6 +2,7 @@
 
 - The iOS application counterpart of https://kobracoding.com
 - Currently being developed by the co-creators of Kobra Coding / https://kobracoding.com
+- API is being created with Firebase
 
 # Final Goal
 
