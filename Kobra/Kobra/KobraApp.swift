@@ -17,8 +17,7 @@ struct KobraApp: App {
     
     var body: some Scene {
         WindowGroup {
-            let viewModel = LoginViewModel()
-            LoginView(viewModel: viewModel)
+           AuthenticationView()
         }
     }
 }
