@@ -33,6 +33,7 @@
 		45E5ABE2299D8AC500DFFDC8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45E5ABE1299D8AC500DFFDC8 /* Preview Assets.xcassets */; };
 		45E9848D299D8C7700B3A56A /* ColorCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E9848C299D8C7700B3A56A /* ColorCodes.swift */; };
 		45EA727F29B7B74C000FD738 /* PackageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EA727E29B7B74C000FD738 /* PackageView.swift */; };
+		45EA728129B7BA5B000FD738 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EA728029B7BA5B000FD738 /* Account.swift */; };
 		9C2EDBE2FC9B2C688571E1EC /* Pods_Kobra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB1B9B802468CF3E0175C93 /* Pods_Kobra.framework */; };
 /* End PBXBuildFile section */
 
@@ -68,6 +69,7 @@
 		45E98489299D8C1100B3A56A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		45E9848C299D8C7700B3A56A /* ColorCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCodes.swift; sourceTree = "<group>"; };
 		45EA727E29B7B74C000FD738 /* PackageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageView.swift; sourceTree = "<group>"; };
+		45EA728029B7BA5B000FD738 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		7DB1B9B802468CF3E0175C93 /* Pods_Kobra.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kobra.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -160,6 +162,7 @@
 				458D23CD29A52B5E00205AAE /* TokenResponseModel.swift */,
 				458D23CF29A52DBB00205AAE /* SignUpErrorModel.swift */,
 				45A908CC29B0386400792FC2 /* Package.swift */,
+				45EA728029B7BA5B000FD738 /* Account.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -334,6 +337,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				45E9848D299D8C7700B3A56A /* ColorCodes.swift in Sources */,
+				45EA728129B7BA5B000FD738 /* Account.swift in Sources */,
 				45AD933F29B130E900D153AF /* AccountViewModel.swift in Sources */,
 				45A34165299EE28200F164CE /* AuthHttpService.swift in Sources */,
 				4594204129AEF00500A100F1 /* HomePageViewModel.swift in Sources */,

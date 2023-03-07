@@ -18,7 +18,7 @@ struct KobraApp: App {
     
     var body: some Scene {
         WindowGroup {
-            PackageView().environmentObject(dataManager)
+            AuthenticationView()
         }
     }
 }
