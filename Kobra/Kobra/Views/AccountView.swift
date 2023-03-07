@@ -3,51 +3,38 @@ import Firebase
 
 struct AccountView: View {
     @ObservedObject var viewModel: AccountViewModel
-    @State private var isPresented = false
     
     var body: some View {
-        NavigationView {
+        ZStack {
             if !viewModel.isSignedIn {
                AuthenticationView()
             } else {
-                ZStack {
-                    VStack(spacing: 20) {
+                VStack(spacing: 20) {
+                    Text("Sign Out")
+                        .font(.custom("Exo-VariableFont_wght.ttf", size: 35))
+                        .foregroundColor(.white)
+                    Button(action: {
+                        viewModel.signOut()
+                    }) {
                         Text("Sign Out")
-                            .font(.custom("Exo-VariableFont_wght.ttf", size: 35))
+                            .frame(maxWidth: .infinity)
+                            .padding()
                             .foregroundColor(.white)
-                        Button(action: {
-                            viewModel.signOut()
-                            isPresented.toggle()
-                        }) {
-                            Text("Sign Out")
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .foregroundColor(.white)
-                                .background(Color.blue)
-                                .cornerRadius(.infinity)
-                        }
+                            .background(Color.blue)
+                            .cornerRadius(.infinity)
                     }
-                    .padding()
                 }
-                .navigationBarHidden(true)
+                .padding()
             }
         }
-        .navigationViewStyle(StackNavigationViewStyle())
-        .background(
-            NavigationLink(
-                destination: AuthenticationView(),
-                isActive: $isPresented,
-                label: {
-                    EmptyView()
-                }
-            )
-            .hidden()
-        )
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .edgesIgnoringSafeArea(.all)
+        .navigationBarHidden(true)
     }
 }
 
 struct AccountView_Previews: PreviewProvider {
     static var previews: some View {
-        AccountView(viewModel: AccountViewModel())
+        AccountView(viewModel: AccountViewModel(isPresented: .constant(false)))
     }
 }

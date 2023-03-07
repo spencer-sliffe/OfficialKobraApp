@@ -6,6 +6,7 @@ struct AuthenticationView: View {
     @State private var selection = 0
     @State private var signInSuccess = false
     @State private var isNavigating = false
+    @State private var isPresented = false
     
     var body: some View {
         NavigationView {
@@ -91,14 +92,19 @@ struct AuthenticationView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(LinearGradient(gradient: Gradient(colors: [.purple, .blue]), startPoint: .topLeading, endPoint: .bottomTrailing))
-                .sheet(isPresented: $signInSuccess) {
-                    AccountView(viewModel: AccountViewModel())
-                }
             }
             .navigationBarHidden(true)
             .onReceive(authViewModel.$isAuthenticated) { isAuthenticated in
+                if isAuthenticated {
+                    signInSuccess = true // present the account view when the user is authenticated
+                }
             }
-        }
+            .fullScreenCover(isPresented: $signInSuccess) {
+                AccountView(viewModel: AccountViewModel(isPresented: $isPresented))
+                    .navigationBarBackButtonHidden(true)
+                    .navigationBarHidden(true)
+            }
+        } .navigationBarHidden(true)
     }
 }
 

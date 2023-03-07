@@ -32,6 +32,7 @@
 		45E5ABDF299D8AC500DFFDC8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45E5ABDE299D8AC500DFFDC8 /* Assets.xcassets */; };
 		45E5ABE2299D8AC500DFFDC8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45E5ABE1299D8AC500DFFDC8 /* Preview Assets.xcassets */; };
 		45E9848D299D8C7700B3A56A /* ColorCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E9848C299D8C7700B3A56A /* ColorCodes.swift */; };
+		45EA727F29B7B74C000FD738 /* PackageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EA727E29B7B74C000FD738 /* PackageView.swift */; };
 		9C2EDBE2FC9B2C688571E1EC /* Pods_Kobra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB1B9B802468CF3E0175C93 /* Pods_Kobra.framework */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +67,7 @@
 		45E98488299D8BFD00B3A56A /* Exo-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Exo-VariableFont_wght.ttf"; sourceTree = "<group>"; };
 		45E98489299D8C1100B3A56A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		45E9848C299D8C7700B3A56A /* ColorCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCodes.swift; sourceTree = "<group>"; };
+		45EA727E29B7B74C000FD738 /* PackageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageView.swift; sourceTree = "<group>"; };
 		7DB1B9B802468CF3E0175C93 /* Pods_Kobra.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kobra.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -187,6 +189,7 @@
 				4594203E29AEEFF400A100F1 /* HomePageView.swift */,
 				45AD934029B130F600D153AF /* AccountView.swift */,
 				45AD934229B1AAB800D153AF /* AuthenticationView.swift */,
+				45EA727E29B7B74C000FD738 /* PackageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -348,6 +351,7 @@
 				45A908CB29B037FE00792FC2 /* DataManager.swift in Sources */,
 				45AD934329B1AAB800D153AF /* AuthenticationView.swift in Sources */,
 				45A908CD29B0386400792FC2 /* Package.swift in Sources */,
+				45EA727F29B7B74C000FD738 /* PackageView.swift in Sources */,
 				45518A1A29A3FC6B006CDB81 /* AuthServiceParser.swift in Sources */,
 				45E5ABDB299D8AC300DFFDC8 /* KobraApp.swift in Sources */,
 			);

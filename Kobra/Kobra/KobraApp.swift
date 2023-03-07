@@ -10,6 +10,7 @@ import Firebase
 
 @main
 struct KobraApp: App {
+    @StateObject var dataManager = DataManager()
     
     init(){
         FirebaseApp.configure()
@@ -17,7 +18,7 @@ struct KobraApp: App {
     
     var body: some Scene {
         WindowGroup {
-           AuthenticationView()
+            PackageView().environmentObject(dataManager)
         }
     }
 }

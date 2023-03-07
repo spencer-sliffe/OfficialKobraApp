@@ -9,5 +9,5 @@ import Foundation
 
 struct Package{
     var id: String
-    var Medal: String
+    var medal: String
 }
