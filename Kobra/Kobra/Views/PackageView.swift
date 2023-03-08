@@ -6,27 +6,32 @@
 //
 
 import SwiftUI
-
 struct PackageView: View {
-    @EnvironmentObject var dataManager: DataManager
+    @ObservedObject var viewModel = PackageViewModel()
     
     var body: some View {
-        NavigationView {
-            List(dataManager.packages, id: \.id) { package in
-                Text(package.medal)
+        Group {
+            if viewModel.isLoading {
+                ProgressView()
+            } else {
+                VStack {
+                    ForEach(viewModel.images, id: \.self) { image in
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFit()
+                    }
+                }
             }
-            .navigationTitle("Packages")
-            .navigationBarItems(trailing: Button(action: {
-                //add
-            }, label: {
-                Image(systemName: "plus")
-            }))
         }
     }
 }
 
 struct PackageView_Previews: PreviewProvider {
     static var previews: some View {
-        PackageView().environmentObject(DataManager())
+        PackageView()
     }
 }
+
+
+
+
