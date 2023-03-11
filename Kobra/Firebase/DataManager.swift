@@ -2,7 +2,7 @@
 //  DataManager.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 3/1/23.
+//  Created by Spencer Sliffe on 3/1/23.
 //
 
 import SwiftUI

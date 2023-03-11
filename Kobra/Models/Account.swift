@@ -2,7 +2,7 @@
 //  Account.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 3/7/23.
+//  Created by Spencer Sliffe on 3/7/23.
 //
 
 import Foundation

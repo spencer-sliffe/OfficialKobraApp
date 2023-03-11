@@ -2,7 +2,7 @@
 //  HomePageView.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 2/28/23.
+//  Created by Spencer Sliffe on 2/28/23.
 //
 
 import SwiftUI

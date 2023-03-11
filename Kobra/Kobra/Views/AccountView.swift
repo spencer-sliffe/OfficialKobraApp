@@ -1,3 +1,10 @@
+//
+// AccountView.swift
+//  Kobra
+//
+//  Created by Spencer Sliffe on 2/28/23.
+//
+
 import SwiftUI
 import Firebase
 
@@ -18,11 +25,12 @@ struct AccountView: View {
                     ProgressView()
                 } else if let account = viewModel.account {
                     Text("Welcome Back \(account.email)")
+                        .font(.largeTitle)
                     if let package = account.package {
-                        Text("Package: \(package.name)")
+                        Text("Current Subscription: \(package.name)")
                         Text("Price: \(package.price)")
                     } else {
-                        Text("No package subscribed")
+                        Text("Current Subscription: none")
                     }
                 } else {
                     Text("Failed to fetch account data")

@@ -2,8 +2,9 @@
 //  PackageViewModel.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 3/7/23.
+//  Created by Spencer Sliffe on 3/7/23.
 //
+
 import Firebase
 import FirebaseFirestoreSwift
 import SwiftUI
@@ -65,21 +66,31 @@ class PackageViewModel: ObservableObject {
 struct PackageCell: View {
     let package: PackageWithImage
     @State private var isImageDownloaded = false
-
+    
+    private let priceFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.locale = Locale(identifier: "en_US")
+        formatter.numberStyle = .currency
+        formatter.currencySymbol = "$"
+        formatter.maximumFractionDigits = 2
+        formatter.minimumFractionDigits = 2
+        return formatter
+    }()
+    
     var body: some View {
         VStack {
             Text("\(package.medal)")
-            Text("\(package.price)")
+            Text(priceFormatter.string(from: NSNumber(value: package.price)) ?? "")
             if isImageDownloaded, let image = package.image {
                 Image(uiImage: image)
                     .resizable()
                     .scaledToFit()
-                    .background(Color.clear)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
             } else {
                 ProgressView()
             }
         }
-        .background(Color.clear) // add this line to set the background color to clear
+        .background(Color.clear)
         .onAppear {
             if package.image != nil {
                 isImageDownloaded = true
