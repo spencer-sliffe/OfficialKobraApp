@@ -3,23 +3,52 @@ import Firebase
 import SwiftUI
 
 class AccountViewModel: ObservableObject {
-
-    @Binding var isPresented: Bool
+    @Published var account: Account?
+    @Published var isLoading = true
+    let dataManager = DataManager()
     
-    init(isPresented: Binding<Bool>) {
-        self._isPresented = isPresented
+    init() {
+        fetchAccount()
     }
     
-    func signOut() {
-        do {
-            try Auth.auth().signOut()
-            isPresented = true
-        } catch let signOutError as NSError {
-            print("Error signing out: %@", signOutError)
+    func fetchAccount() {
+        guard let user = Auth.auth().currentUser else {
+            print("Error: No user is currently signed in.")
+            return
         }
-    }
+        
+        // Make API call to fetch account data from backend using the user's ID
+        let db = Firestore.firestore()
+        let ref = db.collection("Accounts").document(user.uid)
+        ref.getDocument { (document, error) in
+            guard let document = document, document.exists, error == nil else {
+                print("Error fetching account data: \(error?.localizedDescription ?? "unknown error")")
+                return
+            }
+            
+            let data = document.data()!
+            let email = user.email ?? ""
+            let subscription = data["subscription"] as? Bool ?? false
+            var account = Account(id: user.uid, email: email, subscription: subscription, package: nil)
 
-    var isSignedIn: Bool {
-        return Auth.auth().currentUser?.uid != nil
+            if let packageId = data["packageId"] as? String {
+                let packageRef = db.collection("Packages").document(packageId)
+                packageRef.getDocument { (packageDocument, packageError) in
+                    guard let packageDocument = packageDocument, packageDocument.exists, packageError == nil else {
+                        print("Error fetching package data: \(packageError?.localizedDescription ?? "unknown error")")
+                        return
+                    }
+                    
+                    let packageData = packageDocument.data()!
+                    let package = Package(id: packageDocument.documentID, name: packageData["name"] as! String, price: packageData["price"] as! Double)
+                    account.package = package
+                    self.account = account
+                    self.isLoading = false
+                }
+            } else {
+                self.account = account
+                self.isLoading = false
+            }
+        }
     }
 }

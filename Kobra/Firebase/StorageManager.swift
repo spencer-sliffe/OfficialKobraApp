@@ -11,6 +11,11 @@ import SwiftUI
 
 public class StorageManager: ObservableObject {
     let storage = Storage.storage()
+        let reference: StorageReference
+        static let shared = StorageManager()
+        init() {
+            self.reference = storage.reference()
+        }
 
     func upload(image: UIImage) {
         // Create a storage reference
@@ -38,8 +43,25 @@ public class StorageManager: ObservableObject {
                 }
             }
         }
+        
     }
-
+    func downloadImage(from reference: StorageReference, completion: @escaping (UIImage?) -> Void) {
+        reference.getData(maxSize: 1 * 1024 * 1024) { data, error in
+            if let error = error {
+                print("Error downloading image: \(error.localizedDescription)")
+                completion(nil)
+                return
+            }
+            
+            if let data = data, let image = UIImage(data: data) {
+                completion(image)
+                
+            } else {
+                print("Error converting image data to UIImage.")
+                completion(nil)
+            }
+        }
+    }
     func listAllFiles(completion: @escaping ([StorageReference]) -> Void) {
         // Create a reference
         let storageRef = storage.reference()

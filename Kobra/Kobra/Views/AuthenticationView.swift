@@ -100,7 +100,7 @@ struct AuthenticationView: View {
                 }
             }
             .fullScreenCover(isPresented: $signInSuccess) {
-                PackageView()
+                HomePageView()
                     .navigationBarBackButtonHidden(true)
                     .navigationBarHidden(true)
             }

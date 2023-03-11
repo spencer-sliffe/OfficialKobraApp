@@ -5,9 +5,25 @@
 //  Created by Spencer SLiffe on 3/1/23.
 //
 
-import Foundation
+import SwiftUI
+import Firebase
 
-struct Package{
+struct Package {
     var id: String
-    var medal: String
+    var name: String
+    var price: Double
+    
+    init(id: String, name: String, price: Double) {
+        self.id = id
+        self.name = name
+        self.price = price
+    }
+}
+
+extension Package: Identifiable {}
+
+extension Package: Equatable {
+    static func ==(lhs: Package, rhs: Package) -> Bool {
+        return lhs.id == rhs.id
+    }
 }

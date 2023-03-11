@@ -8,7 +8,8 @@
 import Foundation
 
 struct Account {
-    var email : String
-    var subscribtion : Bool
-    var package : String
+    var id: String
+    var email: String
+    var subscription: Bool
+    var package: Package?
 }

@@ -11,6 +11,7 @@ import Firebase
 @main
 struct KobraApp: App {
     @StateObject var dataManager = DataManager()
+    typealias imagePackageTuple = (image: UIImage, package: Package)
     
     init(){
         FirebaseApp.configure()

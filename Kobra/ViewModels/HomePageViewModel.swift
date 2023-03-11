@@ -6,6 +6,18 @@
 //
 
 import Foundation
-class HomePageViewModel: ObservableObject{
+
+class HomePageViewModel: ObservableObject {
+    @Published var accountIsActive = false
+    @Published var packageIsActive = false
     
+    func activateAccount() {
+        accountIsActive = true
+        packageIsActive = false
+    }
+    
+    func activatePackage() {
+        accountIsActive = false
+        packageIsActive = true
+    }
 }

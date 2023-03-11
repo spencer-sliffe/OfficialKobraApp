@@ -8,10 +8,10 @@
 import SwiftUI
 import Firebase
 
-class DataManager: ObservableObject{
+class DataManager: ObservableObject {
     @Published var packages: [Package] = []
     
-    init(){
+    init() {
         fetchPackages()
     }
     
@@ -30,9 +30,10 @@ class DataManager: ObservableObject{
                     let data = document.data()
                     
                     let id = data["id"] as? String ?? ""
-                    let medal = data["medal"] as? String ?? ""
+                    let name = data["name"] as? String ?? ""
+                    let price = data["price"] as? Double ?? 0.0
                     
-                    let package = Package(id: id, medal: medal)
+                    let package = Package(id: id, name: name, price: price)
                     self.packages.append(package)
                 }
             }

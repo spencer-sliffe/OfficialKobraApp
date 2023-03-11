@@ -6,6 +6,7 @@
 
 import Foundation
 import Firebase
+import FirebaseFirestore
 
 class AuthenticationViewModel: ObservableObject {
     
@@ -67,10 +68,24 @@ class AuthenticationViewModel: ObservableObject {
                 return
             }
             
-            self.user = authResult?.user
-            self.isAuthenticated = true
+            // Add the user's account information to the "Accounts" collection on Firebase
+            let db = Firestore.firestore()
+            db.collection("Accounts").document(authResult!.user.uid).setData([
+                "email": self.email,
+                "subscription": false,
+                "package": ""
+            ]) { error in
+                if let error = error {
+                    self.isError = true
+                    self.errorMessage = error.localizedDescription
+                } else {
+                    self.user = authResult?.user
+                    self.isAuthenticated = true
+                }
+            }
         }
     }
+
     
     func startListening() {
         handle = Auth.auth().addStateDidChangeListener { [weak self] _, user in
