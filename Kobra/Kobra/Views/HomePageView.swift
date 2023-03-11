@@ -10,7 +10,7 @@ import Firebase
 
 struct HomePageView: View {
     @State private var selectedTab = "account"
-
+    
     var body: some View {
         ZStack {
             LinearGradient(
@@ -19,20 +19,24 @@ struct HomePageView: View {
                 endPoint: .bottomTrailing
             )
             .ignoresSafeArea()
-
+            
             VStack(spacing: 0) {
+                Spacer()
+                
                 TabView(selection: $selectedTab) {
                     AccountView()
                         .tag("account")
                     PackageView()
                         .tag("package")
+                    ChatView()
+                        .tag("chat")
                 }
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                 .navigationBarHidden(true)
                 .navigationBarTitle("")
-
+                
                 Spacer()
-
+                
                 HStack(spacing: 0) {
                     Button(action: {
                         selectedTab = "account"
@@ -44,9 +48,9 @@ struct HomePageView: View {
                         }
                     }
                     .foregroundColor(selectedTab == "account" ? .white : .gray)
-
+                    
                     Spacer()
-
+                    
                     Button(action: {
                         selectedTab = "package"
                     }) {
@@ -57,6 +61,19 @@ struct HomePageView: View {
                         }
                     }
                     .foregroundColor(selectedTab == "package" ? .white : .gray)
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        selectedTab = "chat"
+                    }) {
+                        VStack {
+                            Image(systemName: "message.fill")
+                                .font(.system(size: 30))
+                            Text("Chat")
+                        }
+                    }
+                    .foregroundColor(selectedTab == "chat" ? .white : .gray)
                 }
                 .padding(.horizontal)
                 .padding(.bottom, 20)
@@ -64,3 +81,6 @@ struct HomePageView: View {
         }
     }
 }
+
+
+

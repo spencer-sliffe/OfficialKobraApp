@@ -16,6 +16,8 @@
 		459180FE29AECC63000FB066 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 459180FD29AECC63000FB066 /* FirebaseAuth */; };
 		4591810029AECC63000FB066 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 459180FF29AECC63000FB066 /* FirebaseFirestore */; };
 		4591810229AECFD3000FB066 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4591810129AECFD3000FB066 /* GoogleService-Info.plist */; };
+		4592E55B29BD35E900FF76E2 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4592E55A29BD35E900FF76E2 /* ChatView.swift */; };
+		4592E55D29BD361200FF76E2 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4592E55C29BD361200FF76E2 /* ChatViewModel.swift */; };
 		4594203F29AEEFF400A100F1 /* HomePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4594203E29AEEFF400A100F1 /* HomePageView.swift */; };
 		4594204129AEF00500A100F1 /* HomePageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4594204029AEF00500A100F1 /* HomePageViewModel.swift */; };
 		45A34163299EE27200F164CE /* AuthHttpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A34162299EE27200F164CE /* AuthHttpRouter.swift */; };
@@ -52,6 +54,8 @@
 		458D23CD29A52B5E00205AAE /* TokenResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenResponseModel.swift; sourceTree = "<group>"; };
 		458D23CF29A52DBB00205AAE /* SignUpErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpErrorModel.swift; sourceTree = "<group>"; };
 		4591810129AECFD3000FB066 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		4592E55A29BD35E900FF76E2 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		4592E55C29BD361200FF76E2 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		4594203E29AEEFF400A100F1 /* HomePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageView.swift; sourceTree = "<group>"; };
 		4594204029AEF00500A100F1 /* HomePageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageViewModel.swift; sourceTree = "<group>"; };
 		45A34162299EE27200F164CE /* AuthHttpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHttpRouter.swift; sourceTree = "<group>"; };
@@ -186,6 +190,7 @@
 				45AD933E29B130E900D153AF /* AccountViewModel.swift */,
 				4528556129B1AED800F088CD /* AuthenticationViewModel.swift */,
 				45EC904F29B8360F00E0A3A3 /* PackageViewModel.swift */,
+				4592E55C29BD361200FF76E2 /* ChatViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -206,6 +211,7 @@
 				45AD934029B130F600D153AF /* AccountView.swift */,
 				45AD934229B1AAB800D153AF /* AuthenticationView.swift */,
 				45EA727E29B7B74C000FD738 /* PackageView.swift */,
+				4592E55A29BD35E900FF76E2 /* ChatView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -357,6 +363,8 @@
 				45A34165299EE28200F164CE /* AuthHttpService.swift in Sources */,
 				4594204129AEF00500A100F1 /* HomePageViewModel.swift in Sources */,
 				45AD934129B130F600D153AF /* AccountView.swift in Sources */,
+				4592E55B29BD35E900FF76E2 /* ChatView.swift in Sources */,
+				4592E55D29BD361200FF76E2 /* ChatViewModel.swift in Sources */,
 				45A34167299EE47200F164CE /* AuthModel.swift in Sources */,
 				45A34169299EE54000F164CE /* HttpRouter.swift in Sources */,
 				45518A1829A3ED57006CDB81 /* AuthService.swift in Sources */,
