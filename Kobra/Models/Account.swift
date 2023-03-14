@@ -12,4 +12,20 @@ struct Account {
     var email: String
     var subscription: Bool
     var package: Package?
+
+    init(id: String, email: String, subscription: Bool, packageData: [String: Any]?) {
+        self.id = id
+        self.email = email
+        self.subscription = subscription
+        self.package = packageData.flatMap {
+            guard
+                let id = $0["id"] as? String,
+                let name = $0["name"] as? String,
+                let price = $0["price"] as? Double
+            else {
+                return nil
+            }
+            return Package(id: id, name: name, price: price)
+        }
+    }
 }
