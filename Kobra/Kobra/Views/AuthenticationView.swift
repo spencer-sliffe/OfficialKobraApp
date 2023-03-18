@@ -35,13 +35,13 @@ struct AuthenticationView: View {
                                 .font(.system(size: 18 * 3))
                         }
                         .pickerStyle(SegmentedPickerStyle())
-                        .padding(.horizontal, 30)
                         .background(Color.clear)
                         .cornerRadius(10)
                         .foregroundColor(.blue)
                         .accentColor(.blue)
-                        .frame(height: 50)
-                        .padding(.horizontal, 20)
+                        .frame(maxWidth: .infinity, maxHeight: 50)
+
+
                         
                         TextField("Email", text: $authViewModel.email)
                             .padding()
@@ -79,11 +79,12 @@ struct AuthenticationView: View {
                         }) {
                             Text(selection == 0 ? "Sign In" : "Sign Up")
                                 .padding()
-                                .frame(maxWidth: .infinity)
+                                .frame(maxWidth: .infinity, maxHeight: 30)
                                 .background(Color.white)
                                 .foregroundColor(.blue)
                                 .cornerRadius(10)
                                 .font(.system(size: 20))
+                                .padding(.horizontal, 30)
                         }
                         .disabled(authViewModel.isLoading)
                         .opacity(authViewModel.isLoading ? 0.5 : 1)

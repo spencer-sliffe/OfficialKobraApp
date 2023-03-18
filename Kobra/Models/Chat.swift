@@ -14,13 +14,3 @@ struct Chat {
 }
 
 
-struct Message {
-    let sender: String
-    let text: String
-    let timestamp: Date
-}
-
-protocol ChatDelegate: AnyObject {
-    func startChat(with chat: Chat)
-    func chat(_ chat: Chat, didReceiveNewMessage message: Message)
-}

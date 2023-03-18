@@ -30,6 +30,9 @@
 		45AD933F29B130E900D153AF /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD933E29B130E900D153AF /* AccountViewModel.swift */; };
 		45AD934129B130F600D153AF /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD934029B130F600D153AF /* AccountView.swift */; };
 		45AD934329B1AAB800D153AF /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD934229B1AAB800D153AF /* AuthenticationView.swift */; };
+		45C7171C29C63ABE00679626 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C7171B29C63ABE00679626 /* Message.swift */; };
+		45C7171E29C63AF700679626 /* InboxViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C7171D29C63AF700679626 /* InboxViewModel.swift */; };
+		45C7172029C63B0E00679626 /* InboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C7171F29C63B0E00679626 /* InboxView.swift */; };
 		45CFE93629C04EF6003806D5 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CFE93529C04EF6003806D5 /* Chat.swift */; };
 		45E5ABDB299D8AC300DFFDC8 /* KobraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E5ABDA299D8AC300DFFDC8 /* KobraApp.swift */; };
 		45E5ABDF299D8AC500DFFDC8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45E5ABDE299D8AC500DFFDC8 /* Assets.xcassets */; };
@@ -70,6 +73,9 @@
 		45AD933E29B130E900D153AF /* AccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewModel.swift; sourceTree = "<group>"; };
 		45AD934029B130F600D153AF /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		45AD934229B1AAB800D153AF /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
+		45C7171B29C63ABE00679626 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		45C7171D29C63AF700679626 /* InboxViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxViewModel.swift; sourceTree = "<group>"; };
+		45C7171F29C63B0E00679626 /* InboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxView.swift; sourceTree = "<group>"; };
 		45CFE93529C04EF6003806D5 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		45E5ABD7299D8AC300DFFDC8 /* Kobra.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kobra.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45E5ABDA299D8AC300DFFDC8 /* KobraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KobraApp.swift; sourceTree = "<group>"; };
@@ -152,9 +158,9 @@
 		45E5ABD9299D8AC300DFFDC8 /* Kobra */ = {
 			isa = PBXGroup;
 			children = (
+				45E9848E299D909D00B3A56A /* Views */,
 				45A908C829B034A300792FC2 /* Kobra.entitlements */,
 				4591810129AECFD3000FB066 /* GoogleService-Info.plist */,
-				45E9848E299D909D00B3A56A /* Views */,
 				45E98489299D8C1100B3A56A /* Info.plist */,
 				45E5ABDA299D8AC300DFFDC8 /* KobraApp.swift */,
 				45E5ABDE299D8AC500DFFDC8 /* Assets.xcassets */,
@@ -182,6 +188,7 @@
 				45EA728029B7BA5B000FD738 /* Account.swift */,
 				45EC905329B8475900E0A3A3 /* PackageWithImage.swift */,
 				45CFE93529C04EF6003806D5 /* Chat.swift */,
+				45C7171B29C63ABE00679626 /* Message.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -194,6 +201,7 @@
 				4528556129B1AED800F088CD /* AuthenticationViewModel.swift */,
 				45EC904F29B8360F00E0A3A3 /* PackageViewModel.swift */,
 				4592E55C29BD361200FF76E2 /* ChatViewModel.swift */,
+				45C7171D29C63AF700679626 /* InboxViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -215,6 +223,7 @@
 				45AD934229B1AAB800D153AF /* AuthenticationView.swift */,
 				45EA727E29B7B74C000FD738 /* PackageView.swift */,
 				4592E55A29BD35E900FF76E2 /* ChatView.swift */,
+				45C7171F29C63B0E00679626 /* InboxView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -364,12 +373,14 @@
 				45EA728129B7BA5B000FD738 /* Account.swift in Sources */,
 				45AD933F29B130E900D153AF /* AccountViewModel.swift in Sources */,
 				45A34165299EE28200F164CE /* AuthHttpService.swift in Sources */,
+				45C7171C29C63ABE00679626 /* Message.swift in Sources */,
 				4594204129AEF00500A100F1 /* HomePageViewModel.swift in Sources */,
 				45AD934129B130F600D153AF /* AccountView.swift in Sources */,
 				4592E55B29BD35E900FF76E2 /* ChatView.swift in Sources */,
 				4592E55D29BD361200FF76E2 /* ChatViewModel.swift in Sources */,
 				45A34167299EE47200F164CE /* AuthModel.swift in Sources */,
 				45A34169299EE54000F164CE /* HttpRouter.swift in Sources */,
+				45C7172029C63B0E00679626 /* InboxView.swift in Sources */,
 				45518A1829A3ED57006CDB81 /* AuthService.swift in Sources */,
 				458D23CE29A52B5E00205AAE /* TokenResponseModel.swift in Sources */,
 				4594203F29AEEFF400A100F1 /* HomePageView.swift in Sources */,
@@ -386,6 +397,7 @@
 				45AD934329B1AAB800D153AF /* AuthenticationView.swift in Sources */,
 				45A908CD29B0386400792FC2 /* Package.swift in Sources */,
 				45EA727F29B7B74C000FD738 /* PackageView.swift in Sources */,
+				45C7171E29C63AF700679626 /* InboxViewModel.swift in Sources */,
 				45518A1A29A3FC6B006CDB81 /* AuthServiceParser.swift in Sources */,
 				45E5ABDB299D8AC300DFFDC8 /* KobraApp.swift in Sources */,
 			);
