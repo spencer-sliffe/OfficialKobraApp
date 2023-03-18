@@ -9,6 +9,9 @@
 - A mobile application that shares data with "kobracoding.com"
 - Streamline the accessibility of https://kobracoding.com/Market/Market.html and expand its functionality
 - Kobra Account Database Transaction capablity on website and app
+- Allow Kobra users to connect and communicate through chat
+- Expand marketplace and allow users to sell hardware and software/solutions to eachother (similar to facebook marketplace but focused)
+- Forums of communities surrounding the topics I care about: Computers, Software, Coding, Music, American Sports, Video Games, World News, Celebrities
 
 # Functionality 
 
@@ -31,3 +34,9 @@
 
 - Xcode
 - TextMate
+
+# Package Subscriptions
+- Premium: $4.99
+- Gold: $499.99
+- Platinum: $799.99
+- Diamond: $1249.99
