@@ -3,16 +3,23 @@
 //  Kobra
 //
 //  Created by Spencer Sliffe on 3/11/23.
-//
+
 import SwiftUI
 import Combine
+import Firebase
+import FirebaseFirestore
+import Foundation
 
 struct ChatView: View {
-    @ObservedObject var viewModel = ChatViewModel()
+    @ObservedObject var viewModel: ChatViewModel
     @State private var chatInput = ""
     @State private var keyboardHeight: CGFloat = 0
     @State private var showSearchBar = false
     @State private var searchButtonLabel = "Cancel"
+    @Environment(\.presentationMode) var presentationMode
+    init(chat: Chat) {
+            viewModel = ChatViewModel(chat: chat)
+        }
 
     var body: some View {
         ZStack {
@@ -24,130 +31,63 @@ struct ChatView: View {
             .edgesIgnoringSafeArea(.all)
 
             VStack {
-                HStack {
-                    Spacer()
-                    if !showSearchBar {
-                        Button(action: {
-                            self.showSearchBar.toggle()
-                        }) {
-                            Image(systemName: "plus")
-                                .font(.title)
-                                .padding(.top, 0)
-                                .padding(.horizontal)
-                        }
-                    } else if showSearchBar {
-                        TextField("Search for other app users by email", text: $viewModel.searchQuery)
-                            .background(Color.white.opacity(0.5))
-                            .padding(.top, 0.1)
-                            .padding(.horizontal, 5)
-                            .font(.headline)
-                        if !viewModel.searchQuery.isValidEmail()    {
-                            Button(action:{self.showSearchBar.toggle()}) {Text("Cancel")}.padding(.horizontal, 10)
-                        }
-                        else if viewModel.searchQuery.isValidEmail() {
-                            Button(action:{viewModel.searchUsers(email: viewModel.searchQuery)}) {Text("Search")}.padding(.horizontal, 10)
+                ScrollView {
+                    LazyVStack(alignment: .leading, spacing: 10) {
+                        ForEach(viewModel.messages, id: \.self) { message in
+                            MessageRow(message: message, isFromCurrentUser: message.sender == Auth.auth().currentUser?.email)
                         }
                     }
-                }
-                
-                List(viewModel.messages ?? [], id: \.self) { message in
-                    Text(message)
-                }
-                
-                Spacer()
-                
-                HStack {
-                    TextField("Message...", text: $chatInput)
-                        .padding(.horizontal, 10)
+                    .padding(.horizontal)
+                    .padding(.top)
+
+                    GeometryReader { geometry in
+                        HStack {
+                            TextField("Message...", text: $chatInput)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .frame(height: 40)
+
+                            Button(action: {
+                                viewModel.sendMessage(chatInput)
+                                chatInput = ""
+                            }) {
+                                Text("Send")
+                            }
+                            .padding(.horizontal)
+                            .frame(height: 40)
+                            .background(Color(.systemGray6))
+                            .cornerRadius(10)
+                            .disabled(chatInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                        }
+                        .frame(width: geometry.size.width, height: 40)
+                        .padding(.horizontal)
+                        .padding(.bottom, keyboardHeight)
                         .background(Color.white)
-                        .cornerRadius(20)
-                    
-                    Button(action: sendMessage) {
-                        Text("Send")
-                            .fontWeight(.semibold)
-                            .foregroundColor(.purple)
                     }
                 }
                 .padding(.horizontal)
-                .padding(.bottom, keyboardHeight)
-                
+
+                Spacer()
             }
         }
-        
-        .onTapGesture {
-            self.showSearchBar = false
-            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-        }
-        .onReceive(viewModel.$searchQuery) { _ in
-            self.searchButtonLabel = viewModel.searchQuery.isEmpty ? "Cancel" : "Search"
-        }
-        .onReceive(Publishers.keyboardHeight) {
-            self.keyboardHeight = $0
-        }
+        .navigationBarTitle(viewModel.chat.otherParticipantEmail(for: Auth.auth().currentUser?.email ?? ""), displayMode: .inline)
         .onAppear {
             viewModel.fetchMessages()
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { (notification) in
+                let value = notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
+                if let safeAreaBottom = UIApplication.shared.windows.first?.safeAreaInsets.bottom {
+                    keyboardHeight = value.height - safeAreaBottom
+                } else {
+                    keyboardHeight = value.height
+                }
+            }
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { (_) in
+                keyboardHeight = 0
+            }
         }
-    }
-    
-    private func sendMessage() {
-        viewModel.sendMessage(chatInput)
-        chatInput = ""
-    }
-}
-
-
-
-
-struct ChatView_Previews: PreviewProvider {
-    static var previews: some View {
-        ChatView()
-    }
-}
-
-extension String {
-    func isValidEmail() -> Bool {
-        // Split the email address into two parts: the username and domain name
-        let emailParts = self.split(separator: "@")
-        
-        // Make sure there are exactly two parts
-        guard emailParts.count == 2 else { return false }
-        
-        // Make sure the username part is not empty
-        let username = emailParts[0]
-        guard !username.isEmpty else { return false }
-        
-        // Make sure the domain name part is not empty
-        let domainName = emailParts[1]
-        guard !domainName.isEmpty else { return false }
-        
-        // Make sure the domain name part contains at least one period
-        let domainNameParts = domainName.split(separator: ".")
-        guard domainNameParts.count > 1 else { return false }
-        
-        // Make sure each part of the domain name is not empty
-        for domainNamePart in domainNameParts {
-            guard !domainNamePart.isEmpty else { return false }
+        .onDisappear {
+            viewModel.chatListener?.remove()
+            NotificationCenter.default.removeObserver(self)
         }
-        
-        // If all the checks pass, the email is valid
-        return true
-    }
-}
-
-extension Notification {
-    var keyboardHeight: CGFloat {
-        return (userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect)?.height ?? 0
-    }
-}
-
-extension Publishers {
-    static var keyboardHeight: AnyPublisher<CGFloat, Never> {
-        let willShow = NotificationCenter.default.publisher(for: UIApplication.keyboardWillShowNotification)
-            .map { $0.keyboardHeight }
-        let willHide = NotificationCenter.default.publisher(for: UIApplication.keyboardWillHideNotification)
-            .map { _ in CGFloat(0) }
-        return MergeMany(willShow, willHide)
-            .eraseToAnyPublisher()
     }
 }
 

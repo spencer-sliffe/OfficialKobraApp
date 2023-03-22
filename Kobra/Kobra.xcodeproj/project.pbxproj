@@ -30,9 +30,10 @@
 		45AD933F29B130E900D153AF /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD933E29B130E900D153AF /* AccountViewModel.swift */; };
 		45AD934129B130F600D153AF /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD934029B130F600D153AF /* AccountView.swift */; };
 		45AD934329B1AAB800D153AF /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD934229B1AAB800D153AF /* AuthenticationView.swift */; };
-		45C7171C29C63ABE00679626 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C7171B29C63ABE00679626 /* Message.swift */; };
+		45C7171C29C63ABE00679626 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C7171B29C63ABE00679626 /* ChatMessage.swift */; };
 		45C7171E29C63AF700679626 /* InboxViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C7171D29C63AF700679626 /* InboxViewModel.swift */; };
 		45C7172029C63B0E00679626 /* InboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C7171F29C63B0E00679626 /* InboxView.swift */; };
+		45C7172229C654DC00679626 /* FireStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C7172129C654DC00679626 /* FireStoreManager.swift */; };
 		45CFE93629C04EF6003806D5 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CFE93529C04EF6003806D5 /* Chat.swift */; };
 		45E5ABDB299D8AC300DFFDC8 /* KobraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E5ABDA299D8AC300DFFDC8 /* KobraApp.swift */; };
 		45E5ABDF299D8AC500DFFDC8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45E5ABDE299D8AC500DFFDC8 /* Assets.xcassets */; };
@@ -73,9 +74,10 @@
 		45AD933E29B130E900D153AF /* AccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewModel.swift; sourceTree = "<group>"; };
 		45AD934029B130F600D153AF /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		45AD934229B1AAB800D153AF /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
-		45C7171B29C63ABE00679626 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		45C7171B29C63ABE00679626 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		45C7171D29C63AF700679626 /* InboxViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxViewModel.swift; sourceTree = "<group>"; };
 		45C7171F29C63B0E00679626 /* InboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxView.swift; sourceTree = "<group>"; };
+		45C7172129C654DC00679626 /* FireStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStoreManager.swift; sourceTree = "<group>"; };
 		45CFE93529C04EF6003806D5 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		45E5ABD7299D8AC300DFFDC8 /* Kobra.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kobra.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45E5ABDA299D8AC300DFFDC8 /* KobraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KobraApp.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 			children = (
 				45A908CA29B037FE00792FC2 /* DataManager.swift */,
 				45EC904B29B8217100E0A3A3 /* StorageManager.swift */,
+				45C7172129C654DC00679626 /* FireStoreManager.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -188,7 +191,7 @@
 				45EA728029B7BA5B000FD738 /* Account.swift */,
 				45EC905329B8475900E0A3A3 /* PackageWithImage.swift */,
 				45CFE93529C04EF6003806D5 /* Chat.swift */,
-				45C7171B29C63ABE00679626 /* Message.swift */,
+				45C7171B29C63ABE00679626 /* ChatMessage.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -373,7 +376,7 @@
 				45EA728129B7BA5B000FD738 /* Account.swift in Sources */,
 				45AD933F29B130E900D153AF /* AccountViewModel.swift in Sources */,
 				45A34165299EE28200F164CE /* AuthHttpService.swift in Sources */,
-				45C7171C29C63ABE00679626 /* Message.swift in Sources */,
+				45C7171C29C63ABE00679626 /* ChatMessage.swift in Sources */,
 				4594204129AEF00500A100F1 /* HomePageViewModel.swift in Sources */,
 				45AD934129B130F600D153AF /* AccountView.swift in Sources */,
 				4592E55B29BD35E900FF76E2 /* ChatView.swift in Sources */,
@@ -400,6 +403,7 @@
 				45C7171E29C63AF700679626 /* InboxViewModel.swift in Sources */,
 				45518A1A29A3FC6B006CDB81 /* AuthServiceParser.swift in Sources */,
 				45E5ABDB299D8AC300DFFDC8 /* KobraApp.swift in Sources */,
+				45C7172229C654DC00679626 /* FireStoreManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

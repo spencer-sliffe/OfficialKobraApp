@@ -4,111 +4,96 @@
 //
 //  Created by Spencer SLiffe on 3/11/23.
 //
-import Foundation
-import FirebaseFirestore
 import Firebase
+import FirebaseFirestore
+import SwiftUI
 import Combine
 
-
 protocol ChatDelegate: AnyObject {
-    func startChat(with chat: Chat)
-    func chat(_ chat: Chat, didReceiveNewMessage message: Message)
+    func didUpdateChat(_ chat: Chat)
 }
-
 
 class ChatViewModel: ObservableObject {
     weak var delegate: ChatDelegate?
+    var chat: Chat
+    @Published var messages: [ChatMessage] = []
     @Published var isLoading = false
-    @Published var messages: [String]?
-    @Published var searchResults: [Account]?
-    @Published var searchError: String?
-    @Published var searchQuery = ""
     private var cancellables = Set<AnyCancellable>()
-    private var userID = Auth.auth().currentUser?.uid ?? ""
-
     private let db = Firestore.firestore()
-    private var chatListener: ListenerRegistration?
+    var chatListener: ListenerRegistration?
     
+    init(chat: Chat) {
+        self.chat = chat
+    }
+
     func fetchMessages() {
         isLoading = true
+        chatListener?.remove() // Remove any existing listener
         chatListener = db.collection("chats")
-            .whereField("userID", isEqualTo: userID)
-            .order(by: "timestamp", descending: true)
+            .document(chat.id)
+            .collection("messages")
+            .order(by: "timestamp", descending: false)
             .addSnapshotListener { [weak self] (snapshot, error) in
                 guard let self = self else { return } // make sure self is still available
                 self.isLoading = false
+                print("chats loaded")
                 if let error = error {
                     print(error.localizedDescription)
                     return
                 }
                 if let snapshot = snapshot {
                     self.messages = snapshot.documents.compactMap {
-                        $0.data()["text"] as? String
+                        guard let sender = $0.data()["sender"] as? String,
+                              let text = $0.data()["text"] as? String,
+                              let timestamp = ($0.data()["timestamp"] as? Timestamp)?.dateValue()
+                        else { return nil }
+                        return ChatMessage(id: $0.documentID, sender: sender, text: text, timestamp: timestamp)
                     }
+                    self.delegate?.didUpdateChat(self.chat)
                 }
             }
     }
-    
+
     func sendMessage(_ message: String) {
-        let data: [String: Any] = [
-            "userID" : userID,
+        let messageData = [
+            "sender": Auth.auth().currentUser?.email ?? "",
             "text": message,
-            "timestamp": Timestamp()
-        ]
-        db.collection("chats").addDocument(data: data)
-    }
-    func searchUsers(email: String) {
-        db.collection("accounts")
-            .whereField("email", isEqualTo: email)
-            .getDocuments { [weak self] (querySnapshot, error) in
-                guard let self = self else { return } // make sure self is still available
+            "timestamp": FieldValue.serverTimestamp()
+        ] as [String: Any]
+        db.collection("chats")
+            .document(chat.id)
+            .collection("messages")
+            .addDocument(data: messageData) { (error) in
                 if let error = error {
                     print(error.localizedDescription)
                     return
                 }
-                if let querySnapshot = querySnapshot {
-                    if querySnapshot.documents.isEmpty {
-                        self.searchResults = nil
-                        self.searchError = "No account found with email \(email)"
-                    } else {
-                        self.searchError = nil
-                        self.searchResults = querySnapshot.documents.compactMap {
-                            let data = $0.data()
-                            let id = $0.documentID
-                            let email = data["email"] as? String ?? ""
-                            let subscription = data["subscription"] as? Bool ?? false
-                            let packageData = data["package"] as? [String: Any]
-                            let account = Account(id: id, email: email, subscription: subscription, packageData: packageData)
-                            return account
-                        }
-                    }
-                }
+                self.delegate?.didUpdateChat(self.chat)
             }
-    }
-
-    
-    func startChat(with account: Account) {
-        let document = db.collection("chats").document()
-        let chatId = document.documentID
-        let chatData: [String: Any] = [
-            "id": chatId,
-            "participants": [
-                account.id,
-                Auth.auth().currentUser?.uid ?? ""
-            ]
-        ]
-        document.setData(chatData) { [weak self] error in
-            guard error == nil else {
-                print(error!.localizedDescription)
-                return
-            }
-            let chat = Chat(id: chatId, participants: [account.id, Auth.auth().currentUser?.uid ?? ""])
-            self?.delegate?.startChat(with: chat)
-        }
-    }
-
-    deinit {
-        chatListener?.remove()
     }
 }
 
+struct MessageRow: View {
+    var message: ChatMessage
+    var isFromCurrentUser: Bool
+
+    var body: some View {
+        HStack {
+            if isFromCurrentUser {
+                Spacer()
+                Text(message.text)
+                    .foregroundColor(.white)
+                    .padding(10)
+                    .background(Color.blue)
+                    .cornerRadius(10)
+            } else {
+                Text(message.text)
+                    .foregroundColor(.black)
+                    .padding(10)
+                    .background(Color.gray)
+                    .cornerRadius(10)
+                Spacer()
+            }
+        }
+    }
+}
