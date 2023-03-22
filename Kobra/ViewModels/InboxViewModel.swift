@@ -33,6 +33,7 @@ class InboxViewModel: ObservableObject {
         firestoreManager.observeChats(forUserWithEmail: currentUserEmail)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
+                self.isLoading = false // Set isLoading to false
                 switch completion {
                 case .failure(let error):
                     print("Failed to fetch chats: \(error.localizedDescription)")
@@ -42,7 +43,6 @@ class InboxViewModel: ObservableObject {
             }, receiveValue: { [weak self] chats in
                 print("Received \(chats.count) chats for user with email: \(self?.currentUserEmail ?? "")")
                 self?.chats = chats
-                self?.isLoading = false
             })
             .store(in: &cancellables)
     }

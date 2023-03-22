@@ -72,11 +72,8 @@ struct ChatCell: View {
                 }
             }
             .padding(.vertical, 8)
-            
         }
-        .buttonStyle(PlainButtonStyle())
         .navigationBarTitle("", displayMode: .inline)
-        
     }
 }
 
