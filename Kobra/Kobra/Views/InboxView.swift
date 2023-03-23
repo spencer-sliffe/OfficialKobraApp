@@ -11,6 +11,12 @@ import FirebaseFirestore
 
 struct InboxView: View {
     @ObservedObject var viewModel: InboxViewModel
+    @State private var searchText = ""
+    @State private var userEmail = ""
+    @State private var showingAddChat = false
+    @State private var showAlert = false
+    @State private var alertMessage = ""
+    
     var body: some View {
         ZStack {
             LinearGradient(
@@ -19,40 +25,87 @@ struct InboxView: View {
                 endPoint: .bottomTrailing
             )
             .ignoresSafeArea()
-                if viewModel.isLoading {
-                    ProgressView()
-                } else {
-                    NavigationView {
-                        List(viewModel.chats.filter({ viewModel.searchText.isEmpty ? true : $0.otherParticipantEmail(for: viewModel.currentUserEmail).localizedCaseInsensitiveContains(viewModel.searchText) })) { chat in
+            
+            if viewModel.isLoading {
+                ProgressView()
+            } else {
+                List(viewModel.chats.filter({ searchText.isEmpty ? true : $0.otherParticipantEmail(for: viewModel.currentUserEmail).localizedCaseInsensitiveContains(searchText) })) { chat in
                             NavigationLink(destination: ChatView(chat: chat)) {
-                                ChatCell(chat: chat)
+                                ChatCell(chat: chat, unreadMessageCount: viewModel.unreadMessageCounts[chat.id] ?? 0)
                             }.listRowBackground(Color.clear)
                         }
-                        .listStyle(PlainListStyle())
-                        .searchable(text: $viewModel.searchText, prompt: "Search")
-                        .background(LinearGradient(
-                            gradient: Gradient(colors: [.purple, .blue]),
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        ))
-                        .onAppear {
-                            viewModel.fetchChats()
-                        }
+                .listStyle(PlainListStyle())
+                .background(LinearGradient(
+                    gradient: Gradient(colors: [.purple, .blue]),
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                ))
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .searchable(text: $searchText)
+            }
+
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        showingAddChat.toggle()
+                    }) {
+                        Image(systemName: "plus.circle.fill")
+                            .resizable()
+                            .frame(width: 60, height: 60)
+                            .foregroundColor(.white)
+                            .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 0)
                     }
-                    .foregroundColor(.white)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .navigationBarHidden(true)
-                }
-        } .navigationViewStyle(StackNavigationViewStyle())
+                }.padding()
+            }
+        }
+        .navigationBarHidden(true)
+        .sheet(isPresented: $showingAddChat, content: {
+                    VStack {
+                        TextField("Enter user email", text: $userEmail)
+                            .padding()
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+
+                        Button("Add Chat") {
+                            viewModel.addChat(withUserEmail: userEmail) { result in
+                                switch result {
+                                case .success(_):
+                                    print("Chat added successfully.")
+                                case .failure(let error):
+                                    print("Failed to add chat: \(error.localizedDescription)")
+                                    alertMessage = error.localizedDescription
+                                    showAlert = true
+                                }
+                            }
+                            userEmail = ""
+                            showingAddChat.toggle()
+                        }
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(LinearGradient(
+                        gradient: Gradient(colors: [.purple, .blue]),
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ))
+                    .alert(isPresented: $showAlert, content: {
+                        Alert(title: Text("Error"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+                    })
+        })
     }
 }
 
-
 struct ChatCell: View {
     let chat: Chat
-    
+    let unreadMessageCount: Int
+
     var body: some View {
-        NavigationLink(destination: ChatView(chat: chat)) {
+        HStack {
             VStack(alignment: .leading, spacing: 4) {
                 Text(chat.otherParticipantEmail(for: Auth.auth().currentUser?.email ?? ""))
                     .font(.headline)
@@ -72,12 +125,16 @@ struct ChatCell: View {
                 }
             }
             .padding(.vertical, 8)
+
+            if unreadMessageCount > 0 {
+                Circle()
+                    .fill(Color.red)
+                    .frame(width: 20, height: 20)
+                    .overlay(Text("\(unreadMessageCount)").foregroundColor(.white).font(.system(size: 12)))
+            }
         }
-        .navigationBarTitle("", displayMode: .inline)
     }
 }
-
-
 
 struct InboxView_Previews: PreviewProvider {
     static var previews: some View {

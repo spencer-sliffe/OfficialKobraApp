@@ -7,6 +7,8 @@
 
 import SwiftUI
 import Firebase
+import SwiftUI
+import Firebase
 
 struct HomePageView: View {
     @State private var selectedTab = "account"
@@ -32,9 +34,7 @@ struct HomePageView: View {
                                 .tag("inbox")
                     }
                     .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                    .navigationBarHidden(true)
-
-
+                    
                     Spacer()
 
                     HStack(spacing: 0) {
@@ -77,8 +77,8 @@ struct HomePageView: View {
                     }
                     .padding(.horizontal)
                 }
-            }.navigationTitle(selectedTab.capitalized)
-            
+            }
+            .navigationBarHidden(selectedTab != "inbox")
         }
     }
 }
@@ -88,5 +88,4 @@ struct HomePageView_Previews: PreviewProvider {
         HomePageView()
     }
 }
-
 

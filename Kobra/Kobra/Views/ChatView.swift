@@ -18,9 +18,9 @@ struct ChatView: View {
     @State private var searchButtonLabel = "Cancel"
     @Environment(\.presentationMode) var presentationMode
     init(chat: Chat) {
-            viewModel = ChatViewModel(chat: chat)
-        }
-
+        viewModel = ChatViewModel(chat: chat)
+    }
+    
     var body: some View {
         ZStack {
             LinearGradient(
@@ -29,44 +29,44 @@ struct ChatView: View {
                 endPoint: .bottomTrailing
             )
             .edgesIgnoringSafeArea(.all)
-
+            
             VStack {
-                ScrollView {
-                    LazyVStack(alignment: .leading, spacing: 10) {
-                        ForEach(viewModel.messages, id: \.self) { message in
-                            MessageRow(message: message, isFromCurrentUser: message.sender == Auth.auth().currentUser?.email)
+                GeometryReader { geometry in
+                    ScrollView {
+                        LazyVStack(alignment: .leading, spacing: 10) {
+                            ForEach(viewModel.messages, id: \.self) { message in
+                                MessageRow(message: message, isFromCurrentUser: message.sender == Auth.auth().currentUser?.email)
+                            }
                         }
+                        .padding(.horizontal)
+                        .padding(.top)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding(.bottom, keyboardHeight + 50) // Padding to accommodate the input field
+                }
+                
+                VStack {
+                    HStack {
+                        TextField("Message...", text: $chatInput)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .frame(height: 40)
+                        
+                        Button(action: {
+                            viewModel.sendMessage(chatInput)
+                            chatInput = ""
+                        }) {
+                            Text("Send")
+                        }
+                        .padding(.horizontal)
+                        .frame(height: 40)
+                        .background(Color(.systemGray6))
+                        .cornerRadius(10)
+                        .disabled(chatInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                     }
                     .padding(.horizontal)
-                    .padding(.top)
-
-                    GeometryReader { geometry in
-                        HStack {
-                            TextField("Message...", text: $chatInput)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                                .frame(height: 40)
-
-                            Button(action: {
-                                viewModel.sendMessage(chatInput)
-                                chatInput = ""
-                            }) {
-                                Text("Send")
-                            }
-                            .padding(.horizontal)
-                            .frame(height: 40)
-                            .background(Color(.systemGray6))
-                            .cornerRadius(10)
-                            .disabled(chatInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
-                        }
-                        .frame(width: geometry.size.width, height: 40)
-                        .padding(.horizontal)
-                        .padding(.bottom, keyboardHeight)
-                        .background(Color.white)
-                    }
+                    .padding(.bottom, keyboardHeight)
+                    .background(Color.white)
                 }
-                .padding(.horizontal)
-
-                Spacer()
             }
         }
         .navigationBarTitle(viewModel.chat.otherParticipantEmail(for: Auth.auth().currentUser?.email ?? ""), displayMode: .inline)

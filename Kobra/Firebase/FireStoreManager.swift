@@ -69,9 +69,12 @@ class FirestoreManager {
                     }
                     subject.send(chats)
                 }
+                
+                subject.send(completion: .finished) // send completion signal when listener is done
             }
         return subject.eraseToAnyPublisher()
     }
+
 
         func createChat(withUserWithEmail userEmail: String, currentUserEmail: String, completion: @escaping (Result<Chat, Error>) -> Void) {
             let chatRef = db.collection("chats").document()
