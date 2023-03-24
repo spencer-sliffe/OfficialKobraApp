@@ -34,7 +34,6 @@ struct InboxView: View {
                         ChatCell(chat: chat, unreadMessageCount: viewModel.unreadMessageCounts[chat.id] ?? 0)
                     }
                     .listRowBackground(Color.clear)
-                    .listRowInsets(EdgeInsets())
                 }
                 .listStyle(PlainListStyle())
                 .background(LinearGradient(
