@@ -9,7 +9,9 @@ import Firebase
 
 struct AccountView: View {
     @ObservedObject var viewModel = AccountViewModel()
-
+    @State var isLoggedOut = false
+    @StateObject var authViewModel: AuthenticationViewModel
+    
     var body: some View {
         ZStack {
             LinearGradient(
@@ -81,17 +83,23 @@ struct AccountView: View {
                         .foregroundColor(.white)
                 }
                 Spacer()
-            }
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarTitle("Account")
+                Button(action: {
+                               authViewModel.signOut() // Call the signOut method on the injected view model
+                           }) {
+                               Text("Logout")
+                                   .font(.headline)
+                                   .foregroundColor(.white)
+                           }
+                           .padding()
+                           .onReceive(authViewModel.signedOut) { _ in
+                               // Navigate to the AuthenticationView when the user signs out
+                               isLoggedOut = true
+                           }
+                           .fullScreenCover(isPresented: $isLoggedOut) {
+                               AuthenticationView(authViewModel: authViewModel)
+                           }
+                       }
         }
     }
 }
 
-struct AccountView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            AccountView()
-        }
-    }
-}

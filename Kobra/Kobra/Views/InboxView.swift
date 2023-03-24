@@ -30,10 +30,12 @@ struct InboxView: View {
                 ProgressView()
             } else {
                 List(viewModel.chats.filter({ searchText.isEmpty ? true : $0.otherParticipantEmail(for: viewModel.currentUserEmail).localizedCaseInsensitiveContains(searchText) })) { chat in
-                            NavigationLink(destination: ChatView(chat: chat)) {
-                                ChatCell(chat: chat, unreadMessageCount: viewModel.unreadMessageCounts[chat.id] ?? 0)
-                            }.listRowBackground(Color.clear)
-                        }
+                    NavigationLink(destination: ChatView(chat: chat)) {
+                        ChatCell(chat: chat, unreadMessageCount: viewModel.unreadMessageCounts[chat.id] ?? 0)
+                    }
+                    .listRowBackground(Color.clear)
+                    .listRowInsets(EdgeInsets())
+                }
                 .listStyle(PlainListStyle())
                 .background(LinearGradient(
                     gradient: Gradient(colors: [.purple, .blue]),
@@ -44,7 +46,7 @@ struct InboxView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .searchable(text: $searchText)
             }
-
+            
             VStack {
                 Spacer()
                 HStack {
@@ -63,39 +65,39 @@ struct InboxView: View {
         }
         .navigationBarHidden(true)
         .sheet(isPresented: $showingAddChat, content: {
-                    VStack {
-                        TextField("Enter user email", text: $userEmail)
-                            .padding()
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-
-                        Button("Add Chat") {
-                            viewModel.addChat(withUserEmail: userEmail) { result in
-                                switch result {
-                                case .success(_):
-                                    print("Chat added successfully.")
-                                case .failure(let error):
-                                    print("Failed to add chat: \(error.localizedDescription)")
-                                    alertMessage = error.localizedDescription
-                                    showAlert = true
-                                }
-                            }
-                            userEmail = ""
-                            showingAddChat.toggle()
+            VStack {
+                TextField("Enter user email", text: $userEmail)
+                    .padding()
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                
+                Button("Add Chat") {
+                    viewModel.addChat(withUserEmail: userEmail) { result in
+                        switch result {
+                        case .success(_):
+                            print("Chat added successfully.")
+                        case .failure(let error):
+                            print("Failed to add chat: \(error.localizedDescription)")
+                            alertMessage = error.localizedDescription
+                            showAlert = true
                         }
-                        .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
                     }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(LinearGradient(
-                        gradient: Gradient(colors: [.purple, .blue]),
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    ))
-                    .alert(isPresented: $showAlert, content: {
-                        Alert(title: Text("Error"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
-                    })
+                    userEmail = ""
+                    showingAddChat.toggle()
+                }
+                .padding()
+                .background(Color.blue)
+                .foregroundColor(.white)
+                .cornerRadius(8)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(LinearGradient(
+                gradient: Gradient(colors: [.purple, .blue]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            ))
+            .alert(isPresented: $showAlert, content: {
+                Alert(title: Text("Error"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+            })
         })
     }
 }
@@ -103,7 +105,7 @@ struct InboxView: View {
 struct ChatCell: View {
     let chat: Chat
     let unreadMessageCount: Int
-
+    
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
@@ -125,7 +127,7 @@ struct ChatCell: View {
                 }
             }
             .padding(.vertical, 8)
-
+            
             if unreadMessageCount > 0 {
                 Circle()
                     .fill(Color.red)

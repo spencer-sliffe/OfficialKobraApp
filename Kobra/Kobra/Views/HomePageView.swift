@@ -14,7 +14,9 @@ struct HomePageView: View {
     @State private var selectedTab = "account"
     @State private var totalUnreadMessages = 0
     @ObservedObject var inboxViewModel = InboxViewModel()
-    
+    @State private var isSignedIn = true
+    @StateObject private var authViewModel = AuthenticationViewModel()
+
     var body: some View {
         NavigationView {
             ZStack {
@@ -26,17 +28,16 @@ struct HomePageView: View {
                 .ignoresSafeArea()
                 
                 VStack(spacing: 0) {
-                    Spacer()
-                    TabView(selection: $selectedTab) {
-                        AccountView()
-                            .tag("account")
-                        PackageView()
-                            .tag("package")
-                        InboxView(viewModel: InboxViewModel())
-                            .tag("inbox")
-                    }
-                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                    
+                                   Spacer()
+                                   TabView(selection: $selectedTab) {
+                                       AccountView(authViewModel: authViewModel) // Pass the view model down to the AccountView
+                                           .tag("account")
+                                       PackageView()
+                                           .tag("package")
+                                       InboxView(viewModel: InboxViewModel())
+                                           .tag("inbox")
+                                   }
+                                   .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                     Spacer()
                     
                     HStack(spacing: 0) {
@@ -92,6 +93,11 @@ struct HomePageView: View {
                 }
             }
             .navigationBarHidden(selectedTab != "inbox")
+            .onChange(of: isSignedIn) { signedIn in
+            if !signedIn {
+                selectedTab = "account"
+                }
+            }
         }
     }
 }

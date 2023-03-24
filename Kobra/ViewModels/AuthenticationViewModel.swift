@@ -8,6 +8,7 @@
 import Foundation
 import Firebase
 import FirebaseFirestore
+import Combine
 
 class AuthenticationViewModel: ObservableObject {
     
@@ -20,6 +21,17 @@ class AuthenticationViewModel: ObservableObject {
     @Published var errorMessage = ""
     @Published var isAuthenticated = false
     @Published var user: User?
+    
+    let signedOut = PassthroughSubject<Void, Never>()
+
+       func signOut() {
+           do {
+               try Auth.auth().signOut()
+               signedOut.send()
+           } catch {
+               print("Error signing out: \(error.localizedDescription)")
+           }
+       }
     
     private var handle: AuthStateDidChangeListenerHandle?
     
