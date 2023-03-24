@@ -4,7 +4,6 @@
 //
 //  Created by Spencer Sliffe on 3/7/23.
 //
-
 import Foundation
 
 struct Account {
@@ -12,8 +11,9 @@ struct Account {
     var email: String
     var subscription: Bool
     var package: Package?
+    var profilePicture: URL?
 
-    init(id: String, email: String, subscription: Bool, packageData: [String: Any]?) {
+    init(id: String, email: String, subscription: Bool, packageData: [String: Any]?, profilePicture: String?) {
         self.id = id
         self.email = email
         self.subscription = subscription
@@ -27,5 +27,6 @@ struct Account {
             }
             return Package(id: id, name: name, price: price)
         }
+        self.profilePicture = profilePicture.flatMap { URL(string: $0) }
     }
 }

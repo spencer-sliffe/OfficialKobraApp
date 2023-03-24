@@ -4,13 +4,12 @@
 //
 //  Created by Spencer Sliffe on 2/28/23.
 //
-
 import SwiftUI
 import Firebase
 
 struct AccountView: View {
     @ObservedObject var viewModel = AccountViewModel()
-    
+
     var body: some View {
         ZStack {
             LinearGradient(
@@ -24,29 +23,75 @@ struct AccountView: View {
                 if viewModel.isLoading {
                     ProgressView()
                 } else if let account = viewModel.account {
-                    Text("Welcome Back \(account.email)")
-                        .font(.largeTitle)
-                    if let package = account.package {
-                        Text("Current Subscription: \(package.name)")
-                        Text("Price: \(package.price)")
+                    let emailComponents = account.email.split(separator: "@")
+                    let displayName = String(emailComponents[0]).uppercased()
+                    
+                    if let profilePicture = account.profilePicture {
+                        AsyncImage(url: profilePicture) { image in
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 120, height: 120)
+                                .clipShape(Circle())
+                        } placeholder: {
+                            Image(systemName: "person.circle.fill")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .foregroundColor(.gray)
+                                .frame(width: 120, height: 120)
+                                .clipShape(Circle())
+                        }
+                        .padding(.bottom, 20)
                     } else {
-                        Text("Current Subscription: none")
+                        Image(systemName: "person.circle.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundColor(.gray)
+                            .frame(width: 120, height: 120)
+                            .clipShape(Circle())
+                            .padding(.bottom, 20)
+                    }
+                    
+                    Text(displayName)
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                    
+                    if let package = account.package {
+                        VStack(spacing: 20) {
+                            Text("Current Subscription:")
+                                .font(.headline)
+                            HStack {
+                                Text(package.name)
+                                    .font(.title2)
+                                Spacer()
+                                Text("$\(package.price, specifier: "%.2f")/month")
+                                    .font(.title2)
+                            }
+                            .padding(.horizontal)
+                        }
+                        .foregroundColor(.white)
+                    } else {
+                        Text("Current Subscription: None")
+                            .font(.headline)
+                            .foregroundColor(.white)
                     }
                 } else {
                     Text("Failed to fetch account data")
+                        .foregroundColor(.white)
                 }
+                Spacer()
             }
-            .foregroundColor(.white)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .navigationBarHidden(true)
-            .navigationBarTitle("")
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarTitle("Account")
         }
     }
 }
 
-
 struct AccountView_Previews: PreviewProvider {
     static var previews: some View {
-        AccountView()
+        NavigationView {
+            AccountView()
+        }
     }
 }

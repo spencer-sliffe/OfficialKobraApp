@@ -3,7 +3,6 @@
 //  Kobra
 //
 //  Created by Spencer Sliffe on 3/11/23.
-
 import SwiftUI
 import Combine
 import Firebase
@@ -17,6 +16,7 @@ struct ChatView: View {
     @State private var showSearchBar = false
     @State private var searchButtonLabel = "Cancel"
     @Environment(\.presentationMode) var presentationMode
+    
     init(chat: Chat) {
         viewModel = ChatViewModel(chat: chat)
     }
@@ -74,7 +74,8 @@ struct ChatView: View {
             viewModel.fetchMessages()
             NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { (notification) in
                 let value = notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
-                if let safeAreaBottom = UIApplication.shared.windows.first?.safeAreaInsets.bottom {
+                if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                    let safeAreaBottom = scene.windows.first?.safeAreaInsets.bottom ?? 0
                     keyboardHeight = value.height - safeAreaBottom
                 } else {
                     keyboardHeight = value.height
@@ -90,4 +91,3 @@ struct ChatView: View {
         }
     }
 }
-
