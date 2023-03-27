@@ -7,16 +7,14 @@
 
 import SwiftUI
 import Firebase
-import SwiftUI
-import Firebase
 
 struct HomePageView: View {
-    @State private var selectedTab = "account"
+    @State private var selectedTab = "home"
     @State private var totalUnreadMessages = 0
     @ObservedObject var inboxViewModel = InboxViewModel()
     @State private var isSignedIn = true
     @StateObject private var authViewModel = AuthenticationViewModel()
-
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -28,16 +26,23 @@ struct HomePageView: View {
                 .ignoresSafeArea()
                 
                 VStack(spacing: 0) {
-                                   Spacer()
-                                   TabView(selection: $selectedTab) {
-                                       AccountView(authViewModel: authViewModel) // Pass the view model down to the AccountView
-                                           .tag("account")
-                                       PackageView()
-                                           .tag("package")
-                                       InboxView(viewModel: InboxViewModel())
-                                           .tag("inbox")
-                                   }
-                                   .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                    Spacer()
+                    TabView(selection: $selectedTab) {
+                        AccountView(authViewModel: authViewModel) // Pass the view model down to the AccountView
+                            .tag("account")
+                        InboxView(viewModel: InboxViewModel())
+                            .tag("inbox")
+                        KobraView()
+                            .tag("home")
+                        MarketPlaceView()
+                            .tag("market")
+                        PackageView()
+                            .tag("package")
+                        
+                    }
+                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                    
+                    Spacer()
                     Spacer()
                     
                     HStack(spacing: 0) {
@@ -46,24 +51,10 @@ struct HomePageView: View {
                         }) {
                             VStack {
                                 Image(systemName: "person.crop.circle.fill")
-                                    .font(.system(size: 30))
-                                Text("Account")
+                                    .font(.system(size: selectedTab == "account" ? 35 : 30))
                             }
                         }
                         .foregroundColor(selectedTab == "account" ? .white : .gray)
-                        
-                        Spacer()
-                        
-                        Button(action: {
-                            selectedTab = "package"
-                        }) {
-                            VStack {
-                                Image(systemName: "shippingbox.fill")
-                                    .font(.system(size: 30))
-                                Text("Package")
-                            }
-                        }
-                        .foregroundColor(selectedTab == "package" ? .white : .gray)
                         
                         Spacer()
                         
@@ -74,8 +65,7 @@ struct HomePageView: View {
                             ZStack {
                                 VStack {
                                     Image(systemName: "message.fill")
-                                        .font(.system(size: 30))
-                                    Text("Chat")
+                                        .font(.system(size: selectedTab == "inbox" ? 35 : 30))
                                 }
                                 if totalUnreadMessages > 0 {
                                     Circle()
@@ -87,15 +77,54 @@ struct HomePageView: View {
                             }
                         }
                         .foregroundColor(selectedTab == "inbox" ? .white : .gray)
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            selectedTab = "home"
+                        }) {
+                            VStack {
+                                Image(selectedTab == "home" ? "home" : "home2")
+                                    .resizable()
+                                    .frame(width: selectedTab == "home" ? 50 : 50, height: selectedTab == "home" ? 50 : 50)
+                            }
+                        }
+                        .foregroundColor(selectedTab == "home" ? .white : .gray)
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            selectedTab = "market"
+                        }) {
+                            VStack {
+                                Image(systemName: "cart.fill")
+                                    .font(.system(size: selectedTab == "market" ? 35 : 30))
+                            }
+                        }
+                        .foregroundColor(selectedTab == "market" ? .white : .gray)
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            selectedTab = "package"
+                        }) {
+                            VStack {
+                                Image(systemName: "shippingbox.fill")
+                                    .font(.system(size: selectedTab == "package" ? 35 : 30))
+                            }
+                        }
+                        .foregroundColor(selectedTab == "package" ? .white : .gray)
+                        
                     }
                     .padding(.horizontal)
+                    .ignoresSafeArea()
                     
                 }
             }
             .navigationBarHidden(selectedTab != "inbox")
             .onChange(of: isSignedIn) { signedIn in
-            if !signedIn {
-                selectedTab = "account"
+                if !signedIn {
+                    selectedTab = "account"
                 }
             }
         }

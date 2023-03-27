@@ -4,10 +4,9 @@
 //
 //  Created by Spencer SLiffe on 3/11/23.
 //
-import Firebase
-import FirebaseFirestore
 import SwiftUI
 import Combine
+import Firebase
 
 protocol ChatDelegate: AnyObject {
     func didUpdateChat(_ chat: Chat)
@@ -19,7 +18,7 @@ class ChatViewModel: ObservableObject {
     @Published var messages: [ChatMessage] = []
     @Published var isLoading = false
     private var cancellables = Set<AnyCancellable>()
-    private let db = Firestore.firestore()
+    private let firestoreManager = FirestoreManager.shared
     var chatListener: ListenerRegistration?
     
     init(chat: Chat) {
@@ -29,47 +28,30 @@ class ChatViewModel: ObservableObject {
     func fetchMessages() {
         isLoading = true
         chatListener?.remove() // Remove any existing listener
-        chatListener = db.collection("chats")
-            .document(chat.id)
-            .collection("messages")
-            .order(by: "timestamp", descending: false)
-            .addSnapshotListener { [weak self] (snapshot, error) in
-                guard let self = self else { return } // make sure self is still available
-                self.isLoading = false
-                print("chats loaded")
-                if let error = error {
-                    print(error.localizedDescription)
-                    return
-                }
-                if let snapshot = snapshot {
-                    self.messages = snapshot.documents.compactMap {
-                        guard let sender = $0.data()["sender"] as? String,
-                              let text = $0.data()["text"] as? String,
-                              let timestamp = ($0.data()["timestamp"] as? Timestamp)?.dateValue()
-                        else { return nil }
-                        return ChatMessage(id: $0.documentID, sender: sender, text: text, timestamp: timestamp)
-                    }
-                    self.delegate?.didUpdateChat(self.chat)
-                }
+        chatListener = firestoreManager.observeMessages(forChat: chat) { [weak self] result in
+            guard let self = self else { return } // make sure self is still available
+            self.isLoading = false
+            switch result {
+            case .success(let messages):
+                self.messages = messages
+                self.delegate?.didUpdateChat(self.chat)
+            case .failure(let error):
+                print(error.localizedDescription)
             }
+        }
     }
 
     func sendMessage(_ message: String) {
-        let messageData = [
-            "sender": Auth.auth().currentUser?.email ?? "",
-            "text": message,
-            "timestamp": FieldValue.serverTimestamp()
-        ] as [String: Any]
-        db.collection("chats")
-            .document(chat.id)
-            .collection("messages")
-            .addDocument(data: messageData) { (error) in
-                if let error = error {
-                    print(error.localizedDescription)
-                    return
-                }
+        guard let currentUserEmail = Auth.auth().currentUser?.email else {
+            return
+        }
+        firestoreManager.sendMessage(chatId: chat.id, message: message, sender: currentUserEmail) { error in
+            if let error = error {
+                print(error.localizedDescription)
+            } else {
                 self.delegate?.didUpdateChat(self.chat)
             }
+        }
     }
 }
 

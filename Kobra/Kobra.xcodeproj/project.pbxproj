@@ -8,9 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		4528556229B1AED800F088CD /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4528556129B1AED800F088CD /* AuthenticationViewModel.swift */; };
-		45518A1629A3ED47006CDB81 /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45518A1529A3ED47006CDB81 /* AuthAPI.swift */; };
-		45518A1829A3ED57006CDB81 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45518A1729A3ED57006CDB81 /* AuthService.swift */; };
-		45518A1A29A3FC6B006CDB81 /* AuthServiceParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45518A1929A3FC6B006CDB81 /* AuthServiceParser.swift */; };
 		458D23CE29A52B5E00205AAE /* TokenResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458D23CD29A52B5E00205AAE /* TokenResponseModel.swift */; };
 		458D23D029A52DBB00205AAE /* SignUpErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458D23CF29A52DBB00205AAE /* SignUpErrorModel.swift */; };
 		459180FE29AECC63000FB066 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 459180FD29AECC63000FB066 /* FirebaseAuth */; };
@@ -20,11 +17,7 @@
 		4592E55D29BD361200FF76E2 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4592E55C29BD361200FF76E2 /* ChatViewModel.swift */; };
 		4594203F29AEEFF400A100F1 /* HomePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4594203E29AEEFF400A100F1 /* HomePageView.swift */; };
 		4594204129AEF00500A100F1 /* HomePageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4594204029AEF00500A100F1 /* HomePageViewModel.swift */; };
-		45A34163299EE27200F164CE /* AuthHttpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A34162299EE27200F164CE /* AuthHttpRouter.swift */; };
-		45A34165299EE28200F164CE /* AuthHttpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A34164299EE28200F164CE /* AuthHttpService.swift */; };
 		45A34167299EE47200F164CE /* AuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A34166299EE47200F164CE /* AuthModel.swift */; };
-		45A34169299EE54000F164CE /* HttpRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A34168299EE54000F164CE /* HttpRouter.swift */; };
-		45A3416B299EE5A800F164CE /* HttpService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A3416A299EE5A800F164CE /* HttpService.swift */; };
 		45A908CB29B037FE00792FC2 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A908CA29B037FE00792FC2 /* DataManager.swift */; };
 		45A908CD29B0386400792FC2 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A908CC29B0386400792FC2 /* Package.swift */; };
 		45AD933F29B130E900D153AF /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD933E29B130E900D153AF /* AccountViewModel.swift */; };
@@ -35,6 +28,8 @@
 		45C7172029C63B0E00679626 /* InboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C7171F29C63B0E00679626 /* InboxView.swift */; };
 		45C7172229C654DC00679626 /* FireStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C7172129C654DC00679626 /* FireStoreManager.swift */; };
 		45CFE93629C04EF6003806D5 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CFE93529C04EF6003806D5 /* Chat.swift */; };
+		45D5110329D0AB9100290720 /* MarketPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D5110229D0AB9100290720 /* MarketPlaceView.swift */; };
+		45D5110529D0ABAF00290720 /* KobraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D5110429D0ABAF00290720 /* KobraView.swift */; };
 		45E5ABDB299D8AC300DFFDC8 /* KobraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E5ABDA299D8AC300DFFDC8 /* KobraApp.swift */; };
 		45E5ABDF299D8AC500DFFDC8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45E5ABDE299D8AC500DFFDC8 /* Assets.xcassets */; };
 		45E5ABE2299D8AC500DFFDC8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45E5ABE1299D8AC500DFFDC8 /* Preview Assets.xcassets */; };
@@ -53,9 +48,6 @@
 		282C022F31C00540FC0513A8 /* Pods-Kobra.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kobra.debug.xcconfig"; path = "Target Support Files/Pods-Kobra/Pods-Kobra.debug.xcconfig"; sourceTree = "<group>"; };
 		4416BB8B9604E5EFA9033790 /* Pods-Kobra.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kobra.release.xcconfig"; path = "Target Support Files/Pods-Kobra/Pods-Kobra.release.xcconfig"; sourceTree = "<group>"; };
 		4528556129B1AED800F088CD /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
-		45518A1529A3ED47006CDB81 /* AuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
-		45518A1729A3ED57006CDB81 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
-		45518A1929A3FC6B006CDB81 /* AuthServiceParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthServiceParser.swift; sourceTree = "<group>"; };
 		458D23CD29A52B5E00205AAE /* TokenResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenResponseModel.swift; sourceTree = "<group>"; };
 		458D23CF29A52DBB00205AAE /* SignUpErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpErrorModel.swift; sourceTree = "<group>"; };
 		4591810129AECFD3000FB066 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -63,11 +55,7 @@
 		4592E55C29BD361200FF76E2 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		4594203E29AEEFF400A100F1 /* HomePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageView.swift; sourceTree = "<group>"; };
 		4594204029AEF00500A100F1 /* HomePageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageViewModel.swift; sourceTree = "<group>"; };
-		45A34162299EE27200F164CE /* AuthHttpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHttpRouter.swift; sourceTree = "<group>"; };
-		45A34164299EE28200F164CE /* AuthHttpService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHttpService.swift; sourceTree = "<group>"; };
 		45A34166299EE47200F164CE /* AuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModel.swift; sourceTree = "<group>"; };
-		45A34168299EE54000F164CE /* HttpRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpRouter.swift; sourceTree = "<group>"; };
-		45A3416A299EE5A800F164CE /* HttpService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpService.swift; sourceTree = "<group>"; };
 		45A908C829B034A300792FC2 /* Kobra.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Kobra.entitlements; sourceTree = "<group>"; };
 		45A908CA29B037FE00792FC2 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		45A908CC29B0386400792FC2 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
@@ -79,6 +67,8 @@
 		45C7171F29C63B0E00679626 /* InboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxView.swift; sourceTree = "<group>"; };
 		45C7172129C654DC00679626 /* FireStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStoreManager.swift; sourceTree = "<group>"; };
 		45CFE93529C04EF6003806D5 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
+		45D5110229D0AB9100290720 /* MarketPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketPlaceView.swift; sourceTree = "<group>"; };
+		45D5110429D0ABAF00290720 /* KobraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KobraView.swift; sourceTree = "<group>"; };
 		45E5ABD7299D8AC300DFFDC8 /* Kobra.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kobra.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45E5ABDA299D8AC300DFFDC8 /* KobraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KobraApp.swift; sourceTree = "<group>"; };
 		45E5ABDE299D8AC500DFFDC8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -111,20 +101,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		45A34161299EE25700F164CE /* Service */ = {
-			isa = PBXGroup;
-			children = (
-				45A34162299EE27200F164CE /* AuthHttpRouter.swift */,
-				45A34164299EE28200F164CE /* AuthHttpService.swift */,
-				45A34168299EE54000F164CE /* HttpRouter.swift */,
-				45A3416A299EE5A800F164CE /* HttpService.swift */,
-				45518A1529A3ED47006CDB81 /* AuthAPI.swift */,
-				45518A1729A3ED57006CDB81 /* AuthService.swift */,
-				45518A1929A3FC6B006CDB81 /* AuthServiceParser.swift */,
-			);
-			path = Service;
-			sourceTree = "<group>";
-		};
 		45A908C929B037EA00792FC2 /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
@@ -139,7 +115,6 @@
 			isa = PBXGroup;
 			children = (
 				45A908C929B037EA00792FC2 /* Firebase */,
-				45A34161299EE25700F164CE /* Service */,
 				45E98486299D8BE600B3A56A /* Fonts */,
 				45E98485299D8BB900B3A56A /* ViewModels */,
 				45E98484299D8BAE00B3A56A /* Models */,
@@ -227,6 +202,8 @@
 				45EA727E29B7B74C000FD738 /* PackageView.swift */,
 				4592E55A29BD35E900FF76E2 /* ChatView.swift */,
 				45C7171F29C63B0E00679626 /* InboxView.swift */,
+				45D5110229D0AB9100290720 /* MarketPlaceView.swift */,
+				45D5110429D0ABAF00290720 /* KobraView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -375,25 +352,20 @@
 				45E9848D299D8C7700B3A56A /* ColorCodes.swift in Sources */,
 				45EA728129B7BA5B000FD738 /* Account.swift in Sources */,
 				45AD933F29B130E900D153AF /* AccountViewModel.swift in Sources */,
-				45A34165299EE28200F164CE /* AuthHttpService.swift in Sources */,
 				45C7171C29C63ABE00679626 /* ChatMessage.swift in Sources */,
 				4594204129AEF00500A100F1 /* HomePageViewModel.swift in Sources */,
 				45AD934129B130F600D153AF /* AccountView.swift in Sources */,
 				4592E55B29BD35E900FF76E2 /* ChatView.swift in Sources */,
+				45D5110329D0AB9100290720 /* MarketPlaceView.swift in Sources */,
 				4592E55D29BD361200FF76E2 /* ChatViewModel.swift in Sources */,
 				45A34167299EE47200F164CE /* AuthModel.swift in Sources */,
-				45A34169299EE54000F164CE /* HttpRouter.swift in Sources */,
 				45C7172029C63B0E00679626 /* InboxView.swift in Sources */,
-				45518A1829A3ED57006CDB81 /* AuthService.swift in Sources */,
 				458D23CE29A52B5E00205AAE /* TokenResponseModel.swift in Sources */,
 				4594203F29AEEFF400A100F1 /* HomePageView.swift in Sources */,
 				45EC905429B8475900E0A3A3 /* PackageWithImage.swift in Sources */,
-				45A3416B299EE5A800F164CE /* HttpService.swift in Sources */,
 				45EC905029B8360F00E0A3A3 /* PackageViewModel.swift in Sources */,
 				4528556229B1AED800F088CD /* AuthenticationViewModel.swift in Sources */,
-				45518A1629A3ED47006CDB81 /* AuthAPI.swift in Sources */,
 				45EC904C29B8217100E0A3A3 /* StorageManager.swift in Sources */,
-				45A34163299EE27200F164CE /* AuthHttpRouter.swift in Sources */,
 				458D23D029A52DBB00205AAE /* SignUpErrorModel.swift in Sources */,
 				45CFE93629C04EF6003806D5 /* Chat.swift in Sources */,
 				45A908CB29B037FE00792FC2 /* DataManager.swift in Sources */,
@@ -401,8 +373,8 @@
 				45A908CD29B0386400792FC2 /* Package.swift in Sources */,
 				45EA727F29B7B74C000FD738 /* PackageView.swift in Sources */,
 				45C7171E29C63AF700679626 /* InboxViewModel.swift in Sources */,
-				45518A1A29A3FC6B006CDB81 /* AuthServiceParser.swift in Sources */,
 				45E5ABDB299D8AC300DFFDC8 /* KobraApp.swift in Sources */,
+				45D5110529D0ABAF00290720 /* KobraView.swift in Sources */,
 				45C7172229C654DC00679626 /* FireStoreManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

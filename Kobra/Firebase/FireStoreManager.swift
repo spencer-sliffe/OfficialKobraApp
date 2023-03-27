@@ -37,43 +37,83 @@ class FirestoreManager {
                 }
         }
 
-    func sendMessage(chatId: String, message: String, sender: String, completion: @escaping (Error?) -> Void) {
+    func observeMessages(forChat chat: Chat, completion: @escaping (Result<[ChatMessage], Error>) -> Void) -> ListenerRegistration {
+           return db.collection("chats")
+               .document(chat.id)
+               .collection("messages")
+               .order(by: "timestamp", descending: false)
+               .addSnapshotListener { snapshot, error in
+                   if let error = error {
+                       completion(.failure(error))
+                       return
+                   }
+                   
+                   let messages = snapshot?.documents.compactMap { document -> ChatMessage? in
+                       guard let sender = document.data()["sender"] as? String,
+                             let text = document.data()["text"] as? String,
+                             let timestamp = (document.data()["timestamp"] as? Timestamp)?.dateValue()
+                       else { return nil }
+                       
+                       return ChatMessage(id: document.documentID, sender: sender, text: text, timestamp: timestamp)
+                   } ?? []
+                   
+                   completion(.success(messages))
+               }
+       }
+
+       func sendMessage(chatId: String, message: String, sender: String, completion: @escaping (Error?) -> Void) {
            let messageData = [
                "sender": sender,
                "text": message,
                "timestamp": FieldValue.serverTimestamp()
            ] as [String: Any]
            
-           db.collection("chats")
+           self.db.collection("chats")
                .document(chatId)
                .collection("messages")
                .addDocument(data: messageData) { error in
-                   completion(error)
+                   if let error = error {
+                       completion(error)
+                       return
+                   }
+                   
+                   // Update last message in chat
+                   let chatRef = self.db.collection("chats").document(chatId)
+                   chatRef.updateData([
+                       "lastMessage": messageData
+                   ]) { error in
+                       completion(error)
+                   }
                }
        }
+
     
-    func observeChats(forUserWithEmail userEmail: String) -> AnyPublisher<[Chat], Error> {
-        let subject = PassthroughSubject<[Chat], Error>()
-        
-        db.collection("chats")
-            .whereField("participants", arrayContains: userEmail)
-            .addSnapshotListener { snapshot, error in
-                if let error = error {
-                    subject.send(completion: .failure(error))
-                } else if let snapshot = snapshot {
-                    let chats = snapshot.documents.compactMap { document -> Chat? in
-                        guard let participants = document.data()["participants"] as? [String] else {
-                            return nil
+    func observeChats(forUserWithEmail userEmail: String, completion: @escaping (Result<[Chat], Error>) -> Void) -> ListenerRegistration? {
+            return db.collection("chats")
+                .whereField("participants", arrayContains: userEmail)
+                .addSnapshotListener { snapshot, error in
+                    if let error = error {
+                        completion(.failure(error))
+                    } else if let snapshot = snapshot {
+                        let chats = snapshot.documents.compactMap { document -> Chat? in
+                            guard let participants = document.data()["participants"] as? [String] else {
+                                return nil
+                            }
+                            guard let lastMessageData = document.data()["lastMessage"] as? [String: Any],
+                                  let sender = lastMessageData["sender"] as? String,
+                                  let text = lastMessageData["text"] as? String,
+                                  let timestamp = (lastMessageData["timestamp"] as? Timestamp)?.dateValue()
+                            else {
+                                return nil
+                            }
+                            let lastMessage = ChatMessage(sender: sender, text: text, timestamp: timestamp)
+                            return Chat(id: document.documentID, participants: participants, lastMessage: lastMessage)
                         }
-                        return Chat(id: document.documentID, participants: participants)
+                        
+                        completion(.success(chats))
                     }
-                    subject.send(chats)
                 }
-                
-                subject.send(completion: .finished) // send completion signal when listener is done
-            }
-        return subject.eraseToAnyPublisher()
-    }
+        }
 
 
         func createChat(withUserWithEmail userEmail: String, currentUserEmail: String, completion: @escaping (Result<Chat, Error>) -> Void) {

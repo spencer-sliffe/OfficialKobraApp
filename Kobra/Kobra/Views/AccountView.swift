@@ -84,21 +84,21 @@ struct AccountView: View {
                 }
                 Spacer()
                 Button(action: {
-                               authViewModel.signOut() // Call the signOut method on the injected view model
-                           }) {
-                               Text("Logout")
-                                   .font(.headline)
-                                   .foregroundColor(.white)
-                           }
-                           .padding()
-                           .onReceive(authViewModel.signedOut) { _ in
-                               // Navigate to the AuthenticationView when the user signs out
-                               isLoggedOut = true
-                           }
-                           .fullScreenCover(isPresented: $isLoggedOut) {
-                               AuthenticationView(authViewModel: authViewModel)
-                           }
-                       }
+                    authViewModel.signOut() // Call the signOut method on the injected view model
+                }) {
+                    Text("Logout")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                }
+                .padding()
+                .onReceive(authViewModel.signedOut) { _ in
+                    // Navigate to the AuthenticationView when the user signs out
+                    isLoggedOut = true
+                }
+                .fullScreenCover(isPresented: $isLoggedOut) {
+                    AuthenticationView(authViewModel: authViewModel)
+                }
+            }
         }
     }
 }

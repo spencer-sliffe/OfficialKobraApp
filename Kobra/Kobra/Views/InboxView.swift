@@ -5,6 +5,12 @@
 //  Created by Spencer Sliffe on 3/18/23.
 //
 
+//  InboxView.swift
+//  Kobra
+//
+//  Created by Spencer Sliffe on 3/18/23.
+//
+
 import SwiftUI
 import Firebase
 import FirebaseFirestore
@@ -17,6 +23,14 @@ struct InboxView: View {
     @State private var showAlert = false
     @State private var alertMessage = ""
     
+    var sortedChats: [Chat] {
+        viewModel.chats.sorted { (chat1, chat2) -> Bool in
+            let timestamp1 = chat1.lastMessage?.timestamp ?? Date.distantPast
+            let timestamp2 = chat2.lastMessage?.timestamp ?? Date.distantPast
+            return timestamp1 > timestamp2
+        }
+    }
+
     var body: some View {
         ZStack {
             LinearGradient(
@@ -28,12 +42,18 @@ struct InboxView: View {
             
             if viewModel.isLoading {
                 ProgressView()
+            } else if sortedChats.isEmpty {
+                VStack {
+                    Spacer()
+                    Text("No Chats Currently")
+                        .foregroundColor(.white)
+                        .font(.headline)
+                    Spacer()
+                }
             } else {
-                List(viewModel.chats.filter({ searchText.isEmpty ? true : $0.otherParticipantEmail(for: viewModel.currentUserEmail).localizedCaseInsensitiveContains(searchText) })) { chat in
-                    NavigationLink(destination: ChatView(chat: chat)) {
-                        ChatCell(chat: chat, unreadMessageCount: viewModel.unreadMessageCounts[chat.id] ?? 0)
-                    }
-                    .listRowBackground(Color.clear)
+                List(sortedChats.filter({ searchText.isEmpty ? true : $0.otherParticipantEmail(for: viewModel.currentUserEmail).localizedCaseInsensitiveContains(searchText) })) {
+                    ChatCell(chat: $0, unreadMessageCount: viewModel.unreadMessageCounts[$0.id] ?? 0)
+                        .listRowBackground(Color.clear)
                 }
                 .listStyle(PlainListStyle())
                 .background(LinearGradient(
@@ -104,11 +124,12 @@ struct InboxView: View {
 struct ChatCell: View {
     let chat: Chat
     let unreadMessageCount: Int
-    
     var body: some View {
         HStack {
             VStack(alignment: .leading, spacing: 4) {
-                Text(chat.otherParticipantEmail(for: Auth.auth().currentUser?.email ?? ""))
+                let emailComponents = chat.otherParticipantEmail(for: Auth.auth().currentUser?.email ?? "").split(separator: "@")
+                let displayName = String(emailComponents[0]).uppercased()
+                Text(displayName)
                     .font(.headline)
                 if let lastMessage = chat.lastMessage {
                     HStack(spacing: 4) {
