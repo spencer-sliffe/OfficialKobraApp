@@ -63,27 +63,30 @@ struct MessageRow: View {
         HStack {
             if isFromCurrentUser {
                 Spacer()
-                VStack{
+                VStack(alignment: .trailing) { // Align content to the trailing edge
                     Text(message.text)
                         .foregroundColor(.white)
                         .padding(1)
                         .background(Color.clear)
+                        .multilineTextAlignment(.trailing)
                     Text(message.timestamp, style: .time)
                         .font(.subheadline)
                         .foregroundColor(.gray)
                 }
             } else {
-                VStack{
+                VStack(alignment: .leading) { // Align content to the leading edge
                     Text(message.text)
                         .foregroundColor(.white)
                         .padding(1)
                         .background(Color.clear)
+                        .multilineTextAlignment(.leading)
                     Text(message.timestamp, style: .time)
                         .font(.subheadline)
                         .foregroundColor(.gray)
                 }
                 Spacer()
             }
+
         }
     }
 }

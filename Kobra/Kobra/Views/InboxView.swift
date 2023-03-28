@@ -39,8 +39,8 @@ struct InboxView: View {
                     .padding()
             } else {
                 chatList
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .searchable(text: $searchText)
+                    .padding(.top, -10)
             }
         }
     }
@@ -134,7 +134,7 @@ struct InboxView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(
             LinearGradient(
-                gradient: Gradient(colors: [.purple, .blue]),
+                gradient: Gradient(colors: [.black, .blue]),
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
@@ -157,7 +157,9 @@ struct ChatCell: View {
                         .font(.headline)
                     if let lastMessage = chat.lastMessage {
                         HStack(spacing: 4) {
-                            Text(lastMessage.sender)
+                            let emailComponents2 = lastMessage.sender.split(separator: "@")
+                            let displayName2 = String(emailComponents2[0]).uppercased()
+                            Text(displayName2 + ":")
                                 .font(.subheadline)
                                 .foregroundColor(.gray)
                             Text(lastMessage.text)

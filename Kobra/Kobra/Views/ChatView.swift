@@ -41,7 +41,7 @@ struct ChatView: View {
                         .padding(.top)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .padding(.bottom, keyboardHeight + 80) // Padding to accommodate the input field
+                    .padding(.bottom, keyboardHeight) // Padding to accommodate the input field
                 }
                 
                 VStack {

@@ -118,8 +118,13 @@ class FirestoreManager {
 
         func createChat(withUserWithEmail userEmail: String, currentUserEmail: String, completion: @escaping (Result<Chat, Error>) -> Void) {
             let chatRef = db.collection("chats").document()
+            let messageData = [
+                "sender": currentUserEmail,
+                "text": "",
+                "timestamp": FieldValue.serverTimestamp()
+            ] as [String: Any]
             chatRef.setData([
-                "participants": [userEmail, currentUserEmail],
+                "participants": [userEmail, currentUserEmail], "lastMessage": []
             ]) { error in
                 if let error = error {
                     completion(.failure(error))
