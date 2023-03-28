@@ -6,5 +6,5 @@ target 'Kobra' do
   use_frameworks!
 
   # Pods for Kobra
-pod'Alamofire'
+  pod 'PullToRefresh'
 end

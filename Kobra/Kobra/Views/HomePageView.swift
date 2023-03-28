@@ -19,7 +19,7 @@ struct HomePageView: View {
         NavigationView {
             ZStack {
                 LinearGradient(
-                    gradient: Gradient(colors: [.purple, .blue]),
+                    gradient: Gradient(colors: [.black, .blue]),
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 )

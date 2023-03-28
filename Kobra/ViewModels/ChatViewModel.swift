@@ -63,17 +63,25 @@ struct MessageRow: View {
         HStack {
             if isFromCurrentUser {
                 Spacer()
-                Text(message.text)
-                    .foregroundColor(.white)
-                    .padding(10)
-                    .background(Color.blue)
-                    .cornerRadius(10)
+                VStack{
+                    Text(message.text)
+                        .foregroundColor(.white)
+                        .padding(1)
+                        .background(Color.clear)
+                    Text(message.timestamp, style: .time)
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                }
             } else {
-                Text(message.text)
-                    .foregroundColor(.black)
-                    .padding(10)
-                    .background(Color.gray)
-                    .cornerRadius(10)
+                VStack{
+                    Text(message.text)
+                        .foregroundColor(.white)
+                        .padding(1)
+                        .background(Color.clear)
+                    Text(message.timestamp, style: .time)
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                }
                 Spacer()
             }
         }

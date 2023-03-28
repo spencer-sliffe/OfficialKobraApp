@@ -10,11 +10,6 @@ import FirebaseFirestore
 import Firebase
 import Combine
 
-import Foundation
-import FirebaseFirestore
-import Firebase
-import Combine
-
 class InboxViewModel: ObservableObject {
     @Published var chats: [Chat] = []
     @Published var isLoading = true
@@ -72,13 +67,18 @@ class InboxViewModel: ObservableObject {
         firestoreManager.createChat(withUserWithEmail: userEmail, currentUserEmail: currentUserEmail) { [weak self] result in
             switch result {
             case .success(let chat):
-                self?.chats.append(chat)
+                // Make a copy of the chats array and append the new chat
+                var updatedChats = self?.chats ?? []
+                updatedChats.append(chat)
+                // Assign the updated array back to the original property
+                self?.chats = updatedChats
                 completion(.success(chat))
             case .failure(let error):
                 completion(.failure(error))
             }
         }
     }
+
 
     func observeUnreadMessageCounts(forChats chats: [Chat]) {
         for chat in chats {

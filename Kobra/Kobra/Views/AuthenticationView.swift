@@ -18,7 +18,7 @@ struct AuthenticationView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                LinearGradient(gradient: Gradient(colors: [.purple, .blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                LinearGradient(gradient: Gradient(colors: [.black, .blue]), startPoint: .topLeading, endPoint: .bottomTrailing)
                     .ignoresSafeArea()
                 VStack(spacing: 20) {
                     Image("kobracoding-logo")
@@ -26,6 +26,7 @@ struct AuthenticationView: View {
                         .aspectRatio(contentMode: .fit)
                         .frame(height: UIScreen.main.bounds.height * 0.25)
                         .padding(.top, UIScreen.main.bounds.height * 0.13)
+                        .shadow(color: .blue.opacity(0.2), radius: 10, x: 0, y: 0)
                     
                     VStack {
                         Picker(selection: $selection, label: Text("Sign In or Sign Up")) {
@@ -99,7 +100,7 @@ struct AuthenticationView: View {
                     authViewModel.stopListening()
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(LinearGradient(gradient: Gradient(colors: [.purple, .blue]), startPoint: .topLeading, endPoint: .bottomTrailing))
+                .background(LinearGradient(gradient: Gradient(colors: [.black, .blue]), startPoint: .topLeading, endPoint: .bottomTrailing))
             }
             .navigationBarHidden(true)
             .onReceive(authViewModel.$isAuthenticated) { isAuthenticated in

@@ -20,11 +20,10 @@ struct ChatView: View {
     init(chat: Chat) {
         viewModel = ChatViewModel(chat: chat)
     }
-    
     var body: some View {
         ZStack {
             LinearGradient(
-                gradient: Gradient(colors: [.purple, .blue]),
+                gradient: Gradient(colors: [.black, .blue]),
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
@@ -42,7 +41,7 @@ struct ChatView: View {
                         .padding(.top)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .padding(.bottom, keyboardHeight + 50) // Padding to accommodate the input field
+                    .padding(.bottom, keyboardHeight + 80) // Padding to accommodate the input field
                 }
                 
                 VStack {
@@ -56,6 +55,7 @@ struct ChatView: View {
                             chatInput = ""
                         }) {
                             Text("Send")
+                                .foregroundColor(Color.blue)
                         }
                         .padding(.horizontal)
                         .frame(height: 40)
@@ -65,11 +65,22 @@ struct ChatView: View {
                     }
                     .padding(.horizontal)
                     .padding(.bottom, keyboardHeight)
-                    .background(Color.white)
+                    .background(Color.clear)
                 }
             }
         }
-        .navigationBarTitle(viewModel.chat.otherParticipantEmail(for: Auth.auth().currentUser?.email ?? ""), displayMode: .inline)
+        .navigationBarTitle(Text(viewModel.chat.otherParticipantEmail(for: Auth.auth().currentUser?.email ?? "").split(separator: "@").first?.uppercased() ?? ""), displayMode: .inline)
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading:
+            Button(action: {
+                presentationMode.wrappedValue.dismiss()
+            }) {
+                Image(systemName: "arrow.left")
+                    .resizable()
+                    .frame(width: 20, height: 20)
+            }
+        )
         .onAppear {
             viewModel.fetchMessages()
             NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { (notification) in
@@ -82,7 +93,7 @@ struct ChatView: View {
                 }
             }
             NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { (_) in
-                keyboardHeight = 0
+                keyboardHeight = 50
             }
         }
         .onDisappear {
@@ -90,4 +101,5 @@ struct ChatView: View {
             NotificationCenter.default.removeObserver(self)
         }
     }
+
 }

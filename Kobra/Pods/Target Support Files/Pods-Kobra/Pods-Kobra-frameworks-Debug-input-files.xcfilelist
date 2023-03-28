@@ -1,2 +1,2 @@
 ${PODS_ROOT}/Target Support Files/Pods-Kobra/Pods-Kobra-frameworks.sh
-${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework
+${BUILT_PRODUCTS_DIR}/PullToRefresh/PullToRefresh.framework

@@ -14,13 +14,6 @@ struct AccountView: View {
     
     var body: some View {
         ZStack {
-            LinearGradient(
-                gradient: Gradient(colors: [.purple, .blue]),
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
-            
             VStack {
                 if viewModel.isLoading {
                     ProgressView()
@@ -99,7 +92,7 @@ struct AccountView: View {
                     AuthenticationView(authViewModel: authViewModel)
                 }
             }
-        }
+        }.background(Color.clear)
     }
 }
 

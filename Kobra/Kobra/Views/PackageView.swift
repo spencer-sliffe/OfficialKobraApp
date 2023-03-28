@@ -12,12 +12,6 @@ struct PackageView: View {
     
     var body: some View {
         ZStack {
-            LinearGradient(
-                gradient: Gradient(colors: [.purple, .blue]),
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
             
             VStack(spacing: 20) {
                 if viewModel.isLoading {
@@ -35,7 +29,7 @@ struct PackageView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .navigationBarHidden(true)
             .navigationBarTitle("")
-        }
+        }.background(Color.clear)
     }
 }
 
