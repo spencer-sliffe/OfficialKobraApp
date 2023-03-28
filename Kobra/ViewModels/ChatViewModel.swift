@@ -31,19 +31,13 @@ class ChatViewModel: ObservableObject {
         chatListener = firestoreManager.observeMessages(forChat: chat) { [weak self] result in
             guard let self = self else { return } // make sure self is still available
             self.isLoading = false
-            
             switch result {
             case .success(let messages):
                 self.messages = messages
                 self.delegate?.didUpdateChat(self.chat)
-                guard let currentUserEmail = Auth.auth().currentUser?.email else {
-                    return
-                }
-                self.firestoreManager.markMessagesAsRead(forChat: self.chat, currentUserEmail: currentUserEmail)
             case .failure(let error):
                 print(error.localizedDescription)
             }
-            
         }
     }
 

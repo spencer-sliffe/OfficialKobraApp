@@ -43,24 +43,23 @@ struct ChatView: View {
                         TextField("Message...", text: $chatInput)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .frame(height: 40)
-                            .background(Color.clear)
+                        
                         Button(action: {
                             viewModel.sendMessage(chatInput)
                             chatInput = ""
                         }) {
                             Text("Send")
-                                .foregroundColor(Color.white)
-                                .background(Color.clear)
+                                .foregroundColor(Color.blue)
                         }
                         .padding(.horizontal)
                         .frame(height: 40)
-                        .background(Color.clear)
+                        .background(Color(.systemGray6))
                         .cornerRadius(10)
                         .disabled(chatInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                     }
-                    .background(Color.clear)
                     .padding(.horizontal)
                     .padding(.bottom, keyboardHeight)
+                    .background(Color.clear)
                 }
             }
         }
@@ -88,7 +87,7 @@ struct ChatView: View {
                 }
             }
             NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { (_) in
-                keyboardHeight = 0
+                keyboardHeight = 50
             }
         }
         .onDisappear {
