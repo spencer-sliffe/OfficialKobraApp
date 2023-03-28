@@ -23,6 +23,7 @@ class InboxViewModel: ObservableObject {
     init(firestoreManager: FirestoreManager = FirestoreManager.shared) {
         self.firestoreManager = firestoreManager
         fetchChats()
+        observeUnreadMessageCounts(forChats: chats)
     }
     
     var currentUserEmail: String {
@@ -85,7 +86,9 @@ class InboxViewModel: ObservableObject {
             let listener = observeUnreadMessageCount(forChat: chat) { [weak self] result in
                 switch result {
                 case .success(let count):
-                    self?.unreadMessageCounts[chat.id] = count
+                    var counts = self?.unreadMessageCounts ?? [:]
+                    counts[chat.id] = count
+                    self?.unreadMessageCounts = counts
                 case .failure(let error):
                     print("Failed to fetch unread message count: \(error.localizedDescription)")
                 }
@@ -93,6 +96,7 @@ class InboxViewModel: ObservableObject {
             listeners.append(listener)
         }
     }
+
 
     func observeUnreadMessageCount(forChat chat: Chat, completion: @escaping (Result<Int, Error>) -> Void) -> ListenerRegistration {
         return firestoreManager.observeUnreadMessageCount(forChat: chat, currentUserEmail: currentUserEmail, completion: completion)
