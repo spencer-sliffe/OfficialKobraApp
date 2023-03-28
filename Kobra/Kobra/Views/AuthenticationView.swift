@@ -22,12 +22,12 @@ struct AuthenticationView: View {
                     .ignoresSafeArea()
                 VStack(spacing: 20) {
                     Image("kobracoding-logo")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(height: UIScreen.main.bounds.height * 0.25)
-                        .padding(.top, UIScreen.main.bounds.height * 0.13)
-                        .shadow(color: .blue.opacity(0.2), radius: 10, x: 0, y: 0)
-                    
+                           .resizable()
+                           .aspectRatio(contentMode: .fit)
+                           .frame(height: UIScreen.main.bounds.height * 0.25)
+                           .padding(.top, UIScreen.main.bounds.height * 0.13)
+                           .shadow(color: .black.opacity(1), radius: 2, x: 0, y: 0)
+                           
                     VStack {
                         Picker(selection: $selection, label: Text("Sign In or Sign Up")) {
                             Text("Sign In").tag(0)

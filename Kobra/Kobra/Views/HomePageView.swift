@@ -18,13 +18,6 @@ struct HomePageView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                LinearGradient(
-                    gradient: Gradient(colors: [.black, .blue]),
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-                .ignoresSafeArea()
-                
                 VStack(spacing: 0) {
                     Spacer()
                     TabView(selection: $selectedTab) {
@@ -42,7 +35,6 @@ struct HomePageView: View {
                     }
                     .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                     
-                    Spacer()
                     Spacer()
                     
                     HStack(spacing: 0) {
@@ -126,7 +118,13 @@ struct HomePageView: View {
                 if !signedIn {
                     selectedTab = "account"
                 }
-            }
+            }.background(
+                LinearGradient(
+                    gradient: Gradient(colors: [.black, .blue]),
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            )
         }
     }
 }

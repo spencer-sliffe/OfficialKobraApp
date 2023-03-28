@@ -22,12 +22,6 @@ struct ChatView: View {
     }
     var body: some View {
         ZStack {
-            LinearGradient(
-                gradient: Gradient(colors: [.black, .blue]),
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .edgesIgnoringSafeArea(.all)
             
             VStack {
                 GeometryReader { geometry in
@@ -100,6 +94,13 @@ struct ChatView: View {
             viewModel.chatListener?.remove()
             NotificationCenter.default.removeObserver(self)
         }
+        .background(
+            LinearGradient(
+                gradient: Gradient(colors: [.black, .blue]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        )
     }
 
 }

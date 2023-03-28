@@ -22,6 +22,7 @@ struct InboxView: View {
             
             addButton
         }
+        
         .navigationBarHidden(true)
         .sheet(isPresented: $showingAddChat, content: addChatSheet)
         .alert(isPresented: $showAlert, content: alert)
@@ -40,7 +41,7 @@ struct InboxView: View {
             } else {
                 chatList
                     .searchable(text: $searchText)
-                    .padding(.top, -10)
+                    
             }
         }
     }
@@ -64,7 +65,7 @@ struct InboxView: View {
                         NavigationLink(
                             destination: ChatView(chat: chat),
                             label: {
-                                ChatCell(chat: chat, unreadMessageCount: viewModel.unreadMessageCounts[chat.id] ?? 0) .shadow(color: .white.opacity(0.2), radius: 10, x: 0, y: 0)
+                                ChatCell(chat: chat, unreadMessageCount: viewModel.unreadMessageCounts[chat.id] ?? 0) 
                             }
                         )
                         .listRowBackground(Color.clear)
@@ -72,14 +73,17 @@ struct InboxView: View {
                 }
                 .foregroundColor(.white)
                 .listStyle(PlainListStyle())
+                .padding(.top,-20)
             }
         }
         .refreshable {
             viewModel.fetchChats()
         }
+        .progressViewStyle(CircularProgressViewStyle())
+        .accentColor(.white)
+
     }
-
-
+    
     private var addButton: some View {
         VStack {
             Spacer()
