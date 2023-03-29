@@ -65,7 +65,7 @@ struct InboxView: View {
                         NavigationLink(
                             destination: ChatView(chat: chat),
                             label: {
-                                ChatCell(chat: chat, unreadMessageCount: viewModel.unreadMessageCounts[chat.id] ?? 0) 
+                                ChatCell(chat: chat, unreadMessageCount: viewModel.unreadMessageCounts[chat.id] ?? 0)
                             }
                         )
                         .listRowBackground(Color.clear)
@@ -177,7 +177,6 @@ struct ChatCell: View {
                     }
                 }
                 .padding(.vertical, 8)
-                
                 if unreadMessageCount > 0 {
                     Circle()
                         .fill(Color.red)
