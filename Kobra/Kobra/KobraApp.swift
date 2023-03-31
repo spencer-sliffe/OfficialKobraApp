@@ -20,7 +20,7 @@ struct KobraApp: App {
     
     var body: some Scene {
         WindowGroup {
-            AuthenticationView()
+            HomePageView()
         }
     }
 }

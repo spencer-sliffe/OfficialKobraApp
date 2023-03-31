@@ -12,88 +12,63 @@ import Foundation
 struct ChatView: View {
     @ObservedObject var viewModel: ChatViewModel
     @State private var chatInput = ""
-    @State private var keyboardHeight: CGFloat = 0
     @State private var showSearchBar = false
     @State private var searchButtonLabel = "Cancel"
-    @Environment(\.presentationMode) var presentationMode
+    @State private var keyboardHeight: CGFloat = 0
     
-    init(chat: Chat) {
-        viewModel = ChatViewModel(chat: chat)
-    }
     var body: some View {
-        ZStack {
-            
-            VStack {
-                GeometryReader { geometry in
-                    ScrollView {
-                        LazyVStack(alignment: .leading, spacing: 10) {
-                            ForEach(viewModel.messages, id: \.self) { message in
-                                MessageRow(message: message, isFromCurrentUser: message.sender == Auth.auth().currentUser?.email)
-                            }
+        VStack(spacing: 0) {
+            ScrollView {
+                ScrollViewReader { scrollView in
+                    LazyVStack(alignment: .leading, spacing: 10) {
+                        ForEach(viewModel.messages, id: \.self) { message in
+                            MessageRow(message: message, isFromCurrentUser: message.sender == Auth.auth().currentUser?.email)
                         }
-                        .padding(.horizontal)
-                        .padding(.top)
                     }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .padding(.bottom, keyboardHeight) // Padding to accommodate the input field
-                }
-                
-                VStack {
-                    HStack {
-                        TextField("Message...", text: $chatInput)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .frame(height: 40)
-                            .background(Color.clear)
-                        Button(action: {
-                            viewModel.sendMessage(chatInput)
-                            chatInput = ""
-                        }) {
-                            Text("Send")
-                                .foregroundColor(Color.white)
-                                .background(Color.clear)
-                        }
-                        .padding(.horizontal)
-                        .frame(height: 40)
-                        .background(Color.clear)
-                        .cornerRadius(10)
-                        .disabled(chatInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                    .onAppear(){
+                        viewModel.fetchMessages()
+                        viewModel.markMessagesAsRead()
                     }
-                    .background(Color.clear)
+                    .onChange(of: viewModel.messages.count, perform: { _ in
+                        scrollView.scrollTo(viewModel.messages.count - 1)
+                    })
                     .padding(.horizontal)
-                    .padding(.bottom, keyboardHeight)
+                    .padding(.top)
                 }
             }
+            
+            
+            Divider()
+            
+            HStack(spacing: 0) {
+                TextField("Message...", text: $chatInput)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .frame(height: 40)
+                Button(action: {
+                    viewModel.sendMessage(chatInput)
+                    chatInput = ""
+                }) {
+                    Text("Send")
+                        
+                }
+                .frame(width: 80, height: 40)
+                .background(Color.blue)
+                .cornerRadius(10)
+                .disabled(chatInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+            }
+            foregroundColor(Color.white)
+            .padding(.horizontal)
+            .background(Color.clear)
+            .padding(.bottom, keyboardHeight)
         }
+        .keyboardAware()
         .navigationBarTitle(Text(viewModel.chat.otherParticipantEmail(for: Auth.auth().currentUser?.email ?? "").split(separator: "@").first?.uppercased() ?? ""), displayMode: .inline)
         .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading:
-            Button(action: {
-                presentationMode.wrappedValue.dismiss()
-            }) {
-                Image(systemName: "arrow.left")
-                    .resizable()
-                    .frame(width: 20, height: 20)
-            }
-        )
         .onAppear {
             viewModel.fetchMessages()
-            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { (notification) in
-                let value = notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
-                if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
-                    let safeAreaBottom = scene.windows.first?.safeAreaInsets.bottom ?? 0
-                    keyboardHeight = value.height - safeAreaBottom
-                } else {
-                    keyboardHeight = value.height
-                }
-            }
-            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { (_) in
-                keyboardHeight = 0
-            }
         }
         .onDisappear {
             viewModel.chatListener?.remove()
-            NotificationCenter.default.removeObserver(self)
         }
         .background(
             LinearGradient(
@@ -103,5 +78,30 @@ struct ChatView: View {
             )
         )
     }
+}
 
+struct KeyboardAwareModifier: ViewModifier {
+    @State private var keyboardHeight: CGFloat = 0
+    
+    func body(content: Content) -> some View {
+        content
+            .padding(.bottom, keyboardHeight)
+            .onAppear {
+                NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { (notification) in
+                    let value = notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
+                    self.keyboardHeight = value.height
+                }
+                
+                NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { (notification) in
+                    self.keyboardHeight = 0
+                }
+            }
+    }
+}
+
+
+extension View {
+    func keyboardAware() -> ModifiedContent<Self, KeyboardAwareModifier> {
+        return modifier(KeyboardAwareModifier())
+    }
 }

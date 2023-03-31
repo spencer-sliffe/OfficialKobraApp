@@ -6,18 +6,19 @@
 //
 
 import Foundation
+import SwiftUI
 
 class HomePageViewModel: ObservableObject {
-    @Published var accountIsActive = false
-    @Published var packageIsActive = false
+    @Published var isSignedIn = false
+    @Published var showAuthenticationView = false
     
-    func activateAccount() {
-        accountIsActive = true
-        packageIsActive = false
+    func signIn() {
+        isSignedIn = true
+        showAuthenticationView = false
     }
     
-    func activatePackage() {
-        accountIsActive = false
-        packageIsActive = true
+    func signOut() {
+        isSignedIn = false
+        showAuthenticationView = true
     }
 }

@@ -25,9 +25,13 @@ class ChatViewModel: ObservableObject {
         self.chat = chat
     }
 
+    var currentUserEmail: String {
+        return Auth.auth().currentUser?.email ?? ""
+    }
+    
     func fetchMessages() {
         isLoading = true
-        chatListener?.remove() // Remove any existing listener
+       // chatListener?.remove() // Remove any existing listener
         chatListener = firestoreManager.observeMessages(forChat: chat) { [weak self] result in
             guard let self = self else { return } // make sure self is still available
             self.isLoading = false
@@ -58,6 +62,9 @@ class ChatViewModel: ObservableObject {
                 self.delegate?.didUpdateChat(self.chat)
             }
         }
+    }
+    func markMessagesAsRead() {
+        firestoreManager.markMessagesAsRead(forChat: chat, currentUserEmail: currentUserEmail)
     }
 }
 
