@@ -12,7 +12,6 @@ struct PackageView: View {
     
     var body: some View {
         ZStack {
-            
             VStack(spacing: 20) {
                 if viewModel.isLoading {
                     ProgressView()
@@ -29,7 +28,8 @@ struct PackageView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .navigationBarHidden(true)
             .navigationBarTitle("")
-        }.background(Color.clear)
+        }
+        .background(Color.clear)
     }
 }
 

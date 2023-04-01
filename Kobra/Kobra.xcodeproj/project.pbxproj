@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4528556229B1AED800F088CD /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4528556129B1AED800F088CD /* AuthenticationViewModel.swift */; };
+		455C6E5729D7E72600446520 /* KobraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455C6E5629D7E72600446520 /* KobraViewModel.swift */; };
 		458D23CE29A52B5E00205AAE /* TokenResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458D23CD29A52B5E00205AAE /* TokenResponseModel.swift */; };
 		458D23D029A52DBB00205AAE /* SignUpErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458D23CF29A52DBB00205AAE /* SignUpErrorModel.swift */; };
 		459180FE29AECC63000FB066 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 459180FD29AECC63000FB066 /* FirebaseAuth */; };
@@ -48,6 +49,7 @@
 		282C022F31C00540FC0513A8 /* Pods-Kobra.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kobra.debug.xcconfig"; path = "Target Support Files/Pods-Kobra/Pods-Kobra.debug.xcconfig"; sourceTree = "<group>"; };
 		4416BB8B9604E5EFA9033790 /* Pods-Kobra.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kobra.release.xcconfig"; path = "Target Support Files/Pods-Kobra/Pods-Kobra.release.xcconfig"; sourceTree = "<group>"; };
 		4528556129B1AED800F088CD /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
+		455C6E5629D7E72600446520 /* KobraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KobraViewModel.swift; sourceTree = "<group>"; };
 		458D23CD29A52B5E00205AAE /* TokenResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenResponseModel.swift; sourceTree = "<group>"; };
 		458D23CF29A52DBB00205AAE /* SignUpErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpErrorModel.swift; sourceTree = "<group>"; };
 		4591810129AECFD3000FB066 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				45EC904F29B8360F00E0A3A3 /* PackageViewModel.swift */,
 				4592E55C29BD361200FF76E2 /* ChatViewModel.swift */,
 				45C7171D29C63AF700679626 /* InboxViewModel.swift */,
+				455C6E5629D7E72600446520 /* KobraViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -375,6 +378,7 @@
 				45C7171E29C63AF700679626 /* InboxViewModel.swift in Sources */,
 				45E5ABDB299D8AC300DFFDC8 /* KobraApp.swift in Sources */,
 				45D5110529D0ABAF00290720 /* KobraView.swift in Sources */,
+				455C6E5729D7E72600446520 /* KobraViewModel.swift in Sources */,
 				45C7172229C654DC00679626 /* FireStoreManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

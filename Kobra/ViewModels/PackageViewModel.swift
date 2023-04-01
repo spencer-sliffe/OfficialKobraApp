@@ -86,6 +86,7 @@ struct PackageCell: View {
                     .resizable()
                     .scaledToFit()
                     .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .shadow(color: Color.black, radius: 10)
             } else {
                 ProgressView()
             }

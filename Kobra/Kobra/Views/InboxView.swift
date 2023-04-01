@@ -62,12 +62,9 @@ struct InboxView: View {
             } else {
                 List {
                     ForEach(sortedChats.filter({ searchText.isEmpty ? true : $0.otherParticipantEmail(for: viewModel.currentUserEmail).localizedCaseInsensitiveContains(searchText) })) { chat in
-                        NavigationLink(
-                            destination: ChatView(chat: chat),
-                            label: {
-                                ChatCell(chat: chat, unreadMessageCount: viewModel.unreadMessageCounts[chat.id] ?? 0)
-                            }
-                        )
+                        NavigationLink(destination: ChatView(viewModel: ChatViewModel(chat: chat))) {
+                            ChatCell(chat: chat, unreadMessageCount: viewModel.unreadMessageCounts[chat.id] ?? 0)
+                        }
                         .listRowBackground(Color.clear)
                     }
                 }

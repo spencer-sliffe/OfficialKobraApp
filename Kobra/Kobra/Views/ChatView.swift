@@ -49,14 +49,13 @@ struct ChatView: View {
                     chatInput = ""
                 }) {
                     Text("Send")
-                        
                 }
                 .frame(width: 80, height: 40)
-                .background(Color.blue)
+                .background(Color.clear)
                 .cornerRadius(10)
                 .disabled(chatInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
             }
-            foregroundColor(Color.white)
+            .foregroundColor(Color.gray)
             .padding(.horizontal)
             .background(Color.clear)
             .padding(.bottom, keyboardHeight)
