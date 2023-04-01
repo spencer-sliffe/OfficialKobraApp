@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4528556229B1AED800F088CD /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4528556129B1AED800F088CD /* AuthenticationViewModel.swift */; };
 		455C6E5729D7E72600446520 /* KobraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455C6E5629D7E72600446520 /* KobraViewModel.swift */; };
+		455C6E5929D7E9B700446520 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455C6E5829D7E9B700446520 /* Post.swift */; };
 		458D23CE29A52B5E00205AAE /* TokenResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458D23CD29A52B5E00205AAE /* TokenResponseModel.swift */; };
 		458D23D029A52DBB00205AAE /* SignUpErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458D23CF29A52DBB00205AAE /* SignUpErrorModel.swift */; };
 		459180FE29AECC63000FB066 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 459180FD29AECC63000FB066 /* FirebaseAuth */; };
@@ -50,6 +51,7 @@
 		4416BB8B9604E5EFA9033790 /* Pods-Kobra.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kobra.release.xcconfig"; path = "Target Support Files/Pods-Kobra/Pods-Kobra.release.xcconfig"; sourceTree = "<group>"; };
 		4528556129B1AED800F088CD /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		455C6E5629D7E72600446520 /* KobraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KobraViewModel.swift; sourceTree = "<group>"; };
+		455C6E5829D7E9B700446520 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		458D23CD29A52B5E00205AAE /* TokenResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenResponseModel.swift; sourceTree = "<group>"; };
 		458D23CF29A52DBB00205AAE /* SignUpErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpErrorModel.swift; sourceTree = "<group>"; };
 		4591810129AECFD3000FB066 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 				45EC905329B8475900E0A3A3 /* PackageWithImage.swift */,
 				45CFE93529C04EF6003806D5 /* Chat.swift */,
 				45C7171B29C63ABE00679626 /* ChatMessage.swift */,
+				455C6E5829D7E9B700446520 /* Post.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -374,6 +377,7 @@
 				45A908CB29B037FE00792FC2 /* DataManager.swift in Sources */,
 				45AD934329B1AAB800D153AF /* AuthenticationView.swift in Sources */,
 				45A908CD29B0386400792FC2 /* Package.swift in Sources */,
+				455C6E5929D7E9B700446520 /* Post.swift in Sources */,
 				45EA727F29B7B74C000FD738 /* PackageView.swift in Sources */,
 				45C7171E29C63AF700679626 /* InboxViewModel.swift in Sources */,
 				45E5ABDB299D8AC300DFFDC8 /* KobraApp.swift in Sources */,
