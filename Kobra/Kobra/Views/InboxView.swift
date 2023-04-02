@@ -22,7 +22,6 @@ struct InboxView: View {
             
             addButton
         }
-        
         .navigationBarHidden(true)
         .sheet(isPresented: $showingAddChat, content: addChatSheet)
         .alert(isPresented: $showAlert, content: alert)
@@ -45,8 +44,7 @@ struct InboxView: View {
             }
         }
     }
-
-
+    
     private var sortedChats: [Chat] {
         viewModel.chats.sorted { (chat1, chat2) -> Bool in
             let timestamp1 = chat1.lastMessage?.timestamp ?? Date.distantPast
@@ -101,7 +99,6 @@ struct InboxView: View {
         }
     }
 
-    
     private func alert() -> Alert {
         Alert(title: Text("Error"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
     }

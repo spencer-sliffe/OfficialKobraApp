@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4527837929D8AB3D00B633FB /* FSPostManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4527837829D8AB3D00B633FB /* FSPostManager.swift */; };
+		4527837B29D8B2FB00B633FB /* PostRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4527837A29D8B2FB00B633FB /* PostRow.swift */; };
+		4527837D29D8B56D00B633FB /* CreatePostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4527837C29D8B56D00B633FB /* CreatePostView.swift */; };
 		4528556229B1AED800F088CD /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4528556129B1AED800F088CD /* AuthenticationViewModel.swift */; };
 		455C6E5729D7E72600446520 /* KobraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455C6E5629D7E72600446520 /* KobraViewModel.swift */; };
 		455C6E5929D7E9B700446520 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455C6E5829D7E9B700446520 /* Post.swift */; };
@@ -49,6 +52,9 @@
 /* Begin PBXFileReference section */
 		282C022F31C00540FC0513A8 /* Pods-Kobra.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kobra.debug.xcconfig"; path = "Target Support Files/Pods-Kobra/Pods-Kobra.debug.xcconfig"; sourceTree = "<group>"; };
 		4416BB8B9604E5EFA9033790 /* Pods-Kobra.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kobra.release.xcconfig"; path = "Target Support Files/Pods-Kobra/Pods-Kobra.release.xcconfig"; sourceTree = "<group>"; };
+		4527837829D8AB3D00B633FB /* FSPostManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FSPostManager.swift; sourceTree = "<group>"; };
+		4527837A29D8B2FB00B633FB /* PostRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRow.swift; sourceTree = "<group>"; };
+		4527837C29D8B56D00B633FB /* CreatePostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostView.swift; sourceTree = "<group>"; };
 		4528556129B1AED800F088CD /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		455C6E5629D7E72600446520 /* KobraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KobraViewModel.swift; sourceTree = "<group>"; };
 		455C6E5829D7E9B700446520 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -111,6 +117,7 @@
 				45A908CA29B037FE00792FC2 /* DataManager.swift */,
 				45EC904B29B8217100E0A3A3 /* StorageManager.swift */,
 				45C7172129C654DC00679626 /* FireStoreManager.swift */,
+				4527837829D8AB3D00B633FB /* FSPostManager.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -172,6 +179,7 @@
 				45CFE93529C04EF6003806D5 /* Chat.swift */,
 				45C7171B29C63ABE00679626 /* ChatMessage.swift */,
 				455C6E5829D7E9B700446520 /* Post.swift */,
+				4527837A29D8B2FB00B633FB /* PostRow.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -210,6 +218,7 @@
 				45C7171F29C63B0E00679626 /* InboxView.swift */,
 				45D5110229D0AB9100290720 /* MarketPlaceView.swift */,
 				45D5110429D0ABAF00290720 /* KobraView.swift */,
+				4527837C29D8B56D00B633FB /* CreatePostView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -359,7 +368,9 @@
 				45EA728129B7BA5B000FD738 /* Account.swift in Sources */,
 				45AD933F29B130E900D153AF /* AccountViewModel.swift in Sources */,
 				45C7171C29C63ABE00679626 /* ChatMessage.swift in Sources */,
+				4527837D29D8B56D00B633FB /* CreatePostView.swift in Sources */,
 				4594204129AEF00500A100F1 /* HomePageViewModel.swift in Sources */,
+				4527837B29D8B2FB00B633FB /* PostRow.swift in Sources */,
 				45AD934129B130F600D153AF /* AccountView.swift in Sources */,
 				4592E55B29BD35E900FF76E2 /* ChatView.swift in Sources */,
 				45D5110329D0AB9100290720 /* MarketPlaceView.swift in Sources */,
@@ -375,6 +386,7 @@
 				458D23D029A52DBB00205AAE /* SignUpErrorModel.swift in Sources */,
 				45CFE93629C04EF6003806D5 /* Chat.swift in Sources */,
 				45A908CB29B037FE00792FC2 /* DataManager.swift in Sources */,
+				4527837929D8AB3D00B633FB /* FSPostManager.swift in Sources */,
 				45AD934329B1AAB800D153AF /* AuthenticationView.swift in Sources */,
 				45A908CD29B0386400792FC2 /* Package.swift in Sources */,
 				455C6E5929D7E9B700446520 /* Post.swift in Sources */,

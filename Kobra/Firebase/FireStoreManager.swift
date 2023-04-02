@@ -146,8 +146,8 @@ class FirestoreManager {
     }
     
     func observeUnreadMessageCount(forChat chat: Chat, currentUserEmail: String, completion: @escaping (Result<Int, Error>) -> Void) ->
-        ListenerRegistration {
-            print("observeUnreadMessageCount is running in manager")
+    ListenerRegistration {
+        print("observeUnreadMessageCount is running in manager")
         return db.collection("chats")
             .document(chat.id)
             .collection("messages")

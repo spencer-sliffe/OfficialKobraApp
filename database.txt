@@ -1,0 +1,42 @@
+1. Accounts (collection)
+   └─ UUID (document)
+      ├─ _email: String (field)
+      ├─ _package: String (field)
+      └─ _subscription: Bool (field)
+
+2. GlobalChat (collection)
+   └─ GlobalMessages (document)
+      ├─ _sender: String (field)
+      ├─ _text: String (field)
+      └─ _timestamp: Bool (field)
+
+3. Chats (collection)
+   └─ UUID: String (document)
+      ├─ Collection: messages (subcollection)
+      ├─ lastMessage: map (field)
+      │  ├─ isRead: Bool
+      │  ├─ sender: String
+      │  ├─ text: String
+      │  └─ timestamp: timestamp
+      └─ participants: array (field)
+         ├─ 0: String
+         └─ 1: String
+
+4. Packages (collection)
+   └─ UUID: String (document)
+      ├─ description: String (field)
+      ├─ duration: String (field)
+      ├─ id: number (field)
+      ├─ medal: String (field)
+      ├─ name: String (field)
+      └─ price: number (field)
+
+5. Posts (collection)
+   ├─ AdvertisementPosts (document)
+   ├─ HelpPosts (document)
+   ├─ NewsPosts (document)
+   └─ MarketPosts (document)
+      ├─ hardware (subcollection)
+      ├─ software (subcollection)
+      ├─ service (subcollection)
+      └─ other (subcollection)
