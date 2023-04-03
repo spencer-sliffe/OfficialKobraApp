@@ -16,7 +16,7 @@ class ChatViewModel: ObservableObject {
     weak var delegate: ChatDelegate?
     var chat: Chat
     @Published var messages: [ChatMessage] = []
-    @Published var isLoading = false
+    @Published var isLoading2 = false
     private var cancellables = Set<AnyCancellable>()
     private let firestoreManager = FirestoreManager.shared
     var chatListener: ListenerRegistration?
@@ -30,11 +30,11 @@ class ChatViewModel: ObservableObject {
     }
     
     func fetchMessages() {
-        isLoading = true
+        isLoading2 = true
        // chatListener?.remove() // Remove any existing listener
         chatListener = firestoreManager.observeMessages(forChat: chat) { [weak self] result in
             guard let self = self else { return } // make sure self is still available
-            self.isLoading = false
+            self.isLoading2 = false
             
             switch result {
             case .success(let messages):

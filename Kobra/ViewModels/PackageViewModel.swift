@@ -12,7 +12,7 @@ import FirebaseStorage
 
 class PackageViewModel: ObservableObject {
     @Published var packages = [PackageWithImage]()
-    @Published var isLoading = true
+    @Published var isLoading4 = true
     
     init() {
         fetchPackages()
@@ -54,7 +54,7 @@ class PackageViewModel: ObservableObject {
                 }
 
                 group.notify(queue: DispatchQueue.main) {
-                    self.isLoading = false
+                    self.isLoading4 = false
                     print("All images downloaded!")
                 }
             }

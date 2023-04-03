@@ -8,6 +8,7 @@
 import SwiftUI
 import Firebase
 import FirebaseFirestore
+
 struct InboxView: View {
     @ObservedObject var viewModel: InboxViewModel
     @State private var searchText = ""
@@ -17,34 +18,39 @@ struct InboxView: View {
     @State private var alertMessage = ""
 
     var body: some View {
-        ZStack {
+        VStack {
             content
-            
-            addButton
+                .sheet(isPresented: $showingAddChat, content: addChatSheet)
+                .alert(isPresented: $showAlert, content: alert)
+                .background(Color.clear)
+
+            Spacer()
+
+            HStack {
+                Spacer()
+                addButton.padding(.bottom, 20)
+            }
         }
-        .navigationBarHidden(true)
-        .sheet(isPresented: $showingAddChat, content: addChatSheet)
-        .alert(isPresented: $showAlert, content: alert)
-        .background(Color.clear)
     }
+
 
     private var content: some View {
         Group {
             if viewModel.isLoading {
                 ProgressView()
             } else if sortedChats.isEmpty {
-                Text("No Chats Currently")
-                    .foregroundColor(.white)
-                    .font(.headline)
-                    .padding()
+                    Text("No Chats Currently")
+                        .foregroundColor(.white)
+                        .font(.headline)
+                        .padding()
             } else {
-                chatList
-                    .searchable(text: $searchText)
-                    
+                VStack {
+                    SearchBar(text: $searchText)
+                    chatList
+                }
             }
         }
     }
-    
     private var sortedChats: [Chat] {
         viewModel.chats.sorted { (chat1, chat2) -> Bool in
             let timestamp1 = chat1.lastMessage?.timestamp ?? Date.distantPast
@@ -58,13 +64,11 @@ struct InboxView: View {
             if viewModel.isLoading {
                 ProgressView()
             } else {
-                List {
-                    ForEach(sortedChats.filter({ searchText.isEmpty ? true : $0.otherParticipantEmail(for: viewModel.currentUserEmail).localizedCaseInsensitiveContains(searchText) })) { chat in
-                        NavigationLink(destination: ChatView(viewModel: ChatViewModel(chat: chat))) {
-                            ChatCell(chat: chat, unreadMessageCount: viewModel.unreadMessageCounts[chat.id] ?? 0)
-                        }
-                        .listRowBackground(Color.clear)
+                List(sortedChats.filter({ searchText.isEmpty ? true : $0.otherParticipantEmail(for: viewModel.currentUserEmail).localizedCaseInsensitiveContains(searchText) })) { chat in
+                    NavigationLink(destination: ChatView(viewModel: ChatViewModel(chat: chat))) {
+                        ChatCell(chat: chat, unreadMessageCount: viewModel.unreadMessageCounts[chat.id] ?? 0)
                     }
+                    .listRowBackground(Color.clear)
                 }
                 .foregroundColor(.white)
                 .listStyle(PlainListStyle())
@@ -76,27 +80,22 @@ struct InboxView: View {
         }
         .progressViewStyle(CircularProgressViewStyle())
         .accentColor(.white)
-
     }
+
     
     private var addButton: some View {
-        VStack {
-            Spacer()
-            HStack {
-                Spacer()
-                Button(action: {
-                    showingAddChat.toggle()
-                }) {
-                    Image(systemName: "plus.circle.fill")
-                        .resizable()
-                        .frame(width: 60, height: 60)
-                        .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 0)
-                        .foregroundColor(Color.white)
-                }
-                .padding(.trailing, 16)
-                .padding(.bottom, 16)
-            }
+        Button(action: {
+            showingAddChat.toggle()
+        }) {
+            Image(systemName: "plus.circle.fill")
+                .resizable()
+                .frame(width: 60, height: 60)
+                .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 0)
+                .foregroundColor(Color.white)
         }
+        .padding(16)
+        .foregroundColor(.white)
+        .cornerRadius(30)
     }
 
     private func alert() -> Alert {
@@ -145,8 +144,6 @@ struct ChatCell: View {
     let unreadMessageCount: Int
     
     var body: some View {
-        ZStack {
-            Color.clear
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
                     let emailComponents = chat.otherParticipantEmail(for: Auth.auth().currentUser?.email ?? "").split(separator: "@")
@@ -178,10 +175,10 @@ struct ChatCell: View {
                         .overlay(Text("\(unreadMessageCount)").foregroundColor(.white).font(.system(size: 12)))
                 }
             }
+            .foregroundColor(.white)
+            .background(Color.clear) // set the background to clear color
         }
-        .foregroundColor(.white)
-        .background(Color.clear) // set the background to clear color
-    }
+        
 }
 
 

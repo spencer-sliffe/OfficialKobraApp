@@ -14,12 +14,25 @@ struct KobraView: View {
     
     var body: some View {
         VStack {
-            List(viewModel.posts) { post in
-                PostRow(post: post)
-                    .environmentObject(viewModel)
+            ScrollView {
+                VStack(alignment: .leading, spacing: 10) {
+                    ForEach(viewModel.posts) { post in
+                        PostRow(post: post)
+                            .environmentObject(viewModel)
+                            .background(Color.clear)
+                    }
+                }
+                .padding(.top)
             }
         }
-        .navigationBarTitle("Kobra Feed")
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(
+            LinearGradient(
+                gradient: Gradient(colors: [.black, .blue]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        )
         .onAppear {
             viewModel.fetchPosts()
         }
@@ -33,10 +46,32 @@ struct KobraView: View {
                 Image(systemName: "plus.circle.fill")
                     .resizable()
                     .frame(width: 60, height: 60)
-                    .foregroundColor(.blue)
+                    .foregroundColor(.white)
             }
                 .padding(.bottom, 20),
             alignment: .bottomTrailing
         )
+    }
+}
+
+
+extension View {
+    func listBackground(_ color: Color) -> some View {
+        modifier(ListBackgroundModifier(color: color))
+    }
+}
+
+private struct ListBackgroundModifier: ViewModifier {
+    let color: Color
+
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        content
+            .background(color)
+            .listRowBackground(color)
+            .onAppear {
+                UITableView.appearance().backgroundColor = .clear
+                UITableViewCell.appearance().backgroundColor = .clear
+            }
     }
 }

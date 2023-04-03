@@ -9,7 +9,7 @@ import SwiftUI
 
 class AccountViewModel: ObservableObject {
     @Published var account: Account?
-    @Published var isLoading = true
+    @Published var isLoading3 = true
     let dataManager = DataManager()
     
     init() {
@@ -48,11 +48,11 @@ class AccountViewModel: ObservableObject {
                     let package = Package(id: packageDocument.documentID, name: packageData["name"] as! String, price: packageData["price"] as! Double)
                     account.package = package
                     self.account = account
-                    self.isLoading = false
+                    self.isLoading3 = false
                 }
             } else {
                 self.account = account
-                self.isLoading = false
+                self.isLoading3 = false
             }
         }
     }

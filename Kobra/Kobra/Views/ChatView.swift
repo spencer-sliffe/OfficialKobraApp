@@ -15,6 +15,7 @@ struct ChatView: View {
     @State private var showSearchBar = false
     @State private var searchButtonLabel = "Cancel"
     @State private var keyboardHeight: CGFloat = 0
+    @Environment(\.presentationMode) private var presentationMode
     
     var body: some View {
         VStack(spacing: 0) {
@@ -61,8 +62,17 @@ struct ChatView: View {
             .padding(.bottom, keyboardHeight)
         }
         .keyboardAware()
-        .navigationBarTitle(Text(viewModel.chat.otherParticipantEmail(for: Auth.auth().currentUser?.email ?? "").split(separator: "@").first?.uppercased() ?? ""), displayMode: .inline)
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading:
+            Button(action: {
+                presentationMode.wrappedValue.dismiss()
+            }) {
+                HStack {
+                    Image(systemName: "chevron.left")
+                    Text("Back")
+                }
+            }
+        )
         .onAppear {
             viewModel.fetchMessages()
         }

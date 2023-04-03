@@ -44,8 +44,9 @@ class KobraViewModel: ObservableObject {
         }
     }
 
-    func updateLikeCount(for postId: UUID, likeCount: Int) {
-        postManager.updateLikeCount(for: postId, likeCount: likeCount)
+    func updateLikeCount(_ post: Post, likeCount: Int) {
+        postManager.updateLikeCount(post, likeCount: likeCount)
         fetchPosts()
     }
+
 }

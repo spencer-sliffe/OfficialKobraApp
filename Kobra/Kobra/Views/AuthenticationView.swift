@@ -9,7 +9,7 @@ import SwiftUI
 import Firebase
 
 struct AuthenticationView: View {
-    @StateObject var authViewModel = AuthenticationViewModel()
+    @ObservedObject var authViewModel: AuthenticationViewModel
     @State private var selection = 0
     @State private var signInSuccess = false
     @State private var isNavigating = false
@@ -87,8 +87,8 @@ struct AuthenticationView: View {
                                 .font(.system(size: 20))
                                 .padding(.horizontal, 30)
                         }
-                        .disabled(authViewModel.isLoading)
-                        .opacity(authViewModel.isLoading ? 0.5 : 1)
+                        .disabled(authViewModel.isLoading1)
+                        .opacity(authViewModel.isLoading1 ? 0.5 : 1)
                     }
                     .padding(.horizontal)
                     Spacer()
@@ -117,8 +117,3 @@ struct AuthenticationView: View {
     }
 }
 
-struct AuthenticationView_Previews: PreviewProvider {
-    static var previews: some View {
-        return AuthenticationView()
-    }
-}

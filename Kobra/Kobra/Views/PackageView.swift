@@ -11,9 +11,8 @@ struct PackageView: View {
     @ObservedObject var viewModel = PackageViewModel()
     
     var body: some View {
-        ZStack {
             VStack(spacing: 20) {
-                if viewModel.isLoading {
+                if viewModel.isLoading4 {
                     ProgressView()
                 } else {
                     List(viewModel.packages, id: \.id) { package in
@@ -24,13 +23,14 @@ struct PackageView: View {
                     .background(Color.clear)
                 }
             }
+            .background(Color.clear)
             .foregroundColor(.white)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .navigationBarHidden(true)
             .navigationBarTitle("")
         }
-        .background(Color.clear)
-    }
+        
+
 }
 
 

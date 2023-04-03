@@ -22,53 +22,54 @@ struct CreatePostView: View {
     @State private var category = ""
 
     var body: some View {
-        NavigationView {
+        VStack{
             Form {
-                Picker("Post Type", selection: $postType) {
-                    Text("Advertisement").tag("advertisement")
-                    Text("Help").tag("help")
-                    Text("News").tag("news")
-                    Text("Market").tag("market")
-                }
-
-                TextField("Title", text: $title)
-                TextField("Content", text: $content)
-                
-                // Conditional view for market posts
-                if postType == "market" {
-                    Picker("Market Post Type", selection: $marketPostType) {
-                        Text("Hardware").tag("hardware")
-                        Text("Software").tag("software")
-                        Text("Service").tag("service")
-                        Text("Other").tag("other")
-                    }
-                    
-                    if marketPostType == "hardware" {
-                        Picker("Condition", selection: $hardwareCondition) {
-                            Text("New").tag(Hardware.HardwareCondition.new.rawValue)
-                            Text("Used").tag(Hardware.HardwareCondition.used.rawValue)
-                        }
-                    }
-                    
-                    if marketPostType == "software" || marketPostType == "service" {
-                        TextField("Category", text: $category)
-                    }
-                    
-                    TextField("Price", value: $price, formatter: NumberFormatter())
-                }
+            Picker("Post Type", selection: $postType) {
+                Text("Advertisement").tag("advertisement")
+                Text("Help").tag("help")
+                Text("News").tag("news")
+                Text("Market").tag("market")
             }
-            .navigationBarTitle("Create Post", displayMode: .inline)
-            .navigationBarItems(
-                leading: Button("Cancel") {
-                    presentationMode.wrappedValue.dismiss()
-                },
-                trailing: Button("Save") {
-                    savePost()
-                    presentationMode.wrappedValue.dismiss()
+            
+            TextField("Title", text: $title)
+            TextField("Content", text: $content)
+            
+            // Conditional view for market posts
+            if postType == "market" {
+                Picker("Market Post Type", selection: $marketPostType) {
+                    Text("Hardware").tag("hardware")
+                    Text("Software").tag("software")
+                    Text("Service").tag("service")
+                    Text("Other").tag("other")
                 }
-            )
+                
+                if marketPostType == "hardware" {
+                    Picker("Condition", selection: $hardwareCondition) {
+                        Text("New").tag(Hardware.HardwareCondition.new.rawValue)
+                        Text("Used").tag(Hardware.HardwareCondition.used.rawValue)
+                    }
+                }
+                
+                if marketPostType == "software" || marketPostType == "service" {
+                    TextField("Category", text: $category)
+                }
+                
+                TextField("Price", value: $price, formatter: NumberFormatter())
+            }
         }
+        
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(
+                LinearGradient(
+                    gradient: Gradient(colors: [.black, .blue]),
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            )
     }
+        
+    
 
     private func savePost() {
         guard let userEmail = Auth.auth().currentUser?.email else {

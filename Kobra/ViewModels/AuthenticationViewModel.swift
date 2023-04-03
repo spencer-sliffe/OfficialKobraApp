@@ -16,7 +16,7 @@ class AuthenticationViewModel: ObservableObject {
     @Published var password = ""
     @Published var confirmPassword = ""
     @Published var isSignIn = true
-    @Published var isLoading = false
+    @Published var isLoading1 = false
     @Published var isError = false
     @Published var errorMessage = ""
     @Published var isAuthenticated = false
@@ -36,12 +36,12 @@ class AuthenticationViewModel: ObservableObject {
     private var handle: AuthStateDidChangeListenerHandle?
     
     func signIn() {
-        isLoading = true
+        isLoading1 = true
         isError = false
         errorMessage = ""
         
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
-            self.isLoading = false
+            self.isLoading1 = false
             if let error = error {
                 self.isError = true
                 self.errorMessage = error.localizedDescription
@@ -55,26 +55,26 @@ class AuthenticationViewModel: ObservableObject {
     }
     
     func signUp() {
-        isLoading = true
+        isLoading1 = true
         isError = false
         errorMessage = ""
         
         guard !email.isEmpty, !password.isEmpty, !confirmPassword.isEmpty else {
             self.isError = true
             self.errorMessage = "Please fill out all fields."
-            self.isLoading = false
+            self.isLoading1 = false
             return
         }
         
         guard password == confirmPassword else {
             self.isError = true
             self.errorMessage = "Passwords do not match."
-            self.isLoading = false
+            self.isLoading1 = false
             return
         }
         
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-            self.isLoading = false
+            self.isLoading1 = false
             if let error = error {
                 self.isError = true
                 self.errorMessage = error.localizedDescription

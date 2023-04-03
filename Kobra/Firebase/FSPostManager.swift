@@ -207,8 +207,9 @@ class FSPostManager {
         }
     }
     
-    func updateLikeCount(for postId: UUID, likeCount: Int) {
-        let postRef = db.collection("posts").document(postId.uuidString)
+    func updateLikeCount(_ post: Post, likeCount: Int) {
+        let id = post.id
+        let postRef = db.collection(postsCollection).document(id.uuidString)
         
         postRef.updateData([
             "likes": likeCount
@@ -219,5 +220,7 @@ class FSPostManager {
                 print("Like count updated successfully")
             }
         }
+    
     }
+
 }

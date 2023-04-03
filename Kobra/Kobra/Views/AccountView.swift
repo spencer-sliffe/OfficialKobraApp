@@ -13,9 +13,8 @@ struct AccountView: View {
     @StateObject var authViewModel: AuthenticationViewModel
     
     var body: some View {
-        ZStack {
             VStack {
-                if viewModel.isLoading {
+                if viewModel.isLoading3 {
                     ProgressView()
                 } else if let account = viewModel.account {
                     let emailComponents = account.email.split(separator: "@")
@@ -85,7 +84,6 @@ struct AccountView: View {
                 }
                 .padding()
             }
-        }.background(Color.clear)
-    }
+        }
 }
 

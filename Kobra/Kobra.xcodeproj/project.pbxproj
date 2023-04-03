@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		452430FA29DAA0E40000B5AB /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452430F929DAA0E40000B5AB /* SearchBar.swift */; };
 		4527837929D8AB3D00B633FB /* FSPostManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4527837829D8AB3D00B633FB /* FSPostManager.swift */; };
 		4527837B29D8B2FB00B633FB /* PostRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4527837A29D8B2FB00B633FB /* PostRow.swift */; };
 		4527837D29D8B56D00B633FB /* CreatePostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4527837C29D8B56D00B633FB /* CreatePostView.swift */; };
@@ -32,6 +33,7 @@
 		45C7171E29C63AF700679626 /* InboxViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C7171D29C63AF700679626 /* InboxViewModel.swift */; };
 		45C7172029C63B0E00679626 /* InboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C7171F29C63B0E00679626 /* InboxView.swift */; };
 		45C7172229C654DC00679626 /* FireStoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C7172129C654DC00679626 /* FireStoreManager.swift */; };
+		45CAAA2429DA7EF500BBD9FE /* SwipeableTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CAAA2329DA7EF500BBD9FE /* SwipeableTabView.swift */; };
 		45CFE93629C04EF6003806D5 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CFE93529C04EF6003806D5 /* Chat.swift */; };
 		45D5110329D0AB9100290720 /* MarketPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D5110229D0AB9100290720 /* MarketPlaceView.swift */; };
 		45D5110529D0ABAF00290720 /* KobraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D5110429D0ABAF00290720 /* KobraView.swift */; };
@@ -52,6 +54,7 @@
 /* Begin PBXFileReference section */
 		282C022F31C00540FC0513A8 /* Pods-Kobra.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kobra.debug.xcconfig"; path = "Target Support Files/Pods-Kobra/Pods-Kobra.debug.xcconfig"; sourceTree = "<group>"; };
 		4416BB8B9604E5EFA9033790 /* Pods-Kobra.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kobra.release.xcconfig"; path = "Target Support Files/Pods-Kobra/Pods-Kobra.release.xcconfig"; sourceTree = "<group>"; };
+		452430F929DAA0E40000B5AB /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		4527837829D8AB3D00B633FB /* FSPostManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FSPostManager.swift; sourceTree = "<group>"; };
 		4527837A29D8B2FB00B633FB /* PostRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRow.swift; sourceTree = "<group>"; };
 		4527837C29D8B56D00B633FB /* CreatePostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostView.swift; sourceTree = "<group>"; };
@@ -76,6 +79,7 @@
 		45C7171D29C63AF700679626 /* InboxViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxViewModel.swift; sourceTree = "<group>"; };
 		45C7171F29C63B0E00679626 /* InboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxView.swift; sourceTree = "<group>"; };
 		45C7172129C654DC00679626 /* FireStoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireStoreManager.swift; sourceTree = "<group>"; };
+		45CAAA2329DA7EF500BBD9FE /* SwipeableTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableTabView.swift; sourceTree = "<group>"; };
 		45CFE93529C04EF6003806D5 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		45D5110229D0AB9100290720 /* MarketPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketPlaceView.swift; sourceTree = "<group>"; };
 		45D5110429D0ABAF00290720 /* KobraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KobraView.swift; sourceTree = "<group>"; };
@@ -219,6 +223,8 @@
 				45D5110229D0AB9100290720 /* MarketPlaceView.swift */,
 				45D5110429D0ABAF00290720 /* KobraView.swift */,
 				4527837C29D8B56D00B633FB /* CreatePostView.swift */,
+				45CAAA2329DA7EF500BBD9FE /* SwipeableTabView.swift */,
+				452430F929DAA0E40000B5AB /* SearchBar.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -374,10 +380,12 @@
 				45AD934129B130F600D153AF /* AccountView.swift in Sources */,
 				4592E55B29BD35E900FF76E2 /* ChatView.swift in Sources */,
 				45D5110329D0AB9100290720 /* MarketPlaceView.swift in Sources */,
+				45CAAA2429DA7EF500BBD9FE /* SwipeableTabView.swift in Sources */,
 				4592E55D29BD361200FF76E2 /* ChatViewModel.swift in Sources */,
 				45A34167299EE47200F164CE /* AuthModel.swift in Sources */,
 				45C7172029C63B0E00679626 /* InboxView.swift in Sources */,
 				458D23CE29A52B5E00205AAE /* TokenResponseModel.swift in Sources */,
+				452430FA29DAA0E40000B5AB /* SearchBar.swift in Sources */,
 				4594203F29AEEFF400A100F1 /* HomePageView.swift in Sources */,
 				45EC905429B8475900E0A3A3 /* PackageWithImage.swift in Sources */,
 				45EC905029B8360F00E0A3A3 /* PackageViewModel.swift in Sources */,
