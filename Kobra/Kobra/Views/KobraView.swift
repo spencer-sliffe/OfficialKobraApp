@@ -11,7 +11,19 @@ import Foundation
 struct KobraView: View {
     @State private var isPresentingCreatePostView = false
     @ObservedObject var viewModel = KobraViewModel()
+    @State private var selectedFeed: FeedType = .advertisement // Add this line
 
+
+    enum FeedType: String, CaseIterable, Identifiable {
+        case advertisement = "Advertisement"
+        case help = "Help"
+        case news = "News"
+        case market = "Market"
+
+        var id: String { self.rawValue }
+    }
+
+    
     var body: some View {
         VStack {
             ScrollView {
