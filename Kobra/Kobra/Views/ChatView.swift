@@ -46,7 +46,6 @@ struct ChatView: View {
                     .padding(.horizontal, 8)
                     .padding(.vertical, 10)
                     .background(Color.clear)
-                    .foregroundColor(.white)
                     .overlay(
                         RoundedRectangle(cornerRadius: 10)
                             .stroke(Color.white, lineWidth: 1)
@@ -62,7 +61,7 @@ struct ChatView: View {
                 .cornerRadius(10)
                 .disabled(chatInput.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
             }
-            .foregroundColor(Color.gray)
+            .foregroundColor(Color.white)
             .padding(.horizontal)
             .background(Color.clear)
             .padding(.bottom, keyboardHeight)
