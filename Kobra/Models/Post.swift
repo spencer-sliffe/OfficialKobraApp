@@ -17,24 +17,28 @@ struct Post: Identifiable {
     var id = UUID()
     var type: PostType
     var likes: Int = 0 // Added likes property with default value of 0
+    var timestamp: Date
 }
 
 struct AdvertisementPost {
     var poster: String
     var title: String
     var content: String
+    var category: String
 }
 
 struct HelpPost {
     var poster: String
     var question: String
     var details: String
+    var category: String
 }
 
 struct NewsPost {
     var poster: String
     var headline: String
     var article: String
+    var category: String
 }
 
 struct MarketPost {
@@ -47,6 +51,8 @@ struct MarketPost {
     
     var vendor: String // Assuming the 'vendor' property is the same as 'poster' for MarketPosts
     var type: MarketPostType
+    var price: Double
+    var category: String
 }
 
 struct Hardware {
@@ -54,25 +60,19 @@ struct Hardware {
         case new
         case used
     }
-    
     var name: String
     var condition: HardwareCondition
-    var price: Double
+    var description: String
 }
-
 
 struct Software {
     var name: String
     var description: String
-    var price: Double
-    var category: String
 }
 
 struct Service {
     var name: String
     var description: String
-    var price: Double
-    var category: String
 }
 
 struct Other {

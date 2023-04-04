@@ -49,4 +49,29 @@ class KobraViewModel: ObservableObject {
         fetchPosts()
     }
 
+    func updatePost(_ post: Post) {
+        postManager.updatePost(post) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    self?.fetchPosts()
+                case .failure(let error):
+                    print("Error updating post: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+
+    func deletePost(_ post: Post) {
+        postManager.deletePost(post) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    self?.fetchPosts()
+                case .failure(let error):
+                    print("Error deleting post: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
 }

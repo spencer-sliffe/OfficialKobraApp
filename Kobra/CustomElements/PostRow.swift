@@ -17,8 +17,17 @@ struct PostRow: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text(getPosterName())
-                           .font(.footnote)
-                           .foregroundColor(.white)
+                .font(.footnote)
+                .foregroundColor(.white)
+            HStack {
+                Text(post.timestamp.formatted())
+                    .font(.caption)
+                    .foregroundColor(.white)
+                Spacer()
+                Text("Post ID: \(post.id)")
+                    .font(.caption)
+                    .foregroundColor(.white)
+            }
             switch post.type {
             case .advertisement(let advertisementPost):
                 Text(advertisementPost.title)
@@ -53,7 +62,7 @@ struct PostRow: View {
                         .foregroundColor(.white)
                     Text(hardware.condition == .new ? "New" : "Used")
                         .foregroundColor(.white)
-                    Text("Price: \(hardware.price)")
+                    Text("Price: \(marketPost.price)")
                         .foregroundColor(.white)
                 case .software(let software):
                     Text("Software: \(software.name)")
@@ -62,9 +71,9 @@ struct PostRow: View {
                         .foregroundColor(.white)
                     Text(software.description)
                         .foregroundColor(.white)
-                    Text("Price: \(software.price)")
+                    Text("Price: \(marketPost.price)")
                         .foregroundColor(.white)
-                    Text("Category: \(software.category)")
+                    Text("Category: \(marketPost.category)")
                         .foregroundColor(.white)
                 case .service(let service):
                     Text("Service: \(service.name)")
@@ -73,9 +82,9 @@ struct PostRow: View {
                         .foregroundColor(.white)
                     Text(service.description)
                         .foregroundColor(.white)
-                    Text("Price: \(service.price)")
+                    Text("Price: \(marketPost.price)")
                         .foregroundColor(.white)
-                    Text("Category: \(service.category)")
+                    Text("Category: \(marketPost.category)")
                         .foregroundColor(.white)
                 case .other(let other):
                     Text("Other: \(other.title)")
@@ -107,9 +116,9 @@ struct PostRow: View {
         .padding()
     }
     func getPosterName() -> String {
-            switch post.type {
-            case .advertisement(let advertisementPost):
-                return "Advertisement by \(advertisementPost.poster)"
+        switch post.type {
+        case .advertisement(let advertisementPost):
+            return "Advertisement by \(advertisementPost.poster)"
             case .help(let helpPost):
                 return "Help Request by \(helpPost.poster)"
             case .news(let newsPost):

@@ -18,7 +18,6 @@ struct CreatePostView: View {
     
     // Additional state variables for market posts
     @State private var marketPostType = "hardware"
-    @State private var price: Double = 0.0
     @State private var hardwareCondition = Hardware.HardwareCondition.used.rawValue
     @State private var category = ""
     
@@ -46,8 +45,10 @@ struct CreatePostView: View {
 
                             CustomTextField(text: $title, placeholder: "Title")
                             CustomTextField(text: $content, placeholder: "Content")
-                            CustomTextField(text: $category, placeholder: "Category")
-
+                            
+                            if postType != "market" {
+                                CustomTextField(text: $category, placeholder: "Category")
+                            }
 
                             // Conditional view for market posts
                             if postType == "market" {
@@ -91,19 +92,14 @@ struct CreatePostView: View {
                 .frame(maxWidth: .infinity)
             }
 
-            if marketPostType == "software" || marketPostType == "service" {
-                CustomTextField(text: $category, placeholder: "Category")
-            }
+            CustomTextField(text: $category, placeholder: "Category")
 
             VStack(alignment: .leading) {
-                       Stepper(value: $stepperPrice, in: 0...Double.infinity, step: 1.0) {
-                           Text("Price: $\(stepperPrice, specifier: "%.2f")")
-                               .foregroundColor(.white)
-                       }
-                       .onChange(of: stepperPrice) { value in
-                           price = value
-                       }
-                   }
+                Stepper(value: $stepperPrice, in: 0...Double.infinity, step: 1.0) {
+                    Text("Price: $\(stepperPrice, specifier: "%.2f")")
+                        .foregroundColor(.white)
+                }
+            }
         }
     }
 
@@ -120,23 +116,44 @@ struct CreatePostView: View {
         
         switch self.postType {
         case "advertisement":
-            let advertisementPost = AdvertisementPost(poster: username, title: title, content: content)
+            let advertisementPost = AdvertisementPost(poster: username, title: title, content: content, category: category)
             postType = .advertisement(advertisementPost)
         case "help":
-            let helpPost = HelpPost(poster: username, question: title, details: content)
+            let helpPost = HelpPost(poster: username, question: title, details: content, category: category)
             postType = .help(helpPost)
         case "news":
-            let newsPost = NewsPost(poster: username, headline: title, article: content)
+            let newsPost = NewsPost(poster: username, headline: title, article: content, category: category)
             postType = .news(newsPost)
         case "market":
-            let marketPostType: MarketPost.MarketPostType = .other(Other(title: title, description: content))
-            let marketPost = MarketPost(vendor: username, type: marketPostType)
+            let marketPostType: MarketPost.MarketPostType
+            
+            switch self.marketPostType {
+            case "hardware":
+                let hardware = Hardware(name: title, condition: Hardware.HardwareCondition(rawValue: hardwareCondition)!, description: content)
+                marketPostType = .hardware(hardware)
+            case "software":
+                let software = Software(name: title, description: content)
+                marketPostType = .software(software)
+            case "service":
+                let service = Service(name: title, description: content)
+                marketPostType = .service(service)
+            case "other":
+                let other = Other(title: title, description: content)
+                marketPostType = .other(other)
+            default:
+                fatalError("Unknown market post type")
+            }
+            
+            let marketPost = MarketPost(vendor: username, type: marketPostType, price: stepperPrice, category: category)
             postType = .market(marketPost)
         default:
             fatalError("Unknown post type")
         }
         
-        let post = Post(id: id, type: postType, likes: 0)
+        let timestamp = Date()
+        let post = Post(id: id, type: postType, likes: 0, timestamp: timestamp)
         kobraViewModel.addPost(post)
+        presentationMode.wrappedValue.dismiss()
     }
+
 }

@@ -20,12 +20,16 @@ struct KobraPicker<Content: View>: View {
     }
 
     var body: some View {
-        VStack {
+        HStack {
+            Text(title)
+                .foregroundColor(.white)
+                .padding(.leading)
+            Spacer()
             Picker(selection: $selection, label: Text("")) {
                 content()
             }
             .pickerStyle(MenuPickerStyle())
-            .padding()
+            .padding(.trailing)
             .background(Color.clear)
             .cornerRadius(8)
             .overlay(
@@ -33,5 +37,7 @@ struct KobraPicker<Content: View>: View {
                     .stroke(Color.white, lineWidth: 1)
             )
         }
+        .frame(maxWidth: .infinity)
     }
+
 }
