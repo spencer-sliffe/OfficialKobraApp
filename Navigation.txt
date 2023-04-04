@@ -1,0 +1,31 @@
+HomePageView (View)
+└─ body (some View)
+   └─ NavigationView (StackNavigationViewStyle)
+      └─ ZStack
+	     └─ TabView (PageTabViewStyle)
+		 	├─ AccountView (Tab)
+      	 	├─ InboxView (Tab)
+			├─ KobraView (Tab)
+			├─ MarketPlaceView (Tab)
+			└─ PackageView (Tab)
+			
+InboxView View
+├─ body (some View)
+│  └─ Vstack
+│  	  ├─ content (some View)
+│	  │  └─ addChatSheet (Sheet)
+│	  └─ HStack
+│	  	 └─ addButton (some View)
+├─ content (some View)
+│  └─ Group
+│	  └─ Vstack
+│	   	 ├─ SearchBar (some View)
+│	     └─ chatList (some View)
+├─ chatList (some View)
+│  └─ Group (refreshable)
+│  	  └─ List 
+│	     └─ chat in NavigationLink (List Element)
+│		 	└─ ChatView (destination)
+├─ addButton (some View)
+   └─ Button (view toggle)
+      └─ showingAddChat.toggle() (action)	

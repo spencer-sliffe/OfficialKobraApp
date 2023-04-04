@@ -16,14 +16,14 @@ struct SearchBar: View {
             TextField("", text: $text, onEditingChanged: { isEditing in
                 self.isEditing = isEditing
             })
+            .padding(.horizontal, 8)
+            .padding(.vertical, 10)
             .background(Color.clear)
-            .foregroundColor(.white)
-            .textFieldStyle(PlainTextFieldStyle()) // Changed to PlainTextFieldStyle
-            .padding(.horizontal, 8) // Add padding to the TextField
             .overlay(
-                RoundedRectangle(cornerRadius: 10) // Add a RoundedRectangle for the border
+                RoundedRectangle(cornerRadius: 10)
                     .stroke(Color.white, lineWidth: 1)
             )
+            
             .overlay(
                 HStack {
                     if !isEditing && text.isEmpty {

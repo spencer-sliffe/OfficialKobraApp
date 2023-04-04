@@ -72,7 +72,6 @@ struct InboxView: View {
                 }
                 .foregroundColor(.white)
                 .listStyle(PlainListStyle())
-                .padding(.top,-20)
             }
         }
         .refreshable {

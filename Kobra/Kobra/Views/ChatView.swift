@@ -43,8 +43,14 @@ struct ChatView: View {
             
             HStack(spacing: 0) {
                 TextField("Message...", text: $chatInput)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .frame(height: 40)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 10)
+                    .background(Color.clear)
+                    .foregroundColor(.white)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.white, lineWidth: 1)
+                    )
                 Button(action: {
                     viewModel.sendMessage(chatInput)
                     chatInput = ""
