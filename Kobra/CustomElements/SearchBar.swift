@@ -29,6 +29,8 @@ struct SearchBar: View {
                     if !isEditing && text.isEmpty {
                         Image(systemName: "magnifyingglass")
                             .foregroundColor(.white)
+                        Text("Search")
+                            .foregroundColor(.white)
                     }
                     Spacer()
                     if !text.isEmpty {
@@ -39,6 +41,7 @@ struct SearchBar: View {
                         }) {
                             Image(systemName: "xmark.circle.fill")
                                 .opacity(text == "" ? 0 : 1)
+                                .foregroundColor(.white)
                         }
                     }
                 }

@@ -45,10 +45,11 @@ struct KobraView: View {
             }) {
                 Image(systemName: "plus.circle.fill")
                     .resizable()
-                    .frame(width: 60, height: 60)
+                    .frame(width: 40, height: 40)
                     .foregroundColor(.white)
+                    .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 0)
             }
-                .padding(.bottom, 20),
+                .padding(16),
             alignment: .bottomTrailing
         )
     }

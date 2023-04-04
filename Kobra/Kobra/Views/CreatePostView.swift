@@ -14,62 +14,98 @@ struct CreatePostView: View {
     @State private var postType = ""
     @State private var title = ""
     @State private var content = ""
+    @State private var stepperPrice: Double = 0
     
     // Additional state variables for market posts
-    @State private var marketPostType = ""
-    @State private var price: Double? = nil
+    @State private var marketPostType = "hardware"
+    @State private var price: Double = 0.0
     @State private var hardwareCondition = Hardware.HardwareCondition.used.rawValue
     @State private var category = ""
-
+    
     var body: some View {
-        VStack{
-            Form {
-            Picker("Post Type", selection: $postType) {
-                Text("Advertisement").tag("advertisement")
-                Text("Help").tag("help")
-                Text("News").tag("news")
-                Text("Market").tag("market")
-            }
-            
-            TextField("Title", text: $title)
-            TextField("Content", text: $content)
-            
-            // Conditional view for market posts
-            if postType == "market" {
-                Picker("Market Post Type", selection: $marketPostType) {
-                    Text("Hardware").tag("hardware")
-                    Text("Software").tag("software")
-                    Text("Service").tag("service")
-                    Text("Other").tag("other")
-                }
-                
-                if marketPostType == "hardware" {
-                    Picker("Condition", selection: $hardwareCondition) {
-                        Text("New").tag(Hardware.HardwareCondition.new.rawValue)
-                        Text("Used").tag(Hardware.HardwareCondition.used.rawValue)
-                    }
-                }
-                
-                if marketPostType == "software" || marketPostType == "service" {
-                    TextField("Category", text: $category)
-                }
-                
-                TextField("Price", value: $price, formatter: NumberFormatter())
-            }
-        }
-        
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(
+        NavigationView {
+            ZStack {
                 LinearGradient(
                     gradient: Gradient(colors: [.black, .blue]),
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 )
-            )
+                .edgesIgnoringSafeArea(.all)
+
+                VStack {
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 20) {
+
+                            KobraPicker(title: "Post Type", selection: $postType) {
+                                Text("Advertisement").tag("advertisement")
+                                Text("Help").tag("help")
+                                Text("News").tag("news")
+                                Text("Market").tag("market")
+                            }
+                            .frame(maxWidth: .infinity)
+
+                            CustomTextField(text: $title, placeholder: "Title")
+                            CustomTextField(text: $content, placeholder: "Content")
+                            CustomTextField(text: $category, placeholder: "Category")
+
+
+                            // Conditional view for market posts
+                            if postType == "market" {
+                                marketPostContent()
+                            }
+                        }
+                        .padding()
+                    }
+                    Spacer()
+                    Button(action: savePost) {
+                        Text("Post")
+                            .foregroundColor(.white)
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .padding()
+                            .background(Color.blue)
+                            .cornerRadius(8)
+                    }
+                    .padding()
+                }
+            }
+        }
     }
-        
     
+    @ViewBuilder
+    private func marketPostContent() -> some View {
+        VStack(alignment: .leading, spacing: 20) {
+
+            KobraPicker(title: "Market Post Type", selection: $marketPostType) {
+                Text("Hardware").tag("hardware")
+                Text("Software").tag("software")
+                Text("Service").tag("service")
+                Text("Other").tag("other")
+            }
+            .frame(maxWidth: .infinity)
+
+            if marketPostType == "hardware" {
+                KobraPicker(title: "Condition", selection: $hardwareCondition) {
+                    Text("New").tag(Hardware.HardwareCondition.new.rawValue)
+                    Text("Used").tag(Hardware.HardwareCondition.used.rawValue)
+                }
+                .frame(maxWidth: .infinity)
+            }
+
+            if marketPostType == "software" || marketPostType == "service" {
+                CustomTextField(text: $category, placeholder: "Category")
+            }
+
+            VStack(alignment: .leading) {
+                       Stepper(value: $stepperPrice, in: 0...Double.infinity, step: 1.0) {
+                           Text("Price: $\(stepperPrice, specifier: "%.2f")")
+                               .foregroundColor(.white)
+                       }
+                       .onChange(of: stepperPrice) { value in
+                           price = value
+                       }
+                   }
+        }
+    }
 
     private func savePost() {
         guard let userEmail = Auth.auth().currentUser?.email else {
@@ -81,7 +117,7 @@ struct CreatePostView: View {
         
         let id = UUID()
         let postType: Post.PostType
-
+        
         switch self.postType {
         case "advertisement":
             let advertisementPost = AdvertisementPost(poster: username, title: title, content: content)
@@ -99,7 +135,7 @@ struct CreatePostView: View {
         default:
             fatalError("Unknown post type")
         }
-
+        
         let post = Post(id: id, type: postType, likes: 0)
         kobraViewModel.addPost(post)
     }

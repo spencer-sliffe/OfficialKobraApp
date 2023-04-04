@@ -8,10 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		452430FA29DAA0E40000B5AB /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452430F929DAA0E40000B5AB /* SearchBar.swift */; };
+		4525CFC429DB407E005C0CE8 /* KobraPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4525CFC329DB407E005C0CE8 /* KobraPicker.swift */; };
 		4527837929D8AB3D00B633FB /* FSPostManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4527837829D8AB3D00B633FB /* FSPostManager.swift */; };
 		4527837B29D8B2FB00B633FB /* PostRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4527837A29D8B2FB00B633FB /* PostRow.swift */; };
 		4527837D29D8B56D00B633FB /* CreatePostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4527837C29D8B56D00B633FB /* CreatePostView.swift */; };
 		4528556229B1AED800F088CD /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4528556129B1AED800F088CD /* AuthenticationViewModel.swift */; };
+		4543FE6129DB4A0C003B3CCC /* CustomUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543FE6029DB4A0C003B3CCC /* CustomUITextField.swift */; };
+		4543FE6329DB4A24003B3CCC /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543FE6229DB4A24003B3CCC /* CustomTextField.swift */; };
 		455C6E5729D7E72600446520 /* KobraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455C6E5629D7E72600446520 /* KobraViewModel.swift */; };
 		455C6E5929D7E9B700446520 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455C6E5829D7E9B700446520 /* Post.swift */; };
 		458D23CE29A52B5E00205AAE /* TokenResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 458D23CD29A52B5E00205AAE /* TokenResponseModel.swift */; };
@@ -55,10 +58,13 @@
 		282C022F31C00540FC0513A8 /* Pods-Kobra.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kobra.debug.xcconfig"; path = "Target Support Files/Pods-Kobra/Pods-Kobra.debug.xcconfig"; sourceTree = "<group>"; };
 		4416BB8B9604E5EFA9033790 /* Pods-Kobra.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kobra.release.xcconfig"; path = "Target Support Files/Pods-Kobra/Pods-Kobra.release.xcconfig"; sourceTree = "<group>"; };
 		452430F929DAA0E40000B5AB /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		4525CFC329DB407E005C0CE8 /* KobraPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KobraPicker.swift; sourceTree = "<group>"; };
 		4527837829D8AB3D00B633FB /* FSPostManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FSPostManager.swift; sourceTree = "<group>"; };
 		4527837A29D8B2FB00B633FB /* PostRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRow.swift; sourceTree = "<group>"; };
 		4527837C29D8B56D00B633FB /* CreatePostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostView.swift; sourceTree = "<group>"; };
 		4528556129B1AED800F088CD /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
+		4543FE6029DB4A0C003B3CCC /* CustomUITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUITextField.swift; sourceTree = "<group>"; };
+		4543FE6229DB4A24003B3CCC /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		455C6E5629D7E72600446520 /* KobraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KobraViewModel.swift; sourceTree = "<group>"; };
 		455C6E5829D7E9B700446520 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		458D23CD29A52B5E00205AAE /* TokenResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenResponseModel.swift; sourceTree = "<group>"; };
@@ -115,6 +121,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4543FE5F29DB499E003B3CCC /* CustomElements */ = {
+			isa = PBXGroup;
+			children = (
+				4527837A29D8B2FB00B633FB /* PostRow.swift */,
+				45CAAA2329DA7EF500BBD9FE /* SwipeableTabView.swift */,
+				452430F929DAA0E40000B5AB /* SearchBar.swift */,
+				4525CFC329DB407E005C0CE8 /* KobraPicker.swift */,
+				4543FE6029DB4A0C003B3CCC /* CustomUITextField.swift */,
+				4543FE6229DB4A24003B3CCC /* CustomTextField.swift */,
+			);
+			path = CustomElements;
+			sourceTree = "<group>";
+		};
 		45A908C929B037EA00792FC2 /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
@@ -129,6 +148,7 @@
 		45E5ABCE299D8AC300DFFDC8 = {
 			isa = PBXGroup;
 			children = (
+				4543FE5F29DB499E003B3CCC /* CustomElements */,
 				45A908C929B037EA00792FC2 /* Firebase */,
 				45E98486299D8BE600B3A56A /* Fonts */,
 				45E98485299D8BB900B3A56A /* ViewModels */,
@@ -183,7 +203,6 @@
 				45CFE93529C04EF6003806D5 /* Chat.swift */,
 				45C7171B29C63ABE00679626 /* ChatMessage.swift */,
 				455C6E5829D7E9B700446520 /* Post.swift */,
-				4527837A29D8B2FB00B633FB /* PostRow.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -223,8 +242,6 @@
 				45D5110229D0AB9100290720 /* MarketPlaceView.swift */,
 				45D5110429D0ABAF00290720 /* KobraView.swift */,
 				4527837C29D8B56D00B633FB /* CreatePostView.swift */,
-				45CAAA2329DA7EF500BBD9FE /* SwipeableTabView.swift */,
-				452430F929DAA0E40000B5AB /* SearchBar.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -371,6 +388,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				45E9848D299D8C7700B3A56A /* ColorCodes.swift in Sources */,
+				4525CFC429DB407E005C0CE8 /* KobraPicker.swift in Sources */,
 				45EA728129B7BA5B000FD738 /* Account.swift in Sources */,
 				45AD933F29B130E900D153AF /* AccountViewModel.swift in Sources */,
 				45C7171C29C63ABE00679626 /* ChatMessage.swift in Sources */,
@@ -392,6 +410,7 @@
 				4528556229B1AED800F088CD /* AuthenticationViewModel.swift in Sources */,
 				45EC904C29B8217100E0A3A3 /* StorageManager.swift in Sources */,
 				458D23D029A52DBB00205AAE /* SignUpErrorModel.swift in Sources */,
+				4543FE6329DB4A24003B3CCC /* CustomTextField.swift in Sources */,
 				45CFE93629C04EF6003806D5 /* Chat.swift in Sources */,
 				45A908CB29B037FE00792FC2 /* DataManager.swift in Sources */,
 				4527837929D8AB3D00B633FB /* FSPostManager.swift in Sources */,
@@ -399,6 +418,7 @@
 				45A908CD29B0386400792FC2 /* Package.swift in Sources */,
 				455C6E5929D7E9B700446520 /* Post.swift in Sources */,
 				45EA727F29B7B74C000FD738 /* PackageView.swift in Sources */,
+				4543FE6129DB4A0C003B3CCC /* CustomUITextField.swift in Sources */,
 				45C7171E29C63AF700679626 /* InboxViewModel.swift in Sources */,
 				45E5ABDB299D8AC300DFFDC8 /* KobraApp.swift in Sources */,
 				45D5110529D0ABAF00290720 /* KobraView.swift in Sources */,
@@ -540,10 +560,11 @@
 				INFOPLIST_FILE = Kobra/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Kobra;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -573,10 +594,11 @@
 				INFOPLIST_FILE = Kobra/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Kobra;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
