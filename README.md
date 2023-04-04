@@ -7,23 +7,26 @@
 # Final Goal
 
 - A mobile application that shares data with "kobracoding.com"
-- Streamline the accessibility of https://kobracoding.com/Market/Market.html and expand its functionality
 - Kobra Account Database Transaction capablity on website and app
-- Allow Kobra users to connect and communicate through chat
+- Universal feed for Marketplace Posts, News Posts, Help Posts, Advertisement Posts, and more to come
+- Kobra Account Management
+- Monthly Subscriptions
+- Allow Kobra users to connect and communicate through private chat
+- Allow Kobra users to connect and communicate through Global chat
 - Expand marketplace and allow users to sell hardware and software/solutions to eachother (similar to facebook marketplace but focused)
 - Forums of communities surrounding the topics I care about: Computers, Software, Coding, Music, American Sports, Video Games, World News, Celebrities
 
 # Functionality 
 
 - Account creation (Complete)
-- Sign in
-- Log out
-- (View) Account Details
+- Sign in (Complete)
+- Log out (Complete)
+- View Account Details (Complete)
 - Edit Account
-- (view) Package Status
-- Purchase Package
-- Upgrade Package
-- Cancel Package
+- View Subscription Status (Complete)
+- Purchase Subscription
+- Upgrade Subscription
+- Cancel Subscription
 - Direct Messaging system to communicate with kobracoding.com developers
 
 # Language
