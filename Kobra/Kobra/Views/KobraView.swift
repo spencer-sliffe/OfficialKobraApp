@@ -11,12 +11,12 @@ import Foundation
 struct KobraView: View {
     @State private var isPresentingCreatePostView = false
     @ObservedObject var viewModel = KobraViewModel()
-    
+
     var body: some View {
         VStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 10) {
-                    ForEach(viewModel.posts) { post in
+                    ForEach(viewModel.posts.sorted(by: { $0.timestamp > $1.timestamp })) { post in
                         PostRow(post: post)
                             .environmentObject(viewModel)
                             .background(Color.clear)

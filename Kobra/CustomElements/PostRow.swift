@@ -14,20 +14,21 @@ struct PostRow: View {
     @State private var likes = 0
     @EnvironmentObject var kobraViewModel: KobraViewModel
 
+    var priceFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.locale = Locale(identifier: "en_US")
+        formatter.numberStyle = .currency
+        formatter.maximumFractionDigits = 2
+        formatter.minimumFractionDigits = 2
+        return formatter
+    }()
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .center, spacing: 10) {
             Text(getPosterName())
                 .font(.footnote)
                 .foregroundColor(.white)
-            HStack {
-                Text(post.timestamp.formatted())
-                    .font(.caption)
-                    .foregroundColor(.white)
-                Spacer()
-                Text("Post ID: \(post.id)")
-                    .font(.caption)
-                    .foregroundColor(.white)
-            }
+            
             switch post.type {
             case .advertisement(let advertisementPost):
                 Text(advertisementPost.title)
@@ -62,7 +63,7 @@ struct PostRow: View {
                         .foregroundColor(.white)
                     Text(hardware.condition == .new ? "New" : "Used")
                         .foregroundColor(.white)
-                    Text("Price: \(marketPost.price)")
+                    Text("Price: \(priceFormatter.string(from: NSNumber(value: marketPost.price)) ?? "")")
                         .foregroundColor(.white)
                 case .software(let software):
                     Text("Software: \(software.name)")
@@ -71,7 +72,7 @@ struct PostRow: View {
                         .foregroundColor(.white)
                     Text(software.description)
                         .foregroundColor(.white)
-                    Text("Price: \(marketPost.price)")
+                    Text("Price: \(priceFormatter.string(from: NSNumber(value: marketPost.price)) ?? "")")
                         .foregroundColor(.white)
                     Text("Category: \(marketPost.category)")
                         .foregroundColor(.white)
@@ -82,7 +83,7 @@ struct PostRow: View {
                         .foregroundColor(.white)
                     Text(service.description)
                         .foregroundColor(.white)
-                    Text("Price: \(marketPost.price)")
+                    Text("Price: \(priceFormatter.string(from: NSNumber(value: marketPost.price)) ?? "")")
                         .foregroundColor(.white)
                     Text("Category: \(marketPost.category)")
                         .foregroundColor(.white)
@@ -93,8 +94,15 @@ struct PostRow: View {
                         .foregroundColor(.white)
                     Text(other.description)
                         .foregroundColor(.white)
+                    Text("Price: \(priceFormatter.string(from: NSNumber(value: marketPost.price)) ?? "")")
+                        .foregroundColor(.white)
                 }
             }
+           
+            Text(post.timestamp.formatted())
+                .font(.caption)
+                .foregroundColor(.white)
+
             HStack {
                 Button(action: {
                     isLiked.toggle()
@@ -115,16 +123,17 @@ struct PostRow: View {
         }
         .padding()
     }
+
     func getPosterName() -> String {
         switch post.type {
         case .advertisement(let advertisementPost):
             return "Advertisement by \(advertisementPost.poster)"
-            case .help(let helpPost):
-                return "Help Request by \(helpPost.poster)"
-            case .news(let newsPost):
-                return "Article by \(newsPost.poster)"
-            case .market(let marketPost):
-                return "Product by \(marketPost.vendor)"
-            }
+        case .help(let helpPost):
+            return "Help Request by \(helpPost.poster)"
+        case .news(let newsPost):
+            return "Article by \(newsPost.poster)"
+        case .market(let marketPost):
+            return "Product by \(marketPost.vendor)"
         }
+    }
 }

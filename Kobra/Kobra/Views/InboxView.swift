@@ -28,7 +28,7 @@ struct InboxView: View {
 
             HStack {
                 Spacer()
-                addButton.padding(.bottom, 20)
+                addButton.padding(.bottom, 0)
             }
         }
     }
