@@ -15,7 +15,6 @@ struct CreatePostView: View {
     @State private var title = ""
     @State private var content = ""
     @State private var stepperPrice: Double = 0
-    
     // Additional state variables for market posts
     @State private var marketPostType = "hardware"
     @State private var hardwareCondition = Hardware.HardwareCondition.used.rawValue
@@ -30,11 +29,9 @@ struct CreatePostView: View {
                     endPoint: .bottomTrailing
                 )
                 .edgesIgnoringSafeArea(.all)
-                
                 VStack {
                     ScrollView {
                         VStack(alignment: .leading, spacing: 20) {
-                            
                             KobraPicker(title: "Post Type", selection: $postType) {
                                 Text("Advertisement").tag("advertisement")
                                 Text("Help").tag("help")
@@ -42,14 +39,11 @@ struct CreatePostView: View {
                                 Text("Market").tag("market")
                             }
                             .frame(maxWidth: .infinity)
-                            
                             CustomTextField(text: $title, placeholder: "Title")
                             CustomTextField(text: $content, placeholder: "Content")
-                            
                             if postType != "market" {
                                 CustomTextField(text: $category, placeholder: "Category")
                             }
-                            
                             // Conditional view for market posts
                             if postType == "market" {
                                 marketPostContent()
@@ -75,7 +69,6 @@ struct CreatePostView: View {
     @ViewBuilder
     private func marketPostContent() -> some View {
         VStack(alignment: .leading, spacing: 20) {
-            
             KobraPicker(title: "Market Post Type", selection: $marketPostType) {
                 Text("Hardware").tag("hardware")
                 Text("Software").tag("software")
@@ -83,7 +76,6 @@ struct CreatePostView: View {
                 Text("Other").tag("other")
             }
             .frame(maxWidth: .infinity)
-            
             if marketPostType == "hardware" {
                 KobraPicker(title: "Condition", selection: $hardwareCondition) {
                     Text("New").tag(Hardware.HardwareCondition.new.rawValue)
@@ -91,9 +83,7 @@ struct CreatePostView: View {
                 }
                 .frame(maxWidth: .infinity)
             }
-            
             CustomTextField(text: $category, placeholder: "Category")
-            
             VStack(alignment: .leading) {
                 Stepper(value: $stepperPrice, in: 0...Double.infinity, step: 1.0) {
                     Text("Price: $\(stepperPrice, specifier: "%.2f")")
@@ -108,12 +98,9 @@ struct CreatePostView: View {
             print("Error: User not logged in or email not found")
             return
         }
-        
         let username = userEmail.components(separatedBy: "@")[0]
-        
         let id = UUID()
         let postType: Post.PostType
-        
         switch self.postType {
         case "advertisement":
             let advertisementPost = AdvertisementPost(poster: username, title: title, content: content, category: category)
@@ -126,7 +113,6 @@ struct CreatePostView: View {
             postType = .news(newsPost)
         case "market":
             let marketPostType: MarketPost.MarketPostType
-            
             switch self.marketPostType {
             case "hardware":
                 let hardware = Hardware(name: title, condition: Hardware.HardwareCondition(rawValue: hardwareCondition)!, description: content)
@@ -143,13 +129,11 @@ struct CreatePostView: View {
             default:
                 fatalError("Unknown market post type")
             }
-            
             let marketPost = MarketPost(vendor: username, type: marketPostType, price: stepperPrice, category: category)
             postType = .market(marketPost)
         default:
             fatalError("Unknown post type")
         }
-        
         let timestamp = Date()
         let post = Post(id: id, type: postType, likes: 0, timestamp: timestamp)
         kobraViewModel.addPost(post)

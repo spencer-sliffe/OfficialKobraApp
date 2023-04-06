@@ -28,19 +28,15 @@ class PackageViewModel: ObservableObject {
                 print(error!.localizedDescription)
                 return
             }
-            
             if let snapshot = snapshot {
                 let group = DispatchGroup()
-                
                 for document in snapshot.documents {
                     let data = document.data()
-                    
                     let id = UUID(uuidString: document.documentID) ?? UUID()
                     let medal = data["medal"] as? String ?? ""
                     let price = data["price"] as? Double ?? 0.0 // change to Double
                     var package = PackageWithImage(id: id, medal: medal, price: price)
                     self.packages.append(package)
-                    
                     let imageRef = storageManager.reference.child("images/\(medal).jpg")
                     group.enter()
                     storageManager.downloadImage(from: imageRef) { image in
@@ -52,7 +48,6 @@ class PackageViewModel: ObservableObject {
                         }
                     }
                 }
-                
                 group.notify(queue: DispatchQueue.main) {
                     self.isLoading4 = false
                     print("All images downloaded!")
@@ -60,7 +55,6 @@ class PackageViewModel: ObservableObject {
             }
         }
     }
-    
 }
 
 struct PackageCell: View {

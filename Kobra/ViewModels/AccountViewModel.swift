@@ -21,7 +21,6 @@ class AccountViewModel: ObservableObject {
             print("Error: No user is currently signed in.")
             return
         }
-        
         // Make API call to fetch account data from backend using the user's ID
         let db = Firestore.firestore()
         let ref = db.collection("Accounts").document(user.uid)
@@ -30,12 +29,10 @@ class AccountViewModel: ObservableObject {
                 print("Error fetching account data: \(error?.localizedDescription ?? "unknown error")")
                 return
             }
-            
             let data = document.data()!
             let email = user.email ?? ""
             let subscription = data["subscription"] as? Bool ?? false
             var account = Account(id: user.uid, email: email, subscription: subscription, packageData: nil, profilePicture: nil)
-            
             if let packageId = data["packageId"] as? String {
                 let packageRef = db.collection("Packages").document(packageId)
                 packageRef.getDocument { (packageDocument, packageError) in
@@ -43,7 +40,6 @@ class AccountViewModel: ObservableObject {
                         print("Error fetching package data: \(packageError?.localizedDescription ?? "unknown error")")
                         return
                     }
-                    
                     let packageData = packageDocument.data()!
                     let package = Package(id: packageDocument.documentID, name: packageData["name"] as! String, price: packageData["price"] as! Double)
                     account.package = package

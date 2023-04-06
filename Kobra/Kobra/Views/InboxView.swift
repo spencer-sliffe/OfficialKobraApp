@@ -81,7 +81,6 @@ struct InboxView: View {
         .accentColor(.white)
     }
     
-    
     private var addButton: some View {
         Button(action: {
             showingAddChat.toggle()
@@ -177,10 +176,7 @@ struct ChatCell: View {
         .foregroundColor(.white)
         .background(Color.clear) // set the background to clear color
     }
-    
 }
-
-
 
 struct InboxView_Previews: PreviewProvider {
     static var previews: some View {

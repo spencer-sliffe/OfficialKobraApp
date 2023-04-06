@@ -29,11 +29,7 @@ struct PackageView: View {
         .navigationBarHidden(true)
         .navigationBarTitle("")
     }
-    
-    
 }
-
-
 
 struct PackageView_Previews: PreviewProvider {
     static var previews: some View {

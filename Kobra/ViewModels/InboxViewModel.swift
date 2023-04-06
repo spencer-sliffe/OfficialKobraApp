@@ -64,7 +64,6 @@ class InboxViewModel: ObservableObject {
             completion(.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "A chat already exists with this user."])))
             return
         }
-        
         firestoreManager.createChat(withUserWithEmail: userEmail, currentUserEmail: currentUserEmail) { [weak self] result in
             switch result {
             case .success(let chat):
@@ -79,7 +78,6 @@ class InboxViewModel: ObservableObject {
             }
         }
     }
-    
     
     func observeUnreadMessageCounts(forChats chats: [Chat]) {
         for chat in chats {
@@ -96,8 +94,7 @@ class InboxViewModel: ObservableObject {
             listeners.append(listener)
         }
     }
-    
-    
+
     func observeUnreadMessageCount(forChat chat: Chat, completion: @escaping (Result<Int, Error>) -> Void) -> ListenerRegistration {
         return firestoreManager.observeUnreadMessageCount(forChat: chat, currentUserEmail: currentUserEmail, completion: completion)
     }

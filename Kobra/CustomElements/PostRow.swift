@@ -28,7 +28,6 @@ struct PostRow: View {
             Text(getPosterName())
                 .font(.footnote)
                 .foregroundColor(.white)
-            
             switch post.type {
             case .advertisement(let advertisementPost):
                 Text(advertisementPost.title)
@@ -98,11 +97,9 @@ struct PostRow: View {
                         .foregroundColor(.white)
                 }
             }
-            
             Text(post.timestamp.formatted())
                 .font(.caption)
                 .foregroundColor(.white)
-            
             HStack {
                 Button(action: {
                     isLiked.toggle()
@@ -121,7 +118,6 @@ struct PostRow: View {
                     .foregroundColor(.white)
             }
         }
-        
         .padding()
         .background(Color.black.opacity(0.3))
         .border(Color.white, width: 1)

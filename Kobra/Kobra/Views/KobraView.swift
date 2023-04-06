@@ -21,7 +21,6 @@ struct KobraView: View {
         case help = "Help"
         case news = "News"
         case market = "Market"
-        
         var id: String { self.rawValue }
     }
     

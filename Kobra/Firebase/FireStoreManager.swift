@@ -24,7 +24,6 @@ class FirestoreManager {
                     completion(.failure(error))
                     return
                 }
-                
                 let messages = snapshot?.documents.compactMap { document -> ChatMessage? in
                     guard let sender = document.data()["sender"] as? String,
                           let text = document.data()["text"] as? String,
@@ -34,7 +33,6 @@ class FirestoreManager {
                     
                     return ChatMessage(id: document.documentID, sender: sender, text: text, timestamp: timestamp, isRead: isRead)
                 } ?? []
-                
                 completion(.success(messages))
             }
     }
@@ -50,17 +48,14 @@ class FirestoreManager {
                     completion(.failure(error))
                     return
                 }
-                
                 let messages = snapshot?.documents.compactMap { document -> ChatMessage? in
                     guard let sender = document.data()["sender"] as? String,
                           let text = document.data()["text"] as? String,
                           let timestamp = (document.data()["timestamp"] as? Timestamp)?.dateValue(),
                           let isRead = document.data()["isRead"] as? Bool
                     else { return nil }
-                    
                     return ChatMessage(id: document.documentID, sender: sender, text: text, timestamp: timestamp, isRead: isRead)
                 } ?? []
-                
                 completion(.success(messages))
             }
     }
@@ -73,7 +68,6 @@ class FirestoreManager {
             "timestamp": FieldValue.serverTimestamp(),
             "isRead": false
         ] as [String: Any]
-        
         self.db.collection("chats")
             .document(chatId)
             .collection("messages")
@@ -82,7 +76,6 @@ class FirestoreManager {
                     completion(error)
                     return
                 }
-                
                 // Update last message in chat
                 let chatRef = self.db.collection("chats").document(chatId)
                 chatRef.updateData([
@@ -117,7 +110,6 @@ class FirestoreManager {
                         let lastMessage = ChatMessage(sender: sender, text: text, timestamp: timestamp, isRead: isRead)
                         return Chat(id: document.documentID, participants: participants, lastMessage: lastMessage)
                     }
-                    
                     completion(.success(chats))
                 }
             }

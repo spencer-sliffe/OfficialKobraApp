@@ -37,10 +37,7 @@ struct ChatView: View {
                     .padding(.top)
                 }
             }
-            
-            
             Divider()
-            
             HStack(spacing: 0) {
                 TextField("Message...", text: $chatInput)
                     .padding(.horizontal, 8)
@@ -112,7 +109,6 @@ struct KeyboardAwareModifier: ViewModifier {
             }
     }
 }
-
 
 extension View {
     func keyboardAware() -> ModifiedContent<Self, KeyboardAwareModifier> {

@@ -12,7 +12,6 @@ import Firebase
 class FSPostManager {
     private init() {}
     static let shared = FSPostManager()
-    
     private let db = Firestore.firestore()
     private let postsCollection = "Posts"
     
@@ -28,7 +27,6 @@ class FSPostManager {
                 let post = self.createPostFrom(data: data)
                 posts.append(post)
             }
-            
             completion(.success(posts))
         }
     }
@@ -38,7 +36,6 @@ class FSPostManager {
         let likes = data["likes"] as? Int ?? 0
         let timestamp = (data["timestamp"] as? Timestamp)?.dateValue() ?? Date()
         let postTypeString = data["postType"] as? String ?? ""
-        
         var postType: Post.PostType
         
         switch postTypeString {
@@ -95,21 +92,16 @@ class FSPostManager {
             default:
                 fatalError("Unknown market post type")
             }
-            
             let marketPost = MarketPost(vendor: vendor, type: marketPostType, price: price, category: category)
             postType = .market(marketPost)
         default:
             fatalError("Unknown post type")
         }
-        
         return Post(id: id, type: postType, likes: likes, timestamp: timestamp)
     }
-    
-    
     func addPost(_ post: Post, completion: @escaping (Result<Void, Error>) -> Void) {
         // Convert the Post struct into a data dictionary
         let data = self.convertPostToData(post)
-        
         db.collection(postsCollection).addDocument(data: data) { error in
             if let error = error {
                 completion(.failure(error))
@@ -128,7 +120,6 @@ class FSPostManager {
         
         var postTypeString: String
         var marketPostTypeString: String?
-        
         switch post.type {
         case .advertisement(let advertisementPost):
             postTypeString = "advertisement"
@@ -173,12 +164,10 @@ class FSPostManager {
                 data["title"] = other.title
                 data["description"] = other.description
             }
-            
             if let marketPostTypeString = marketPostTypeString {
                 data["marketPostType"] = marketPostTypeString
             }
         }
-        
         data["postType"] = postTypeString
         return data
     }
@@ -187,7 +176,6 @@ class FSPostManager {
     func updatePost(_ post: Post, completion: @escaping (Result<Void, Error>) -> Void) {
         let id = post.id
         let data = self.convertPostToData(post)
-        
         db.collection(postsCollection).document(id.uuidString).setData(data) { error in
             if let error = error {
                 completion(.failure(error))
@@ -199,7 +187,6 @@ class FSPostManager {
     
     func deletePost(_ post: Post, completion: @escaping (Result<Void, Error>) -> Void) {
         let id = post.id
-        
         db.collection(postsCollection).document(id.uuidString).delete { error in
             if let error = error {
                 completion(.failure(error))
@@ -212,7 +199,6 @@ class FSPostManager {
     func updateLikeCount(_ post: Post, likeCount: Int) {
         let id = post.id
         let postRef = db.collection(postsCollection).document(id.uuidString)
-        
         postRef.updateData([
             "likes": likeCount
         ]) { error in
@@ -222,7 +208,5 @@ class FSPostManager {
                 print("Like count updated successfully")
             }
         }
-        
     }
-    
 }
