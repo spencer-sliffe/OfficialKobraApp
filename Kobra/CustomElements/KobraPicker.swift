@@ -2,7 +2,7 @@
 //  KobraPicker.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 4/3/23.
+//  Created by Spencer Sliffe on 4/3/23.
 //
 
 import Foundation
@@ -12,13 +12,13 @@ struct KobraPicker<Content: View>: View {
     let content: () -> Content
     let title: String
     @Binding var selection: String
-
+    
     init(title: String, selection: Binding<String>, @ViewBuilder content: @escaping () -> Content) {
         self.content = content
         self.title = title
         self._selection = selection
     }
-
+    
     var body: some View {
         HStack {
             Text(title)

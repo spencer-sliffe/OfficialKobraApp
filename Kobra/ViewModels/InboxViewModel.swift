@@ -29,7 +29,7 @@ class InboxViewModel: ObservableObject {
     var currentUserEmail: String {
         return Auth.auth().currentUser?.email ?? ""
     }
-
+    
     func fetchChats() {
         isLoading = true
         print("Fetching chats for user with email: \(currentUserEmail)")
@@ -51,7 +51,7 @@ class InboxViewModel: ObservableObject {
             listeners.append(listener)
         }
     }
-
+    
     deinit {
         for listener in listeners {
             listener.remove()
@@ -64,7 +64,7 @@ class InboxViewModel: ObservableObject {
             completion(.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "A chat already exists with this user."])))
             return
         }
-
+        
         firestoreManager.createChat(withUserWithEmail: userEmail, currentUserEmail: currentUserEmail) { [weak self] result in
             switch result {
             case .success(let chat):
@@ -79,8 +79,8 @@ class InboxViewModel: ObservableObject {
             }
         }
     }
-
-
+    
+    
     func observeUnreadMessageCounts(forChats chats: [Chat]) {
         for chat in chats {
             let listener = observeUnreadMessageCount(forChat: chat) { [weak self] result in
@@ -96,12 +96,12 @@ class InboxViewModel: ObservableObject {
             listeners.append(listener)
         }
     }
-
-
+    
+    
     func observeUnreadMessageCount(forChat chat: Chat, completion: @escaping (Result<Int, Error>) -> Void) -> ListenerRegistration {
         return firestoreManager.observeUnreadMessageCount(forChat: chat, currentUserEmail: currentUserEmail, completion: completion)
     }
-
+    
     func markMessagesAsRead(forChat chat: Chat) {
         firestoreManager.markMessagesAsRead(forChat: chat, currentUserEmail: currentUserEmail)
     }

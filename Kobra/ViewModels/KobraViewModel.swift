@@ -10,10 +10,10 @@ import Combine
 
 class KobraViewModel: ObservableObject {
     @Published var posts: [Post] = []
-
+    
     private let postManager = FSPostManager.shared
     private var cancellables: Set<AnyCancellable> = []
-
+    
     init() {
         fetchPosts()
     }
@@ -30,7 +30,7 @@ class KobraViewModel: ObservableObject {
             }
         }
     }
-
+    
     func addPost(_ post: Post) {
         postManager.addPost(post) { [weak self] result in
             DispatchQueue.main.async {
@@ -43,12 +43,12 @@ class KobraViewModel: ObservableObject {
             }
         }
     }
-
+    
     func updateLikeCount(_ post: Post, likeCount: Int) {
         postManager.updateLikeCount(post, likeCount: likeCount)
         fetchPosts()
     }
-
+    
     func updatePost(_ post: Post) {
         postManager.updatePost(post) { [weak self] result in
             DispatchQueue.main.async {
@@ -61,7 +61,7 @@ class KobraViewModel: ObservableObject {
             }
         }
     }
-
+    
     func deletePost(_ post: Post) {
         postManager.deletePost(post) { [weak self] result in
             DispatchQueue.main.async {

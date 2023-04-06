@@ -11,7 +11,7 @@ import FirebaseAuth
 struct CreatePostView: View {
     @Environment(\.presentationMode) private var presentationMode
     @EnvironmentObject var kobraViewModel: KobraViewModel
-    @State private var postType = ""
+    @State private var postType = "advertisement"
     @State private var title = ""
     @State private var content = ""
     @State private var stepperPrice: Double = 0
@@ -30,11 +30,11 @@ struct CreatePostView: View {
                     endPoint: .bottomTrailing
                 )
                 .edgesIgnoringSafeArea(.all)
-
+                
                 VStack {
                     ScrollView {
                         VStack(alignment: .leading, spacing: 20) {
-
+                            
                             KobraPicker(title: "Post Type", selection: $postType) {
                                 Text("Advertisement").tag("advertisement")
                                 Text("Help").tag("help")
@@ -42,14 +42,14 @@ struct CreatePostView: View {
                                 Text("Market").tag("market")
                             }
                             .frame(maxWidth: .infinity)
-
+                            
                             CustomTextField(text: $title, placeholder: "Title")
                             CustomTextField(text: $content, placeholder: "Content")
                             
                             if postType != "market" {
                                 CustomTextField(text: $category, placeholder: "Category")
                             }
-
+                            
                             // Conditional view for market posts
                             if postType == "market" {
                                 marketPostContent()
@@ -75,7 +75,7 @@ struct CreatePostView: View {
     @ViewBuilder
     private func marketPostContent() -> some View {
         VStack(alignment: .leading, spacing: 20) {
-
+            
             KobraPicker(title: "Market Post Type", selection: $marketPostType) {
                 Text("Hardware").tag("hardware")
                 Text("Software").tag("software")
@@ -83,7 +83,7 @@ struct CreatePostView: View {
                 Text("Other").tag("other")
             }
             .frame(maxWidth: .infinity)
-
+            
             if marketPostType == "hardware" {
                 KobraPicker(title: "Condition", selection: $hardwareCondition) {
                     Text("New").tag(Hardware.HardwareCondition.new.rawValue)
@@ -91,9 +91,9 @@ struct CreatePostView: View {
                 }
                 .frame(maxWidth: .infinity)
             }
-
+            
             CustomTextField(text: $category, placeholder: "Category")
-
+            
             VStack(alignment: .leading) {
                 Stepper(value: $stepperPrice, in: 0...Double.infinity, step: 1.0) {
                     Text("Price: $\(stepperPrice, specifier: "%.2f")")
@@ -102,7 +102,7 @@ struct CreatePostView: View {
             }
         }
     }
-
+    
     private func savePost() {
         guard let userEmail = Auth.auth().currentUser?.email else {
             print("Error: User not logged in or email not found")
@@ -155,5 +155,5 @@ struct CreatePostView: View {
         kobraViewModel.addPost(post)
         presentationMode.wrappedValue.dismiss()
     }
-
+    
 }

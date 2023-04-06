@@ -8,24 +8,55 @@
 import SwiftUI
 import Foundation
 
+import SwiftUI
+import Foundation
+
 struct KobraView: View {
     @State private var isPresentingCreatePostView = false
     @ObservedObject var viewModel = KobraViewModel()
-    @State private var selectedFeed: FeedType = .advertisement // Add this line
-
-
+    @State private var selectedFeed: FeedType = .advertisement
+    
     enum FeedType: String, CaseIterable, Identifiable {
         case advertisement = "Advertisement"
         case help = "Help"
         case news = "News"
         case market = "Market"
-
+        
         var id: String { self.rawValue }
     }
-
+    
+    var timeFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "hh:mm a"
+        return formatter
+    }
+    
+    var dateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM dd"
+        return formatter
+    }
     
     var body: some View {
         VStack {
+            GeometryReader { geometry in
+                HStack {
+                    Text("\(Date(), formatter: dateFormatter)")
+                        .foregroundColor(.white)
+                    Spacer()
+                    
+                    Text("Kobra Feed")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                    
+                    Spacer()
+                    
+                    Text("\(Date(), formatter: timeFormatter)")
+                        .foregroundColor(.white)
+                }
+                .padding(.horizontal)
+            }.frame(height: 30)
+            
             ScrollView {
                 VStack(alignment: .leading, spacing: 10) {
                     ForEach(viewModel.posts.sorted(by: { $0.timestamp > $1.timestamp })) { post in
@@ -67,7 +98,6 @@ struct KobraView: View {
     }
 }
 
-
 extension View {
     func listBackground(_ color: Color) -> some View {
         modifier(ListBackgroundModifier(color: color))
@@ -76,7 +106,7 @@ extension View {
 
 private struct ListBackgroundModifier: ViewModifier {
     let color: Color
-
+    
     @ViewBuilder
     func body(content: Content) -> some View {
         content

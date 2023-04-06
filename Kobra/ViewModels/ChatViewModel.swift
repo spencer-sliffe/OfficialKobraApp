@@ -24,14 +24,14 @@ class ChatViewModel: ObservableObject {
     init(chat: Chat) {
         self.chat = chat
     }
-
+    
     var currentUserEmail: String {
         return Auth.auth().currentUser?.email ?? ""
     }
     
     func fetchMessages() {
         isLoading2 = true
-       // chatListener?.remove() // Remove any existing listener
+        // chatListener?.remove() // Remove any existing listener
         chatListener = firestoreManager.observeMessages(forChat: chat) { [weak self] result in
             guard let self = self else { return } // make sure self is still available
             self.isLoading2 = false
@@ -50,7 +50,7 @@ class ChatViewModel: ObservableObject {
             
         }
     }
-
+    
     func sendMessage(_ message: String) {
         guard let currentUserEmail = Auth.auth().currentUser?.email else {
             return
@@ -71,7 +71,7 @@ class ChatViewModel: ObservableObject {
 struct MessageRow: View {
     var message: ChatMessage
     var isFromCurrentUser: Bool
-
+    
     var body: some View {
         HStack {
             if isFromCurrentUser {
@@ -99,7 +99,7 @@ struct MessageRow: View {
                 }
                 Spacer()
             }
-
+            
         }
     }
 }

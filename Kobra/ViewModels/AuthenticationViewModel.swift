@@ -23,15 +23,15 @@ class AuthenticationViewModel: ObservableObject {
     @Published var user: User?
     
     let signedOut = PassthroughSubject<Void, Never>()
-       func signOut() {
-           do {
-               try Auth.auth().signOut()
-               signedOut.send()
-               isAuthenticated = false
-           } catch {
-               print("Error signing out: \(error.localizedDescription)")
-           }
-       }
+    func signOut() {
+        do {
+            try Auth.auth().signOut()
+            signedOut.send()
+            isAuthenticated = false
+        } catch {
+            print("Error signing out: \(error.localizedDescription)")
+        }
+    }
     
     private var handle: AuthStateDidChangeListenerHandle?
     
@@ -98,7 +98,7 @@ class AuthenticationViewModel: ObservableObject {
             }
         }
     }
-
+    
     
     func startListening() {
         handle = Auth.auth().addStateDidChangeListener { [weak self] _, user in

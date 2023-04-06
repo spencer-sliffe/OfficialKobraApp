@@ -2,7 +2,7 @@
 //  FSPostManager.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 4/1/23.
+//  Created by Spencer Sliffe on 4/1/23.
 //
 
 import Foundation
@@ -17,21 +17,21 @@ class FSPostManager {
     private let postsCollection = "Posts"
     
     func fetchPosts(completion: @escaping (Result<[Post], Error>) -> Void) {
-            db.collection(postsCollection).getDocuments { (querySnapshot, error) in
-                if let error = error {
-                    completion(.failure(error))
-                    return
-                }
-                var posts: [Post] = []
-                querySnapshot?.documents.forEach { document in
-                    let data = document.data()
-                    let post = self.createPostFrom(data: data)
-                    posts.append(post)
-                }
-                
-                completion(.success(posts))
+        db.collection(postsCollection).getDocuments { (querySnapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+                return
             }
+            var posts: [Post] = []
+            querySnapshot?.documents.forEach { document in
+                let data = document.data()
+                let post = self.createPostFrom(data: data)
+                posts.append(post)
+            }
+            
+            completion(.success(posts))
         }
+    }
     
     private func createPostFrom(data: [String: Any]) -> Post {
         let id = UUID(uuidString: data["id"] as? String ?? "") ?? UUID()
@@ -182,7 +182,7 @@ class FSPostManager {
         data["postType"] = postTypeString
         return data
     }
-
+    
     
     func updatePost(_ post: Post, completion: @escaping (Result<Void, Error>) -> Void) {
         let id = post.id
@@ -222,7 +222,7 @@ class FSPostManager {
                 print("Like count updated successfully")
             }
         }
-    
+        
     }
-
+    
 }

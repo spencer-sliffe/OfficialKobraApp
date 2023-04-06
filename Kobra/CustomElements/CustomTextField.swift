@@ -2,7 +2,7 @@
 //  CustomTextField.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 4/3/23.
+//  Created by Spencer Sliffe on 4/3/23.
 //
 
 import Foundation
@@ -12,7 +12,7 @@ struct CustomTextField: View {
     @Binding var text: String
     var placeholder: String
     var onEditingChanged: (Bool) -> Void = { _ in }
-
+    
     var body: some View {
         CustomTextFieldUI(text: $text, placeholder: placeholder, onEditingChanged: onEditingChanged)
             .padding(.horizontal, 8)

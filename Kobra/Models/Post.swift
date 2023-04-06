@@ -2,7 +2,7 @@
 //  Post.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 3/31/23.
+//  Created by Spencer Sliffe on 3/31/23.
 //
 import Foundation
 
@@ -16,8 +16,9 @@ struct Post: Identifiable {
     
     var id = UUID()
     var type: PostType
-    var likes: Int = 0 // Added likes property with default value of 0
+    var likes: Int = 0
     var timestamp: Date
+    var imageUrl: String?
 }
 
 struct AdvertisementPost {

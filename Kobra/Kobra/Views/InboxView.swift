@@ -16,33 +16,33 @@ struct InboxView: View {
     @State private var showingAddChat = false
     @State private var showAlert = false
     @State private var alertMessage = ""
-
+    
     var body: some View {
         VStack {
             content
                 .sheet(isPresented: $showingAddChat, content: addChatSheet)
                 .alert(isPresented: $showAlert, content: alert)
                 .background(Color.clear)
-
+            
             Spacer()
-
+            
             HStack {
                 Spacer()
                 addButton.padding(.bottom, 0)
             }
         }
     }
-
-
+    
+    
     private var content: some View {
         Group {
             if viewModel.isLoading {
                 ProgressView()
             } else if sortedChats.isEmpty {
-                    Text("No Chats Currently")
-                        .foregroundColor(.white)
-                        .font(.headline)
-                        .padding()
+                Text("No Chats Currently")
+                    .foregroundColor(.white)
+                    .font(.headline)
+                    .padding()
             } else {
                 VStack {
                     SearchBar(text: $searchText)
@@ -58,7 +58,7 @@ struct InboxView: View {
             return timestamp1 > timestamp2
         }
     }
-
+    
     private var chatList: some View {
         Group {
             if viewModel.isLoading {
@@ -80,7 +80,7 @@ struct InboxView: View {
         .progressViewStyle(CircularProgressViewStyle())
         .accentColor(.white)
     }
-
+    
     
     private var addButton: some View {
         Button(action: {
@@ -96,17 +96,17 @@ struct InboxView: View {
         .foregroundColor(.white)
         .cornerRadius(30)
     }
-
+    
     private func alert() -> Alert {
         Alert(title: Text("Error"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
     }
-
+    
     private func addChatSheet() -> some View {
         VStack {
             TextField("Enter user email", text: $userEmail)
                 .padding()
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-
+            
             Button("Add Chat") {
                 viewModel.addChat(withUserEmail: userEmail) { result in
                     switch result {
@@ -143,41 +143,41 @@ struct ChatCell: View {
     let unreadMessageCount: Int
     
     var body: some View {
-            HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    let emailComponents = chat.otherParticipantEmail(for: Auth.auth().currentUser?.email ?? "").split(separator: "@")
-                    let displayName = String(emailComponents[0]).uppercased()
-                    Text(displayName)
-                        .font(.headline)
-                    if let lastMessage = chat.lastMessage {
-                        HStack(spacing: 4) {
-                            let emailComponents2 = lastMessage.sender.split(separator: "@")
-                            let displayName2 = String(emailComponents2[0]).uppercased()
-                            Text(displayName2 + ":")
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
-                            Text(lastMessage.text)
-                                .font(.subheadline)
-                                .lineLimit(1)
-                            Spacer()
-                            Text(lastMessage.timestamp, style: .time)
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
-                        }
+        HStack {
+            VStack(alignment: .leading, spacing: 4) {
+                let emailComponents = chat.otherParticipantEmail(for: Auth.auth().currentUser?.email ?? "").split(separator: "@")
+                let displayName = String(emailComponents[0]).uppercased()
+                Text(displayName)
+                    .font(.headline)
+                if let lastMessage = chat.lastMessage {
+                    HStack(spacing: 4) {
+                        let emailComponents2 = lastMessage.sender.split(separator: "@")
+                        let displayName2 = String(emailComponents2[0]).uppercased()
+                        Text(displayName2 + ":")
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
+                        Text(lastMessage.text)
+                            .font(.subheadline)
+                            .lineLimit(1)
+                        Spacer()
+                        Text(lastMessage.timestamp, style: .time)
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
                     }
                 }
-                .padding(.vertical, 8)
-                if unreadMessageCount > 0 {
-                    Circle()
-                        .fill(Color.red)
-                        .frame(width: 20, height: 20)
-                        .overlay(Text("\(unreadMessageCount)").foregroundColor(.white).font(.system(size: 12)))
-                }
             }
-            .foregroundColor(.white)
-            .background(Color.clear) // set the background to clear color
+            .padding(.vertical, 8)
+            if unreadMessageCount > 0 {
+                Circle()
+                    .fill(Color.red)
+                    .frame(width: 20, height: 20)
+                    .overlay(Text("\(unreadMessageCount)").foregroundColor(.white).font(.system(size: 12)))
+            }
         }
-        
+        .foregroundColor(.white)
+        .background(Color.clear) // set the background to clear color
+    }
+    
 }
 
 

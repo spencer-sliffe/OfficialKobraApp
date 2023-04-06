@@ -2,7 +2,7 @@
 //  SearchBar.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 4/3/23.
+//  Created by Spencer Sliffe on 4/3/23.
 //
 
 import SwiftUI
@@ -45,7 +45,7 @@ struct SearchBar: View {
                         }
                     }
                 }
-                .padding(.horizontal, 8),
+                    .padding(.horizontal, 8),
                 alignment: .leading // Set the alignment of the HStack overlay to .leading
             )
             if isEditing {

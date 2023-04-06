@@ -2,7 +2,7 @@
 //  PostRow.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 4/1/23.
+//  Created by Spencer Sliffe on 4/1/23.
 //
 
 import Foundation
@@ -13,7 +13,7 @@ struct PostRow: View {
     @State private var isLiked = false
     @State private var likes = 0
     @EnvironmentObject var kobraViewModel: KobraViewModel
-
+    
     var priceFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.locale = Locale(identifier: "en_US")
@@ -22,7 +22,7 @@ struct PostRow: View {
         formatter.minimumFractionDigits = 2
         return formatter
     }()
-
+    
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
             Text(getPosterName())
@@ -98,11 +98,11 @@ struct PostRow: View {
                         .foregroundColor(.white)
                 }
             }
-           
+            
             Text(post.timestamp.formatted())
                 .font(.caption)
                 .foregroundColor(.white)
-
+            
             HStack {
                 Button(action: {
                     isLiked.toggle()
@@ -121,9 +121,13 @@ struct PostRow: View {
                     .foregroundColor(.white)
             }
         }
+        
         .padding()
+        .background(Color.black.opacity(0.3))
+        .border(Color.white, width: 1)
+        .cornerRadius(8)
     }
-
+    
     func getPosterName() -> String {
         switch post.type {
         case .advertisement(let advertisementPost):

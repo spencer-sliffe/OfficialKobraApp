@@ -35,7 +35,7 @@ class AccountViewModel: ObservableObject {
             let email = user.email ?? ""
             let subscription = data["subscription"] as? Bool ?? false
             var account = Account(id: user.uid, email: email, subscription: subscription, packageData: nil, profilePicture: nil)
-
+            
             if let packageId = data["packageId"] as? String {
                 let packageRef = db.collection("Packages").document(packageId)
                 packageRef.getDocument { (packageDocument, packageError) in
