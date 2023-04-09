@@ -34,6 +34,17 @@ struct PostRow: View {
                     .font(.headline)
                     .fontWeight(.bold)
                     .foregroundColor(.white)
+                if let imageURL = post.imageURL, let url = URL(string: imageURL) {
+                    AsyncImage(url: url) { image in
+                        image
+                            .resizable()
+                            .scaledToFit()
+                            .cornerRadius(8)
+                    } placeholder: {
+                        ProgressView()
+                    }
+                    .frame(maxHeight: 200)
+                }
                 Text(advertisementPost.content)
                     .font(.subheadline)
                     .foregroundColor(.white)
@@ -42,6 +53,17 @@ struct PostRow: View {
                     .font(.headline)
                     .fontWeight(.bold)
                     .foregroundColor(.white)
+                if let imageURL = post.imageURL, let url = URL(string: imageURL) {
+                    AsyncImage(url: url) { image in
+                        image
+                            .resizable()
+                            .scaledToFit()
+                            .cornerRadius(8)
+                    } placeholder: {
+                        ProgressView()
+                    }
+                    .frame(maxHeight: 200)
+                }
                 Text(helpPost.details)
                     .font(.subheadline)
                     .foregroundColor(.white)
@@ -50,6 +72,17 @@ struct PostRow: View {
                     .font(.headline)
                     .fontWeight(.bold)
                     .foregroundColor(.white)
+                if let imageURL = post.imageURL, let url = URL(string: imageURL) {
+                    AsyncImage(url: url) { image in
+                        image
+                            .resizable()
+                            .scaledToFit()
+                            .cornerRadius(8)
+                    } placeholder: {
+                        ProgressView()
+                    }
+                    .frame(maxHeight: 200)
+                }
                 Text(newsPost.article)
                     .font(.subheadline)
                     .foregroundColor(.white)
@@ -60,6 +93,17 @@ struct PostRow: View {
                         .font(.headline)
                         .fontWeight(.bold)
                         .foregroundColor(.white)
+                    if let imageURL = post.imageURL, let url = URL(string: imageURL) {
+                        AsyncImage(url: url) { image in
+                            image
+                                .resizable()
+                                .scaledToFit()
+                                .cornerRadius(8)
+                        } placeholder: {
+                            ProgressView()
+                        }
+                        .frame(maxHeight: 200)
+                    }
                     Text(hardware.condition == .new ? "New" : "Used")
                         .foregroundColor(.white)
                     Text("Price: \(priceFormatter.string(from: NSNumber(value: marketPost.price)) ?? "")")
@@ -69,6 +113,17 @@ struct PostRow: View {
                         .font(.headline)
                         .fontWeight(.bold)
                         .foregroundColor(.white)
+                    if let imageURL = post.imageURL, let url = URL(string: imageURL) {
+                        AsyncImage(url: url) { image in
+                            image
+                                .resizable()
+                                .scaledToFit()
+                                .cornerRadius(8)
+                        } placeholder: {
+                            ProgressView()
+                        }
+                        .frame(maxHeight: 200)
+                    }
                     Text(software.description)
                         .foregroundColor(.white)
                     Text("Price: \(priceFormatter.string(from: NSNumber(value: marketPost.price)) ?? "")")
@@ -80,6 +135,17 @@ struct PostRow: View {
                         .font(.headline)
                         .fontWeight(.bold)
                         .foregroundColor(.white)
+                    if let imageURL = post.imageURL, let url = URL(string: imageURL) {
+                        AsyncImage(url: url) { image in
+                            image
+                                .resizable()
+                                .scaledToFit()
+                                .cornerRadius(8)
+                        } placeholder: {
+                            ProgressView()
+                        }
+                        .frame(maxHeight: 200)
+                    }
                     Text(service.description)
                         .foregroundColor(.white)
                     Text("Price: \(priceFormatter.string(from: NSNumber(value: marketPost.price)) ?? "")")
@@ -91,12 +157,25 @@ struct PostRow: View {
                         .font(.headline)
                         .fontWeight(.bold)
                         .foregroundColor(.white)
+                    if let imageURL = post.imageURL, let url = URL(string: imageURL) {
+                        AsyncImage(url: url) { image in
+                            image
+                                .resizable()
+                                .scaledToFit()
+                                .cornerRadius(8)
+                        } placeholder: {
+                            ProgressView()
+                        }
+                        .frame(maxHeight: 200)
+                    }
                     Text(other.description)
                         .foregroundColor(.white)
                     Text("Price: \(priceFormatter.string(from: NSNumber(value: marketPost.price)) ?? "")")
                         .foregroundColor(.white)
                 }
             }
+            
+            
             Text(post.timestamp.formatted())
                 .font(.caption)
                 .foregroundColor(.white)

@@ -8,6 +8,8 @@
 import Foundation
 import FirebaseFirestore
 import Firebase
+import FirebaseStorage
+import SwiftUI
 
 class FSPostManager {
     private init() {}
@@ -30,7 +32,35 @@ class FSPostManager {
             completion(.success(posts))
         }
     }
-    
+
+    func uploadImage(_ image: UIImage, postId: String, completion: @escaping (Result<String, Error>) -> Void) {
+        guard let imageData = image.jpegData(compressionQuality: 0.5) else {
+            completion(.failure(NSError(domain: "Kobra", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to convert image to data"])))
+            return
+        }
+        
+        let storageRef = Storage.storage().reference().child("post_images/\(postId).jpg")
+        storageRef.putData(imageData, metadata: nil) { metadata, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            storageRef.downloadURL { url, error in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                
+                if let url = url {
+                    completion(.success(url.absoluteString))
+                } else {
+                    completion(.failure(NSError(domain: "Kobra", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to get download URL"])))
+                }
+            }
+        }
+    }
+
     private func createPostFrom(data: [String: Any]) -> Post {
         let id = UUID(uuidString: data["id"] as? String ?? "") ?? UUID()
         let likes = data["likes"] as? Int ?? 0
@@ -97,7 +127,8 @@ class FSPostManager {
         default:
             fatalError("Unknown post type")
         }
-        return Post(id: id, type: postType, likes: likes, timestamp: timestamp)
+        let imageURL = data["imageURL"] as? String
+        return Post(id: id, type: postType, likes: likes, timestamp: timestamp, imageURL: imageURL)
     }
     func addPost(_ post: Post, completion: @escaping (Result<Void, Error>) -> Void) {
         // Convert the Post struct into a data dictionary
@@ -169,7 +200,10 @@ class FSPostManager {
             }
         }
         data["postType"] = postTypeString
-        return data
+        if let imageURL = post.imageURL {
+                   data["imageURL"] = imageURL
+               }
+               return data
     }
     
     
@@ -209,4 +243,37 @@ class FSPostManager {
             }
         }
     }
+    
+    func addPostWithImage(_ post: Post, image: UIImage, completion: @escaping (Result<Void, Error>) -> Void) {
+            self.addPost(post) { result in
+                switch result {
+                case .success:
+                    self.uploadImage(image, postId: post.id.uuidString) { result in
+                        switch result {
+                        case .success(let imageURL):
+                            self.updateImageURLForPost(post, imageURL: imageURL, completion: completion)
+                        case .failure(let error):
+                            completion(.failure(error))
+                        }
+                    }
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+        }
+        
+        // New function to update the image URL of a post
+        private func updateImageURLForPost(_ post: Post, imageURL: String, completion: @escaping (Result<Void, Error>) -> Void) {
+            let id = post.id
+            let postRef = db.collection(postsCollection).document(id.uuidString)
+            postRef.updateData([
+                "imageURL": imageURL
+            ]) { error in
+                if let error = error {
+                    completion(.failure(error))
+                } else {
+                    completion(.success(()))
+                }
+            }
+        }
 }

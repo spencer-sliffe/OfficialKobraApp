@@ -2,11 +2,12 @@
 //  KobraViewModel.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 3/31/23.
+//  Created by Spencer Sliffe on 3/31/23.
 //
 
 import Foundation
 import Combine
+import SwiftUI
 
 class KobraViewModel: ObservableObject {
     @Published var posts: [Post] = []
@@ -16,6 +17,10 @@ class KobraViewModel: ObservableObject {
     
     init() {
         fetchPosts()
+    }
+    
+    func uploadImage(_ image: UIImage, postId: String, completion: @escaping (Result<String, Error>) -> Void) {
+        postManager.uploadImage(image, postId: postId, completion: completion)
     }
     
     func fetchPosts() {
@@ -31,14 +36,34 @@ class KobraViewModel: ObservableObject {
         }
     }
     
-    func addPost(_ post: Post) {
+    func addPost(_ post: Post, image: UIImage? = nil, completion: ((Result<Void, Error>) -> Void)? = nil) {
+        if let image = image {
+            postManager.uploadImage(image, postId: post.id.uuidString) { [weak self] result in
+                switch result {
+                case .success(let imageURL):
+                    var newPost = post
+                    newPost.imageURL = imageURL
+                    self?.addPostToDatabase(newPost, completion: completion)
+                case .failure(let error):
+                    print("Error uploading image: \(error.localizedDescription)")
+                    completion?(.failure(error))
+                }
+            }
+        } else {
+            addPostToDatabase(post, completion: completion)
+        }
+    }
+
+    private func addPostToDatabase(_ post: Post, completion: ((Result<Void, Error>) -> Void)? = nil) {
         postManager.addPost(post) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success:
                     self?.fetchPosts()
+                    completion?(.success(()))
                 case .failure(let error):
                     print("Error adding post: \(error.localizedDescription)")
+                    completion?(.failure(error))
                 }
             }
         }

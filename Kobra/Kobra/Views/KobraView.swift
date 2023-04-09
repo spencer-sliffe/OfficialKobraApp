@@ -8,9 +8,6 @@
 import SwiftUI
 import Foundation
 
-import SwiftUI
-import Foundation
-
 struct KobraView: View {
     @State private var isPresentingCreatePostView = false
     @ObservedObject var viewModel = KobraViewModel()

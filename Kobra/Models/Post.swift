@@ -18,7 +18,7 @@ struct Post: Identifiable {
     var type: PostType
     var likes: Int = 0
     var timestamp: Date
-    var imageUrl: String?
+    var imageURL: String?
 }
 
 struct AdvertisementPost {
