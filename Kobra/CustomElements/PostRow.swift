@@ -1,4 +1,3 @@
-//
 //  PostRow.swift
 //  Kobra
 //
@@ -24,161 +23,35 @@ struct PostRow: View {
     }()
     
     var body: some View {
-        VStack(alignment: .center, spacing: 10) {
-            Text(getPosterName())
-                .font(.footnote)
-                .foregroundColor(.white)
-            switch post.type {
-            case .advertisement(let advertisementPost):
-                Text(advertisementPost.title)
+        VStack(alignment: .leading, spacing: 16) {
+            HStack {
+                Text(getPosterName())
                     .font(.headline)
                     .fontWeight(.bold)
-                    .foregroundColor(.white)
-                if let imageURL = post.imageURL, let url = URL(string: imageURL) {
-                    AsyncImage(url: url) { image in
-                        image
-                            .resizable()
-                            .scaledToFit()
-                            .cornerRadius(8)
-                    } placeholder: {
-                        ProgressView()
-                    }
-                    .frame(maxHeight: 200)
-                }
-                Text(advertisementPost.content)
-                    .font(.subheadline)
-                    .foregroundColor(.white)
-            case .help(let helpPost):
-                Text(helpPost.question)
-                    .font(.headline)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-                if let imageURL = post.imageURL, let url = URL(string: imageURL) {
-                    AsyncImage(url: url) { image in
-                        image
-                            .resizable()
-                            .scaledToFit()
-                            .cornerRadius(8)
-                    } placeholder: {
-                        ProgressView()
-                    }
-                    .frame(maxHeight: 200)
-                }
-                Text(helpPost.details)
-                    .font(.subheadline)
-                    .foregroundColor(.white)
-            case .news(let newsPost):
-                Text(newsPost.headline)
-                    .font(.headline)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-                if let imageURL = post.imageURL, let url = URL(string: imageURL) {
-                    AsyncImage(url: url) { image in
-                        image
-                            .resizable()
-                            .scaledToFit()
-                            .cornerRadius(8)
-                    } placeholder: {
-                        ProgressView()
-                    }
-                    .frame(maxHeight: 200)
-                }
-                Text(newsPost.article)
-                    .font(.subheadline)
-                    .foregroundColor(.white)
-            case .market(let marketPost):
-                switch marketPost.type {
-                case .hardware(let hardware):
-                    Text("Hardware: \(hardware.name)")
-                        .font(.headline)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                    if let imageURL = post.imageURL, let url = URL(string: imageURL) {
-                        AsyncImage(url: url) { image in
-                            image
-                                .resizable()
-                                .scaledToFit()
-                                .cornerRadius(8)
-                        } placeholder: {
-                            ProgressView()
-                        }
-                        .frame(maxHeight: 200)
-                    }
-                    Text(hardware.condition == .new ? "New" : "Used")
-                        .foregroundColor(.white)
-                    Text("Price: \(priceFormatter.string(from: NSNumber(value: marketPost.price)) ?? "")")
-                        .foregroundColor(.white)
-                case .software(let software):
-                    Text("Software: \(software.name)")
-                        .font(.headline)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                    if let imageURL = post.imageURL, let url = URL(string: imageURL) {
-                        AsyncImage(url: url) { image in
-                            image
-                                .resizable()
-                                .scaledToFit()
-                                .cornerRadius(8)
-                        } placeholder: {
-                            ProgressView()
-                        }
-                        .frame(maxHeight: 200)
-                    }
-                    Text(software.description)
-                        .foregroundColor(.white)
-                    Text("Price: \(priceFormatter.string(from: NSNumber(value: marketPost.price)) ?? "")")
-                        .foregroundColor(.white)
-                    Text("Category: \(marketPost.category)")
-                        .foregroundColor(.white)
-                case .service(let service):
-                    Text("Service: \(service.name)")
-                        .font(.headline)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                    if let imageURL = post.imageURL, let url = URL(string: imageURL) {
-                        AsyncImage(url: url) { image in
-                            image
-                                .resizable()
-                                .scaledToFit()
-                                .cornerRadius(8)
-                        } placeholder: {
-                            ProgressView()
-                        }
-                        .frame(maxHeight: 200)
-                    }
-                    Text(service.description)
-                        .foregroundColor(.white)
-                    Text("Price: \(priceFormatter.string(from: NSNumber(value: marketPost.price)) ?? "")")
-                        .foregroundColor(.white)
-                    Text("Category: \(marketPost.category)")
-                        .foregroundColor(.white)
-                case .other(let other):
-                    Text("Other: \(other.title)")
-                        .font(.headline)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                    if let imageURL = post.imageURL, let url = URL(string: imageURL) {
-                        AsyncImage(url: url) { image in
-                            image
-                                .resizable()
-                                .scaledToFit()
-                                .cornerRadius(8)
-                        } placeholder: {
-                            ProgressView()
-                        }
-                        .frame(maxHeight: 200)
-                    }
-                    Text(other.description)
-                        .foregroundColor(.white)
-                    Text("Price: \(priceFormatter.string(from: NSNumber(value: marketPost.price)) ?? "")")
-                        .foregroundColor(.white)
-                }
+                    .foregroundColor(.primary)
+                Spacer()
+                Text(post.timestamp.formatted())
+                    .font(.caption)
+                    .foregroundColor(.secondary)
             }
             
+            switch post.type {
+            case .advertisement(let advertisementPost):
+                PostContent(title: advertisementPost.title,
+                            content: advertisementPost.content,
+                            imageURL: post.imageURL)
+            case .help(let helpPost):
+                PostContent(title: helpPost.question,
+                            content: helpPost.details,
+                            imageURL: post.imageURL)
+            case .news(let newsPost):
+                PostContent(title: newsPost.headline,
+                            content: newsPost.article,
+                            imageURL: post.imageURL)
+            case .market(let marketPost):
+                MarketPostContent(marketPost: marketPost, imageURL: post.imageURL)
+            }
             
-            Text(post.timestamp.formatted())
-                .font(.caption)
-                .foregroundColor(.white)
             HStack {
                 Button(action: {
                     isLiked.toggle()
@@ -189,17 +62,17 @@ struct PostRow: View {
                         Image(systemName: isLiked ? "heart.fill" : "heart")
                             .foregroundColor(isLiked ? .red : .gray)
                         Text("Like")
-                            .foregroundColor(.white)
+                            .foregroundColor(.primary)
                     }
                 }
                 Spacer()
                 Text("Likes: \(likes)")
-                    .foregroundColor(.white)
+                    .foregroundColor(.primary)
             }
         }
         .padding()
-        .background(Color.black.opacity(0.3))
-        .border(Color.white, width: 1)
+        .background(Color(.systemBackground))
+        .border(Color(.separator), width: 1)
         .cornerRadius(8)
     }
     
@@ -213,6 +86,92 @@ struct PostRow: View {
             return "Article by \(newsPost.poster)"
         case .market(let marketPost):
             return "Product by \(marketPost.vendor)"
+        }
+    }
+    
+    func PostContent(title: String, content: String, imageURL: String?) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(title)
+                .font(.title2)
+                .fontWeight(.bold)
+                .foregroundColor(.primary)
+            
+            if let imageURL = imageURL, let url = URL(string: imageURL) {
+                AsyncImage(url: url) { image in
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .cornerRadius(8)
+                } placeholder: {
+                    ProgressView()
+                }
+                .frame(maxHeight: 200)
+            }
+            
+            Text(content)
+                .font(.subheadline)
+                .foregroundColor(.primary)
+        }
+    }
+    
+    func MarketPostContent(marketPost: MarketPost, imageURL: String?) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            switch marketPost.type {
+            case .hardware(let hardware):
+                Text("Hardware: \(hardware.name)")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .foregroundColor(.primary)
+                Text(hardware.description)
+                    .font(.subheadline)
+                    .foregroundColor(.primary)
+            case .software(let software):
+                Text("Software: \(software.name)")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .foregroundColor(.primary)
+                Text(software.description)
+                    .font(.subheadline)
+                    .foregroundColor(.primary)
+            case .service(let service):
+                Text("Service: \(service.name)")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .foregroundColor(.primary)
+                Text(service.description)
+                    .font(.subheadline)
+                    .foregroundColor(.primary)
+            case .other(let other):
+                Text(other.description)
+                    .font(.subheadline)
+                    .foregroundColor(.primary)
+                Text("Other: \(other.title)")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .foregroundColor(.primary)
+            }
+            
+            if let imageURL = imageURL, let url = URL(string: imageURL) {
+                AsyncImage(url: url) { image in
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .cornerRadius(8)
+                } placeholder: {
+                    ProgressView()
+                }
+                .frame(maxHeight: 200)
+            }
+            
+           
+            
+            Text("Price: \(priceFormatter.string(from: NSNumber(value: marketPost.price)) ?? "")")
+                .font(.subheadline)
+                .foregroundColor(.primary)
+            
+            Text("Category: \(marketPost.category)")
+                .font(.subheadline)
+                .foregroundColor(.primary)
         }
     }
 }
