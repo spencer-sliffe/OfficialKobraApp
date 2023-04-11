@@ -57,7 +57,6 @@ struct SearchBar: View {
                 .foregroundColor(.white)
             }
         }
-        .padding(8)
     }
 }
 

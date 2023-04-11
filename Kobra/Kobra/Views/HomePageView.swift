@@ -18,13 +18,13 @@ struct HomePageView: View {
                     AuthenticationView(authViewModel: authViewModel)
                 } else {
                     TabView(selection: $selectedTab) {
-                        AccountView(authViewModel: authViewModel)
+                        MarketPlaceView()
                             .tag(0)
-                        InboxView(viewModel: InboxViewModel())
+                        AccountView(authViewModel: authViewModel)
                             .tag(1)
                         KobraView()
                             .tag(2)
-                        MarketPlaceView()
+                        InboxView(viewModel: InboxViewModel())
                             .tag(3)
                         PackageView()
                             .tag(4)
@@ -33,6 +33,7 @@ struct HomePageView: View {
                     .navigationBarHidden(true)
                 }
             }
+            .edgesIgnoringSafeArea(.bottom)
             .background(
                 LinearGradient(
                     gradient: Gradient(colors: [.black, .blue]),

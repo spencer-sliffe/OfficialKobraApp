@@ -13,6 +13,48 @@ struct KobraView: View {
     @ObservedObject var viewModel = KobraViewModel()
     @State private var selectedFeed: FeedType = .advertisement
     
+    private func customToolbar() -> some View {
+        HStack(spacing: 20) {
+            ForEach(FeedType.allCases) { feedType in
+                Button(action: {
+                    selectedFeed = feedType
+                }) {
+                    VStack {
+                       
+                        if(feedType.rawValue == "Advertisement") {
+                            Image(systemName: "radio") // Replace with appropriate icons
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(selectedFeed == feedType ? .yellow : .white)
+                                .padding(.bottom, 5)
+                        } else if(feedType.rawValue == "Market") {
+                            Image(systemName: "dollarsign.circle") // Replace with appropriate icons
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(selectedFeed == feedType ? .yellow : .white)
+                                .padding(.bottom, 5)
+                        } else if(feedType.rawValue == "News") {
+                            Image(systemName: "newspaper") // Replace with appropriate icons
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(selectedFeed == feedType ? .yellow : .white)
+                                .padding(.bottom, 5)
+                        } else if(feedType.rawValue == "Help") {
+                            Image(systemName: "questionmark.circle") // Replace with appropriate icons
+                                .resizable()
+                                .frame(width: 30, height:30)
+                                .foregroundColor(selectedFeed == feedType ? .yellow : .white)
+                                .padding(.bottom, 5)
+                        }
+                    }
+                    .background(Color.clear)
+                }
+            }
+        }
+        .edgesIgnoringSafeArea(.bottom)
+    }
+    
+    
     enum FeedType: String, CaseIterable, Identifiable {
         case advertisement = "Advertisement"
         case help = "Help"
@@ -51,8 +93,8 @@ struct KobraView: View {
                         .foregroundColor(.white)
                 }
                 .padding(.horizontal)
-            }.frame(height: 30)
-            
+            }.frame(height: 20)
+            Spacer()
             ScrollView {
                 VStack(alignment: .leading, spacing: 10) {
                     ForEach(viewModel.posts.sorted(by: { $0.timestamp > $1.timestamp })) { post in
@@ -61,10 +103,11 @@ struct KobraView: View {
                             .background(Color.clear)
                     }
                 }
-                .padding(.top)
             }
+            .background(Color.clear)
+            
+            customToolbar()
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(
             LinearGradient(
                 gradient: Gradient(colors: [.black, .blue]),
@@ -72,6 +115,7 @@ struct KobraView: View {
                 endPoint: .bottomTrailing
             )
         )
+        .edgesIgnoringSafeArea(.bottom)
         .onAppear {
             viewModel.fetchPosts()
         }
@@ -114,3 +158,4 @@ private struct ListBackgroundModifier: ViewModifier {
             }
     }
 }
+

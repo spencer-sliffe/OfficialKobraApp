@@ -119,7 +119,7 @@ struct CreatePostView: View {
                         }
                         
                         let timestamp = Date()
-                        let post = Post(id: id, type: postType, likes: 0, timestamp: timestamp, imageURL: nil)
+                        let post = Post(id: id, type: postType, likes: 0, timestamp: timestamp, imageURL: nil, likingUsers: [""])
                         
                         if let image = selectedImage {
                             kobraViewModel.uploadImage(image, postId: id.uuidString) { result in

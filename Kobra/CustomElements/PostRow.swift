@@ -13,6 +13,10 @@ struct PostRow: View {
     @State private var likes = 0
     @EnvironmentObject var kobraViewModel: KobraViewModel
     
+    init(post: Post) {
+        self.post = post
+        _likes = State(initialValue: post.likes)
+    }
     var priceFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.locale = Locale(identifier: "en_US")
@@ -55,7 +59,11 @@ struct PostRow: View {
             HStack {
                 Button(action: {
                     isLiked.toggle()
-                    likes = post.likes + (isLiked ? +1 : +0)
+                    if isLiked {
+                        likes += 1
+                    } else {
+                        likes -= 1
+                    }
                     kobraViewModel.updateLikeCount(post, likeCount: likes)
                 }) {
                     HStack {
@@ -162,8 +170,6 @@ struct PostRow: View {
                 }
                 .frame(maxHeight: 300)
             }
-            
-           
             
             Text("Price: \(priceFormatter.string(from: NSNumber(value: marketPost.price)) ?? "")")
                 .font(.subheadline)
