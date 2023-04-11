@@ -71,7 +71,7 @@ struct PostRow: View {
             }
         }
         .padding()
-        .background(Color(.systemBackground))
+        .background(Color(.systemBackground).opacity(0.6))
         .border(Color(.separator), width: 1)
         .cornerRadius(8)
     }
@@ -105,7 +105,7 @@ struct PostRow: View {
                 } placeholder: {
                     ProgressView()
                 }
-                .frame(maxHeight: 200)
+                .frame(maxHeight: 300)
             }
             
             Text(content)
@@ -160,7 +160,7 @@ struct PostRow: View {
                 } placeholder: {
                     ProgressView()
                 }
-                .frame(maxHeight: 200)
+                .frame(maxHeight: 300)
             }
             
            
