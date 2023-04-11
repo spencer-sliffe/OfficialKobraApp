@@ -11,11 +11,14 @@ struct PostRow: View {
     var post: Post
     @State private var isLiked = false
     @State private var likes = 0
+    @State private var isDisliked = false
+    @State private var dislikes = 0
     @EnvironmentObject var kobraViewModel: KobraViewModel
     
     init(post: Post) {
         self.post = post
         _likes = State(initialValue: post.likes)
+        _dislikes = State(initialValue: post.dislikes)
     }
     var priceFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -75,6 +78,26 @@ struct PostRow: View {
                 }
                 Spacer()
                 Text("Likes: \(likes)")
+                    .foregroundColor(.primary)
+                Spacer()
+                Button(action: {
+                    isDisliked.toggle()
+                    if isDisliked {
+                        dislikes += 1
+                    } else {
+                        dislikes -= 1
+                    }
+                    kobraViewModel.updateDislikeCount(post, dislikeCount: dislikes)
+                }) {
+                    HStack {
+                        Image(systemName: isDisliked ? "hand.thumbsdown.fill" : "hand.thumbsdown")
+                            .foregroundColor(isDisliked ? .red : .gray)
+                        Text("Dislike")
+                            .foregroundColor(.primary)
+                    }
+                }
+                Spacer()
+                Text("Dislikes: \(dislikes)")
                     .foregroundColor(.primary)
             }
         }

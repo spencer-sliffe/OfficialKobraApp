@@ -52,7 +52,6 @@
 		45EC905029B8360F00E0A3A3 /* PackageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EC904F29B8360F00E0A3A3 /* PackageViewModel.swift */; };
 		45EC905229B846BD00E0A3A3 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 45EC905129B846BD00E0A3A3 /* FirebaseFirestoreSwift */; };
 		45EC905429B8475900E0A3A3 /* PackageWithImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45EC905329B8475900E0A3A3 /* PackageWithImage.swift */; };
-		9C2EDBE2FC9B2C688571E1EC /* Pods_Kobra.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB1B9B802468CF3E0175C93 /* Pods_Kobra.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -113,7 +112,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				45EC905229B846BD00E0A3A3 /* FirebaseFirestoreSwift in Frameworks */,
-				9C2EDBE2FC9B2C688571E1EC /* Pods_Kobra.framework in Frameworks */,
 				45EC904E29B826E800E0A3A3 /* FirebaseStorage in Frameworks */,
 				459180FE29AECC63000FB066 /* FirebaseAuth in Frameworks */,
 				4591810029AECC63000FB066 /* FirebaseFirestore in Frameworks */,

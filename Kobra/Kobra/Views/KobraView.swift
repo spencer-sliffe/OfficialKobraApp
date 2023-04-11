@@ -20,35 +20,45 @@ struct KobraView: View {
                     selectedFeed = feedType
                 }) {
                     VStack {
-                       
+                        
                         if(feedType.rawValue == "Advertisement") {
                             Image(systemName: "radio") // Replace with appropriate icons
                                 .resizable()
                                 .frame(width: 30, height: 30)
                                 .foregroundColor(selectedFeed == feedType ? .yellow : .white)
-                                .padding(.bottom, 5)
+                                .padding(0)
                         } else if(feedType.rawValue == "Market") {
                             Image(systemName: "dollarsign.circle") // Replace with appropriate icons
                                 .resizable()
                                 .frame(width: 30, height: 30)
                                 .foregroundColor(selectedFeed == feedType ? .yellow : .white)
-                                .padding(.bottom, 5)
+                                .padding(0)
                         } else if(feedType.rawValue == "News") {
                             Image(systemName: "newspaper") // Replace with appropriate icons
                                 .resizable()
                                 .frame(width: 30, height: 30)
                                 .foregroundColor(selectedFeed == feedType ? .yellow : .white)
-                                .padding(.bottom, 5)
+                                .padding(0)
                         } else if(feedType.rawValue == "Help") {
                             Image(systemName: "questionmark.circle") // Replace with appropriate icons
                                 .resizable()
                                 .frame(width: 30, height:30)
                                 .foregroundColor(selectedFeed == feedType ? .yellow : .white)
-                                .padding(.bottom, 5)
+                                .padding(0)
                         }
+                        
                     }
                     .background(Color.clear)
                 }
+            }
+            Button(action: {
+                isPresentingCreatePostView.toggle()
+            }) {
+                Image(systemName: "plus.circle.fill")
+                    .resizable()
+                    .frame(width: 30, height: 30)
+                    .foregroundColor(.white)
+                    .padding(0)
             }
         }
         .edgesIgnoringSafeArea(.bottom)
@@ -122,19 +132,6 @@ struct KobraView: View {
         .sheet(isPresented: $isPresentingCreatePostView) {
             CreatePostView().environmentObject(viewModel)
         }
-        .overlay(
-            Button(action: {
-                isPresentingCreatePostView.toggle()
-            }) {
-                Image(systemName: "plus.circle.fill")
-                    .resizable()
-                    .frame(width: 40, height: 40)
-                    .foregroundColor(.white)
-                    .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 0)
-            }
-                .padding(16),
-            alignment: .bottomTrailing
-        )
     }
 }
 

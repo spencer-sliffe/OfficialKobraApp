@@ -74,6 +74,11 @@ class KobraViewModel: ObservableObject {
         fetchPosts()
     }
     
+    func updateDislikeCount(_ post: Post, dislikeCount: Int) {
+        postManager.updateDislikeCount(post, dislikeCount: dislikeCount)
+        fetchPosts()
+    }
+    
     func updatePost(_ post: Post) {
         postManager.updatePost(post) { [weak self] result in
             DispatchQueue.main.async {

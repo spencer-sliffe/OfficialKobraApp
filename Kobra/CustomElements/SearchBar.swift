@@ -20,7 +20,7 @@ struct SearchBar: View {
             .padding(.vertical, 10)
             .background(Color.clear)
             .overlay(
-                RoundedRectangle(cornerRadius: 10)
+                RoundedRectangle(cornerRadius: 20)
                     .stroke(Color.white, lineWidth: 1)
             )
             

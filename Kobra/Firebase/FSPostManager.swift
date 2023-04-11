@@ -67,7 +67,7 @@ class FSPostManager {
         let timestamp = (data["timestamp"] as? Timestamp)?.dateValue() ?? Date()
         let postTypeString = data["postType"] as? String ?? ""
         var postType: Post.PostType
-        var likingUsers = data["likingUsers"] as? [String] ?? [""]
+        let likingUsers = data["likingUsers"] as? [String] ?? [""]
         
         switch postTypeString {
         case "advertisement":
@@ -255,6 +255,34 @@ class FSPostManager {
                     print("Error updating like count: \(error.localizedDescription)")
                 } else {
                     print("Like count updated successfully")
+                }
+            }
+        }
+    }
+    
+    func updateDislikeCount(_ post: Post, dislikeCount: Int) {
+        let postId = post.id
+        
+        let query = db.collection(postsCollection).whereField("id", isEqualTo: postId.uuidString)
+
+        query.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error updating like count: \(error.localizedDescription)")
+                return
+            }
+
+            guard let document = querySnapshot?.documents.first else {
+                print("No document found with matching post id")
+                return
+            }
+
+            document.reference.updateData([
+                "dislikes": dislikeCount
+            ]) { error in
+                if let error = error {
+                    print("Error updating dislike count: \(error.localizedDescription)")
+                } else {
+                    print("Dislike count updated successfully")
                 }
             }
         }
