@@ -79,11 +79,11 @@ struct CreatePostView: View {
                             print("Error: User not logged in or email not found")
                             return
                         }
-
+                        
                         let username = userEmail.components(separatedBy: "@")[0]
                         let id = UUID()
                         let postType: Post.PostType
-
+                        
                         switch self.postType {
                         case "advertisement":
                             let advertisementPost = AdvertisementPost(poster: username, title: title, content: content, category: category)
@@ -117,10 +117,10 @@ struct CreatePostView: View {
                         default:
                             fatalError("Unknown post type")
                         }
-
+                        
                         let timestamp = Date()
                         let post = Post(id: id, type: postType, likes: 0, timestamp: timestamp, imageURL: nil)
-
+                        
                         if let image = selectedImage {
                             kobraViewModel.uploadImage(image, postId: id.uuidString) { result in
                                 switch result {
@@ -135,7 +135,7 @@ struct CreatePostView: View {
                         } else {
                             kobraViewModel.addPost(post) { _ in }
                         }
-
+                        
                         presentationMode.wrappedValue.dismiss()
                     }) {
                         Text("Post")
@@ -154,34 +154,32 @@ struct CreatePostView: View {
     private func loadImage() {
         isImagePickerPresented = false
     }
-
+    
     @ViewBuilder
-        private func marketPostContent() -> some View {
-            VStack(alignment: .leading, spacing: 20) {
-                KobraPicker(title: "Market Post Type", selection: $marketPostType) {
-                    Text("Hardware").tag("hardware")
-                    Text("Software").tag("software")
-                    Text("Service").tag("service")
-                    Text("Other").tag("other")
+    private func marketPostContent() -> some View {
+        VStack(alignment: .leading, spacing: 20) {
+            KobraPicker(title: "Market Post Type", selection: $marketPostType) {
+                Text("Hardware").tag("hardware")
+                Text("Software").tag("software")
+                Text("Service").tag("service")
+                Text("Other").tag("other")
+            }
+            .frame(maxWidth: .infinity)
+            if marketPostType == "hardware" {
+                KobraPicker(title: "Condition", selection: $hardwareCondition) {
+                    Text("New").tag(Hardware.HardwareCondition.new.rawValue)
+                    Text("Used").tag(Hardware.HardwareCondition.used.rawValue)
                 }
                 .frame(maxWidth: .infinity)
-                if marketPostType == "hardware" {
-                    KobraPicker(title: "Condition", selection: $hardwareCondition) {
-                        Text("New").tag(Hardware.HardwareCondition.new.rawValue)
-                        Text("Used").tag(Hardware.HardwareCondition.used.rawValue)
-                    }
-                    .frame(maxWidth: .infinity)
-                }
-                CustomTextField(text: $category, placeholder: "Category")
-                VStack(alignment: .leading) {
-                    Stepper(value: $stepperPrice, in: 0...Double.infinity, step: 1.0) {
-                        Text("Price: $\(stepperPrice, specifier: "%.2f")")
-                            .foregroundColor(.white)
-                    }
+            }
+            CustomTextField(text: $category, placeholder: "Category")
+            VStack(alignment: .leading) {
+                Stepper(value: $stepperPrice, in: 0...Double.infinity, step: 1.0) {
+                    Text("Price: $\(stepperPrice, specifier: "%.2f")")
+                        .foregroundColor(.white)
                 }
             }
         }
-        
-       
     }
+}
 
