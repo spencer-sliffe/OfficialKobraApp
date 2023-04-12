@@ -6,20 +6,28 @@
 
 import Foundation
 import SwiftUI
+import FirebaseAuth
 
 struct PostRow: View {
-    var post: Post
+    @ObservedObject var post: Post
     @State private var isLiked = false
     @State private var likes = 0
     @State private var isDisliked = false
     @State private var dislikes = 0
     @EnvironmentObject var kobraViewModel: KobraViewModel
     
+    // Add a property for the current user's ID
+    let currentUserId: String = Auth.auth().currentUser?.uid ?? ""
+    
     init(post: Post) {
         self.post = post
         _likes = State(initialValue: post.likes)
         _dislikes = State(initialValue: post.dislikes)
+        
+        _isLiked = State(initialValue: post.likingUsers.contains(currentUserId))
+        _isDisliked = State(initialValue: post.dislikingUsers.contains(currentUserId))
     }
+    
     var priceFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.locale = Locale(identifier: "en_US")
@@ -64,10 +72,12 @@ struct PostRow: View {
                     isLiked.toggle()
                     if isLiked {
                         likes += 1
+                        post.likingUsers.append(currentUserId)
                     } else {
                         likes -= 1
+                        post.likingUsers.removeAll { $0 == currentUserId }
                     }
-                    kobraViewModel.updateLikeCount(post, likeCount: likes)
+                    kobraViewModel.updateLikeCount(post, likeCount: likes, userId: currentUserId, isAdding: isLiked)
                 }) {
                     HStack {
                         Image(systemName: isLiked ? "heart.fill" : "heart")
@@ -84,10 +94,12 @@ struct PostRow: View {
                     isDisliked.toggle()
                     if isDisliked {
                         dislikes += 1
+                        post.dislikingUsers.append(currentUserId)
                     } else {
                         dislikes -= 1
+                        post.dislikingUsers.removeAll { $0 == currentUserId }
                     }
-                    kobraViewModel.updateDislikeCount(post, dislikeCount: dislikes)
+                    kobraViewModel.updateDislikeCount(post, dislikeCount: dislikes, userId: currentUserId, isAdding: isDisliked)
                 }) {
                     HStack {
                         Image(systemName: isDisliked ? "hand.thumbsdown.fill" : "hand.thumbsdown")
@@ -119,6 +131,16 @@ struct PostRow: View {
             return "Product by \(marketPost.vendor)"
         }
     }
+    
+    func canLike() -> Bool {
+            return !post.likingUsers.contains(currentUserId)
+        }
+        
+        // Add a function to check if the user can dislike the post
+        func canDislike() -> Bool {
+            return !post.dislikingUsers.contains(currentUserId)
+        }
+
     
     func PostContent(title: String, content: String, imageURL: String?) -> some View {
         VStack(alignment: .leading, spacing: 8) {

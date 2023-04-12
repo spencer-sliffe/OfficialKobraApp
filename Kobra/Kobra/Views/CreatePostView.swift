@@ -45,6 +45,7 @@ struct CreatePostView: View {
                             .frame(maxWidth: .infinity)
                             CustomTextField(text: $title, placeholder: "Title")
                             CustomTextField(text: $content, placeholder: "Content")
+                               
                             if postType != "market" {
                                 CustomTextField(text: $category, placeholder: "Category")
                             }
@@ -125,7 +126,7 @@ struct CreatePostView: View {
                             kobraViewModel.uploadImage(image, postId: id.uuidString) { result in
                                 switch result {
                                 case .success(let imageURL):
-                                    var updatedPost = post
+                                    let updatedPost = post
                                     updatedPost.imageURL = imageURL
                                     kobraViewModel.addPost(updatedPost) { _ in }
                                 case .failure(let error):

@@ -13,6 +13,20 @@ struct KobraView: View {
     @ObservedObject var viewModel = KobraViewModel()
     @State private var selectedFeed: FeedType = .advertisement
     
+    func isPostTypeVisible(post: Post) -> Bool {
+        switch selectedFeed {
+        case .advertisement:
+            if case .advertisement = post.type { return true }
+        case .help:
+            if case .help = post.type { return true }
+        case .news:
+            if case .news = post.type { return true }
+        case .market:
+            if case .market = post.type { return true }
+        }
+        return false
+    }
+    
     private func customToolbar() -> some View {
         HStack(spacing: 20) {
             ForEach(FeedType.allCases) { feedType in
@@ -61,6 +75,7 @@ struct KobraView: View {
                     .padding(0)
             }
         }
+        .padding(.bottom, 13)
         .edgesIgnoringSafeArea(.bottom)
     }
     
@@ -92,8 +107,7 @@ struct KobraView: View {
                     Text("\(Date(), formatter: dateFormatter)")
                         .foregroundColor(.white)
                     Spacer()
-                    
-                    Text("Kobra Feed")
+                    Text("Kobra Bitch")
                         .font(.headline)
                         .foregroundColor(.white)
                     
@@ -107,7 +121,7 @@ struct KobraView: View {
             Spacer()
             ScrollView {
                 VStack(alignment: .leading, spacing: 10) {
-                    ForEach(viewModel.posts.sorted(by: { $0.timestamp > $1.timestamp })) { post in
+                    ForEach(viewModel.posts.sorted(by: { $0.timestamp > $1.timestamp }).filter(isPostTypeVisible)) { post in
                         PostRow(post: post)
                             .environmentObject(viewModel)
                             .background(Color.clear)
@@ -115,6 +129,7 @@ struct KobraView: View {
                 }
             }
             .background(Color.clear)
+
             
             customToolbar()
         }

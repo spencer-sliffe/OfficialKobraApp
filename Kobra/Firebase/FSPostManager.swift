@@ -68,6 +68,7 @@ class FSPostManager {
         let postTypeString = data["postType"] as? String ?? ""
         var postType: Post.PostType
         let likingUsers = data["likingUsers"] as? [String] ?? [""]
+        let dislikingUsers = data["dislikingUsers"] as? [String] ?? [""]
         
         switch postTypeString {
         case "advertisement":
@@ -129,7 +130,7 @@ class FSPostManager {
             fatalError("Unknown post type")
         }
         let imageURL = data["imageURL"] as? String
-        return Post(id: id, type: postType, likes: likes, timestamp: timestamp, imageURL: imageURL, likingUsers: likingUsers)
+        return Post(id: id, type: postType, likes: likes, timestamp: timestamp, imageURL: imageURL, likingUsers: likingUsers, dislikingUsers: dislikingUsers)
     }
     func addPost(_ post: Post, completion: @escaping (Result<Void, Error>) -> Void) {
         // Convert the Post struct into a data dictionary
@@ -232,9 +233,9 @@ class FSPostManager {
         }
     }
     
-    func updateLikeCount(_ post: Post, likeCount: Int) {
+    func updateLikeCount(_ post: Post, likeCount: Int, userId: String, isAdding: Bool) {
         let postId = post.id
-        
+
         let query = db.collection(postsCollection).whereField("id", isEqualTo: postId.uuidString)
 
         query.getDocuments { (querySnapshot, error) in
@@ -249,7 +250,8 @@ class FSPostManager {
             }
 
             document.reference.updateData([
-                "likes": likeCount
+                "likes": likeCount,
+                "likingUsers": isAdding ? FieldValue.arrayUnion([userId]) : FieldValue.arrayRemove([userId])
             ]) { error in
                 if let error = error {
                     print("Error updating like count: \(error.localizedDescription)")
@@ -259,15 +261,15 @@ class FSPostManager {
             }
         }
     }
-    
-    func updateDislikeCount(_ post: Post, dislikeCount: Int) {
+
+    func updateDislikeCount(_ post: Post, dislikeCount: Int, userId: String, isAdding: Bool) {
         let postId = post.id
-        
+
         let query = db.collection(postsCollection).whereField("id", isEqualTo: postId.uuidString)
 
         query.getDocuments { (querySnapshot, error) in
             if let error = error {
-                print("Error updating like count: \(error.localizedDescription)")
+                print("Error updating dislike count: \(error.localizedDescription)")
                 return
             }
 
@@ -277,7 +279,8 @@ class FSPostManager {
             }
 
             document.reference.updateData([
-                "dislikes": dislikeCount
+                "dislikes": dislikeCount,
+                "dislikingUsers": isAdding ? FieldValue.arrayUnion([userId]) : FieldValue.arrayRemove([userId])
             ]) { error in
                 if let error = error {
                     print("Error updating dislike count: \(error.localizedDescription)")

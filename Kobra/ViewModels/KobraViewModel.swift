@@ -41,7 +41,7 @@ class KobraViewModel: ObservableObject {
             postManager.uploadImage(image, postId: post.id.uuidString) { [weak self] result in
                 switch result {
                 case .success(let imageURL):
-                    var newPost = post
+                    let newPost = post
                     newPost.imageURL = imageURL
                     self?.addPostToDatabase(newPost, completion: completion)
                 case .failure(let error):
@@ -69,16 +69,16 @@ class KobraViewModel: ObservableObject {
         }
     }
     
-    func updateLikeCount(_ post: Post, likeCount: Int) {
-        postManager.updateLikeCount(post, likeCount: likeCount)
+    func updateLikeCount(_ post: Post, likeCount: Int, userId: String, isAdding: Bool) {
+        postManager.updateLikeCount(post, likeCount: likeCount, userId: userId, isAdding: isAdding)
         fetchPosts()
     }
-    
-    func updateDislikeCount(_ post: Post, dislikeCount: Int) {
-        postManager.updateDislikeCount(post, dislikeCount: dislikeCount)
+
+    func updateDislikeCount(_ post: Post, dislikeCount: Int, userId: String, isAdding: Bool) {
+        postManager.updateDislikeCount(post, dislikeCount: dislikeCount, userId: userId, isAdding: isAdding)
         fetchPosts()
     }
-    
+
     func updatePost(_ post: Post) {
         postManager.updatePost(post) { [weak self] result in
             DispatchQueue.main.async {

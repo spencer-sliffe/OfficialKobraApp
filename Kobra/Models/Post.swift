@@ -6,7 +6,7 @@
 //
 import Foundation
 
-struct Post: Identifiable {
+class Post: Identifiable, ObservableObject {
     enum PostType {
         case advertisement(AdvertisementPost)
         case help(HelpPost)
@@ -19,8 +19,23 @@ struct Post: Identifiable {
     var likes: Int = 0
     var timestamp: Date
     var imageURL: String?
-    var likingUsers: [String]
     var dislikes: Int = 0
+    @Published var likingUsers: [String]
+    @Published var dislikingUsers: [String]
+
+
+
+        init(id: UUID = UUID(), type: PostType, likes: Int = 0, timestamp: Date, imageURL: String? = nil, likingUsers: [String] = [], dislikingUsers: [String] = []) {
+            self.id = id
+            self.type = type
+            self.likes = likes
+            self.timestamp = timestamp
+            self.imageURL = imageURL
+            self.likingUsers = likingUsers
+            self.dislikingUsers = dislikingUsers
+        }
+    
+
 }
 
 struct AdvertisementPost {

@@ -15,6 +15,7 @@ struct CustomTextField: View {
     
     var body: some View {
         CustomTextFieldUI(text: $text, placeholder: placeholder, onEditingChanged: onEditingChanged)
+            .frame(maxWidth: UIScreen.main.bounds.width - 40)
             .padding(.horizontal, 8)
             .padding(.vertical, 10)
             .background(Color.clear)
