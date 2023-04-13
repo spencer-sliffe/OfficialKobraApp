@@ -22,20 +22,18 @@ class Post: Identifiable, ObservableObject {
     var dislikes: Int = 0
     @Published var likingUsers: [String]
     @Published var dislikingUsers: [String]
-
-
-
-        init(id: UUID = UUID(), type: PostType, likes: Int = 0, timestamp: Date, imageURL: String? = nil, likingUsers: [String] = [], dislikingUsers: [String] = []) {
-            self.id = id
-            self.type = type
-            self.likes = likes
-            self.timestamp = timestamp
-            self.imageURL = imageURL
-            self.likingUsers = likingUsers
-            self.dislikingUsers = dislikingUsers
-        }
+    var comments: [Comment]
     
-
+    init(id: UUID = UUID(), type: PostType, likes: Int = 0, timestamp: Date, imageURL: String? = nil, likingUsers: [String] = [], dislikingUsers: [String] = [], comments: [Comment]) {
+        self.id = id
+        self.type = type
+        self.likes = likes
+        self.timestamp = timestamp
+        self.imageURL = imageURL
+        self.likingUsers = likingUsers
+        self.dislikingUsers = dislikingUsers
+        self.comments = comments
+    }
 }
 
 struct AdvertisementPost {

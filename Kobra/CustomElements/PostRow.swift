@@ -15,6 +15,7 @@ struct PostRow: View {
     @State private var isDisliked = false
     @State private var dislikes = 0
     @EnvironmentObject var kobraViewModel: KobraViewModel
+    @State private var showingComments = false
     
     // Add a property for the current user's ID
     let currentUserId: String = Auth.auth().currentUser?.uid ?? ""
@@ -82,14 +83,10 @@ struct PostRow: View {
                     HStack {
                         Image(systemName: isLiked ? "heart.fill" : "heart")
                             .foregroundColor(isLiked ? .red : .gray)
-                        Text("Like")
+                        Text("\(likes)")
                             .foregroundColor(.primary)
                     }
                 }
-                Spacer()
-                Text("Likes: \(likes)")
-                    .foregroundColor(.primary)
-                Spacer()
                 Button(action: {
                     isDisliked.toggle()
                     if isDisliked {
@@ -104,19 +101,30 @@ struct PostRow: View {
                     HStack {
                         Image(systemName: isDisliked ? "hand.thumbsdown.fill" : "hand.thumbsdown")
                             .foregroundColor(isDisliked ? .red : .gray)
-                        Text("Dislike")
+                        Text("\(dislikes)")
                             .foregroundColor(.primary)
                     }
                 }
                 Spacer()
-                Text("Dislikes: \(dislikes)")
-                    .foregroundColor(.primary)
+                Button(action: {
+                    showingComments.toggle()
+                }) {
+                    HStack {
+                        Image(systemName: "bubble.right")
+                            .foregroundColor(.gray)
+                        Text("Comment")
+                            .foregroundColor(.primary)
+                    }
+                }
             }
         }
         .padding()
         .background(Color(.systemBackground).opacity(0.6))
         .border(Color(.separator), width: 1)
         .cornerRadius(8)
+        .sheet(isPresented: $showingComments) {
+            CommentView(post: post)
+        }
     }
     
     func getPosterName() -> String {
@@ -133,14 +141,14 @@ struct PostRow: View {
     }
     
     func canLike() -> Bool {
-            return !post.likingUsers.contains(currentUserId)
-        }
-        
-        // Add a function to check if the user can dislike the post
-        func canDislike() -> Bool {
-            return !post.dislikingUsers.contains(currentUserId)
-        }
-
+        return !post.likingUsers.contains(currentUserId)
+    }
+    
+    // Add a function to check if the user can dislike the post
+    func canDislike() -> Bool {
+        return !post.dislikingUsers.contains(currentUserId)
+    }
+    
     
     func PostContent(title: String, content: String, imageURL: String?) -> some View {
         VStack(alignment: .leading, spacing: 8) {

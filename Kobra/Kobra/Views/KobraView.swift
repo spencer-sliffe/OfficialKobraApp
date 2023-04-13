@@ -107,10 +107,23 @@ struct KobraView: View {
                     Text("\(Date(), formatter: dateFormatter)")
                         .foregroundColor(.white)
                     Spacer()
-                    Text("Kobra Bitch")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                    
+                    if(selectedFeed.rawValue == "Advertisement") {
+                        Text("Advertisement Feed")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                    } else if(selectedFeed.rawValue == "Market") {
+                        Text("Market Feed")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                    } else if(selectedFeed.rawValue == "News") {
+                        Text("News Feed")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                    } else if(selectedFeed.rawValue == "Help") {
+                        Text("Help Feed")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                    }
                     Spacer()
                     
                     Text("\(Date(), formatter: timeFormatter)")
@@ -129,8 +142,6 @@ struct KobraView: View {
                 }
             }
             .background(Color.clear)
-
-            
             customToolbar()
         }
         .background(

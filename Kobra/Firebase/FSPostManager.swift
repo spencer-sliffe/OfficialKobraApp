@@ -69,6 +69,7 @@ class FSPostManager {
         var postType: Post.PostType
         let likingUsers = data["likingUsers"] as? [String] ?? [""]
         let dislikingUsers = data["dislikingUsers"] as? [String] ?? [""]
+        let comments = data["comments"] as? [Comment] ?? []
         
         switch postTypeString {
         case "advertisement":
@@ -130,7 +131,7 @@ class FSPostManager {
             fatalError("Unknown post type")
         }
         let imageURL = data["imageURL"] as? String
-        return Post(id: id, type: postType, likes: likes, timestamp: timestamp, imageURL: imageURL, likingUsers: likingUsers, dislikingUsers: dislikingUsers)
+        return Post(id: id, type: postType, likes: likes, timestamp: timestamp, imageURL: imageURL, likingUsers: likingUsers, dislikingUsers: dislikingUsers, comments: comments)
     }
     func addPost(_ post: Post, completion: @escaping (Result<Void, Error>) -> Void) {
         // Convert the Post struct into a data dictionary
@@ -149,7 +150,10 @@ class FSPostManager {
             "id": post.id.uuidString,
             "likes": post.likes,
             "timestamp": post.timestamp,
-            "likingUsers": post.likingUsers
+            "likingUsers": post.likingUsers,
+            "dislikes": post.dislikes,
+            "dislikingUsers": post.dislikingUsers,
+            "comments": post.comments
         ]
         
         var postTypeString: String
