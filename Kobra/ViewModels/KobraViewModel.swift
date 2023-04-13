@@ -103,5 +103,6 @@ class KobraViewModel: ObservableObject {
                 }
             }
         }
+        fetchPosts()
     }
 }

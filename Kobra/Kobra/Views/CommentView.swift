@@ -21,6 +21,8 @@ struct CommentView: View {
                         CommentRow(comment: comment)
                     }
                 }
+                .background(Color.black)
+                .foregroundColor(.white)
                 HStack {
                     TextField("Write a comment...", text: $newCommentText)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -32,7 +34,7 @@ struct CommentView: View {
                 }
                 .padding()
             }
-            .navigationTitle("Comments")
+            
         }
     }
     

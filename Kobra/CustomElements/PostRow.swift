@@ -49,6 +49,13 @@ struct PostRow: View {
                 Text(post.timestamp.formatted())
                     .font(.caption)
                     .foregroundColor(.secondary)
+                Button(action: {
+                    kobraViewModel.deletePost(post)
+                }) {
+                    Image(systemName: "trash")
+                        .foregroundColor(.red)
+                }
+
             }
             
             switch post.type {

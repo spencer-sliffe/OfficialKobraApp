@@ -227,15 +227,15 @@ class FSPostManager {
     }
     
     func deletePost(_ post: Post, completion: @escaping (Result<Void, Error>) -> Void) {
-        let id = post.id
-        db.collection(postsCollection).document(id.uuidString).delete { error in
-            if let error = error {
-                completion(.failure(error))
-            } else {
-                completion(.success(()))
+            let postId = post.id
+            db.collection(postsCollection).document(postId.uuidString).delete { error in
+                if let error = error {
+                    completion(.failure(error))
+                } else {
+                    completion(.success(()))
+                }
             }
         }
-    }
     
     func updateLikeCount(_ post: Post, likeCount: Int, userId: String, isAdding: Bool) {
         let postId = post.id
