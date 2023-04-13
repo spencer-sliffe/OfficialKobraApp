@@ -97,12 +97,21 @@ class KobraViewModel: ObservableObject {
             DispatchQueue.main.async {
                 switch result {
                 case .success:
+                    if let imageURL = post.imageURL {
+                        self?.postManager.deleteImage(imageURL: imageURL) { result in
+                            switch result {
+                            case .success:
+                                print("Image deleted successfully")
+                            case .failure(let error):
+                                print("Error deleting image: \(error.localizedDescription)")
+                            }
+                        }
+                    }
                     self?.fetchPosts()
                 case .failure(let error):
                     print("Error deleting post: \(error.localizedDescription)")
                 }
             }
         }
-        fetchPosts()
     }
 }

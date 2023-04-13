@@ -32,7 +32,7 @@ class FSPostManager {
             completion(.success(posts))
         }
     }
-
+    
     func uploadImage(_ image: UIImage, postId: String, completion: @escaping (Result<String, Error>) -> Void) {
         guard let imageData = image.jpegData(compressionQuality: 0.5) else {
             completion(.failure(NSError(domain: "Kobra", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to convert image to data"])))
@@ -60,7 +60,7 @@ class FSPostManager {
             }
         }
     }
-
+    
     private func createPostFrom(data: [String: Any]) -> Post {
         let id = UUID(uuidString: data["id"] as? String ?? "") ?? UUID()
         let likes = data["likes"] as? Int ?? 0
@@ -133,6 +133,7 @@ class FSPostManager {
         let imageURL = data["imageURL"] as? String
         return Post(id: id, type: postType, likes: likes, timestamp: timestamp, imageURL: imageURL, likingUsers: likingUsers, dislikingUsers: dislikingUsers, comments: comments)
     }
+    
     func addPost(_ post: Post, completion: @escaping (Result<Void, Error>) -> Void) {
         // Convert the Post struct into a data dictionary
         let data = self.convertPostToData(post)
@@ -208,11 +209,10 @@ class FSPostManager {
         }
         data["postType"] = postTypeString
         if let imageURL = post.imageURL {
-                   data["imageURL"] = imageURL
-               }
-               return data
+            data["imageURL"] = imageURL
+        }
+        return data
     }
-    
     
     func updatePost(_ post: Post, completion: @escaping (Result<Void, Error>) -> Void) {
         let id = post.id
@@ -227,32 +227,43 @@ class FSPostManager {
     }
     
     func deletePost(_ post: Post, completion: @escaping (Result<Void, Error>) -> Void) {
-            let postId = post.id
-            db.collection(postsCollection).document(postId.uuidString).delete { error in
-                if let error = error {
-                    completion(.failure(error))
-                } else {
-                    completion(.success(()))
+        let postId = post.id
+        
+        let query = db.collection(postsCollection).whereField("id", isEqualTo: postId.uuidString)
+        
+        query.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else if let document = querySnapshot?.documents.first {
+                document.reference.delete { error in
+                    if let error = error {
+                        completion(.failure(error))
+                    } else {
+                        completion(.success(()))
+                    }
                 }
+            } else {
+                completion(.failure(NSError(domain: "No document found with matching id", code: -1, userInfo: nil)))
             }
         }
+    }
     
     func updateLikeCount(_ post: Post, likeCount: Int, userId: String, isAdding: Bool) {
         let postId = post.id
-
+        
         let query = db.collection(postsCollection).whereField("id", isEqualTo: postId.uuidString)
-
+        
         query.getDocuments { (querySnapshot, error) in
             if let error = error {
                 print("Error updating like count: \(error.localizedDescription)")
                 return
             }
-
+            
             guard let document = querySnapshot?.documents.first else {
                 print("No document found with matching post id")
                 return
             }
-
+            
             document.reference.updateData([
                 "likes": likeCount,
                 "likingUsers": isAdding ? FieldValue.arrayUnion([userId]) : FieldValue.arrayRemove([userId])
@@ -265,23 +276,23 @@ class FSPostManager {
             }
         }
     }
-
+    
     func updateDislikeCount(_ post: Post, dislikeCount: Int, userId: String, isAdding: Bool) {
         let postId = post.id
-
+        
         let query = db.collection(postsCollection).whereField("id", isEqualTo: postId.uuidString)
-
+        
         query.getDocuments { (querySnapshot, error) in
             if let error = error {
                 print("Error updating dislike count: \(error.localizedDescription)")
                 return
             }
-
+            
             guard let document = querySnapshot?.documents.first else {
                 print("No document found with matching post id")
                 return
             }
-
+            
             document.reference.updateData([
                 "dislikes": dislikeCount,
                 "dislikingUsers": isAdding ? FieldValue.arrayUnion([userId]) : FieldValue.arrayRemove([userId])
@@ -294,38 +305,50 @@ class FSPostManager {
             }
         }
     }
-
     
     func addPostWithImage(_ post: Post, image: UIImage, completion: @escaping (Result<Void, Error>) -> Void) {
-            self.addPost(post) { result in
-                switch result {
-                case .success:
-                    self.uploadImage(image, postId: post.id.uuidString) { result in
-                        switch result {
-                        case .success(let imageURL):
-                            self.updateImageURLForPost(post, imageURL: imageURL, completion: completion)
-                        case .failure(let error):
-                            completion(.failure(error))
-                        }
+        self.addPost(post) { result in
+            switch result {
+            case .success:
+                self.uploadImage(image, postId: post.id.uuidString) { result in
+                    switch result {
+                    case .success(let imageURL):
+                        self.updateImageURLForPost(post, imageURL: imageURL, completion: completion)
+                    case .failure(let error):
+                        completion(.failure(error))
                     }
-                case .failure(let error):
-                    completion(.failure(error))
                 }
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
+    }
+    
+    // New function to update the image URL of a post
+    private func updateImageURLForPost(_ post: Post, imageURL: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        let id = post.id
+        let postRef = db.collection(postsCollection).document(id.uuidString)
+        postRef.updateData([
+            "imageURL": imageURL
+        ]) { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(()))
+            }
+        }
+    }
+    
+    func deleteImage(imageURL: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        let storage = Storage.storage()
+        let storageRef = storage.reference(forURL: imageURL)
         
-        // New function to update the image URL of a post
-        private func updateImageURLForPost(_ post: Post, imageURL: String, completion: @escaping (Result<Void, Error>) -> Void) {
-            let id = post.id
-            let postRef = db.collection(postsCollection).document(id.uuidString)
-            postRef.updateData([
-                "imageURL": imageURL
-            ]) { error in
-                if let error = error {
-                    completion(.failure(error))
-                } else {
-                    completion(.success(()))
-                }
+        storageRef.delete { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(()))
             }
         }
+    }
 }

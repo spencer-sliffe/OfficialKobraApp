@@ -16,6 +16,7 @@ struct PostRow: View {
     @State private var dislikes = 0
     @EnvironmentObject var kobraViewModel: KobraViewModel
     @State private var showingComments = false
+    @State private var showingDeleteAlert = false
     
     // Add a property for the current user's ID
     let currentUserId: String = Auth.auth().currentUser?.uid ?? ""
@@ -50,12 +51,12 @@ struct PostRow: View {
                     .font(.caption)
                     .foregroundColor(.secondary)
                 Button(action: {
-                    kobraViewModel.deletePost(post)
+                    showingDeleteAlert.toggle()
                 }) {
                     Image(systemName: "trash")
                         .foregroundColor(.red)
                 }
-
+                
             }
             
             switch post.type {
@@ -132,7 +133,16 @@ struct PostRow: View {
         .sheet(isPresented: $showingComments) {
             CommentView(post: post)
         }
+        .alert(isPresented: $showingDeleteAlert) {
+            Alert(title: Text("Delete Post"),
+                  message: Text("Are you sure you want to delete this post?"),
+                  primaryButton: .destructive(Text("Delete")) {
+                kobraViewModel.deletePost(post)
+            },
+                  secondaryButton: .cancel())
+        }
     }
+    
     
     func getPosterName() -> String {
         switch post.type {
