@@ -24,7 +24,7 @@ class Post: Identifiable, ObservableObject {
     @Published var dislikingUsers: [String]
     var comments: [Comment]
     
-    init(id: UUID = UUID(), type: PostType, likes: Int = 0, timestamp: Date, imageURL: String? = nil, likingUsers: [String] = [], dislikingUsers: [String] = [], comments: [Comment]) {
+    init(id: UUID = UUID(), type: PostType, likes: Int = 0, timestamp: Date, imageURL: String? = nil, likingUsers: [String] = [], dislikingUsers: [String] = [], comments: [Comment], dislikes: Int = 0) {
         self.id = id
         self.type = type
         self.likes = likes
@@ -33,6 +33,7 @@ class Post: Identifiable, ObservableObject {
         self.likingUsers = likingUsers
         self.dislikingUsers = dislikingUsers
         self.comments = comments
+        self.dislikes = dislikes
     }
 }
 

@@ -70,6 +70,7 @@ class FSPostManager {
         let likingUsers = data["likingUsers"] as? [String] ?? [""]
         let dislikingUsers = data["dislikingUsers"] as? [String] ?? [""]
         let comments = data["comments"] as? [Comment] ?? []
+        let dislikes = data["dislikes"] as? Int ?? 0
         
         switch postTypeString {
         case "advertisement":
@@ -131,7 +132,7 @@ class FSPostManager {
             fatalError("Unknown post type")
         }
         let imageURL = data["imageURL"] as? String
-        return Post(id: id, type: postType, likes: likes, timestamp: timestamp, imageURL: imageURL, likingUsers: likingUsers, dislikingUsers: dislikingUsers, comments: comments)
+        return Post(id: id, type: postType, likes: likes, timestamp: timestamp, imageURL: imageURL, likingUsers: likingUsers, dislikingUsers: dislikingUsers, comments: comments, dislikes: dislikes)
     }
     
     func addPost(_ post: Post, completion: @escaping (Result<Void, Error>) -> Void) {
