@@ -84,6 +84,7 @@ struct AccountView: View {
             }
             .padding()
         }
+        .edgesIgnoringSafeArea(.bottom)
     }
 }
 

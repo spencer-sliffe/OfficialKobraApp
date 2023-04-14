@@ -50,12 +50,13 @@ struct PostRow: View {
                 Text(post.timestamp.formatted())
                     .font(.caption)
                     .foregroundColor(.secondary)
-                Button(action: {
-                    showingDeleteAlert.toggle()
-                }) {
-                    Image(systemName: "trash")
-                        .foregroundColor(.red)
-                }
+               
+                    Button(action: {
+                        showingDeleteAlert.toggle()
+                    }) {
+                        Image(systemName: "trash")
+                            .foregroundColor(.red)
+                    }
                 
             }
             
@@ -131,7 +132,7 @@ struct PostRow: View {
         .border(Color(.separator), width: 1)
         .cornerRadius(8)
         .sheet(isPresented: $showingComments) {
-            CommentView(post: post)
+            CommentView(post: post, kobraViewModel: KobraViewModel())
         }
         .alert(isPresented: $showingDeleteAlert) {
             Alert(title: Text("Delete Post"),

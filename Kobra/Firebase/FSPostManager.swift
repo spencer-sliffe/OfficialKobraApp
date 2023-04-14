@@ -249,6 +249,40 @@ class FSPostManager {
         }
     }
     
+    func updateComments(_ post: Post, comment: Comment) {
+        let postId = post.id
+        let query = db.collection(postsCollection).whereField("id", isEqualTo: postId.uuidString)
+
+        query.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error adding comment: \(error.localizedDescription)")
+                return
+            }
+
+            guard let document = querySnapshot?.documents.first else {
+                print("No document found with matching post id")
+                return
+            }
+
+            let commentData: [String: Any] = [
+                "id": comment.id.uuidString,
+                "text": comment.text,
+                "commenter": comment.commenter,
+                "timestamp": comment.timestamp
+            ]
+
+            document.reference.collection("comments").addDocument(data: commentData) { error in
+                if let error = error {
+                    print("Error adding comment: \(error.localizedDescription)")
+                } else {
+                    print("Comment added successfully")
+                }
+            }
+        }
+    }
+
+
+    
     func updateLikeCount(_ post: Post, likeCount: Int, userId: String, isAdding: Bool) {
         let postId = post.id
         
