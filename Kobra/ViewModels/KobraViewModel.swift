@@ -11,7 +11,7 @@ import SwiftUI
 
 class KobraViewModel: ObservableObject {
     @Published var posts: [Post] = []
-    
+    @Published var comments: [Comment] = []
     private let postManager = FSPostManager.shared
     private var cancellables: Set<AnyCancellable> = []
     
@@ -119,4 +119,13 @@ class KobraViewModel: ObservableObject {
             }
         }
     }
+    
+    func fetchComments(for post: Post, completion: @escaping ([Comment]) -> Void) {
+        postManager.fetchComments(for: post) { comments in
+            DispatchQueue.main.async {
+                completion(comments)
+            }
+        }
+    }
+
 }

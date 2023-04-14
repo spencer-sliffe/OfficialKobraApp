@@ -12,8 +12,6 @@ import FirebaseAuth
 struct CommentView: View {
     @ObservedObject var post: Post
     @State private var newCommentText = ""
-    @ObservedObject var kobraViewModel: KobraViewModel
-    
     var currentUserId: String = Auth.auth().currentUser?.uid ?? ""
     var body: some View {
         NavigationView {
@@ -36,14 +34,13 @@ struct CommentView: View {
                 }
                 .padding()
             }
-            
         }
     }
     
     func addComment() {
         if !newCommentText.isEmpty {
             let newComment = Comment(text: newCommentText, commenter: currentUserId, timestamp: Date())
-            kobraViewModel.updateComments(post, comment: newComment)
+            post.comments.append(newComment)
             newCommentText = ""
         }
     }
