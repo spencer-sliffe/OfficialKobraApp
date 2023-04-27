@@ -98,8 +98,4 @@ class InboxViewModel: ObservableObject {
     func observeUnreadMessageCount(forChat chat: Chat, completion: @escaping (Result<Int, Error>) -> Void) -> ListenerRegistration {
         return firestoreManager.observeUnreadMessageCount(forChat: chat, currentUserEmail: currentUserEmail, completion: completion)
     }
-    
-    func markMessagesAsRead(forChat chat: Chat) {
-        firestoreManager.markMessagesAsRead(forChat: chat, currentUserEmail: currentUserEmail)
-    }
 }

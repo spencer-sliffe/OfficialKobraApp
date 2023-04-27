@@ -19,6 +19,7 @@ class FSInboxManager {
             .whereField("participants", arrayContains: userEmail)
             .addSnapshotListener { snapshot, error in
                 if let error = error {
+                    print("observeChats error: \(error.localizedDescription)")
                     completion(.failure(error))
                 } else if let snapshot = snapshot {
                     let chats = snapshot.documents.compactMap { document -> Chat? in
@@ -37,6 +38,7 @@ class FSInboxManager {
                         return Chat(id: document.documentID, participants: participants, lastMessage: lastMessage)
                     }
                     completion(.success(chats))
+                    print("observeChats received \(chats.count) chats")
                 }
             }
     }

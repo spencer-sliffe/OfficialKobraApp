@@ -60,26 +60,21 @@ struct InboxView: View {
     }
     
     private var chatList: some View {
-        Group {
-            if viewModel.isLoading {
-                ProgressView()
-            } else {
-                List(sortedChats.filter({ searchText.isEmpty ? true : $0.otherParticipantEmail(for: viewModel.currentUserEmail).localizedCaseInsensitiveContains(searchText) })) { chat in
-                    NavigationLink(destination: ChatView(viewModel: ChatViewModel(chat: chat))) {
-                        ChatCell(chat: chat, unreadMessageCount: viewModel.unreadMessageCounts[chat.id] ?? 0)
-                    }
-                    .listRowBackground(Color.clear)
-                }
-                .foregroundColor(.white)
-                .listStyle(PlainListStyle())
+        List(sortedChats.filter({ searchText.isEmpty ? true : $0.otherParticipantEmail(for: viewModel.currentUserEmail).localizedCaseInsensitiveContains(searchText) })) { chat in
+            NavigationLink(destination: ChatView(viewModel: ChatViewModel(chat: chat))) {
+                ChatCell(chat: chat, unreadMessageCount: viewModel.unreadMessageCounts[chat.id] ?? 0)
             }
+            .listRowBackground(Color.clear)
         }
+        .foregroundColor(.white)
+        .listStyle(PlainListStyle())
         .refreshable {
             viewModel.fetchChats()
         }
         .progressViewStyle(CircularProgressViewStyle())
         .accentColor(.white)
     }
+
     
     private var addButton: some View {
         Button(action: {

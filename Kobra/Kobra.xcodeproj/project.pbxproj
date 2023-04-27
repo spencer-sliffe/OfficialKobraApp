@@ -41,7 +41,7 @@
 		45C7172229C654DC00679626 /* FSInboxManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C7172129C654DC00679626 /* FSInboxManager.swift */; };
 		45CAAA2429DA7EF500BBD9FE /* SwipeableTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CAAA2329DA7EF500BBD9FE /* SwipeableTabView.swift */; };
 		45CFE93629C04EF6003806D5 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CFE93529C04EF6003806D5 /* Chat.swift */; };
-		45D5110329D0AB9100290720 /* MarketPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D5110229D0AB9100290720 /* MarketPlaceView.swift */; };
+		45D5110329D0AB9100290720 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D5110229D0AB9100290720 /* SettingsView.swift */; };
 		45D5110529D0ABAF00290720 /* KobraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D5110429D0ABAF00290720 /* KobraView.swift */; };
 		45E5ABDB299D8AC300DFFDC8 /* KobraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E5ABDA299D8AC300DFFDC8 /* KobraApp.swift */; };
 		45E5ABDF299D8AC500DFFDC8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45E5ABDE299D8AC500DFFDC8 /* Assets.xcassets */; };
@@ -91,7 +91,7 @@
 		45C7172129C654DC00679626 /* FSInboxManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FSInboxManager.swift; sourceTree = "<group>"; };
 		45CAAA2329DA7EF500BBD9FE /* SwipeableTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableTabView.swift; sourceTree = "<group>"; };
 		45CFE93529C04EF6003806D5 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
-		45D5110229D0AB9100290720 /* MarketPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketPlaceView.swift; sourceTree = "<group>"; };
+		45D5110229D0AB9100290720 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		45D5110429D0ABAF00290720 /* KobraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KobraView.swift; sourceTree = "<group>"; };
 		45E5ABD7299D8AC300DFFDC8 /* Kobra.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kobra.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45E5ABDA299D8AC300DFFDC8 /* KobraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KobraApp.swift; sourceTree = "<group>"; };
@@ -242,7 +242,7 @@
 				45EA727E29B7B74C000FD738 /* PackageView.swift */,
 				4592E55A29BD35E900FF76E2 /* ChatView.swift */,
 				45C7171F29C63B0E00679626 /* InboxView.swift */,
-				45D5110229D0AB9100290720 /* MarketPlaceView.swift */,
+				45D5110229D0AB9100290720 /* SettingsView.swift */,
 				45D5110429D0ABAF00290720 /* KobraView.swift */,
 				4527837C29D8B56D00B633FB /* CreatePostView.swift */,
 				45074EEA29E8699B0096C82A /* CommentView.swift */,
@@ -403,7 +403,7 @@
 				4527837B29D8B2FB00B633FB /* PostRow.swift in Sources */,
 				45AD934129B130F600D153AF /* AccountView.swift in Sources */,
 				4592E55B29BD35E900FF76E2 /* ChatView.swift in Sources */,
-				45D5110329D0AB9100290720 /* MarketPlaceView.swift in Sources */,
+				45D5110329D0AB9100290720 /* SettingsView.swift in Sources */,
 				45CAAA2429DA7EF500BBD9FE /* SwipeableTabView.swift in Sources */,
 				4592E55D29BD361200FF76E2 /* ChatViewModel.swift in Sources */,
 				45C7172029C63B0E00679626 /* InboxView.swift in Sources */,

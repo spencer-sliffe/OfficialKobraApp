@@ -23,85 +23,146 @@ struct CreatePostView: View {
     @State private var postTypeExpanded = false
     @State private var marketPostTypeExpanded = false
     @State private var hardwareConditionExpanded = false
-
+    
     var body: some View {
-           NavigationView {
-               ZStack {
-                   LinearGradient(
-                       gradient: Gradient(colors: [Color.blue.opacity(0.7), Color.black.opacity(0.4)]),
-                       startPoint: .topLeading,
-                       endPoint: .bottomTrailing
-                   )
-                   .edgesIgnoringSafeArea(.all)
-                   VStack {
-                       ScrollView {
-                           VStack(alignment: .leading, spacing: 20) {
-                               Text("Post Type")
-                                   .foregroundColor(.white)
-                               DropDownMenu(isExpanded: $postTypeExpanded, options: ["Advertisement", "Help", "News", "Market"], selection: $postType)
-                                   .frame(maxWidth: .infinity)
-                               CustomTextField(text: $title, placeholder: "Title")
-                               CustomTextField(text: $content, placeholder: "Content")
-
-                               if postType != "Market" {
-                                   CustomTextField(text: $category, placeholder: "Category")
-                               }
-                               if postType == "Market" {
-                                   marketPostContent()
-                               }
-                           }
-                           .padding()
-                       }
-                       if let image = selectedImage {
-                           Image(uiImage: image)
-                               .resizable()
-                               .scaledToFit()
-                               .frame(maxWidth: 200, maxHeight: 200)
-                               .shadow(radius: 10)
-                       }
-                       Button(action: {
-                           isImagePickerPresented = true
-                       }) {
-                           Text("Select Image")
-                               .foregroundColor(.white)
-                               .padding()
-                               .background(Color.black.opacity(0.6))
-                               .cornerRadius(8)
-                               .overlay(
-                                   RoundedRectangle(cornerRadius: 8)
-                                       .stroke(Color.white, lineWidth: 1)
-                               )
-                       }
-                       .sheet(isPresented: $isImagePickerPresented, onDismiss: loadImage) {
-                           ImagePicker(image: $selectedImage)
-                       }
-                       Spacer()
-                       Button(action: {
-                           // Your post creation logic here
-                       }) {
-                           Text("Post")
-                               .foregroundColor(.white)
-                               .frame(minWidth: 0, maxWidth: .infinity)
-                               .padding()
-                               .background(Color.black.opacity(0.6))
-                               .cornerRadius(8)
-                               .overlay(
-                                   RoundedRectangle(cornerRadius: 8)
-                                       .stroke(Color.white, lineWidth: 1)
-                               )
-                       }
-                       .padding()
-                   }
-               }
-               .navigationBarTitle("Create Post", displayMode: .inline)
-               .navigationBarItems(trailing: Button(action: {
-                   presentationMode.wrappedValue.dismiss()
-               }) {
-                   Text("Cancel")
-                       .foregroundColor(.white)
-               })
-           }
-       }
+        NavigationView {
+            ZStack {
+                LinearGradient(
+                    gradient: Gradient(colors: [Color.blue.opacity(0.7), Color.purple.opacity(0.4)]),
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                .edgesIgnoringSafeArea(.all)
+                VStack {
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 20) {
+                            Text("Post Type")
+                                .foregroundColor(.white)
+                            DropDownMenu(isExpanded: $postTypeExpanded, options: ["Advertisement", "Help", "News", "Market"], selection: $postType)
+                                .frame(maxWidth: .infinity)
+                            CustomTextField(text: $title, placeholder: "Title")
+                            CustomTextField(text: $content, placeholder: "Content")
+                            
+                            if postType != "Market" {
+                                CustomTextField(text: $category, placeholder: "Category")
+                            }
+                            if postType == "Market" {
+                                marketPostContent()
+                            }
+                        }
+                        .padding()
+                    }
+                    if let image = selectedImage {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: 200, maxHeight: 200)
+                            .shadow(radius: 10)
+                    }
+                    Button(action: {
+                        isImagePickerPresented = true
+                    }) {
+                        Text("Select Image")
+                            .foregroundColor(.white)
+                            .padding()
+                            .background(Color.black.opacity(0.6))
+                            .cornerRadius(8)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.white, lineWidth: 1)
+                            )
+                    }
+                    .sheet(isPresented: $isImagePickerPresented, onDismiss: loadImage) {
+                        ImagePicker(image: $selectedImage)
+                    }
+                    Spacer()
+                    Button(action: {
+                        guard let userEmail = Auth.auth().currentUser?.email else {
+                            print("Error: User not logged in or email not found")
+                            return
+                        }
+                        
+                        let username = userEmail.components(separatedBy: "@")[0]
+                        let id = UUID()
+                        let postType: Post.PostType
+                        
+                        switch self.postType {
+                        case "advertisement":
+                            let advertisementPost = AdvertisementPost(poster: username, title: title, content: content, category: category)
+                            postType = .advertisement(advertisementPost)
+                        case "help":
+                            let helpPost = HelpPost(poster: username, question: title, details: content, category: category)
+                            postType = .help(helpPost)
+                        case "news":
+                            let newsPost = NewsPost(poster: username, headline: title, article: content, category: category)
+                            postType = .news(newsPost)
+                        case "market":
+                            let marketPostType: MarketPost.MarketPostType
+                            switch self.marketPostType {
+                            case "hardware":
+                                let hardware = Hardware(name: title, condition: Hardware.HardwareCondition(rawValue: hardwareCondition)!, description: content)
+                                marketPostType = .hardware(hardware)
+                            case "software":
+                                let software = Software(name: title, description: content)
+                                marketPostType = .software(software)
+                            case "service":
+                                let service = Service(name: title, description: content)
+                                marketPostType = .service(service)
+                            case "other":
+                                let other = Other(title: title, description: content)
+                                marketPostType = .other(other)
+                            default:
+                                fatalError("Unknown market post type")
+                            }
+                            let marketPost = MarketPost(vendor: username, type: marketPostType, price: stepperPrice, category: category)
+                            postType = .market(marketPost)
+                        default:
+                            fatalError("Unknown post type")
+                        }
+                        
+                        let timestamp = Date()
+                        let post = Post(id: id, type: postType, likes: 0, timestamp: timestamp, imageURL: nil, likingUsers: [""], comments: [])
+                        
+                        if let image = selectedImage {
+                            kobraViewModel.uploadImage(image, postId: id.uuidString) { result in
+                                switch result {
+                                case .success(let imageURL):
+                                    let updatedPost = post
+                                    updatedPost.imageURL = imageURL
+                                    kobraViewModel.addPost(updatedPost) { _ in }
+                                case .failure(let error):
+                                    print("Error uploading image: \(error.localizedDescription)")
+                                }
+                            }
+                        } else {
+                            kobraViewModel.addPost(post) { _ in }
+                        }
+                        
+                        presentationMode.wrappedValue.dismiss()
+                    })  {
+                        Text("Post")
+                            .foregroundColor(.white)
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .padding()
+                            .background(Color.black.opacity(0.6))
+                            .cornerRadius(8)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.white, lineWidth: 1)
+                            )
+                    }
+                    .padding()
+                }
+            }
+            .navigationBarTitle("Create Post", displayMode: .inline)
+            .navigationBarItems(trailing: Button(action: {
+                presentationMode.wrappedValue.dismiss()
+            }) {
+                Text("Cancel")
+                    .foregroundColor(.white)
+            })
+        }
+    }
     
     private func loadImage() {
         isImagePickerPresented = false

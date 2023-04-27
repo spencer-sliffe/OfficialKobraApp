@@ -18,7 +18,7 @@ struct HomePageView: View {
                     AuthenticationView(authViewModel: authViewModel)
                 } else {
                     TabView(selection: $selectedTab) {
-                        MarketPlaceView()
+                        SettingsView()
                             .tag(0)
                         AccountView(authViewModel: authViewModel)
                             .tag(1)

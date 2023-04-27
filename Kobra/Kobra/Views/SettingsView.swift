@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct MarketPlaceView: View {
+struct SettingsView: View {
     var body: some View {
         VStack{
 

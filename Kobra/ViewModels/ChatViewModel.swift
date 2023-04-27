@@ -25,6 +25,10 @@ class ChatViewModel: ObservableObject {
         self.chat = chat
     }
     
+    deinit {
+        chatListener?.remove()
+    }
+    
     var currentUserEmail: String {
         return Auth.auth().currentUser?.email ?? ""
     }

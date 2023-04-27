@@ -63,7 +63,6 @@ struct ChatView: View {
             .background(Color.clear)
             .padding(.bottom, keyboardHeight)
         }
-        .keyboardAware()
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading:
                                 Button(action: {
