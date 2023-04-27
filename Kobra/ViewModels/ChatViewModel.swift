@@ -18,7 +18,7 @@ class ChatViewModel: ObservableObject {
     @Published var messages: [ChatMessage] = []
     @Published var isLoading2 = false
     private var cancellables = Set<AnyCancellable>()
-    private let firestoreManager = FirestoreManager.shared
+    private let firestoreManager = FSChatManager.shared
     var chatListener: ListenerRegistration?
     
     init(chat: Chat) {

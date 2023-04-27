@@ -15,12 +15,12 @@ class InboxViewModel: ObservableObject {
     @Published var isLoading = true
     @Published var searchText = ""
     @Published var unreadMessageCounts: [String: Int] = [:]
-    private let firestoreManager: FirestoreManager
+    private let firestoreManager: FSInboxManager
     private var cancellables = Set<AnyCancellable>()
     private var listener: ListenerRegistration?
     private var listeners: [ListenerRegistration] = []
     
-    init(firestoreManager: FirestoreManager = FirestoreManager.shared) {
+    init(firestoreManager: FSInboxManager = FSInboxManager.shared) {
         self.firestoreManager = firestoreManager
         fetchChats()
         observeUnreadMessageCounts(forChats: chats)

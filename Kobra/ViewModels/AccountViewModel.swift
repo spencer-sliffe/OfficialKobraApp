@@ -10,7 +10,7 @@ import SwiftUI
 class AccountViewModel: ObservableObject {
     @Published var account: Account?
     @Published var isLoading3 = true
-    let dataManager = DataManager()
+    let dataManager = FSAccountManager()
     @Published var userPosts: [Post] = []
     
     init() {

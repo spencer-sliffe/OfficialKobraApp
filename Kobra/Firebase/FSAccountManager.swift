@@ -8,7 +8,7 @@
 import SwiftUI
 import Firebase
 
-class DataManager: ObservableObject {
+class FSAccountManager: ObservableObject {
     @Published var packages: [Package] = []
     
     init() {
