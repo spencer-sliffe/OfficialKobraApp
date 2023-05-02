@@ -23,9 +23,7 @@ struct InboxView: View {
                 .sheet(isPresented: $showingAddChat, content: addChatSheet)
                 .alert(isPresented: $showAlert, content: alert)
                 .background(Color.clear)
-            
             Spacer()
-            
             HStack {
                 Spacer()
                 addButton.padding(.bottom, 0)
@@ -46,6 +44,7 @@ struct InboxView: View {
             } else {
                 VStack {
                     SearchBar(text: $searchText)
+                        .padding(.horizontal)
                     chatList
                 }
             }

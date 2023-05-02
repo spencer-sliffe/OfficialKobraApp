@@ -40,30 +40,33 @@ struct DropDownMenu: View {
                 }
             }
             if isExpanded {
-                VStack(alignment: .leading, spacing: 0) {
-                    ForEach(options.indices, id: \.self) { index in
-                        Text(options[index])
-                            .font(.system(size: 18, weight: .semibold, design: .rounded))
-                            .foregroundColor(.white)
-                            .padding(.vertical, 10)
-                            .padding(.horizontal)
-                            .background(Color.blue.opacity(0.8))
-                            .onTapGesture {
-                                withAnimation(.spring()) {
-                                    selection = options[index]
-                                    isExpanded = false
-                                    onOptionSelected(index)
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 0) {
+                        ForEach(options.indices, id: \.self) { index in
+                            Text(options[index])
+                                .font(.system(size: 18, weight: .semibold, design: .rounded))
+                                .foregroundColor(.white)
+                                .padding(.vertical, 10)
+                                .padding(.horizontal)
+                                .background(Color.blue.opacity(0.8))
+                                .onTapGesture {
+                                    withAnimation(.spring()) {
+                                        selection = options[index]
+                                        isExpanded = false
+                                        onOptionSelected(index)
+                                    }
                                 }
-                            }
+                        }
                     }
+                    .background(Color.blue.opacity(0.8))
+                    .cornerRadius(8)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.white, lineWidth: 1)
+                    )
+                    .shadow(radius: 5)
                 }
-                .background(Color.blue.opacity(0.8))
-                .cornerRadius(8)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.white, lineWidth: 1)
-                )
-                .shadow(radius: 5)
+                .frame(maxHeight: UIScreen.main.bounds.height * 0.4)
             }
         }
     }

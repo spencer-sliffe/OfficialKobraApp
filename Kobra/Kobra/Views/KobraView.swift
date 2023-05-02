@@ -145,7 +145,6 @@ struct KobraView: View {
             customToolbar()
         }
         .background(Color.clear)
-        .edgesIgnoringSafeArea(.bottom)
         .onAppear {
             viewModel.fetchPosts()
         }

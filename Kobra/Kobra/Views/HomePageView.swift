@@ -46,34 +46,45 @@ struct HomePageView: View {
                                 withAnimation { selectedTab = 0 }
                             }) {
                                 Image(systemName: "gear")
+                                    .resizable()
+                                    .frame(width: 24, height: 24)
                             }
                             .frame(maxWidth: .infinity)
                             Button(action: {
                                 withAnimation { selectedTab = 1 }
                             }) {
                                 Image(systemName: "person")
+                                    .resizable()
+                                    .frame(width: 24, height: 24)
                             }
                             .frame(maxWidth: .infinity)
                             Button(action: {
                                 withAnimation { selectedTab = 2 }
                             }) {
                                 Image(systemName: "house")
+                                    .resizable()
+                                    .frame(width: 28, height: 24)
                             }
                             .frame(maxWidth: .infinity)
                             Button(action: {
                                 withAnimation { selectedTab = 3 }
                             }) {
                                 Image(systemName: "envelope")
+                                    .resizable()
+                                    .frame(width: 28, height: 24)
                             }
                             .frame(maxWidth: .infinity)
                             Button(action: {
                                 withAnimation { selectedTab = 4 }
                             }) {
                                 Image(systemName: "shippingbox")
+                                    .resizable()
+                                    .frame(width: 28, height: 24)
                             }
                             .frame(maxWidth: .infinity)
                         }
-                        .padding(.bottom, 10)
+                        .padding(.bottom, 16)
+                        .foregroundColor(Color.white)
                     }
                     .navigationBarHidden(true)
                 }
@@ -83,8 +94,8 @@ struct HomePageView: View {
                 LinearGradient(
                     gradient: Gradient(
                         colors: [
-                            gradientOptions[settingsViewModel.selectedGradientIndex].0,
-                            gradientOptions[settingsViewModel.selectedGradientIndex].1
+                            gradientOptions[settingsViewModel.gradientIndex].0,
+                            gradientOptions[settingsViewModel.gradientIndex].1
                         ]
                     ),
                     startPoint: .topLeading,

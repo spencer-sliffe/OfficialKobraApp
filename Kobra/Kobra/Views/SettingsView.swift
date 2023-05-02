@@ -4,7 +4,6 @@
 //
 //  Created by Spencer SLiffe on 3/26/23.
 //
-
 import Foundation
 import SwiftUI
 
@@ -21,9 +20,9 @@ struct SettingsView: View {
             DropDownMenu(
                 isExpanded: $isExpanded,
                 options: gradientOptions.indices.map { "Gradient \($0 + 1)" },
-                selection: .constant("Gradient \(settingsViewModel.selectedGradientIndex + 1)"),
+                selection: .constant("Gradient \(settingsViewModel.gradientIndex + 1)"),
                 onOptionSelected: { index in
-                    settingsViewModel.selectedGradientIndex = index
+                    settingsViewModel.updateSelectedGradient(to: index)
                 }
             )
             Spacer()

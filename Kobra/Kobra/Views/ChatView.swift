@@ -16,6 +16,7 @@ struct ChatView: View {
     @State private var searchButtonLabel = "Cancel"
     @State private var keyboardHeight: CGFloat = 0
     @Environment(\.presentationMode) private var presentationMode
+    @EnvironmentObject private var settingsViewModel: SettingsViewModel
     
     var body: some View {
         VStack(spacing: 0) {
@@ -82,7 +83,12 @@ struct ChatView: View {
         }
         .background(
             LinearGradient(
-                gradient: Gradient(colors: [.black, .blue]),
+                gradient: Gradient(
+                    colors: [
+                        gradientOptions[settingsViewModel.gradientIndex].0,
+                        gradientOptions[settingsViewModel.gradientIndex].1
+                    ]
+                ),
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )

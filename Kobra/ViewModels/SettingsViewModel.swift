@@ -7,8 +7,14 @@
 
 import Foundation
 import SwiftUI
-import Combine
 
 class SettingsViewModel: ObservableObject {
-    @Published var selectedGradientIndex: Int = 0
+    @AppStorage("gradientIndex") public var gradientIndex: Int = 0
+    var selectedGradient: (Color, Color) {
+        gradientOptions[gradientIndex]
+    }
+    func updateSelectedGradient(to newIndex: Int) {
+        gradientIndex = newIndex
+    }
+
 }
