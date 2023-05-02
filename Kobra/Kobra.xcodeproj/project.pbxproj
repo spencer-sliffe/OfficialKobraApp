@@ -10,6 +10,8 @@
 		45074EE729E866590096C82A /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45074EE629E866590096C82A /* Comment.swift */; };
 		45074EE929E8681C0096C82A /* CommentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45074EE829E8681C0096C82A /* CommentRow.swift */; };
 		45074EEB29E8699B0096C82A /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45074EEA29E8699B0096C82A /* CommentView.swift */; };
+		451C33F42A0168A500259B86 /* gradientOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C33F32A0168A500259B86 /* gradientOptions.swift */; };
+		451C33F62A01691B00259B86 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C33F52A01691B00259B86 /* SettingsViewModel.swift */; };
 		452430FA29DAA0E40000B5AB /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452430F929DAA0E40000B5AB /* SearchBar.swift */; };
 		4525CFC429DB407E005C0CE8 /* KobraPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4525CFC329DB407E005C0CE8 /* KobraPicker.swift */; };
 		4527837929D8AB3D00B633FB /* FSPostManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4527837829D8AB3D00B633FB /* FSPostManager.swift */; };
@@ -61,6 +63,8 @@
 		45074EE629E866590096C82A /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		45074EE829E8681C0096C82A /* CommentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentRow.swift; sourceTree = "<group>"; };
 		45074EEA29E8699B0096C82A /* CommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentView.swift; sourceTree = "<group>"; };
+		451C33F32A0168A500259B86 /* gradientOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gradientOptions.swift; sourceTree = "<group>"; };
+		451C33F52A01691B00259B86 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		452430F929DAA0E40000B5AB /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		4525CFC329DB407E005C0CE8 /* KobraPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KobraPicker.swift; sourceTree = "<group>"; };
 		4527837829D8AB3D00B633FB /* FSPostManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FSPostManager.swift; sourceTree = "<group>"; };
@@ -135,6 +139,7 @@
 				457D1F5029DF4D9B00EF722D /* ImagePicker.swift */,
 				45074EE829E8681C0096C82A /* CommentRow.swift */,
 				457EFD3829F8AECB006F53F2 /* DropDownMenu.swift */,
+				451C33F32A0168A500259B86 /* gradientOptions.swift */,
 			);
 			path = CustomElements;
 			sourceTree = "<group>";
@@ -220,6 +225,7 @@
 				4592E55C29BD361200FF76E2 /* ChatViewModel.swift */,
 				45C7171D29C63AF700679626 /* InboxViewModel.swift */,
 				455C6E5629D7E72600446520 /* KobraViewModel.swift */,
+				451C33F52A01691B00259B86 /* SettingsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -403,6 +409,7 @@
 				4527837B29D8B2FB00B633FB /* PostRow.swift in Sources */,
 				45AD934129B130F600D153AF /* AccountView.swift in Sources */,
 				4592E55B29BD35E900FF76E2 /* ChatView.swift in Sources */,
+				451C33F62A01691B00259B86 /* SettingsViewModel.swift in Sources */,
 				45D5110329D0AB9100290720 /* SettingsView.swift in Sources */,
 				45CAAA2429DA7EF500BBD9FE /* SwipeableTabView.swift in Sources */,
 				4592E55D29BD361200FF76E2 /* ChatViewModel.swift in Sources */,
@@ -417,6 +424,7 @@
 				4543FE6329DB4A24003B3CCC /* CustomTextField.swift in Sources */,
 				45CFE93629C04EF6003806D5 /* Chat.swift in Sources */,
 				45A908CB29B037FE00792FC2 /* FSAccountManager.swift in Sources */,
+				451C33F42A0168A500259B86 /* gradientOptions.swift in Sources */,
 				4527837929D8AB3D00B633FB /* FSPostManager.swift in Sources */,
 				45AD934329B1AAB800D153AF /* AuthenticationView.swift in Sources */,
 				45A908CD29B0386400792FC2 /* Package.swift in Sources */,

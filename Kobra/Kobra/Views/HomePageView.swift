@@ -10,7 +10,8 @@ import Foundation
 struct HomePageView: View {
     @State private var selectedTab = 2
     @ObservedObject var authViewModel = AuthenticationViewModel()
-    
+    @StateObject private var settingsViewModel = SettingsViewModel()
+
     var body: some View {
         NavigationView {
             ZStack {
@@ -36,13 +37,17 @@ struct HomePageView: View {
             .edgesIgnoringSafeArea(.bottom)
             .background(
                 LinearGradient(
-                    gradient: Gradient(colors: [.black, .blue]),
+                    gradient: Gradient(
+                        colors: [
+                            gradientOptions[settingsViewModel.selectedGradientIndex].0,
+                            gradientOptions[settingsViewModel.selectedGradientIndex].1
+                        ]
+                    ),
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 )
             )
         }
-        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
