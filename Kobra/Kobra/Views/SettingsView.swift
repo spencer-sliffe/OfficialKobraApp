@@ -10,7 +10,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @State private var isExpanded = false
-    @State private var selectedGradientIndex = 0
+    @EnvironmentObject private var settingsViewModel: SettingsViewModel
     
     var body: some View {
         VStack{
@@ -21,7 +21,10 @@ struct SettingsView: View {
             DropDownMenu(
                 isExpanded: $isExpanded,
                 options: gradientOptions.indices.map { "Gradient \($0 + 1)" },
-                selection: .constant("Gradient \(selectedGradientIndex + 1)")
+                selection: .constant("Gradient \(settingsViewModel.selectedGradientIndex + 1)"),
+                onOptionSelected: { index in
+                    settingsViewModel.selectedGradientIndex = index
+                }
             )
             Spacer()
         }

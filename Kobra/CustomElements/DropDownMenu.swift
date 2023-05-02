@@ -12,6 +12,7 @@ struct DropDownMenu: View {
     @Binding var isExpanded: Bool
     let options: [String]
     @Binding var selection: String
+    let onOptionSelected: (Int) -> Void
     
     var body: some View {
         VStack {
@@ -40,8 +41,8 @@ struct DropDownMenu: View {
             }
             if isExpanded {
                 VStack(alignment: .leading, spacing: 0) {
-                    ForEach(options, id: \.self) { option in
-                        Text(option)
+                    ForEach(options.indices, id: \.self) { index in
+                        Text(options[index])
                             .font(.system(size: 18, weight: .semibold, design: .rounded))
                             .foregroundColor(.white)
                             .padding(.vertical, 10)
@@ -49,8 +50,9 @@ struct DropDownMenu: View {
                             .background(Color.blue.opacity(0.8))
                             .onTapGesture {
                                 withAnimation(.spring()) {
-                                    selection = option
+                                    selection = options[index]
                                     isExpanded = false
+                                    onOptionSelected(index)
                                 }
                             }
                     }

@@ -144,13 +144,7 @@ struct KobraView: View {
             .background(Color.clear)
             customToolbar()
         }
-        .background(
-            LinearGradient(
-                gradient: Gradient(colors: [.black, .blue]),
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-        )
+        .background(Color.clear)
         .edgesIgnoringSafeArea(.bottom)
         .onAppear {
             viewModel.fetchPosts()

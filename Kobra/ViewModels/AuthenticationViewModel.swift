@@ -9,6 +9,7 @@ import Foundation
 import Firebase
 import FirebaseFirestore
 import Combine
+import SwiftUI
 
 class AuthenticationViewModel: ObservableObject {
     @Published var email = ""
@@ -18,7 +19,7 @@ class AuthenticationViewModel: ObservableObject {
     @Published var isLoading1 = false
     @Published var isError = false
     @Published var errorMessage = ""
-    @Published var isAuthenticated = false
+    @AppStorage("isAuthenticated") var isAuthenticated: Bool = false
     @Published var user: User?
 
     let signedOut = PassthroughSubject<Void, Never>()

@@ -13,13 +13,16 @@ import UIKit
 struct KobraApp: App {
     typealias imagePackageTuple = (image: UIImage, package: Package)
     
-    init(){
+    init() {
         FirebaseApp.configure()
     }
     
+    @StateObject private var authenticationViewModel = AuthenticationViewModel()
+    
     var body: some Scene {
         WindowGroup {
-            HomePageView()
+            MainAppView()
+                .environmentObject(authenticationViewModel)
         }
     }
 }

@@ -10,7 +10,26 @@ import Foundation
 struct HomePageView: View {
     @State private var selectedTab = 2
     @ObservedObject var authViewModel = AuthenticationViewModel()
-    @StateObject private var settingsViewModel = SettingsViewModel()
+    @EnvironmentObject private var settingsViewModel: SettingsViewModel
+
+
+    @ViewBuilder
+    private func getView(for index: Int) -> some View {
+        switch index {
+        case 0:
+            SettingsView()
+        case 1:
+            AccountView(authViewModel: authViewModel)
+        case 2:
+            KobraView()
+        case 3:
+            InboxView(viewModel: InboxViewModel())
+        case 4:
+            PackageView()
+        default:
+            EmptyView()
+        }
+    }
 
     var body: some View {
         NavigationView {
@@ -18,19 +37,44 @@ struct HomePageView: View {
                 if !authViewModel.isAuthenticated {
                     AuthenticationView(authViewModel: authViewModel)
                 } else {
-                    TabView(selection: $selectedTab) {
-                        SettingsView()
-                            .tag(0)
-                        AccountView(authViewModel: authViewModel)
-                            .tag(1)
-                        KobraView()
-                            .tag(2)
-                        InboxView(viewModel: InboxViewModel())
-                            .tag(3)
-                        PackageView()
-                            .tag(4)
+                    VStack {
+                        getView(for: selectedTab)
+                            .transition(.slide)
+
+                        HStack(spacing: 0) {
+                            Button(action: {
+                                withAnimation { selectedTab = 0 }
+                            }) {
+                                Image(systemName: "gear")
+                            }
+                            .frame(maxWidth: .infinity)
+                            Button(action: {
+                                withAnimation { selectedTab = 1 }
+                            }) {
+                                Image(systemName: "person")
+                            }
+                            .frame(maxWidth: .infinity)
+                            Button(action: {
+                                withAnimation { selectedTab = 2 }
+                            }) {
+                                Image(systemName: "house")
+                            }
+                            .frame(maxWidth: .infinity)
+                            Button(action: {
+                                withAnimation { selectedTab = 3 }
+                            }) {
+                                Image(systemName: "envelope")
+                            }
+                            .frame(maxWidth: .infinity)
+                            Button(action: {
+                                withAnimation { selectedTab = 4 }
+                            }) {
+                                Image(systemName: "shippingbox")
+                            }
+                            .frame(maxWidth: .infinity)
+                        }
+                        .padding(.bottom, 10)
                     }
-                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                     .navigationBarHidden(true)
                 }
             }
@@ -56,4 +100,3 @@ struct HomePageView_Previews: PreviewProvider {
         HomePageView()
     }
 }
-

@@ -122,13 +122,7 @@ struct InboxView: View {
             .cornerRadius(8)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(
-            LinearGradient(
-                gradient: Gradient(colors: [.black, .blue]),
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-        )
+        .background(Color.clear)
     }
 }
 

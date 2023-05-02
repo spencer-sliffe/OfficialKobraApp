@@ -38,8 +38,14 @@ struct CreatePostView: View {
                         VStack(alignment: .leading, spacing: 20) {
                             Text("Post Type")
                                 .foregroundColor(.white)
-                            DropDownMenu(isExpanded: $postTypeExpanded, options: ["Advertisement", "Help", "News", "Market"], selection: $postType)
-                                .frame(maxWidth: .infinity)
+                            DropDownMenu(
+                                isExpanded: $postTypeExpanded,
+                                options: ["Advertisement", "Help", "News", "Market"],
+                                selection: $postType,
+                                onOptionSelected: { _ in }
+                            )
+                            .frame(maxWidth: .infinity)
+
                             CustomTextField(text: $title, placeholder: "Title")
                             CustomTextField(text: $content, placeholder: "Content")
                             
@@ -173,13 +179,25 @@ struct CreatePostView: View {
         VStack(alignment: .leading, spacing: 20) {
             Text("Market Post Type")
                 .foregroundColor(.white)
-            DropDownMenu(isExpanded: $marketPostTypeExpanded, options: ["Hardware", "Software", "Service", "Other"], selection: $marketPostType)
-                .frame(maxWidth: .infinity)
+            DropDownMenu(
+                isExpanded: $marketPostTypeExpanded,
+                options: ["Hardware", "Software", "Service", "Other"],
+                selection: $marketPostType,
+                onOptionSelected: { _ in }
+            )
+            .frame(maxWidth: .infinity)
+
             if marketPostType == "Hardware" {
                 Text("Condition")
                     .foregroundColor(.white)
-                DropDownMenu(isExpanded: $hardwareConditionExpanded, options: [Hardware.HardwareCondition.new.rawValue, Hardware.HardwareCondition.used.rawValue], selection: $hardwareCondition)
-                    .frame(maxWidth: .infinity)
+                DropDownMenu(
+                    isExpanded: $hardwareConditionExpanded,
+                    options: [Hardware.HardwareCondition.new.rawValue, Hardware.HardwareCondition.used.rawValue],
+                    selection: $hardwareCondition,
+                    onOptionSelected: { _ in }
+                )
+                .frame(maxWidth: .infinity)
+
             }
             CustomTextField(text: $category, placeholder: "Category")
             VStack(alignment: .leading) {
