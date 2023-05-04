@@ -27,7 +27,6 @@ struct PackageView: View {
         .foregroundColor(.white)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .navigationBarHidden(true)
-        .navigationBarTitle("")
     }
 }
 

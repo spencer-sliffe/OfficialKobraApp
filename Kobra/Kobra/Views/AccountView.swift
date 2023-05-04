@@ -6,11 +6,13 @@
 //
 import SwiftUI
 import Firebase
+import SwiftUI
+import Firebase
 
 struct AccountView: View {
     @ObservedObject var viewModel = AccountViewModel()
+    @EnvironmentObject var kobraViewModel: KobraViewModel
     @State var isLoggedOut = false
-    @StateObject var authViewModel: AuthenticationViewModel
     
     var body: some View {
         VStack {
@@ -75,15 +77,10 @@ struct AccountView: View {
                     .foregroundColor(.white)
             }
             Spacer()
-            Button(action: {
-                authViewModel.signOut() // Call the signOut method on the injected view model
-            }) {
-                Text("Logout")
-                    .font(.headline)
-                    .foregroundColor(.white)
-            }
-            .padding()
         }
+        .background(Color.clear)
+        .foregroundColor(.white)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .navigationBarHidden(true)
     }
 }
-

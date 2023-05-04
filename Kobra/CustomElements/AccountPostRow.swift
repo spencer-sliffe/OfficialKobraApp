@@ -1,14 +1,15 @@
-//  PostRow.swift
+//
+//  AccountPostRow.swift
 //  Kobra
 //
-//  Created by Spencer Sliffe on 4/1/23.
+//  Created by Spencer SLiffe on 5/4/23.
 //
 
 import Foundation
 import SwiftUI
 import FirebaseAuth
 
-struct PostRow: View {
+struct AccountPostRow: View {
     @ObservedObject var post: Post
     @State private var isLiked = false
     @State private var likes = 0
@@ -16,6 +17,7 @@ struct PostRow: View {
     @State private var dislikes = 0
     @EnvironmentObject var kobraViewModel: KobraViewModel
     @State private var showingComments = false
+    @State private var showingDeleteAlert = false
     
     // Add a property for the current user's ID
     let currentUserId: String = Auth.auth().currentUser?.uid ?? ""
@@ -49,6 +51,13 @@ struct PostRow: View {
                 Text(post.timestamp.formatted())
                     .font(.caption)
                     .foregroundColor(.secondary)
+               
+                    Button(action: {
+                        showingDeleteAlert.toggle()
+                    }) {
+                        Image(systemName: "trash")
+                            .foregroundColor(.red)
+                    }
                 
             }
             
@@ -125,6 +134,14 @@ struct PostRow: View {
         .cornerRadius(8)
         .sheet(isPresented: $showingComments) {
             CommentView(post: post)
+        }
+        .alert(isPresented: $showingDeleteAlert) {
+            Alert(title: Text("Delete Post"),
+                  message: Text("Are you sure you want to delete this post?"),
+                  primaryButton: .destructive(Text("Delete")) {
+                kobraViewModel.deletePost(post)
+            },
+                  secondaryButton: .cancel())
         }
     }
     

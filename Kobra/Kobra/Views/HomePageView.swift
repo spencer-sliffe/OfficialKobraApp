@@ -12,14 +12,15 @@ struct HomePageView: View {
     @ObservedObject var authViewModel = AuthenticationViewModel()
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
 
+    @StateObject var kobraViewModel = KobraViewModel()
 
     @ViewBuilder
     private func getView(for index: Int) -> some View {
         switch index {
         case 0:
-            SettingsView()
+            SettingsView(authViewModel: authViewModel)
         case 1:
-            AccountView(authViewModel: authViewModel)
+            AccountView()
         case 2:
             KobraView()
         case 3:

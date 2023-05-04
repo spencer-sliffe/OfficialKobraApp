@@ -27,7 +27,7 @@ struct DropDownMenu: View {
                     .foregroundColor(.white)
             }
             .padding()
-            .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.blue.opacity(0.7)]), startPoint: .leading, endPoint: .trailing))
+            .background(Color.clear)
             .cornerRadius(8)
             .overlay(
                 RoundedRectangle(cornerRadius: 8)
@@ -48,7 +48,7 @@ struct DropDownMenu: View {
                                 .foregroundColor(.white)
                                 .padding(.vertical, 10)
                                 .padding(.horizontal)
-                                .background(Color.blue.opacity(0.8))
+                                .background(Color.clear)
                                 .onTapGesture {
                                     withAnimation(.spring()) {
                                         selection = options[index]
@@ -58,7 +58,7 @@ struct DropDownMenu: View {
                                 }
                         }
                     }
-                    .background(Color.blue.opacity(0.8))
+                    .background(Color.clear)
                     .cornerRadius(8)
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)

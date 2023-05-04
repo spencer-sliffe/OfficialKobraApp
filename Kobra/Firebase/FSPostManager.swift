@@ -218,20 +218,20 @@ class FSPostManager {
     func fetchComments(for post: Post, completion: @escaping ([Comment]) -> Void) {
         let postId = post.id
         let query = db.collection(postsCollection).whereField("id", isEqualTo: postId.uuidString)
-
+        
         query.getDocuments { (querySnapshot, error) in
             if let error = error {
                 print("Error fetching post: \(error.localizedDescription)")
                 completion([])
                 return
             }
-
+            
             guard let document = querySnapshot?.documents.first else {
                 print("No document found with matching post id")
                 completion([])
                 return
             }
-
+            
             document.reference.collection("comments").order(by: "timestamp", descending: true).getDocuments { (commentSnapshot, error) in
                 if let error = error {
                     print("Error fetching comments: \(error.localizedDescription)")
@@ -291,25 +291,25 @@ class FSPostManager {
     func updateComments(_ post: Post, comment: Comment) {
         let postId = post.id
         let query = db.collection(postsCollection).whereField("id", isEqualTo: postId.uuidString)
-
+        
         query.getDocuments { (querySnapshot, error) in
             if let error = error {
                 print("Error adding comment: \(error.localizedDescription)")
                 return
             }
-
+            
             guard let document = querySnapshot?.documents.first else {
                 print("No document found with matching post id")
                 return
             }
-
+            
             let commentData: [String: Any] = [
                 "id": comment.id.uuidString,
                 "text": comment.text,
                 "commenter": comment.commenter,
                 "timestamp": comment.timestamp
             ]
-
+            
             document.reference.collection("comments").addDocument(data: commentData) { error in
                 if let error = error {
                     print("Error adding comment: \(error.localizedDescription)")
@@ -319,8 +319,8 @@ class FSPostManager {
             }
         }
     }
-
-
+    
+    
     
     func updateLikeCount(_ post: Post, likeCount: Int, userId: String, isAdding: Bool) {
         let postId = post.id
@@ -423,6 +423,21 @@ class FSPostManager {
             } else {
                 completion(.success(()))
             }
+        }
+    }
+    func fetchUserPosts(userEmail: String, completion: @escaping (Result<[Post], Error>) -> Void) {
+        db.collection(postsCollection).whereField("author", isEqualTo: userEmail).getDocuments { (querySnapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            var posts: [Post] = []
+            querySnapshot?.documents.forEach { document in
+                let data = document.data()
+                let post = self.createPostFrom(data: data)
+                posts.append(post)
+            }
+            completion(.success(posts))
         }
     }
 }

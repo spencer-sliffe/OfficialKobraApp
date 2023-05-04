@@ -13,12 +13,15 @@
 		451C33F42A0168A500259B86 /* gradientOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C33F32A0168A500259B86 /* gradientOptions.swift */; };
 		451C33F62A01691B00259B86 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C33F52A01691B00259B86 /* SettingsViewModel.swift */; };
 		451C33FA2A0175FD00259B86 /* MainAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C33F92A0175FD00259B86 /* MainAppView.swift */; };
+		451C33FC2A0190F200259B86 /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C33FB2A0190F200259B86 /* ChangePasswordView.swift */; };
 		452430FA29DAA0E40000B5AB /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452430F929DAA0E40000B5AB /* SearchBar.swift */; };
 		4525CFC429DB407E005C0CE8 /* KobraPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4525CFC329DB407E005C0CE8 /* KobraPicker.swift */; };
 		4527837929D8AB3D00B633FB /* FSPostManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4527837829D8AB3D00B633FB /* FSPostManager.swift */; };
 		4527837B29D8B2FB00B633FB /* PostRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4527837A29D8B2FB00B633FB /* PostRow.swift */; };
 		4527837D29D8B56D00B633FB /* CreatePostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4527837C29D8B56D00B633FB /* CreatePostView.swift */; };
 		4528556229B1AED800F088CD /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4528556129B1AED800F088CD /* AuthenticationViewModel.swift */; };
+		452CB79A2A030BDE001D8195 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452CB7992A030BDE001D8195 /* CustomButton.swift */; };
+		452CB79C2A03F7FF001D8195 /* AccountPostRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452CB79B2A03F7FF001D8195 /* AccountPostRow.swift */; };
 		4543FE6129DB4A0C003B3CCC /* CustomUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543FE6029DB4A0C003B3CCC /* CustomUITextField.swift */; };
 		4543FE6329DB4A24003B3CCC /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543FE6229DB4A24003B3CCC /* CustomTextField.swift */; };
 		455C6E5729D7E72600446520 /* KobraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455C6E5629D7E72600446520 /* KobraViewModel.swift */; };
@@ -67,12 +70,15 @@
 		451C33F32A0168A500259B86 /* gradientOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gradientOptions.swift; sourceTree = "<group>"; };
 		451C33F52A01691B00259B86 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		451C33F92A0175FD00259B86 /* MainAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppView.swift; sourceTree = "<group>"; };
+		451C33FB2A0190F200259B86 /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
 		452430F929DAA0E40000B5AB /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		4525CFC329DB407E005C0CE8 /* KobraPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KobraPicker.swift; sourceTree = "<group>"; };
 		4527837829D8AB3D00B633FB /* FSPostManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FSPostManager.swift; sourceTree = "<group>"; };
 		4527837A29D8B2FB00B633FB /* PostRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRow.swift; sourceTree = "<group>"; };
 		4527837C29D8B56D00B633FB /* CreatePostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostView.swift; sourceTree = "<group>"; };
 		4528556129B1AED800F088CD /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
+		452CB7992A030BDE001D8195 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		452CB79B2A03F7FF001D8195 /* AccountPostRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountPostRow.swift; sourceTree = "<group>"; };
 		4543FE6029DB4A0C003B3CCC /* CustomUITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUITextField.swift; sourceTree = "<group>"; };
 		4543FE6229DB4A24003B3CCC /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		455C6E5629D7E72600446520 /* KobraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KobraViewModel.swift; sourceTree = "<group>"; };
@@ -142,6 +148,8 @@
 				45074EE829E8681C0096C82A /* CommentRow.swift */,
 				457EFD3829F8AECB006F53F2 /* DropDownMenu.swift */,
 				451C33F32A0168A500259B86 /* gradientOptions.swift */,
+				452CB7992A030BDE001D8195 /* CustomButton.swift */,
+				452CB79B2A03F7FF001D8195 /* AccountPostRow.swift */,
 			);
 			path = CustomElements;
 			sourceTree = "<group>";
@@ -255,6 +263,7 @@
 				4527837C29D8B56D00B633FB /* CreatePostView.swift */,
 				45074EEA29E8699B0096C82A /* CommentView.swift */,
 				451C33F92A0175FD00259B86 /* MainAppView.swift */,
+				451C33FB2A0190F200259B86 /* ChangePasswordView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -425,6 +434,8 @@
 				45EC904C29B8217100E0A3A3 /* StorageManager.swift in Sources */,
 				45074EEB29E8699B0096C82A /* CommentView.swift in Sources */,
 				4543FE6329DB4A24003B3CCC /* CustomTextField.swift in Sources */,
+				451C33FC2A0190F200259B86 /* ChangePasswordView.swift in Sources */,
+				452CB79C2A03F7FF001D8195 /* AccountPostRow.swift in Sources */,
 				45CFE93629C04EF6003806D5 /* Chat.swift in Sources */,
 				45A908CB29B037FE00792FC2 /* FSAccountManager.swift in Sources */,
 				451C33F42A0168A500259B86 /* gradientOptions.swift in Sources */,
@@ -439,6 +450,7 @@
 				45074EE729E866590096C82A /* Comment.swift in Sources */,
 				451C33FA2A0175FD00259B86 /* MainAppView.swift in Sources */,
 				45E5ABDB299D8AC300DFFDC8 /* KobraApp.swift in Sources */,
+				452CB79A2A030BDE001D8195 /* CustomButton.swift in Sources */,
 				45D5110529D0ABAF00290720 /* KobraView.swift in Sources */,
 				455C6E5729D7E72600446520 /* KobraViewModel.swift in Sources */,
 				45C7172229C654DC00679626 /* FSInboxManager.swift in Sources */,

@@ -88,28 +88,28 @@ struct CreatePostView: View {
                     let postType: Post.PostType
                     
                     switch self.postType {
-                    case "advertisement":
+                    case "Advertisement":
                         let advertisementPost = AdvertisementPost(poster: username, title: title, content: content, category: category)
                         postType = .advertisement(advertisementPost)
-                    case "help":
+                    case "Help":
                         let helpPost = HelpPost(poster: username, question: title, details: content, category: category)
                         postType = .help(helpPost)
-                    case "news":
+                    case "News":
                         let newsPost = NewsPost(poster: username, headline: title, article: content, category: category)
                         postType = .news(newsPost)
-                    case "market":
+                    case "Market":
                         let marketPostType: MarketPost.MarketPostType
                         switch self.marketPostType {
-                        case "hardware":
+                        case "Hardware":
                             let hardware = Hardware(name: title, condition: Hardware.HardwareCondition(rawValue: hardwareCondition)!, description: content)
                             marketPostType = .hardware(hardware)
-                        case "software":
+                        case "Software":
                             let software = Software(name: title, description: content)
                             marketPostType = .software(software)
-                        case "service":
+                        case "Service":
                             let service = Service(name: title, description: content)
                             marketPostType = .service(service)
-                        case "other":
+                        case "Other":
                             let other = Other(title: title, description: content)
                             marketPostType = .other(other)
                         default:

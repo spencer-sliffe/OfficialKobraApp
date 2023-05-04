@@ -14,10 +14,10 @@ struct AuthenticationView: View {
     @State private var signInSuccess = false
     @State private var isNavigating = false
     @State private var isPresented = false
+    @State private var showChangePasswordView = false
     
     var body: some View {
         NavigationView {
-            
             VStack(spacing: 20) {
                 Image("kobracoding-logo")
                     .resizable()
@@ -83,6 +83,19 @@ struct AuthenticationView: View {
                     }
                     .disabled(authViewModel.isLoading1)
                     .opacity(authViewModel.isLoading1 ? 0.5 : 1)
+                    
+                    if selection == 0 {
+                        Button(action: {
+                            showChangePasswordView.toggle()
+                        }) {
+                            Text("Forgot Password?")
+                                .foregroundColor(.white)
+                                .font(.system(size: 14))
+                        }
+                        .sheet(isPresented: $showChangePasswordView) {
+                            ChangePasswordView()
+                        }
+                    }
                 }
                 .padding(.horizontal)
                 Spacer()
@@ -95,8 +108,8 @@ struct AuthenticationView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(LinearGradient(gradient: Gradient(colors: [.black, .blue]), startPoint: .topLeading, endPoint: .bottomTrailing))
+            }
+            .navigationBarHidden(true)
         }
-        .navigationBarHidden(true)
     }
-}
 
