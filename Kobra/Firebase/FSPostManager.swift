@@ -426,7 +426,7 @@ class FSPostManager {
         }
     }
     func fetchUserPosts(userEmail: String, completion: @escaping (Result<[Post], Error>) -> Void) {
-        db.collection(postsCollection).whereField("author", isEqualTo: userEmail).getDocuments { (querySnapshot, error) in
+        db.collection(postsCollection).whereField("poster", isEqualTo: userEmail).getDocuments { (querySnapshot, error) in
             if let error = error {
                 completion(.failure(error))
                 return

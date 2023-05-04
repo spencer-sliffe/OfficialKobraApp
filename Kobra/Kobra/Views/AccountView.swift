@@ -6,8 +6,6 @@
 //
 import SwiftUI
 import Firebase
-import SwiftUI
-import Firebase
 
 struct AccountView: View {
     @ObservedObject var viewModel = AccountViewModel()
@@ -16,7 +14,7 @@ struct AccountView: View {
     
     var body: some View {
         VStack {
-            if viewModel.isLoading3 {
+            if viewModel.isLoading {
                 ProgressView()
             } else if let account = viewModel.account {
                 let emailComponents = account.email.split(separator: "@")
@@ -77,6 +75,15 @@ struct AccountView: View {
                     .foregroundColor(.white)
             }
             Spacer()
+            ScrollView {
+                LazyVStack(alignment: .leading, spacing: 10) {
+                    ForEach(viewModel.userPosts.sorted(by: { $0.timestamp.compare($1.timestamp) == .orderedDescending })) { post in
+                        AccountPostRow(post: post)
+                            .background(Color.clear)
+                    }
+                }
+            }
+            .background(Color.clear)
         }
         .background(Color.clear)
         .foregroundColor(.white)

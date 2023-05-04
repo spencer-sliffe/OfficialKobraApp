@@ -12,7 +12,8 @@ class AccountViewModel: ObservableObject {
     @Published var isLoading3 = true
     let dataManager = FSAccountManager()
     @Published var userPosts: [Post] = []
-    
+    @Published var isLoading = true
+
     init() {
         fetchAccount()
     }
@@ -22,12 +23,35 @@ class AccountViewModel: ObservableObject {
             print("Error: No user is currently signed in.")
             return
         }
-        // Make API call to fetch account data from backend using the user's ID
+        let userEmail = user.email ?? ""
+        let emailComponents = userEmail.split(separator: "@")
+        let displayName = String(emailComponents[0]).uppercased()
+        // Create a DispatchGroup
+        let dispatchGroup = DispatchGroup()
+        
+        // Enter the DispatchGroup for fetching user posts
+        dispatchGroup.enter()
+        FSPostManager.shared.fetchUserPosts(userEmail: displayName) { result in
+            switch result {
+            case .success(let posts):
+                DispatchQueue.main.async {
+                    self.userPosts = posts
+                }
+            case .failure(let error):
+                print("Error fetching user posts: \(error.localizedDescription)")
+            }
+            // Leave the DispatchGroup after fetching user posts
+            dispatchGroup.leave()
+        }
+
+        // Enter the DispatchGroup for fetching account data
+        dispatchGroup.enter()
         let db = Firestore.firestore()
         let ref = db.collection("Accounts").document(user.uid)
         ref.getDocument { (document, error) in
             guard let document = document, document.exists, error == nil else {
                 print("Error fetching account data: \(error?.localizedDescription ?? "unknown error")")
+                dispatchGroup.leave()
                 return
             }
             let data = document.data()!
@@ -39,18 +63,28 @@ class AccountViewModel: ObservableObject {
                 packageRef.getDocument { (packageDocument, packageError) in
                     guard let packageDocument = packageDocument, packageDocument.exists, packageError == nil else {
                         print("Error fetching package data: \(packageError?.localizedDescription ?? "unknown error")")
+                        dispatchGroup.leave()
                         return
                     }
                     let packageData = packageDocument.data()!
                     let package = Package(id: packageDocument.documentID, name: packageData["name"] as! String, price: packageData["price"] as! Double)
                     account.package = package
                     self.account = account
-                    self.isLoading3 = false
+                    
+                    // Leave the DispatchGroup after fetching account data
+                    dispatchGroup.leave()
                 }
             } else {
                 self.account = account
-                self.isLoading3 = false
+                
+                // Leave the DispatchGroup when there's no package data to fetch
+                dispatchGroup.leave()
             }
+        }
+        
+        // Set isLoading to false after both account data and user posts have been fetched
+        dispatchGroup.notify(queue: .main) {
+            self.isLoading = false
         }
     }
 }
