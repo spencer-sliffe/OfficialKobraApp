@@ -13,7 +13,8 @@ struct SettingsView: View {
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
     @StateObject var authViewModel: AuthenticationViewModel
     @State private var showChangePasswordView = false
-
+    @State private var showAlert = false
+    
     var body: some View {
         VStack {
             Text("Settings")
@@ -51,7 +52,7 @@ struct SettingsView: View {
                     }
                     Spacer()
                     CustomButton(title: "Logout") {
-                        authViewModel.signOut() // Call the signOut method on the injected view model
+                        showAlert = true // Call the signOut method on the injected view model
                     }
                 }
             }
@@ -59,5 +60,13 @@ struct SettingsView: View {
 
             Spacer()
         }
+        .alert(isPresented: $showAlert) {
+                   Alert(title: Text("Log Out"),
+                         message: Text("Are you sure you want to log out?"),
+                         primaryButton: .default(Text("Yes"), action: {
+                             authViewModel.signOut()
+                         }),
+                         secondaryButton: .cancel())
+               }
     }
 }

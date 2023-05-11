@@ -17,18 +17,15 @@ struct CommentRow: View {
                     .font(.headline)
                     .foregroundColor(.primary)
                 Spacer()
+                Text(comment.timestamp, style: .date)
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
             }
             Text(comment.text)
                 .font(.body)
                 .foregroundColor(.primary)
-            HStack {
-                Text(comment.timestamp, style: .date)
-                    .font(.footnote)
-                    .foregroundColor(.secondary)
-            }
         }
-        .padding()
+        .padding(.vertical, 8)
     }
 }
-
 

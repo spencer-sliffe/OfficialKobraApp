@@ -133,7 +133,7 @@ struct AccountPostRow: View {
         .border(Color(.separator), width: 1)
         .cornerRadius(8)
         .sheet(isPresented: $showingComments) {
-            CommentView(post: post)
+            CommentView(viewModel: kobraViewModel, post: post)
         }
         .alert(isPresented: $showingDeleteAlert) {
             Alert(title: Text("Delete Post"),

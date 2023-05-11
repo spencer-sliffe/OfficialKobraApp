@@ -121,10 +121,16 @@ class KobraViewModel: ObservableObject {
     }
     
     func fetchComments(for post: Post, completion: @escaping ([Comment]) -> Void) {
-        postManager.fetchComments(for: post) { comments in
+        postManager.fetchComments(for: post) { [weak self] comments in
             DispatchQueue.main.async {
+                self?.comments = comments
                 completion(comments)
             }
         }
     }
+    
+    func addComment(_ comment: Comment, to post: Post, completion: @escaping (Result<Void, Error>) -> Void) {
+        postManager.addComment(comment, to: post, completion: completion)
+    }
+
 }

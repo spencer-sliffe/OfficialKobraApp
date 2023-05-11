@@ -76,10 +76,11 @@ struct AccountView: View {
             }
             Spacer()
             ScrollView {
-                LazyVStack(alignment: .leading, spacing: 10) {
+                VStack(alignment: .leading, spacing: 10) {
                     ForEach(viewModel.userPosts.sorted(by: { $0.timestamp.compare($1.timestamp) == .orderedDescending })) { post in
                         AccountPostRow(post: post)
                             .background(Color.clear)
+                            .environmentObject(kobraViewModel) // Pass the environment object here
                     }
                 }
             }

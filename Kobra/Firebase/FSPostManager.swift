@@ -8,8 +8,8 @@
 import Foundation
 import FirebaseFirestore
 import Firebase
+import UIKit
 import FirebaseStorage
-import SwiftUI
 
 class FSPostManager {
     private init() {}
@@ -243,7 +243,7 @@ class FSPostManager {
                         let id = UUID(uuidString: data["id"] as! String)
                         let text = data["text"] as! String
                         let commenter = data["commenter"] as! String
-                        let timestamp = data["timestamp"] as! Date
+                        let timestamp = (data["timestamp"] as! Timestamp).dateValue() // Update this line
                         
                         let comment = Comment(id: id!, text: text, commenter: commenter, timestamp: timestamp)
                         comments.append(comment)
@@ -440,4 +440,36 @@ class FSPostManager {
             completion(.success(posts))
         }
     }
+    
+    func addComment(_ comment: Comment, to post: Post, completion: @escaping (Result<Void, Error>) -> Void) {
+            let postId = post.id
+            let query = db.collection(postsCollection).whereField("id", isEqualTo: postId.uuidString)
+            
+            query.getDocuments { (querySnapshot, error) in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                
+                guard let document = querySnapshot?.documents.first else {
+                    completion(.failure(NSError(domain: "Kobra", code: -1, userInfo: [NSLocalizedDescriptionKey: "No document found with matching post id"])))
+                    return
+                }
+                
+                let commentData: [String: Any] = [
+                    "id": comment.id.uuidString,
+                    "text": comment.text,
+                    "commenter": comment.commenter,
+                    "timestamp": Timestamp(date: comment.timestamp)
+                ]
+                
+                document.reference.collection("comments").addDocument(data: commentData) { error in
+                    if let error = error {
+                        completion(.failure(error))
+                    } else {
+                        completion(.success(()))
+                    }
+                }
+            }
+        }
 }
