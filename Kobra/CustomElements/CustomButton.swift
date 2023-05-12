@@ -2,7 +2,7 @@
 //  CustomButton.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 5/3/23.
+//  Created by Spencer Sliffe on 5/3/23.
 //
 
 import Foundation
