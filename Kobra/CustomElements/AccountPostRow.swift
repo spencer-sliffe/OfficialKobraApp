@@ -2,7 +2,7 @@
 //  AccountPostRow.swift
 //  Kobra
 //
-//  Created by Spencer Sliffe on 5/4/23.
+//  Created by Spencer SLiffe on 5/4/23.
 //
 
 import Foundation

@@ -2,7 +2,7 @@
 //  PasswordResetView.swift
 //  Kobra
 //
-//  Created by Spencer Sliffe on 5/2/23
+//  Created by Spencer SLiffe on 5/2/23.
 //
 
 import Foundation

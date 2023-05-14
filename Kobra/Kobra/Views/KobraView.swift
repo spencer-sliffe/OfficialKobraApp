@@ -2,7 +2,7 @@
 //  KobraView.swift
 //  Kobra
 //
-//  Created by Spencer Sliffe on 3/26/23
+//  Created by Spencer SLiffe on 3/26/23.
 //
 
 import SwiftUI

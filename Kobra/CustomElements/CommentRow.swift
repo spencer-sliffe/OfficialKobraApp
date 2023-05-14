@@ -2,7 +2,7 @@
 //  CommentRow.swift
 //  Kobra
 //
-//  Created by Spencer Sliffe on 4/13/23.
+//  Created by Spencer SLiffe on 4/13/23.
 //
 
 import SwiftUI

@@ -2,7 +2,7 @@
 //  DropDownMenu.swift
 //  Kobra
 //
-//  Created by Spencer Sliffe on 4/25/23.
+//  Created by Spencer SLiffe on 4/25/23.
 //
 
 import Foundation

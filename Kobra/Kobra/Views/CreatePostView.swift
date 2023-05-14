@@ -2,7 +2,7 @@
 //  CreatePostView.swift
 //  Kobra
 //
-//  Created by Spencer Sliffe on 4/1/23
+//  Created by Spencer Sliffe on 4/1/23.
 //
 import SwiftUI
 import FirebaseAuth

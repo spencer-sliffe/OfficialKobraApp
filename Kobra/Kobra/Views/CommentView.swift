@@ -2,7 +2,7 @@
 //  CommentView.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 4/13/23
+//  Created by Spencer SLiffe on 4/13/23.
 //
 
 import Foundation
