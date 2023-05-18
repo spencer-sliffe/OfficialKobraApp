@@ -36,6 +36,9 @@
 		4592E55D29BD361200FF76E2 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4592E55C29BD361200FF76E2 /* ChatViewModel.swift */; };
 		4594203F29AEEFF400A100F1 /* HomePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4594203E29AEEFF400A100F1 /* HomePageView.swift */; };
 		4594204129AEF00500A100F1 /* HomePageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4594204029AEF00500A100F1 /* HomePageViewModel.swift */; };
+		459B43782A169BAE0029D90B /* DiscoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459B43772A169BAE0029D90B /* DiscoverView.swift */; };
+		459B437A2A169BC20029D90B /* DiscoverViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459B43792A169BC20029D90B /* DiscoverViewModel.swift */; };
+		459B437C2A16C2750029D90B /* GradientDropDownMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459B437B2A16C2750029D90B /* GradientDropDownMenu.swift */; };
 		45A908CB29B037FE00792FC2 /* FSAccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A908CA29B037FE00792FC2 /* FSAccountManager.swift */; };
 		45A908CD29B0386400792FC2 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A908CC29B0386400792FC2 /* Package.swift */; };
 		45AD933F29B130E900D153AF /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD933E29B130E900D153AF /* AccountViewModel.swift */; };
@@ -91,6 +94,9 @@
 		4592E55C29BD361200FF76E2 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		4594203E29AEEFF400A100F1 /* HomePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageView.swift; sourceTree = "<group>"; };
 		4594204029AEF00500A100F1 /* HomePageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageViewModel.swift; sourceTree = "<group>"; };
+		459B43772A169BAE0029D90B /* DiscoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverView.swift; sourceTree = "<group>"; };
+		459B43792A169BC20029D90B /* DiscoverViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewModel.swift; sourceTree = "<group>"; };
+		459B437B2A16C2750029D90B /* GradientDropDownMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientDropDownMenu.swift; sourceTree = "<group>"; };
 		45A908C829B034A300792FC2 /* Kobra.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Kobra.entitlements; sourceTree = "<group>"; };
 		45A908CA29B037FE00792FC2 /* FSAccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FSAccountManager.swift; sourceTree = "<group>"; };
 		45A908CC29B0386400792FC2 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
@@ -150,6 +156,7 @@
 				451C33F32A0168A500259B86 /* gradientOptions.swift */,
 				452CB7992A030BDE001D8195 /* CustomButton.swift */,
 				452CB79B2A03F7FF001D8195 /* AccountPostRow.swift */,
+				459B437B2A16C2750029D90B /* GradientDropDownMenu.swift */,
 			);
 			path = CustomElements;
 			sourceTree = "<group>";
@@ -236,6 +243,7 @@
 				45C7171D29C63AF700679626 /* InboxViewModel.swift */,
 				455C6E5629D7E72600446520 /* KobraViewModel.swift */,
 				451C33F52A01691B00259B86 /* SettingsViewModel.swift */,
+				459B43792A169BC20029D90B /* DiscoverViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -264,6 +272,7 @@
 				45074EEA29E8699B0096C82A /* CommentView.swift */,
 				451C33F92A0175FD00259B86 /* MainAppView.swift */,
 				451C33FB2A0190F200259B86 /* ChangePasswordView.swift */,
+				459B43772A169BAE0029D90B /* DiscoverView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -413,6 +422,7 @@
 				45EA728129B7BA5B000FD738 /* Account.swift in Sources */,
 				45AD933F29B130E900D153AF /* AccountViewModel.swift in Sources */,
 				45C7171C29C63ABE00679626 /* ChatMessage.swift in Sources */,
+				459B437A2A169BC20029D90B /* DiscoverViewModel.swift in Sources */,
 				4527837D29D8B56D00B633FB /* CreatePostView.swift in Sources */,
 				457EFD3929F8AECB006F53F2 /* DropDownMenu.swift in Sources */,
 				45074EE929E8681C0096C82A /* CommentRow.swift in Sources */,
@@ -429,6 +439,7 @@
 				452430FA29DAA0E40000B5AB /* SearchBar.swift in Sources */,
 				4594203F29AEEFF400A100F1 /* HomePageView.swift in Sources */,
 				45EC905429B8475900E0A3A3 /* PackageWithImage.swift in Sources */,
+				459B437C2A16C2750029D90B /* GradientDropDownMenu.swift in Sources */,
 				45EC905029B8360F00E0A3A3 /* PackageViewModel.swift in Sources */,
 				4528556229B1AED800F088CD /* AuthenticationViewModel.swift in Sources */,
 				45EC904C29B8217100E0A3A3 /* StorageManager.swift in Sources */,
@@ -436,6 +447,7 @@
 				4543FE6329DB4A24003B3CCC /* CustomTextField.swift in Sources */,
 				451C33FC2A0190F200259B86 /* ChangePasswordView.swift in Sources */,
 				452CB79C2A03F7FF001D8195 /* AccountPostRow.swift in Sources */,
+				459B43782A169BAE0029D90B /* DiscoverView.swift in Sources */,
 				45CFE93629C04EF6003806D5 /* Chat.swift in Sources */,
 				45A908CB29B037FE00792FC2 /* FSAccountManager.swift in Sources */,
 				451C33F42A0168A500259B86 /* gradientOptions.swift in Sources */,
