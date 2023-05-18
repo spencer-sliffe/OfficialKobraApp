@@ -17,13 +17,12 @@ struct SettingsView: View {
     
     var body: some View {
         VStack {
-            Text("Settings")
+            Text(NSLocalizedString("Settings", comment: ""))
                 .font(.system(size: 32, weight: .bold, design: .rounded))
                 .padding(.bottom, 20)
                 .foregroundColor(Color.white)
             
             VStack(alignment: .leading, spacing: 20) {
-                
                 GradientDropDownMenu(
                     isExpanded: $isGradientExpanded,
                     options: gradientOptions.indices.map {
@@ -42,12 +41,12 @@ struct SettingsView: View {
                 }
                 
                 Toggle(isOn: $settingsViewModel.isDarkMode) {
-                    Text("Dark Mode")
+                    Text(NSLocalizedString("Dark Mode", comment: ""))
                         .font(.system(size: 24, weight: .bold, design: .rounded))
                         .foregroundColor(Color.white)
                 }
                 Toggle(isOn: $settingsViewModel.pushNotificationsEnabled) {
-                    Text("Push Notifications")
+                    Text(NSLocalizedString("Push Notifications", comment: ""))
                         .font(.system(size: 24, weight: .bold, design: .rounded))
                         .foregroundColor(Color.white)
                 }
@@ -66,20 +65,19 @@ struct SettingsView: View {
                     }
                 }
                 
-                CustomButton(title: "Change Password") {
+                CustomButton(title: NSLocalizedString("Change Password", comment: "")) {
                     showChangePasswordView.toggle()
                 }
                 .sheet(isPresented: $showChangePasswordView) {
                     ChangePasswordView()
                 }
                 
-                
-                Text("App Version: \(settingsViewModel.appVersion)")
+                Text(NSLocalizedString("App Version:", comment: "") + " \(settingsViewModel.appVersion)")
                     .font(.system(size: 24, weight: .bold, design: .rounded))
                     .foregroundColor(Color.white)
                 
                 Spacer()
-                CustomButton(title: "Logout") {
+                CustomButton(title: NSLocalizedString("Logout", comment: "")) {
                     showAlert = true
                 }
             }
@@ -89,9 +87,9 @@ struct SettingsView: View {
             Spacer()
         }
         .alert(isPresented: $showAlert) {
-            Alert(title: Text("Log Out"),
-                  message: Text("Are you sure you want to log out?"),
-                  primaryButton: .default(Text("Yes"), action: {
+            Alert(title: Text(NSLocalizedString("Logout", comment: "")),
+                  message: Text(NSLocalizedString("Are you sure you want to log out?", comment: "")),
+                  primaryButton: .default(Text(NSLocalizedString("Yes", comment: "")), action: {
                 authViewModel.signOut()
             }),
                   secondaryButton: .cancel())

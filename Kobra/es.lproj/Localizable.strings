@@ -1,0 +1,107 @@
+/*
+  Localizable.strings
+  Kobra
+
+  Created by Spencer SLiffe on 5/18/23.
+  
+*/
+// General
+"Settings" = "Configuraciones";
+"Dark Mode" = "Modo Oscuro";
+"Push Notifications" = "Notificaciones Push";
+"App Version:" = "Versión de la App:";
+"Logout" = "Cerrar sesión";
+
+// Authentication
+"SignInOrSignUp" = "Iniciar sesión o registrarse";
+"SignIn" = "Iniciar sesión";
+"SignUp" = "Registrarse";
+"Email" = "Correo electrónico";
+"Password" = "Contraseña";
+"Confirm Password" = "Confirmar contraseña";
+"Forgot Password?" = "¿Olvidó la contraseña?";
+
+//Account
+"Current Subscription:" = "Suscripción Actual:";
+"Current Subscription: None" = "Suscripción Actual: Ninguna";
+"Failed to fetch account data" = "Error al obtener los datos de la cuenta";
+
+//Chat
+"Message..." = "Mensaje...";
+"Send" = "Enviar";
+"Back" = "Volver";
+
+//Inbox
+"No Chats Currently" = "No hay chats actualmente";
+"Enter user email" = "Ingrese el correo electrónico del usuario";
+"Add Chat" = "Agregar chat";
+"Error" = "Error";
+"OK" = "Aceptar";
+
+// Feed Type
+"Advertisement" = "Publicidad";
+"Help" = "Ayuda";
+"News" = "Noticias";
+"Market" = "Mercado";
+
+// Time and Date Format
+"hh:mm a" = "hh:mm a"; // This is universal time format
+"MMMM dd" = "dd 'de' MMMM"; // This is the date format in Spanish
+
+// Advertisement Feed
+"Advertisement Feed" = "Feed de Publicidad";
+// Market Feed
+"Market Feed" = "Feed de Mercado";
+// News Feed
+"News Feed" = "Feed de Noticias";
+// Help Feed
+"Help Feed" = "Feed de Ayuda";
+
+// CreatePostView
+"Post Type" = "Tipo de Publicación";
+"Title" = "Título";
+"Content" = "Contenido";
+"Category" = "Categoría";
+"Select Image" = "Seleccionar Imagen";
+"Post" = "Publicar";
+"Market Post Type" = "Tipo de Publicación de Mercado";
+"Condition" = "Condición";
+"Price: $%.2f" = "Precio: $%.2f"; // This is the format for the price
+"Create Post" = "Crear Publicación";
+"Cancel" = "Cancelar";
+
+// CommentView
+"Write a comment..." = "Escribe un comentario...";
+"Post" = "Publicar";
+"Comments" = "Comentarios";
+"Error: User not logged in or email not found" = "Error: Usuario no conectado o correo electrónico no encontrado";
+"Comment added successfully" = "Comentario añadido exitosamente";
+"Error adding comment: \(error.localizedDescription)" = "Error al añadir comentario: \(error.localizedDescription)";
+
+// PostRow
+"Advertisement by %@" = "Anuncio por %@";
+"Help Request by %@" = "Solicitud de ayuda por %@";
+"Article by %@" = "Artículo por %@";
+"Product by %@" = "Producto por %@";
+"Comment" = "Comentario";
+"Hardware: %@" = "Hardware: %@";
+"Software: %@" = "Software: %@";
+"Service: %@" = "Servicio: %@";
+"Other: %@" = "Otro: %@";
+"Price: %@" = "Precio: %@";
+"Category: %@" = "Categoría: %@";
+
+//AccountPostRow/PostRow
+
+// Likes and Dislikes
+"Like" = "Me gusta";
+"Dislike" = "No me gusta";
+"Likes" = "Me gustas";
+"Dislikes" = "No me gustas";
+
+// Deletion
+"Delete Post" = "Borrar publicación";
+"Are you sure you want to delete this post?" = "¿Estás seguro de que quieres borrar esta publicación?";
+"Delete" = "Borrar";
+"Cancel" = "Cancelar";
+
