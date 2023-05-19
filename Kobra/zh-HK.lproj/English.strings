@@ -1,0 +1,106 @@
+/*
+  Localizable.strings
+  Kobra
+
+  Created by Spencer SLiffe on 5/18/23.
+  
+*/
+// General
+"Settings" = "Settings";
+"Dark Mode" = "Dark Mode";
+"Push Notifications" = "Push Notifications";
+"App Version:" = "App Version:";
+"Logout" = "Logout";
+
+// Authentication
+"SignInOrSignUp" = "Sign In or Sign Up";
+"SignIn" = "Sign In";
+"SignUp" = "Sign Up";
+"Email" = "Email";
+"Password" = "Password";
+"Confirm Password" = "Confirm Password";
+"Forgot Password?" = "Forgot Password?";
+
+//Account
+"Current Subscription:" = "Current Subscription:";
+"Current Subscription: None" = "Current Subscription: None";
+"Failed to fetch account data" = "Failed to fetch account data";
+
+//Chat
+"Message..." = "Message...";
+"Send" = "Send";
+"Back" = "Back";
+
+//Inbox
+"No Chats Currently" = "No Chats Currently";
+"Enter user email" = "Enter user email";
+"Add Chat" = "Add Chat";
+"Error" = "Error";
+"OK" = "OK";
+
+// Feed Type
+"Advertisement" = "Advertisement";
+"Help" = "Help";
+"News" = "News";
+"Market" = "Market";
+
+// Time and Date Format
+"hh:mm a" = "hh:mm a";
+"MMMM dd" = "MMMM dd";
+
+// Advertisement Feed
+"Advertisement Feed" = "Advertisement Feed";
+// Market Feed
+"Market Feed" = "Market Feed";
+// News Feed
+"News Feed" = "News Feed";
+// Help Feed
+"Help Feed" = "Help Feed";
+
+// CreatePostView
+"Post Type" = "Post Type";
+"Title" = "Title";
+"Content" = "Content";
+"Category" = "Category";
+"Select Image" = "Select Image";
+"Post" = "Post";
+"Market Post Type" = "Market Post Type";
+"Condition" = "Condition";
+"Price: $%.2f" = "Price: $%.2f";
+"Create Post" = "Create Post";
+"Cancel" = "Cancel";
+
+// CommentView
+"Write a comment..." = "Write a comment...";
+"Post" = "Post";
+"Comments" = "Comments";
+"Error: User not logged in or email not found" = "Error: User not logged in or email not found";
+"Comment added successfully" = "Comment added successfully";
+"Error adding comment: \(error.localizedDescription)" = "Error adding comment: \(error.localizedDescription)";
+
+// PostRow
+"Advertisement by %@" = "Advertisement by %@";
+"Help Request by %@" = "Help Request by %@";
+"Article by %@" = "Article by %@";
+"Product by %@" = "Product by %@";
+"Comment" = "Comment";
+"Hardware: %@" = "Hardware: %@";
+"Software: %@" = "Software: %@";
+"Service: %@" = "Service: %@";
+"Other: %@" = "Other: %@";
+"Price: %@" = "Price: %@";
+"Category: %@" = "Category: %@";
+
+//AccountPostRow/PostRow
+
+// Likes and Dislikes
+"Like" = "Like";
+"Dislike" = "Dislike";
+"Likes" = "Likes";
+"Dislikes" = "Dislikes";
+
+// Deletion
+"Delete Post" = "Delete Post";
+"Are you sure you want to delete this post?" = "Are you sure you want to delete this post?";
+"Delete" = "Delete";
+"Cancel" = "Cancel";

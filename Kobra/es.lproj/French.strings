@@ -1,0 +1,90 @@
+/*
+Localizable.strings
+Kobra
+
+Créé par Spencer SLiffe le 18/05/23.
+
+*/
+// Général
+"Settings" = "Paramètres";
+"Dark Mode" = "Mode Sombre";
+"Push Notifications" = "Notifications Push";
+"App Version:" = "Version de l'App:";
+"Logout" = "Déconnexion";
+
+// Authentification
+"SignInOrSignUp" = "Se Connecter ou S'Inscrire";
+"SignIn" = "Se Connecter";
+"SignUp" = "S'Inscrire";
+"Email" = "Email";
+"Password" = "Mot de Passe";
+"Confirm Password" = "Confirmer le Mot de Passe";
+"Forgot Password?" = "Mot de Passe Oublié?";
+
+//Compte
+"Current Subscription:" = "Abonnement Actuel:";
+"Current Subscription: None" = "Abonnement Actuel: Aucun";
+"Failed to fetch account data" = "Échec de la récupération des données du compte";
+
+//Chat
+"Message..." = "Message...";
+"Send" = "Envoyer";
+"Back" = "Retour";
+
+//Boîte de réception
+"No Chats Currently" = "Aucun Chat Actuellement";
+"Enter user email" = "Entrer l'email de l'utilisateur";
+"Add Chat" = "Ajouter un Chat";
+"Error" = "Erreur";
+"OK" = "OK";
+
+// Type de flux
+"Advertisement" = "Publicité";
+"Help" = "Aide";
+"News" = "Actualités";
+"Market" = "Marché";
+
+// Format Date et Heure
+"hh:mm a" = "hh:mm";
+"MMMM dd" = "dd MMMM";
+
+// Flux de publicité
+"Advertisement Feed" = "Flux de Publicités";
+// Flux de marché
+"Market Feed" = "Flux du Marché";
+// Flux de nouvelles
+"News Feed" = "Flux d'Actualités";
+// Flux d'aide
+"Help Feed" = "Flux d'Aide";
+
+// CreatePostView
+"Post Type" = "Type de Publication";
+"Title" = "Titre";
+"Content" = "Contenu";
+"Category" = "Catégorie";
+"Select Image" = "Sélectionner une Image";
+"Post" = "Publier";
+"Market Post Type" = "Type de Publication Marché";
+"Condition" = "Condition";
+"Price: $%.2f" = "Prix: $%.2f";
+"Create Post" = "Créer une Publication";
+"Cancel" = "Annuler";
+
+// CommentView
+"Write a comment..." = "Écrire un commentaire...";
+"Post" = "Publier";
+"Comments" = "Commentaires";
+"Error: User not logged in or email not found" = "Erreur: Utilisateur non connecté ou email introuvable";
+"Comment added successfully" = "Commentaire ajouté avec succès";
+"Error adding comment: (error.localizedDescription)" = "Erreur lors de l'ajout du commentaire: (error.localizedDescription)";
+
+// PostRow
+"Advertisement by %@" = "Publicité par %@";
+"Help Request by %@" = "Demande d'aide par %@";
+"Article by %@" = "Article par %@";
+"Product by %@" = "Produit par %@";
+"Comment" = "Commentaire";
+"Hardware: %@" = "Matériel: %@";
+"Software: %@" = "Logiciel: %@";
+"Service: %@" = "Service: %@";
+"Other: %@";

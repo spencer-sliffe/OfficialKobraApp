@@ -1,0 +1,107 @@
+/*
+  Localizable.strings
+  Kobra
+
+  Created by Spencer SLiffe on 5/18/23.
+  
+*/
+
+// General
+"Settings" = "設定";
+"Dark Mode" = "深色模式";
+"Push Notifications" = "推送通知";
+"App Version:" = "應用版本:";
+"Logout" = "登出";
+
+// Authentication
+"SignInOrSignUp" = "登入或註冊";
+"SignIn" = "登入";
+"SignUp" = "註冊";
+"Email" = "電郵";
+"Password" = "密碼";
+"Confirm Password" = "確認密碼";
+"Forgot Password?" = "忘記密碼?";
+
+//Account
+"Current Subscription:" = "當前訂閱:";
+"Current Subscription: None" = "當前訂閱: 無";
+"Failed to fetch account data" = "無法獲取帳戶資料";
+
+//Chat
+"Message..." = "消息...";
+"Send" = "發送";
+"Back" = "返回";
+
+//Inbox
+"No Chats Currently" = "目前沒有聊天";
+"Enter user email" = "輸入用戶電郵";
+"Add Chat" = "添加聊天";
+"Error" = "錯誤";
+"OK" = "確定";
+
+// Feed Type
+"Advertisement" = "廣告";
+"Help" = "幫助";
+"News" = "新聞";
+"Market" = "市場";
+
+// Time and Date Format
+"hh:mm a" = "hh:mm a";
+"MMMM dd" = "MMMM dd";
+
+// Advertisement Feed
+"Advertisement Feed" = "廣告訊息";
+// Market Feed
+"Market Feed" = "市場訊息";
+// News Feed
+"News Feed" = "新聞訊息";
+// Help Feed
+"Help Feed" = "幫助訊息";
+
+// CreatePostView
+"Post Type" = "帖子類型";
+"Title" = "標題";
+"Content" = "內容";
+"Category" = "類別";
+"Select Image" = "選擇圖片";
+"Post" = "發帖";
+"Market Post Type" = "市場帖子類型";
+"Condition" = "條件";
+"Price: $%.2f" = "價格: $%.2f";
+"Create Post" = "創建帖子";
+"Cancel" = "取消";
+
+// CommentView
+"Write a comment..." = "寫下評論...";
+"Post" = "發帖";
+"Comments" = "評論";
+"Error: User not logged in or email not found" = "錯誤:用戶未登入或未找到電郵";
+"Comment added successfully" = "評論添加成功";
+"Error adding comment: \(error.localizedDescription)" = "添加評論錯誤: \(error.localizedDescription)";
+
+// PostRow
+"Advertisement by %@" = "%@ 的廣告";
+"Help Request by %@" = "%@ 的求助請求";
+"Article by %@" = "%@ 的文章";
+"Product by %@" = "%@ 的產品";
+"Comment" = "評論";
+"Hardware: %@" = "硬件: %@";
+"Software: %@" = "軟件: %@";
+"Service: %@" = "服務: %@";
+"Other: %@" = "其他: %@";
+"Price: %@" = "價格: %@";
+"Category: %@" = "類別: %@";
+
+//AccountPostRow/PostRow
+
+// Likes and Dislikes
+"Like" = "喜歡";
+"Dislike" = "不喜歡";
+"Likes" = "喜歡";
+"Dislikes" = "不喜歡";
+
+// Deletion
+"Delete Post" = "刪除帖子";
+"Are you sure you want to delete this post?" = "你確定要刪除這個帖子嗎？";
+"Delete" = "刪除";
+"Cancel" = "取消";

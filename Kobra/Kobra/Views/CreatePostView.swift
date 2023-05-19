@@ -24,14 +24,23 @@ struct CreatePostView: View {
     @State private var marketPostTypeExpanded = false
     @State private var hardwareConditionExpanded = false
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
-
+    
+    var isPostDataValid: Bool {
+        if title.isEmpty || content.isEmpty || category.isEmpty {
+            return false
+        }
+        if postType == "Market" && (stepperPrice == 0 || (marketPostType == "Hardware" && hardwareCondition.isEmpty)) {
+            return false
+        }
+        return true
+    }
     
     var body: some View {
         NavigationView {
             VStack {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
-                        Text("Post Type")
+                        Text(NSLocalizedString("Post Type", comment: ""))
                             .foregroundColor(.white)
                         DropDownMenu(
                             isExpanded: $postTypeExpanded,
@@ -41,11 +50,11 @@ struct CreatePostView: View {
                         )
                         .frame(maxWidth: .infinity)
                         
-                        CustomTextField(text: $title, placeholder: "Title")
-                        CustomTextField(text: $content, placeholder: "Content")
+                        CustomTextField(text: $title, placeholder: NSLocalizedString("Title", comment: ""))
+                        CustomTextField(text: $content, placeholder: NSLocalizedString("Content", comment: ""))
                         
                         if postType != "Market" {
-                            CustomTextField(text: $category, placeholder: "Category")
+                            CustomTextField(text: $category, placeholder: NSLocalizedString("Category", comment: ""))
                         }
                         if postType == "Market" {
                             marketPostContent()
@@ -63,7 +72,7 @@ struct CreatePostView: View {
                 Button(action: {
                     isImagePickerPresented = true
                 }) {
-                    Text("Select Image")
+                    Text(NSLocalizedString("Select Image", comment: ""))
                         .foregroundColor(.white)
                         .padding()
                         .background(Color.black.opacity(0.6))
@@ -141,7 +150,7 @@ struct CreatePostView: View {
                     
                     presentationMode.wrappedValue.dismiss()
                 })  {
-                    Text("Post")
+                    Text(NSLocalizedString("Post", comment: ""))
                         .foregroundColor(.white)
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .padding()
@@ -152,7 +161,10 @@ struct CreatePostView: View {
                                 .stroke(Color.white, lineWidth: 1)
                         )
                 }
+                .disabled(!isPostDataValid) // Disable the button if post data is not valid
+                .opacity(isPostDataValid ? 1 : 0.5) // Reduce opacity if post data is not valid
                 .padding()
+                
             }
             .background(
                 LinearGradient(
@@ -167,23 +179,23 @@ struct CreatePostView: View {
                 )
             )
         }
-        .navigationBarTitle("Create Post", displayMode: .inline)
+        .navigationBarTitle(NSLocalizedString("Create Post", comment: ""), displayMode: .inline)
         .navigationBarItems(trailing: Button(action: {
             presentationMode.wrappedValue.dismiss()
         }) {
-            Text("Cancel")
+            Text(NSLocalizedString("Cancel", comment: ""))
                 .foregroundColor(.white)
         })
     }
     
-    private func loadImage() {
-        isImagePickerPresented = false
+    func loadImage() {
+        guard let _ = selectedImage else { return }
     }
     
     @ViewBuilder
     private func marketPostContent() -> some View {
         VStack(alignment: .leading, spacing: 20) {
-            Text("Market Post Type")
+            Text(NSLocalizedString("Market Post Type", comment: ""))
                 .foregroundColor(.white)
             DropDownMenu(
                 isExpanded: $marketPostTypeExpanded,
@@ -194,7 +206,7 @@ struct CreatePostView: View {
             .frame(maxWidth: .infinity)
             
             if marketPostType == "Hardware" {
-                Text("Condition")
+                Text(NSLocalizedString("Condition", comment: ""))
                     .foregroundColor(.white)
                 DropDownMenu(
                     isExpanded: $hardwareConditionExpanded,
@@ -205,14 +217,13 @@ struct CreatePostView: View {
                 .frame(maxWidth: .infinity)
                 
             }
-            CustomTextField(text: $category, placeholder: "Category")
+            CustomTextField(text: $category, placeholder: NSLocalizedString("Category", comment: ""))
             VStack(alignment: .leading) {
                 Stepper(value: $stepperPrice, in: 0...Double.infinity, step: 1.0) {
-                    Text("Price: $\(stepperPrice, specifier: "%.2f")")
+                    Text(String(format: NSLocalizedString("Price: $%.2f", comment: ""), stepperPrice))
                         .foregroundColor(.white)
                 }
             }
         }
     }
 }
-
