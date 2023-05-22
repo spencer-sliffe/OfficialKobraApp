@@ -8,7 +8,7 @@ import SwiftUI
 import Foundation
 
 struct HomePageView: View {
-    @State private var selectedTab = 2
+    @State private var selectedTab = 3
     @ObservedObject var authViewModel = AuthenticationViewModel()
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
 
@@ -23,10 +23,14 @@ struct HomePageView: View {
             AccountView()
                 .environmentObject(kobraViewModel)
         case 2:
-            KobraView()
+            DiscoverView()
         case 3:
-            InboxView(viewModel: InboxViewModel())
+            KobraView()
         case 4:
+            InboxView(viewModel: InboxViewModel())
+        case 5:
+            FoodView()
+        case 6:
             PackageView()
         default:
             EmptyView()
@@ -42,7 +46,6 @@ struct HomePageView: View {
                     VStack {
                         getView(for: selectedTab)
                             .transition(.slide)
-
                         HStack(spacing: 0) {
                             Button(action: {
                                 withAnimation { selectedTab = 0 }
@@ -61,7 +64,15 @@ struct HomePageView: View {
                             }
                             .frame(maxWidth: .infinity)
                             Button(action: {
-                                withAnimation { selectedTab = 2 }
+                                withAnimation{ selectedTab = 2 }
+                            }) {
+                                Image(systemName: "magnifyingglass")
+                                    .resizable()
+                                    .frame(width: 24, height: 24)
+                            }
+                            .frame(maxWidth: .infinity)
+                            Button(action: {
+                                withAnimation { selectedTab = 3 }
                             }) {
                                 Image(systemName: "house")
                                     .resizable()
@@ -69,7 +80,7 @@ struct HomePageView: View {
                             }
                             .frame(maxWidth: .infinity)
                             Button(action: {
-                                withAnimation { selectedTab = 3 }
+                                withAnimation { selectedTab = 4 }
                             }) {
                                 Image(systemName: "envelope")
                                     .resizable()
@@ -77,7 +88,15 @@ struct HomePageView: View {
                             }
                             .frame(maxWidth: .infinity)
                             Button(action: {
-                                withAnimation { selectedTab = 4 }
+                                withAnimation{ selectedTab = 5 }
+                            }) {
+                                Image(systemName: "leaf")
+                                    .resizable()
+                                    .frame(width: 24, height: 24)
+                            }
+                            .frame(maxWidth: .infinity)
+                            Button(action: {
+                                withAnimation { selectedTab = 6 }
                             }) {
                                 Image(systemName: "shippingbox")
                                     .resizable()
@@ -113,3 +132,4 @@ struct HomePageView_Previews: PreviewProvider {
         HomePageView()
     }
 }
+

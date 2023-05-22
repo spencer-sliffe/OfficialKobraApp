@@ -1,15 +1,15 @@
 //
-//  DiscoverView.swift
+//  FoodView.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 5/18/23.
+//  Created by Spencer SLiffe on 5/19/23.
 //
 
 import Foundation
 import SwiftUI
 
-struct DiscoverView: View {
-    @ObservedObject var viewModel = DiscoverViewModel()
+struct FoodView: View {
+    @ObservedObject var viewModel = FoodViewModel()
 
     var body: some View {
         VStack {
@@ -17,8 +17,8 @@ struct DiscoverView: View {
                 ProgressView()
             } else {
                 // Display your data here.
-                // Replace with the appropriate logic for the Discover view.
-                Text("Discover Content Here")
+                // Replace with the appropriate logic for the Food view.
+                Text("Food Content Here")
                     .foregroundColor(.white)
                     .font(.largeTitle)
             }
@@ -26,7 +26,7 @@ struct DiscoverView: View {
             Spacer()
             ScrollView {
                 VStack(alignment: .leading, spacing: 10) {
-                    // Add the logic for displaying the contents for Discover view here.
+                    // Add the logic for displaying the contents for Food view here.
                 }
             }
             .background(Color.clear)

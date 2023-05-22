@@ -6,3 +6,8 @@
 //
 
 import Foundation
+import Combine
+
+class DiscoverViewModel: ObservableObject {
+    @Published var isLoading = false
+}
