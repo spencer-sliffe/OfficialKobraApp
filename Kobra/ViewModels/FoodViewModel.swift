@@ -9,6 +9,5 @@ import Foundation
 import Combine
 
 class FoodViewModel: ObservableObject {
-    @Published var isLoading = false
-   
+  
 }
