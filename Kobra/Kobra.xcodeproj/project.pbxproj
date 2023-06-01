@@ -22,6 +22,7 @@
 		4528556229B1AED800F088CD /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4528556129B1AED800F088CD /* AuthenticationViewModel.swift */; };
 		452CB79A2A030BDE001D8195 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452CB7992A030BDE001D8195 /* CustomButton.swift */; };
 		452CB79C2A03F7FF001D8195 /* AccountPostRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452CB79B2A03F7FF001D8195 /* AccountPostRow.swift */; };
+		453314062A23245800DEE73E /* CreateFoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453314052A23245800DEE73E /* CreateFoodView.swift */; };
 		4543FE6129DB4A0C003B3CCC /* CustomUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543FE6029DB4A0C003B3CCC /* CustomUITextField.swift */; };
 		4543FE6329DB4A24003B3CCC /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543FE6229DB4A24003B3CCC /* CustomTextField.swift */; };
 		455C6E5729D7E72600446520 /* KobraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455C6E5629D7E72600446520 /* KobraViewModel.swift */; };
@@ -45,7 +46,6 @@
 		459BE6042A18032100625E53 /* FoodViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459BE6032A18032100625E53 /* FoodViewModel.swift */; };
 		459BE6062A18033300625E53 /* FoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459BE6052A18033300625E53 /* FoodView.swift */; };
 		459BE6082A180F7600625E53 /* FSFoodManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459BE6072A180F7600625E53 /* FSFoodManager.swift */; };
-		459BE60A2A1810D800625E53 /* FoodItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459BE6092A1810D800625E53 /* FoodItem.swift */; };
 		45A908CB29B037FE00792FC2 /* FSAccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A908CA29B037FE00792FC2 /* FSAccountManager.swift */; };
 		45A908CD29B0386400792FC2 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A908CC29B0386400792FC2 /* Package.swift */; };
 		45AD933F29B130E900D153AF /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD933E29B130E900D153AF /* AccountViewModel.swift */; };
@@ -89,6 +89,7 @@
 		4528556129B1AED800F088CD /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		452CB7992A030BDE001D8195 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		452CB79B2A03F7FF001D8195 /* AccountPostRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountPostRow.swift; sourceTree = "<group>"; };
+		453314052A23245800DEE73E /* CreateFoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFoodView.swift; sourceTree = "<group>"; };
 		4543FE6029DB4A0C003B3CCC /* CustomUITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUITextField.swift; sourceTree = "<group>"; };
 		4543FE6229DB4A24003B3CCC /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		455C6E5629D7E72600446520 /* KobraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KobraViewModel.swift; sourceTree = "<group>"; };
@@ -113,7 +114,6 @@
 		459BE6032A18032100625E53 /* FoodViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodViewModel.swift; sourceTree = "<group>"; };
 		459BE6052A18033300625E53 /* FoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodView.swift; sourceTree = "<group>"; };
 		459BE6072A180F7600625E53 /* FSFoodManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FSFoodManager.swift; sourceTree = "<group>"; };
-		459BE6092A1810D800625E53 /* FoodItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodItem.swift; sourceTree = "<group>"; };
 		45A908C829B034A300792FC2 /* Kobra.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Kobra.entitlements; sourceTree = "<group>"; };
 		45A908CA29B037FE00792FC2 /* FSAccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FSAccountManager.swift; sourceTree = "<group>"; };
 		45A908CC29B0386400792FC2 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
@@ -248,7 +248,6 @@
 				45C7171B29C63ABE00679626 /* ChatMessage.swift */,
 				455C6E5829D7E9B700446520 /* Post.swift */,
 				45074EE629E866590096C82A /* Comment.swift */,
-				459BE6092A1810D800625E53 /* FoodItem.swift */,
 				45895C082A1B25CB0022DF98 /* Food.swift */,
 			);
 			path = Models;
@@ -297,6 +296,7 @@
 				451C33FB2A0190F200259B86 /* ChangePasswordView.swift */,
 				459B43772A169BAE0029D90B /* DiscoverView.swift */,
 				459BE6052A18033300625E53 /* FoodView.swift */,
+				453314052A23245800DEE73E /* CreateFoodView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -466,6 +466,7 @@
 				4592E55D29BD361200FF76E2 /* ChatViewModel.swift in Sources */,
 				45C7172029C63B0E00679626 /* InboxView.swift in Sources */,
 				452430FA29DAA0E40000B5AB /* SearchBar.swift in Sources */,
+				453314062A23245800DEE73E /* CreateFoodView.swift in Sources */,
 				4594203F29AEEFF400A100F1 /* HomePageView.swift in Sources */,
 				45EC905429B8475900E0A3A3 /* PackageWithImage.swift in Sources */,
 				459B437C2A16C2750029D90B /* GradientDropDownMenu.swift in Sources */,
@@ -496,7 +497,6 @@
 				451C33FA2A0175FD00259B86 /* MainAppView.swift in Sources */,
 				45E5ABDB299D8AC300DFFDC8 /* KobraApp.swift in Sources */,
 				452CB79A2A030BDE001D8195 /* CustomButton.swift in Sources */,
-				459BE60A2A1810D800625E53 /* FoodItem.swift in Sources */,
 				45D5110529D0ABAF00290720 /* KobraView.swift in Sources */,
 				455C6E5729D7E72600446520 /* KobraViewModel.swift in Sources */,
 				45C7172229C654DC00679626 /* FSInboxManager.swift in Sources */,
