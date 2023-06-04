@@ -139,7 +139,10 @@ struct CreateFoodView: View {
             image: "",
             preparationTime: preparationTime,
             mealType: selectedMealType,
-            cuisine: selectedCuisine
+            cuisine: selectedCuisine,
+            timestamp: Date(),  // current date and time
+            likes: 0,  // initial likes count is zero
+            likingUsers: []  // initial liking users list is empty
         )
 
         viewModel.addFood(newFood, image: image) { result in

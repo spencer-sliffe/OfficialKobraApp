@@ -41,16 +41,17 @@ class FoodViewModel: ObservableObject {
     func addFood(_ food: Food, image: UIImage? = nil, completion: ((Result<Void, Error>) -> Void)? = nil) {
         isLoading = true
         if let image = image {
-            foodManager.uploadImage(image, foodId: food.id) { [weak self] result in
-                switch result {
-                case .success(let imageURL):
-                    var newFood = food
-                    newFood.image = imageURL
-                    self?.addFoodToDatabase(newFood, completion: completion)
-                case .failure(let error):
-                    print("Error uploading image: \(error.localizedDescription)")
+            foodManager.addFoodWithImage(food, image: image) { [weak self] result in
+                DispatchQueue.main.async {
                     self?.isLoading = false
-                    completion?(.failure(error))
+                    switch result {
+                    case .success:
+                        self?.fetchFoods()
+                        completion?(.success(()))
+                    case .failure(let error):
+                        print("Error adding food with image: \(error.localizedDescription)")
+                        completion?(.failure(error))
+                    }
                 }
             }
         } else {
@@ -69,6 +70,48 @@ class FoodViewModel: ObservableObject {
                 case .failure(let error):
                     print("Error adding food: \(error.localizedDescription)")
                     completion?(.failure(error))
+                }
+            }
+        }
+    }
+    
+    func updateLikeCount(_ food: Food, likeCount: Int, userId: String, isAdding: Bool) {
+        foodManager.updateLikeCount(food, likeCount: likeCount, userId: userId, isAdding: isAdding)
+        fetchFoods()
+    }
+
+    func deleteFood(_ food: Food) {
+        foodManager.deleteFood(food) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    self?.foodManager.deleteImage(imageURL: food.image) { result in  // directly using food.image
+                        switch result {
+                        case .success:
+                            print("Image deleted successfully")
+                        case .failure(let error):
+                            print("Error deleting image: \(error.localizedDescription)")
+                        }
+                    }
+                    self?.fetchFoods()
+                case .failure(let error):
+                    print("Error deleting food: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+
+
+    func fetchUserFoods(userId: String) {
+        isLoading = true
+        foodManager.fetchUserFoods(userId: userId) { [weak self] result in
+            DispatchQueue.main.async {
+                self?.isLoading = false
+                switch result {
+                case .success(let foods):
+                    self?.foods = foods
+                case .failure(let error):
+                    print("Error fetching user's foods: \(error.localizedDescription)")
                 }
             }
         }

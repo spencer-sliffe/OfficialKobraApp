@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 enum MealType: String, CaseIterable {
     case breakfast = "Breakfast"
@@ -100,14 +101,34 @@ enum CuisineType: String, CaseIterable {
     case taiwanese = "Taiwanese"
 }
 
-
-struct Food: Identifiable {
+class Food: ObservableObject, Identifiable {
     var id: String = UUID().uuidString
-    var name: String
-    var ingredients: [String]
-    var steps: [String]
-    var image: String
-    var preparationTime: String
-    var mealType: MealType
-    var cuisine: CuisineType
+    @Published var name: String
+    @Published var ingredients: [String]
+    @Published var steps: [String]
+    @Published var image: String
+    @Published var preparationTime: String
+    @Published var mealType: MealType
+    @Published var cuisine: CuisineType
+    
+    // Add timestamp property
+    @Published var timestamp: Date
+    
+    // Add likes count and liking users properties
+    @Published var likes: Int
+    @Published var likingUsers: [String]
+
+    init(id: String = UUID().uuidString, name: String, ingredients: [String], steps: [String], image: String, preparationTime: String, mealType: MealType, cuisine: CuisineType, timestamp: Date, likes: Int, likingUsers: [String]) {
+        self.id = id
+        self.name = name
+        self.ingredients = ingredients
+        self.steps = steps
+        self.image = image
+        self.preparationTime = preparationTime
+        self.mealType = mealType
+        self.cuisine = cuisine
+        self.timestamp = timestamp
+        self.likes = likes
+        self.likingUsers = likingUsers
+    }
 }
