@@ -9,31 +9,35 @@ import Foundation
 import SwiftUI
 
 struct DiscoverView: View {
-    @ObservedObject var viewModel = DiscoverViewModel()
-
+    @StateObject var viewModel = DiscoverViewModel()
+    @State var searchText = ""
+    
     var body: some View {
         VStack {
-            if viewModel.isLoading {
-                ProgressView()
-            } else {
-                // Display your data here.
-                // Replace with the appropriate logic for the Discover view.
-                Text("Discover Content Here")
-                    .foregroundColor(.white)
-                    .font(.largeTitle)
-            }
-
-            Spacer()
+            SearchBar(text: $searchText)
+                .padding()
+            
             ScrollView {
-                VStack(alignment: .leading, spacing: 10) {
-                    // Add the logic for displaying the contents for Discover view here.
+                LazyVStack {
+                    ForEach(viewModel.accounts.filter({"\($0)".contains(searchText) || searchText.isEmpty}), id: \.id) { account in
+                        NavigationLink(
+                            destination: AccountProfileView(account: account),
+                            label: {
+                                AccountCell(account: account)
+                                    .padding(.vertical, 8)
+                            })
+                    }
                 }
             }
-            .background(Color.clear)
+            .onAppear {
+                if viewModel.accounts.isEmpty {
+                    viewModel.fetchAccounts()
+                }
+            }
+            .onChange(of: searchText) { newValue in
+                viewModel.searchAccounts(query: newValue)
+            }
         }
-        .background(Color.clear)
-        .foregroundColor(.white)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .navigationBarHidden(true)
     }
 }
+

@@ -12,8 +12,10 @@ struct Account {
     var subscription: Bool
     var package: Package?
     var profilePicture: URL?
+    var followers: [String]
+    var following: [String]
 
-    init(id: String, email: String, subscription: Bool, packageData: [String: Any]?, profilePicture: String?) {
+    init(id: String, email: String, subscription: Bool, packageData: [String: Any]?, profilePicture: String?, followers: [String] = [], following: [String] = []) {
         self.id = id
         self.email = email
         self.subscription = subscription
@@ -28,5 +30,7 @@ struct Account {
             return Package(id: id, name: name, price: price)
         }
         self.profilePicture = profilePicture.flatMap { URL(string: $0) }
+        self.followers = followers
+        self.following = following
     }
 }
