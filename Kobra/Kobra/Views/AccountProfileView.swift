@@ -12,7 +12,7 @@ import FirebaseAuth
 struct AccountProfileView: View {
     let accountId: String
     @StateObject var viewModel: AccountProfileViewModel
-    @EnvironmentObject var settingsViewModel: SettingsViewModel // Make sure this environment object is available
+    @EnvironmentObject var settingsViewModel: SettingsViewModel
     
     init(accountId: String) {
         self.accountId = accountId
@@ -44,7 +44,7 @@ struct AccountProfileView: View {
                                 .frame(width: 120, height: 120)
                                 .clipShape(Circle())
                         }
-                        .padding(.leading, 20)
+                        .padding(.leading, 10) // Reduced padding
                     } else {
                         Image(systemName: "person.circle.fill")
                             .resizable()
@@ -52,12 +52,12 @@ struct AccountProfileView: View {
                             .foregroundColor(.gray)
                             .frame(width: 120, height: 120)
                             .clipShape(Circle())
-                            .padding(.leading, 20)
+                            .padding(.leading, 10) // Reduced padding
                     }
-
+                    
                     // Account name, subscription, and following information
                     VStack(alignment: .leading, spacing: 10) {
-                        VStack(alignment: .leading, spacing: 5) { // Adjusted spacing from 10 to 5
+                        VStack(alignment: .leading, spacing: 5) {
                             Text(displayName)
                                 .font(.largeTitle)
                                 .fontWeight(.bold)
@@ -108,14 +108,15 @@ struct AccountProfileView: View {
                             .padding(.trailing)
                         }
                         .foregroundColor(.white)
-                        // Include in AccountProfileView, under the 'Following' information
                     }
                 }
                 .padding(.bottom, 2)
+                .foregroundColor(.white)
             } else {
                 Text("Failed to fetch account data")
                     .foregroundColor(.white)
             }
+            
             Spacer()
             ScrollView {
                 VStack(alignment: .leading, spacing: 10) {
@@ -127,7 +128,7 @@ struct AccountProfileView: View {
             }
             .background(Color.clear)
         }
-        .frame(maxWidth: .infinity) // Make sure VStack takes the whole width
+        .frame(maxWidth: .infinity)
         .background(
             LinearGradient(
                 gradient: Gradient(
@@ -139,10 +140,11 @@ struct AccountProfileView: View {
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
-            .edgesIgnoringSafeArea(.all) // Ignore safe area to fill the whole screen
+            .edgesIgnoringSafeArea(.all)
         )
         .foregroundColor(.white)
     }
 }
+
 
 

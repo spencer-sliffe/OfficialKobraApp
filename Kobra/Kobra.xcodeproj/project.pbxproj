@@ -38,6 +38,7 @@
 		459180FE29AECC63000FB066 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 459180FD29AECC63000FB066 /* FirebaseAuth */; };
 		4591810029AECC63000FB066 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 459180FF29AECC63000FB066 /* FirebaseFirestore */; };
 		4591810229AECFD3000FB066 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4591810129AECFD3000FB066 /* GoogleService-Info.plist */; };
+		459246B02A2EF72F00D564AE /* FSAccountProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459246AF2A2EF72F00D564AE /* FSAccountProfileManager.swift */; };
 		4592E55B29BD35E900FF76E2 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4592E55A29BD35E900FF76E2 /* ChatView.swift */; };
 		4592E55D29BD361200FF76E2 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4592E55C29BD361200FF76E2 /* ChatViewModel.swift */; };
 		4594203F29AEEFF400A100F1 /* HomePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4594203E29AEEFF400A100F1 /* HomePageView.swift */; };
@@ -106,6 +107,7 @@
 		459014472A2E2A6F00A778A6 /* AccountCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCell.swift; sourceTree = "<group>"; };
 		459014492A2E2C0100A778A6 /* AccountProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountProfileView.swift; sourceTree = "<group>"; };
 		4591810129AECFD3000FB066 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		459246AF2A2EF72F00D564AE /* FSAccountProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FSAccountProfileManager.swift; sourceTree = "<group>"; };
 		4592E55A29BD35E900FF76E2 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		4592E55C29BD361200FF76E2 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		4594203E29AEEFF400A100F1 /* HomePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageView.swift; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 				4527837829D8AB3D00B633FB /* FSPostManager.swift */,
 				456429EE29FAFB1D00BC5D8F /* FSChatManager.swift */,
 				459BE6072A180F7600625E53 /* FSFoodManager.swift */,
+				459246AF2A2EF72F00D564AE /* FSAccountProfileManager.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -485,6 +488,7 @@
 				45074EEB29E8699B0096C82A /* CommentView.swift in Sources */,
 				4543FE6329DB4A24003B3CCC /* CustomTextField.swift in Sources */,
 				451C33FC2A0190F200259B86 /* ChangePasswordView.swift in Sources */,
+				459246B02A2EF72F00D564AE /* FSAccountProfileManager.swift in Sources */,
 				452CB79C2A03F7FF001D8195 /* AccountPostRow.swift in Sources */,
 				459B43782A169BAE0029D90B /* DiscoverView.swift in Sources */,
 				45CFE93629C04EF6003806D5 /* Chat.swift in Sources */,
