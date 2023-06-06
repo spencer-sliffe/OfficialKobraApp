@@ -128,7 +128,6 @@ struct AccountView: View {
         .foregroundColor(.white)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .navigationBarHidden(true)
-
     }
 }
 

@@ -12,8 +12,8 @@ struct Account {
     var subscription: Bool
     var package: Package?
     var profilePicture: URL?
-    var followers: [String]
-    var following: [String]
+    var followers: [String]  // Now holds emails
+    var following: [String]  // Now holds emails
 
     init(id: String, email: String, subscription: Bool, packageData: [String: Any]?, profilePicture: String?, followers: [String] = [], following: [String] = []) {
         self.id = id

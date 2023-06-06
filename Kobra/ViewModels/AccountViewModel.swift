@@ -11,7 +11,7 @@ import Combine
 class AccountViewModel: ObservableObject {
     @Published var account: Account?
     @Published var isLoading = true
-    let dataManager = FSAccountManager()
+    let dataManager = FSAccountManager.shared
     @Published var userPosts: [Post] = []
     
     private var cancellables: Set<AnyCancellable> = []

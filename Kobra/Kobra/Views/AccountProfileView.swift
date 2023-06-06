@@ -108,6 +108,18 @@ struct AccountProfileView: View {
                             .padding(.trailing)
                         }
                         .foregroundColor(.white)
+                        Button(action: {
+                            viewModel.toggleFollow()
+                        }) {
+                            Text(viewModel.isFollowing ? "Unfollow" : "Follow")
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 5)
+                                .background(Color.blue)
+                                .cornerRadius(8)
+                        }
+                        .padding(.top, 10)
                     }
                 }
                 .padding(.bottom, 2)
@@ -145,6 +157,3 @@ struct AccountProfileView: View {
         .foregroundColor(.white)
     }
 }
-
-
-

@@ -2,8 +2,13 @@
    └─ UUID (document)
       ├─ email: String (field)
       ├─ package: String (field)
-      └─ subscription: Bool (field)
-
+      ├─ subscription: Bool (field)
+      ├─ followers: Array (field)
+      │  ├─ 0: String
+      │  └─ 1: String
+      └─ following: Array (field)
+         ├─ 0: String
+         └─ 1: String
 2. GlobalChat (collection)
    └─ GlobalMessages (document)
       ├─ sender: String (field)
