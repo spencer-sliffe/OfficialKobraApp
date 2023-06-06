@@ -108,6 +108,20 @@ struct AccountProfileView: View {
                             .padding(.trailing)
                         }
                         .foregroundColor(.white)
+                        // Include in AccountProfileView, under the 'Following' information
+                        Button(action: {
+                            viewModel.toggleFollowStatus()
+                        }) {
+                            Text(viewModel.isFollowing ? "Unfollow" : "Follow")
+                                .font(.subheadline)
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+                                .padding(.vertical, 10)
+                                .padding(.horizontal, 20)
+                                .background(viewModel.isFollowing ? Color.red : Color.blue)
+                                .cornerRadius(10)
+                        }
+                        .disabled(viewModel.account == nil)
                     }
                 }
                 .padding(.bottom, 2)

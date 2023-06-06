@@ -15,7 +15,54 @@ class AccountProfileViewModel: ObservableObject {
     let dataManager = FSAccountManager()
     @Published var userPosts: [Post] = []
     private var accountId: String
+    @Published var isFollowing = false
+    var currentUserId: String = ""
     
+    func toggleFollowStatus() {
+        guard let account = self.account else { return }
+
+        isFollowing.toggle()
+
+        DispatchQueue.main.async {
+            let db = Firestore.firestore()
+            let currentUserRef = db.collection("Accounts").document(self.currentUserId)
+            let targetUserRef = db.collection("Accounts").document(account.id)
+
+            db.runTransaction({ (transaction, errorPointer) -> Any? in
+                do {
+                    let currentUserDocument = try transaction.getDocument(currentUserRef)
+                    let targetUserDocument = try transaction.getDocument(targetUserRef)
+                    var following = currentUserDocument.data()?["following"] as? [String] ?? []
+                    var followers = targetUserDocument.data()?["followers"] as? [String] ?? []
+
+                    if self.isFollowing {
+                        following.append(account.id)
+                        followers.append(self.currentUserId)
+                    } else {
+                        following.removeAll { $0 == account.id }
+                        followers.removeAll { $0 == self.currentUserId }
+                    }
+
+                    transaction.updateData(["following": following], forDocument: currentUserRef)
+                    transaction.updateData(["followers": followers], forDocument: targetUserRef)
+
+                } catch let fetchError as NSError {
+                    errorPointer?.pointee = fetchError
+                    return nil
+                }
+
+                return nil
+            }) { (object, error) in
+                if let error = error {
+                    print("Transaction failed: \(error)")
+                } else {
+                    print("Transaction successfully committed!")
+                }
+            }
+        }
+    }
+
+
     private var cancellables: Set<AnyCancellable> = []
     
     init(accountId: String) {
