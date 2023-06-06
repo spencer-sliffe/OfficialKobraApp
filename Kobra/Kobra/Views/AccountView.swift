@@ -20,56 +20,94 @@ struct AccountView: View {
                 let emailComponents = account.email.split(separator: "@")
                 let displayName = String(emailComponents[0]).uppercased()
                 
-                if let profilePicture = account.profilePicture {
-                    AsyncImage(url: profilePicture) { image in
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 120, height: 120)
-                            .clipShape(Circle())
-                    } placeholder: {
+                HStack {
+                    // Profile picture
+                    if let profilePicture = account.profilePicture {
+                        AsyncImage(url: profilePicture) { image in
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 120, height: 120)
+                                .clipShape(Circle())
+                        } placeholder: {
+                            Image(systemName: "person.circle.fill")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .foregroundColor(.gray)
+                                .frame(width: 120, height: 120)
+                                .clipShape(Circle())
+                        }
+                        .padding(.leading, 20)
+                    } else {
                         Image(systemName: "person.circle.fill")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .foregroundColor(.gray)
                             .frame(width: 120, height: 120)
                             .clipShape(Circle())
+                            .padding(.leading, 20)
                     }
-                    .padding(.bottom, 20)
-                } else {
-                    Image(systemName: "person.circle.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .foregroundColor(.gray)
-                        .frame(width: 120, height: 120)
-                        .clipShape(Circle())
-                        .padding(.bottom, 20)
-                }
-                
-                Text(displayName)
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-                
-                if let package = account.package {
-                    VStack(spacing: 20) {
-                        Text("Current Subscription:")
-                            .font(.headline)
-                        HStack {
-                            Text(package.name)
-                                .font(.title2)
-                            Spacer()
-                            Text("$\(package.price, specifier: "%.2f")/month")
-                                .font(.title2)
+                    
+                    // Account name, subscription, and following information
+                    VStack(alignment: .leading, spacing: 10) {
+                        VStack(alignment: .leading, spacing: 5) { // Adjusted spacing from 10 to 5
+                            Text(displayName)
+                                .font(.largeTitle)
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+                                .minimumScaleFactor(0.5)
+                                .lineLimit(1)
+                            
+                            if let package = account.package {
+                                Text("Current Subscription: \(package.name) - $\(package.price, specifier: "%.2f")/month")
+                                    .font(.subheadline)
+                                    .foregroundColor(.white)
+                                    .padding(.leading, 10)
+                            } else {
+                                Text("Current Subscription: None")
+                                    .font(.subheadline)
+                                    .foregroundColor(.white)
+                                    .padding(.leading, 10)
+                            }
                         }
-                        .padding(.horizontal)
-                    }
-                    .foregroundColor(.white)
-                } else {
-                    Text("Current Subscription: None")
-                        .font(.headline)
+                        
+                        HStack {
+                            VStack {
+                                Text("\(account.followers.count)")
+                                    .font(.subheadline)
+                                    .fontWeight(.bold)
+                                Text("Followers")
+                                    .font(.caption)
+                                    .fontWeight(.medium)
+                            }
+                            .padding(2)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 5)
+                                    .stroke(Color.white, lineWidth: 2)
+                            )
+                            .padding(.trailing)
+                            
+                            VStack {
+                                Text("\(account.following.count)")
+                                    .font(.subheadline)
+                                    .fontWeight(.bold)
+                                Text("Following")
+                                    .font(.caption)
+                                    .fontWeight(.medium)
+                            }
+                            .padding(2)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 5)
+                                    .stroke(Color.white, lineWidth: 2)
+                            )
+                            .padding(.trailing)
+                        }
                         .foregroundColor(.white)
+                    }
                 }
+                .padding(.bottom, 2)
+                
+                .foregroundColor(.white)
             } else {
                 Text("Failed to fetch account data")
                     .foregroundColor(.white)
@@ -80,7 +118,7 @@ struct AccountView: View {
                     ForEach(viewModel.userPosts.sorted(by: { $0.timestamp.compare($1.timestamp) == .orderedDescending })) { post in
                         AccountPostRow(post: post)
                             .background(Color.clear)
-                            .environmentObject(kobraViewModel) // Pass the environment object here
+                            .environmentObject(kobraViewModel)
                     }
                 }
             }
@@ -90,5 +128,8 @@ struct AccountView: View {
         .foregroundColor(.white)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .navigationBarHidden(true)
+
     }
 }
+
+

@@ -19,9 +19,9 @@ struct DiscoverView: View {
             
             ScrollView {
                 LazyVStack {
-                    ForEach(viewModel.accounts.filter({"\($0)".contains(searchText) || searchText.isEmpty}), id: \.id) { account in
+                    ForEach(viewModel.accounts.filter({$0.email.lowercased().contains(searchText.lowercased()) || searchText.isEmpty}), id: \.id) { account in
                         NavigationLink(
-                            destination: AccountProfileView(account: account),
+                            destination: AccountProfileView(accountId: account.id), // pass account id to AccountProfileView
                             label: {
                                 AccountCell(account: account)
                                     .padding(.vertical, 8)
@@ -40,4 +40,5 @@ struct DiscoverView: View {
         }
     }
 }
+
 

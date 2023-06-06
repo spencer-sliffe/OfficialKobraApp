@@ -40,8 +40,6 @@ struct CreatePostView: View {
             VStack {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
-                        Text(NSLocalizedString("Post Type", comment: ""))
-                            .foregroundColor(.white)
                         DropDownMenu(
                             isExpanded: $postTypeExpanded,
                             options: ["Advertisement", "Help", "News", "Market"],

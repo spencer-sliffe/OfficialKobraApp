@@ -55,7 +55,27 @@ class AccountViewModel: ObservableObject {
                 let data = document.data()!
                 let email = user.email ?? ""
                 let subscription = data["subscription"] as? Bool ?? false
-                let account = Account(id: user.uid, email: email, subscription: subscription, packageData: nil, profilePicture: nil)
+                let followers = data["followers"] as? [String] ?? []
+                let following = data["following"] as? [String] ?? []
+                
+                var account = Account(id: user.uid, email: email, subscription: subscription, packageData: nil, profilePicture: nil, followers: followers, following: following)
+                
+                // Fetch and assign package data
+                self.dataManager.fetchPackages()
+                
+                // Find the appropriate package for the account
+                if let packageId = data["packageId"] as? String {
+                    if let package = self.dataManager.packages.first(where: { $0.id == packageId }) {
+                        account.package = package
+                    }
+                }
+                
+                // Assign profile picture URL if available
+                if let profilePictureURLString = data["profilePicture"] as? String,
+                   let profilePictureURL = URL(string: profilePictureURLString) {
+                    account.profilePicture = profilePictureURL
+                }
+
                 promise(.success(account))
             }
         }

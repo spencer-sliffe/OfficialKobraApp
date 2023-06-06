@@ -79,7 +79,9 @@ class AuthenticationViewModel: ObservableObject {
             db.collection("Accounts").document(authResult!.user.uid).setData([
                 "email": self.email,
                 "subscription": false,
-                "package": ""
+                "package": "",
+                "followers": [String](),
+                "following": [String]()
             ]) { error in
                 if let error = error {
                     self.isError = true
