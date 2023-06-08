@@ -25,6 +25,8 @@
 		453314062A23245800DEE73E /* CreateFoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453314052A23245800DEE73E /* CreateFoodView.swift */; };
 		4543FE6129DB4A0C003B3CCC /* CustomUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543FE6029DB4A0C003B3CCC /* CustomUITextField.swift */; };
 		4543FE6329DB4A24003B3CCC /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543FE6229DB4A24003B3CCC /* CustomTextField.swift */; };
+		455B2B222A31170800136D6D /* RemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455B2B212A31170800136D6D /* RemoteImage.swift */; };
+		455B2B242A317E0800136D6D /* AccountSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455B2B232A317E0800136D6D /* AccountSearchBar.swift */; };
 		455C6E5729D7E72600446520 /* KobraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455C6E5629D7E72600446520 /* KobraViewModel.swift */; };
 		455C6E5929D7E9B700446520 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455C6E5829D7E9B700446520 /* Post.swift */; };
 		456429EF29FAFB1D00BC5D8F /* FSChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456429EE29FAFB1D00BC5D8F /* FSChatManager.swift */; };
@@ -95,6 +97,8 @@
 		453314052A23245800DEE73E /* CreateFoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFoodView.swift; sourceTree = "<group>"; };
 		4543FE6029DB4A0C003B3CCC /* CustomUITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUITextField.swift; sourceTree = "<group>"; };
 		4543FE6229DB4A24003B3CCC /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		455B2B212A31170800136D6D /* RemoteImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImage.swift; sourceTree = "<group>"; };
+		455B2B232A317E0800136D6D /* AccountSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSearchBar.swift; sourceTree = "<group>"; };
 		455C6E5629D7E72600446520 /* KobraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KobraViewModel.swift; sourceTree = "<group>"; };
 		455C6E5829D7E9B700446520 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		456429EE29FAFB1D00BC5D8F /* FSChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FSChatManager.swift; sourceTree = "<group>"; };
@@ -182,6 +186,8 @@
 				459B437B2A16C2750029D90B /* GradientDropDownMenu.swift */,
 				45895C0A2A1B272F0022DF98 /* FoodRow.swift */,
 				459014472A2E2A6F00A778A6 /* AccountCell.swift */,
+				455B2B212A31170800136D6D /* RemoteImage.swift */,
+				455B2B232A317E0800136D6D /* AccountSearchBar.swift */,
 			);
 			path = CustomElements;
 			sourceTree = "<group>";
@@ -491,7 +497,9 @@
 				45A908CB29B037FE00792FC2 /* FSAccountManager.swift in Sources */,
 				45895C092A1B25CB0022DF98 /* Food.swift in Sources */,
 				45895C0B2A1B27300022DF98 /* FoodRow.swift in Sources */,
+				455B2B242A317E0800136D6D /* AccountSearchBar.swift in Sources */,
 				451C33F42A0168A500259B86 /* gradientOptions.swift in Sources */,
+				455B2B222A31170800136D6D /* RemoteImage.swift in Sources */,
 				4527837929D8AB3D00B633FB /* FSPostManager.swift in Sources */,
 				45AD934329B1AAB800D153AF /* AuthenticationView.swift in Sources */,
 				45A908CD29B0386400792FC2 /* Package.swift in Sources */,

@@ -155,33 +155,6 @@ class FSAccountManager: ObservableObject {
         }
     }
     
-    func uploadProfilePicture(_ image: UIImage, accountId: String, completion: @escaping (Result<String, Error>) -> Void) {
-        guard let imageData = image.jpegData(compressionQuality: 0.5) else {
-            completion(.failure(NSError(domain: "AppDomain", code: -1, userInfo: [NSLocalizedDescriptionKey: "Unable to convert image to data"])))
-            return
-        }
-        
-        let storageRef = Storage.storage().reference()
-        let imagesRef = storageRef.child("images/\(accountId).jpg")
-        
-        let metadata = StorageMetadata()
-        metadata.contentType = "image/jpeg"
-        
-        imagesRef.putData(imageData, metadata: metadata) { (_, error) in
-            if let error = error {
-                completion(.failure(error))
-            } else {
-                imagesRef.downloadURL { (url, error) in
-                    if let error = error {
-                        completion(.failure(error))
-                    } else if let downloadURL = url {
-                        completion(.success(downloadURL.absoluteString))
-                    }
-                }
-            }
-        }
-    }
-    
     private func createAccountFrom(data: [String: Any]) -> Account {
         let id = data["id"] as? String ?? ""
         let email = data["email"] as? String ?? ""
@@ -193,5 +166,59 @@ class FSAccountManager: ObservableObject {
         
         return Account(id: id, email: email, subscription: subscription, packageData: packageData, profilePicture: profilePicture, followers: followers, following: following)
     }
+    
+    func deleteProfilePicture(imageURL: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        let storage = Storage.storage()
+        let storageRef = storage.reference(forURL: imageURL)
+        
+        storageRef.delete { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(()))
+            }
+        }
+    }
 
+    func uploadProfilePicture(_ image: UIImage, userId: String, completion: @escaping (Result<String, Error>) -> Void) {
+        guard let imageData = image.jpegData(compressionQuality: 0.5) else {
+            completion(.failure(NSError(domain: "Kobra", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to convert image to data"])))
+            return
+        }
+        
+        let storageRef = Storage.storage().reference().child("profile_images/\(userId).jpg")
+        storageRef.putData(imageData, metadata: nil) { metadata, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            storageRef.downloadURL { url, error in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                
+                if let url = url {
+                    self.updateProfilePictureURL(userId: userId, imageURL: url.absoluteString, completion: completion)
+                } else {
+                    completion(.failure(NSError(domain: "Kobra", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to get download URL"])))
+                }
+            }
+        }
+    }
+
+    // New function to update the profile picture URL of an account
+    private func updateProfilePictureURL(userId: String, imageURL: String, completion: @escaping (Result<String, Error>) -> Void) {
+        let accountRef = db.collection(accountCollection).document(userId)
+        accountRef.updateData([
+            "profilePicture": imageURL
+        ]) { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(imageURL))
+            }
+        }
+    }
 }

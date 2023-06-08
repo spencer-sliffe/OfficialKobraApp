@@ -24,6 +24,7 @@ struct HomePageView: View {
                 .environmentObject(kobraViewModel)
         case 2:
             DiscoverView()
+                .environmentObject(kobraViewModel)
         case 3:
             KobraView()
         case 4:

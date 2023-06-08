@@ -7,7 +7,7 @@
 
 import Foundation
 import Combine
-import FirebaseFirestore
+import Firebase
 
 class AccountProfileViewModel: ObservableObject {
     @Published var account: Account?
@@ -70,11 +70,19 @@ class AccountProfileViewModel: ObservableObject {
                 let subscription = data["subscription"] as? Bool ?? false
                 let followers = data["followers"] as? [String] ?? []  // Holds emails
                 let following = data["following"] as? [String] ?? []  // Holds emails
-                let account = Account(id: self.accountId, email: email, subscription: subscription, packageData: nil, profilePicture: nil, followers: followers, following: following)
+                var account = Account(id: self.accountId, email: email, subscription: subscription, packageData: nil, profilePicture: nil, followers: followers, following: following)
+                
+                // Fetch and assign profile picture URL if available
+                if let profilePictureURLString = data["profilePicture"] as? String,
+                   let profilePictureURL = URL(string: profilePictureURLString) {
+                    account.profilePicture = profilePictureURL
+                }
+                
                 promise(.success(account))
             }
         }
     }
+
     
     func toggleFollow() {
         guard let currentUserEmail = UserDefaults.standard.string(forKey: "currentUserEmail") else { return }

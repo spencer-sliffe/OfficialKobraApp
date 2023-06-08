@@ -11,21 +11,23 @@ import SwiftUI
 struct DiscoverView: View {
     @StateObject var viewModel = DiscoverViewModel()
     @State var searchText = ""
-    
+    @EnvironmentObject var kobraViewModel: KobraViewModel
+
     var body: some View {
-        VStack {
-            SearchBar(text: $searchText)
-                .padding()
+        VStack(spacing: 0) {
+            AccountSearchBar(text: $searchText)
             
             ScrollView {
-                LazyVStack {
-                    ForEach(viewModel.accounts.filter({$0.email.lowercased().contains(searchText.lowercased()) || searchText.isEmpty}), id: \.id) { account in
-                        NavigationLink(
-                            destination: AccountProfileView(accountId: account.id), // pass account id to AccountProfileView
-                            label: {
-                                AccountCell(account: account)
-                                    .padding(.vertical, 8)
-                            })
+                // Only show the list when searchText is not empty
+                if !searchText.isEmpty {
+                    LazyVStack(spacing: 0) {
+                        ForEach(viewModel.accounts.filter({$0.email.lowercased().contains(searchText.lowercased())}), id: \.id) { account in
+                            NavigationLink(
+                                destination: AccountProfileView(accountId: account.id).environmentObject(kobraViewModel), // pass account id to AccountProfileView
+                                label: {
+                                    AccountCell(account: account)
+                                })
+                        }
                     }
                 }
             }
@@ -40,5 +42,8 @@ struct DiscoverView: View {
         }
     }
 }
+
+
+
 
 

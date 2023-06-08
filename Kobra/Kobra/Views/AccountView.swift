@@ -11,6 +11,8 @@ struct AccountView: View {
     @ObservedObject var viewModel = AccountViewModel()
     @EnvironmentObject var kobraViewModel: KobraViewModel
     @State var isLoggedOut = false
+    @State private var isShowingImagePicker = false
+    @State private var inputImage: UIImage?
     
     var body: some View {
         VStack {
@@ -22,32 +24,49 @@ struct AccountView: View {
                 
                 HStack {
                     // Profile picture
-                    if let profilePicture = account.profilePicture {
-                        AsyncImage(url: profilePicture) { image in
-                            image
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 120, height: 120)
-                                .clipShape(Circle())
-                        } placeholder: {
+                    ZStack {
+                        if let profilePicture = account.profilePicture {
+                            AsyncImage(url: profilePicture) { image in
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 120, height: 120)
+                                    .clipShape(Circle())
+                            } placeholder: {
+                                Image(systemName: "person.circle.fill")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .foregroundColor(.gray)
+                                    .frame(width: 120, height: 120)
+                                    .clipShape(Circle())
+                            }
+                            .padding(.leading, 20)
+                        } else {
                             Image(systemName: "person.circle.fill")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .foregroundColor(.gray)
                                 .frame(width: 120, height: 120)
                                 .clipShape(Circle())
+                                .padding(.leading, 20)
                         }
-                        .padding(.leading, 20)
-                    } else {
-                        Image(systemName: "person.circle.fill")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .foregroundColor(.gray)
-                            .frame(width: 120, height: 120)
-                            .clipShape(Circle())
-                            .padding(.leading, 20)
+                        Button(action: {
+                            isShowingImagePicker = true
+                        }) {
+                            Image(systemName: "plus")
+                                .resizable() // add this to allow changing the size
+                                .frame(width: 20, height: 20) // change width and height to adjust size
+                                .foregroundColor(.blue) // change color here
+                                .padding()
+                                .background(Color.white)
+                                .clipShape(Circle())
+                                .shadow(radius: 10)
+                        }
+                        .offset(x: 40, y: 40)
+                        .sheet(isPresented: $isShowingImagePicker, onDismiss: loadImage) {
+                            ImagePicker(image: $inputImage)
+                        }
                     }
-                    
                     // Account name, subscription, and following information
                     VStack(alignment: .leading, spacing: 10) {
                         VStack(alignment: .leading, spacing: 5) { // Adjusted spacing from 10 to 5
@@ -129,6 +148,12 @@ struct AccountView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .navigationBarHidden(true)
     }
+    
+    func loadImage() {
+        guard let inputImage = inputImage else { return }
+        viewModel.updateProfilePicture(image: inputImage)
+    }
 }
+
 
 

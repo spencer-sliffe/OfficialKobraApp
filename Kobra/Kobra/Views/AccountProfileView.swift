@@ -11,13 +11,15 @@ import FirebaseAuth
 
 struct AccountProfileView: View {
     let accountId: String
-    @StateObject var viewModel: AccountProfileViewModel
+    @ObservedObject var viewModel: AccountProfileViewModel
     @EnvironmentObject var settingsViewModel: SettingsViewModel
-    
+    @EnvironmentObject var kobraViewModel: KobraViewModel
+
     init(accountId: String) {
-        self.accountId = accountId
-        _viewModel = StateObject(wrappedValue: AccountProfileViewModel(accountId: accountId))
-    }
+           self.accountId = accountId
+           self.viewModel = AccountProfileViewModel(accountId: accountId)
+           self.viewModel.fetchAccount()
+       }
     
     var body: some View {
         VStack {
@@ -29,8 +31,8 @@ struct AccountProfileView: View {
                 
                 HStack {
                     // Profile picture
-                    if let profilePicture = account.profilePicture {
-                        AsyncImage(url: profilePicture) { image in
+                    if let profilePictureString = account.profilePicture {
+                        AsyncImage(url: profilePictureString) { image in
                             image
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
@@ -54,7 +56,7 @@ struct AccountProfileView: View {
                             .clipShape(Circle())
                             .padding(.leading, 10) // Reduced padding
                     }
-                    
+
                     // Account name, subscription, and following information
                     VStack(alignment: .leading, spacing: 10) {
                         VStack(alignment: .leading, spacing: 5) {
@@ -139,6 +141,7 @@ struct AccountProfileView: View {
                 }
             }
             .background(Color.clear)
+
         }
         .frame(maxWidth: .infinity)
         .background(

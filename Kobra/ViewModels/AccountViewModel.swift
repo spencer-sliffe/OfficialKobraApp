@@ -11,7 +11,7 @@ import Combine
 class AccountViewModel: ObservableObject {
     @Published var account: Account?
     @Published var isLoading = true
-    let dataManager = FSAccountManager.shared
+    let accountManager = FSAccountManager.shared
     @Published var userPosts: [Post] = []
     
     private var cancellables: Set<AnyCancellable> = []
@@ -88,6 +88,21 @@ class AccountViewModel: ObservableObject {
                 case .failure(let error):
                     promise(.failure(error))
                 }
+            }
+        }
+    }
+    
+    func updateProfilePicture(image: UIImage) {
+        isLoading = true
+        accountManager.uploadProfilePicture(image, userId: self.account?.id ?? "") { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let imageURL):
+                    self?.account?.profilePicture = URL(string: imageURL) // converting string to URL
+                case .failure(let error):
+                    print("Error uploading profile picture: \(error.localizedDescription)")
+                }
+                self?.isLoading = false
             }
         }
     }
