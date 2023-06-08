@@ -57,7 +57,6 @@ struct HomePageView: View {
                             createTabButton(icon: "shippingbox", tabIndex: 6)
                         }
                         .padding(.bottom, 16)
-                        .foregroundColor(Color.white)
                     }
                     .navigationBarHidden(true)
                 }
@@ -86,6 +85,7 @@ struct HomePageView: View {
             Image(systemName: icon)
                 .resizable()
                 .frame(width: selectedTab == tabIndex ? 30 : 24, height: selectedTab == tabIndex ? 26 : 20)
+                .foregroundColor(selectedTab == tabIndex ? .yellow : .white)
         }
         .frame(maxWidth: .infinity)
     }

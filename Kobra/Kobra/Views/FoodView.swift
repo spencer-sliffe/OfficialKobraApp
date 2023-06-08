@@ -14,15 +14,35 @@ struct FoodView: View {
     @State private var selectedMealType: MealType = .breakfast
     @State private var selectedCuisineType: CuisineType = .italian
     
+    var timeFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "hh:mm a"
+        return formatter
+    }
+    
+    var dateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM dd"
+        return formatter
+    }
+    
     var body: some View {
         VStack {
-            if viewModel.isLoading {
-                ProgressView()
-            } else {
-                Text("Food Content Here")
-                    .foregroundColor(.white)
-                    .font(.largeTitle)
-            }
+            GeometryReader { geometry in
+                HStack {
+                    Text("\(Date(), formatter: dateFormatter)")
+                        .foregroundColor(.white)
+                    Spacer()
+                    Text("Recipe Feed")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                    Spacer()
+                    
+                    Text("\(Date(), formatter: timeFormatter)")
+                        .foregroundColor(.white)
+                }
+                .padding(.horizontal)
+            }.frame(height: 20)
             Spacer()
             ScrollView {
                 VStack(alignment: .leading, spacing: 10) {

@@ -38,25 +38,25 @@ struct KobraView: View {
                         if(feedType.rawValue == "Advertisement") {
                             Image(systemName: "radio") // Replace with appropriate icons
                                 .resizable()
-                                .frame(width: 30, height: 30)
+                                .frame(width: selectedFeed == feedType ? 26 : 20, height: selectedFeed == feedType ? 26 : 20)
                                 .foregroundColor(selectedFeed == feedType ? .yellow : .white)
                                 .padding(0)
                         } else if(feedType.rawValue == "Market") {
                             Image(systemName: "dollarsign.circle") // Replace with appropriate icons
                                 .resizable()
-                                .frame(width: 30, height: 30)
+                                .frame(width: selectedFeed == feedType ? 26 : 20, height: selectedFeed == feedType ? 26 : 20)
                                 .foregroundColor(selectedFeed == feedType ? .yellow : .white)
                                 .padding(0)
                         } else if(feedType.rawValue == "News") {
                             Image(systemName: "newspaper") // Replace with appropriate icons
                                 .resizable()
-                                .frame(width: 30, height: 30)
+                                .frame(width: selectedFeed == feedType ? 26 : 20, height: selectedFeed == feedType ? 26 : 20)
                                 .foregroundColor(selectedFeed == feedType ? .yellow : .white)
                                 .padding(0)
                         } else if(feedType.rawValue == "Help") {
                             Image(systemName: "questionmark.circle") // Replace with appropriate icons
                                 .resizable()
-                                .frame(width: 30, height:30)
+                                .frame(width: selectedFeed == feedType ? 26 : 20, height: selectedFeed == feedType ? 26 : 20)
                                 .foregroundColor(selectedFeed == feedType ? .yellow : .white)
                                 .padding(0)
                         }
@@ -70,12 +70,12 @@ struct KobraView: View {
             }) {
                 Image(systemName: "plus.circle.fill")
                     .resizable()
-                    .frame(width: 30, height: 30)
+                    .frame(width: 26, height: 26)
                     .foregroundColor(.white)
                     .padding(0)
             }
         }
-        .padding(.bottom, 13)
+        .padding(.bottom, 0)
         .edgesIgnoringSafeArea(.bottom)
     }
     
