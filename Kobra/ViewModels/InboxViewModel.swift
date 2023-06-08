@@ -94,7 +94,7 @@ class InboxViewModel: ObservableObject {
             listeners.append(listener)
         }
     }
-
+    
     func observeUnreadMessageCount(forChat chat: Chat, completion: @escaping (Result<Int, Error>) -> Void) -> ListenerRegistration {
         return firestoreManager.observeUnreadMessageCount(forChat: chat, currentUserEmail: currentUserEmail, completion: completion)
     }

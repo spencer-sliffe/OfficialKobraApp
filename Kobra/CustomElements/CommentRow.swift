@@ -2,14 +2,14 @@
 //  CommentRow.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 4/13/23.
+//  Created by Spencer Sliffe on 4/13/23.
 //
 
 import SwiftUI
 
 struct CommentRow: View {
     let comment: Comment
-
+    
     var body: some View {
         VStack(alignment: .leading) {
             HStack {

@@ -29,10 +29,10 @@ struct AuthenticationView: View {
                     Picker(selection: $selection, label: Text("Sign In or Sign Up")) {
                         Text("Sign In").tag(0)
                             .font(.system(size: 18 * 3))
-                            
+                        
                         Text("Sign Up").tag(1)
                             .font(.system(size: 18 * 3))
-                            
+                        
                     }
                     .pickerStyle(SegmentedPickerStyle())
                     .background(Color.white.opacity(0.5))

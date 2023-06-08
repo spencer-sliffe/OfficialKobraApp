@@ -1,9 +1,10 @@
 //
-//  MarketPlaceView.swift
+//  SettingsView.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 3/26/23.
+//  Created by Spencer Sliffe on 3/26/23.
 //
+
 import Foundation
 import SwiftUI
 

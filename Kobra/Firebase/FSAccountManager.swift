@@ -58,7 +58,7 @@ class FSAccountManager: ObservableObject {
             }
         }
     }
-
+    
     func unfollow(userToUnfollow: String) {
         guard let currentUserId = UserDefaults.standard.string(forKey: "currentUserEmail") else { return }
         
@@ -87,7 +87,7 @@ class FSAccountManager: ObservableObject {
             }
         }
     }
-
+    
     func fetchAccounts(completion: @escaping (Result<[Account], Error>) -> Void) {
         db.collection(accountCollection).getDocuments { (querySnapshot, error) in
             if let error = error {
@@ -105,19 +105,15 @@ class FSAccountManager: ObservableObject {
     }
     
     func addAccount(_ account: Account, completion: @escaping (Result<Void, Error>) -> Void) {
-        var data: [String: Any] = [
+        let data: [String: Any] = [
             "id": account.id,
             "email": account.email,
             "subscription": account.subscription,
             "profilePicture": account.profilePicture?.absoluteString ?? "",
             "followers": account.followers,
-            "following": account.following
+            "following": account.following,
+            "package": account.package
         ]
-        
-        if let package = account.package {
-            let packageData: [String : Any] = ["id": package.id, "name": package.name, "price": package.price]
-            data["package"] = packageData
-        }
         
         db.collection(accountCollection).document(account.id).setData(data) { error in  // updated here
             if let error = error {
@@ -159,12 +155,12 @@ class FSAccountManager: ObservableObject {
         let id = data["id"] as? String ?? ""
         let email = data["email"] as? String ?? ""
         let subscription = data["subscription"] as? Bool ?? false
-        let packageData = data["package"] as? [String: Any]
+        let package = data["package"] as? String ?? ""
         let profilePicture = data["profilePicture"] as? String
         let followers = data["followers"] as? [String] ?? []
         let following = data["following"] as? [String] ?? []
         
-        return Account(id: id, email: email, subscription: subscription, packageData: packageData, profilePicture: profilePicture, followers: followers, following: following)
+        return Account(id: id, email: email, subscription: subscription, package: package, profilePicture: profilePicture, followers: followers, following: following)
     }
     
     func deleteProfilePicture(imageURL: String, completion: @escaping (Result<Void, Error>) -> Void) {
@@ -179,7 +175,7 @@ class FSAccountManager: ObservableObject {
             }
         }
     }
-
+    
     func uploadProfilePicture(_ image: UIImage, userId: String, completion: @escaping (Result<String, Error>) -> Void) {
         guard let imageData = image.jpegData(compressionQuality: 0.5) else {
             completion(.failure(NSError(domain: "Kobra", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to convert image to data"])))
@@ -207,7 +203,7 @@ class FSAccountManager: ObservableObject {
             }
         }
     }
-
+    
     // New function to update the profile picture URL of an account
     private func updateProfilePictureURL(userId: String, imageURL: String, completion: @escaping (Result<String, Error>) -> Void) {
         let accountRef = db.collection(accountCollection).document(userId)

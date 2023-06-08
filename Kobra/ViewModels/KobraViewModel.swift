@@ -53,7 +53,7 @@ class KobraViewModel: ObservableObject {
             addPostToDatabase(post, completion: completion)
         }
     }
-
+    
     private func addPostToDatabase(_ post: Post, completion: ((Result<Void, Error>) -> Void)? = nil) {
         postManager.addPost(post) { [weak self] result in
             DispatchQueue.main.async {
@@ -73,7 +73,7 @@ class KobraViewModel: ObservableObject {
         postManager.updateLikeCount(post, likeCount: likeCount, userId: userId, isAdding: isAdding)
         fetchPosts()
     }
-
+    
     func updateDislikeCount(_ post: Post, dislikeCount: Int, userId: String, isAdding: Bool) {
         postManager.updateDislikeCount(post, dislikeCount: dislikeCount, userId: userId, isAdding: isAdding)
         fetchPosts()
@@ -83,7 +83,7 @@ class KobraViewModel: ObservableObject {
         postManager.updateComments(post, comment: comment)
         fetchPosts()
     }
-
+    
     func updatePost(_ post: Post) {
         postManager.updatePost(post) { [weak self] result in
             DispatchQueue.main.async {
@@ -132,5 +132,4 @@ class KobraViewModel: ObservableObject {
     func addComment(_ comment: Comment, to post: Post, completion: @escaping (Result<Void, Error>) -> Void) {
         postManager.addComment(comment, to: post, completion: completion)
     }
-
 }

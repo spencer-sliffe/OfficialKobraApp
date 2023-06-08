@@ -2,7 +2,7 @@
 //  UserCell.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 6/5/23.
+//  Created by Spencer Sliffe on 6/5/23.
 //
 
 import Foundation
@@ -10,7 +10,7 @@ import SwiftUI
 
 struct AccountCell: View {
     var account: Account
-
+    
     var body: some View {
         HStack(spacing: 16) {
             // Circle view for the profile picture

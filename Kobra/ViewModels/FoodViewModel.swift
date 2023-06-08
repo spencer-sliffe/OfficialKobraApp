@@ -2,7 +2,7 @@
 //  FoodViewModel.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 5/19/23.
+//  Created by Spencer Sliffe on 5/19/23.
 //
 
 import Foundation
@@ -14,15 +14,15 @@ class FoodViewModel: ObservableObject {
     @Published var foods: [Food] = []
     private let foodManager = FSFoodManager.shared
     private var cancellables: Set<AnyCancellable> = []
-
+    
     init() {
         fetchFoods()
     }
-
+    
     func uploadImage(_ image: UIImage, foodId: String, completion: @escaping (Result<String, Error>) -> Void) {
         foodManager.uploadImage(image, foodId: foodId, completion: completion)
     }
-
+    
     func fetchFoods() {
         isLoading = true
         foodManager.fetchFoods { [weak self] result in
@@ -37,7 +37,7 @@ class FoodViewModel: ObservableObject {
             }
         }
     }
-
+    
     func addFood(_ food: Food, image: UIImage? = nil, completion: ((Result<Void, Error>) -> Void)? = nil) {
         isLoading = true
         if let image = image {
@@ -58,7 +58,7 @@ class FoodViewModel: ObservableObject {
             addFoodToDatabase(food, completion: completion)
         }
     }
-
+    
     private func addFoodToDatabase(_ food: Food, completion: ((Result<Void, Error>) -> Void)? = nil) {
         foodManager.addFood(food) { [weak self] result in
             DispatchQueue.main.async {
@@ -79,7 +79,7 @@ class FoodViewModel: ObservableObject {
         foodManager.updateLikeCount(food, likeCount: likeCount, userId: userId, isAdding: isAdding)
         fetchFoods()
     }
-
+    
     func deleteFood(_ food: Food) {
         foodManager.deleteFood(food) { [weak self] result in
             DispatchQueue.main.async {
@@ -100,8 +100,8 @@ class FoodViewModel: ObservableObject {
             }
         }
     }
-
-
+    
+    
     func fetchUserFoods(userId: String) {
         isLoading = true
         foodManager.fetchUserFoods(userId: userId) { [weak self] result in

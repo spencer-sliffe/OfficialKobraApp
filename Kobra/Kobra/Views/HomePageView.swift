@@ -11,9 +11,9 @@ struct HomePageView: View {
     @State private var selectedTab = 3
     @ObservedObject var authViewModel = AuthenticationViewModel()
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
-
+    
     @StateObject var kobraViewModel = KobraViewModel()
-
+    
     @ViewBuilder
     private func getView(for index: Int) -> some View {
         switch index {
@@ -37,7 +37,7 @@ struct HomePageView: View {
             EmptyView()
         }
     }
-
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -48,62 +48,13 @@ struct HomePageView: View {
                         getView(for: selectedTab)
                             .transition(.slide)
                         HStack(spacing: 0) {
-                            Button(action: {
-                                withAnimation { selectedTab = 0 }
-                            }) {
-                                Image(systemName: "gear")
-                                    .resizable()
-                                    .frame(width: 24, height: 24)
-                            }
-                            .frame(maxWidth: .infinity)
-                            Button(action: {
-                                withAnimation { selectedTab = 1 }
-                            }) {
-                                Image(systemName: "person")
-                                    .resizable()
-                                    .frame(width: 24, height: 24)
-                            }
-                            .frame(maxWidth: .infinity)
-                            Button(action: {
-                                withAnimation{ selectedTab = 2 }
-                            }) {
-                                Image(systemName: "magnifyingglass")
-                                    .resizable()
-                                    .frame(width: 24, height: 24)
-                            }
-                            .frame(maxWidth: .infinity)
-                            Button(action: {
-                                withAnimation { selectedTab = 3 }
-                            }) {
-                                Image(systemName: "house")
-                                    .resizable()
-                                    .frame(width: 28, height: 24)
-                            }
-                            .frame(maxWidth: .infinity)
-                            Button(action: {
-                                withAnimation { selectedTab = 4 }
-                            }) {
-                                Image(systemName: "envelope")
-                                    .resizable()
-                                    .frame(width: 28, height: 24)
-                            }
-                            .frame(maxWidth: .infinity)
-                            Button(action: {
-                                withAnimation{ selectedTab = 5 }
-                            }) {
-                                Image(systemName: "leaf")
-                                    .resizable()
-                                    .frame(width: 24, height: 24)
-                            }
-                            .frame(maxWidth: .infinity)
-                            Button(action: {
-                                withAnimation { selectedTab = 6 }
-                            }) {
-                                Image(systemName: "shippingbox")
-                                    .resizable()
-                                    .frame(width: 28, height: 24)
-                            }
-                            .frame(maxWidth: .infinity)
+                            createTabButton(icon: "gear", tabIndex: 0)
+                            createTabButton(icon: "person", tabIndex: 1)
+                            createTabButton(icon: "magnifyingglass", tabIndex: 2)
+                            createTabButton(icon: "house", tabIndex: 3)
+                            createTabButton(icon: "envelope", tabIndex: 4)
+                            createTabButton(icon: "leaf", tabIndex: 5)
+                            createTabButton(icon: "shippingbox", tabIndex: 6)
                         }
                         .padding(.bottom, 16)
                         .foregroundColor(Color.white)
@@ -126,11 +77,18 @@ struct HomePageView: View {
             )
         }
     }
-}
-
-struct HomePageView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomePageView()
+    
+    @ViewBuilder
+    private func createTabButton(icon: String, tabIndex: Int) -> some View {
+        Button(action: {
+            withAnimation { selectedTab = tabIndex }
+        }) {
+            Image(systemName: icon)
+                .resizable()
+                .frame(width: selectedTab == tabIndex ? 30 : 24, height: selectedTab == tabIndex ? 26 : 20)
+        }
+        .frame(maxWidth: .infinity)
     }
 }
+
 

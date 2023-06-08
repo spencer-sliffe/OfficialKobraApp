@@ -2,7 +2,7 @@
 //  RemoteImage.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 6/7/23.
+//  Created by Spencer Sliffe on 6/7/23.
 //
 
 import Foundation

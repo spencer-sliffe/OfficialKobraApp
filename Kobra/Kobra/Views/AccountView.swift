@@ -76,18 +76,6 @@ struct AccountView: View {
                                 .foregroundColor(.white)
                                 .minimumScaleFactor(0.5)
                                 .lineLimit(1)
-                            
-                            if let package = account.package {
-                                Text("Current Subscription: \(package.name) - $\(package.price, specifier: "%.2f")/month")
-                                    .font(.subheadline)
-                                    .foregroundColor(.white)
-                                    .padding(.leading, 10)
-                            } else {
-                                Text("Current Subscription: None")
-                                    .font(.subheadline)
-                                    .foregroundColor(.white)
-                                    .padding(.leading, 10)
-                            }
                         }
                         
                         HStack {

@@ -21,7 +21,7 @@ class AuthenticationViewModel: ObservableObject {
     @Published var errorMessage = ""
     @AppStorage("isAuthenticated") var isAuthenticated: Bool = false
     @Published var user: User?
-
+    
     let signedOut = PassthroughSubject<Void, Never>()
     func signOut() {
         do {

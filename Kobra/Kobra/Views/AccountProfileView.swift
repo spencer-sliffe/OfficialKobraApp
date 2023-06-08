@@ -2,7 +2,7 @@
 //  AccountProfileView.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 6/5/23.
+//  Created by Spencer Sliffe on 6/5/23.
 //
 
 import Foundation
@@ -14,12 +14,12 @@ struct AccountProfileView: View {
     @ObservedObject var viewModel: AccountProfileViewModel
     @EnvironmentObject var settingsViewModel: SettingsViewModel
     @EnvironmentObject var kobraViewModel: KobraViewModel
-
+    
     init(accountId: String) {
-           self.accountId = accountId
-           self.viewModel = AccountProfileViewModel(accountId: accountId)
-           self.viewModel.fetchAccount()
-       }
+        self.accountId = accountId
+        self.viewModel = AccountProfileViewModel(accountId: accountId)
+        self.viewModel.fetchAccount()
+    }
     
     var body: some View {
         VStack {
@@ -56,7 +56,7 @@ struct AccountProfileView: View {
                             .clipShape(Circle())
                             .padding(.leading, 10) // Reduced padding
                     }
-
+                    
                     // Account name, subscription, and following information
                     VStack(alignment: .leading, spacing: 10) {
                         VStack(alignment: .leading, spacing: 5) {
@@ -66,16 +66,6 @@ struct AccountProfileView: View {
                                 .foregroundColor(.white)
                                 .minimumScaleFactor(0.5)
                                 .lineLimit(1)
-                            
-                            if let package = account.package {
-                                Text("Current Subscription: \(package.name) - $\(package.price, specifier: "%.2f")/month")
-                                    .font(.subheadline)
-                                    .foregroundColor(.white)
-                            } else {
-                                Text("Current Subscription: None")
-                                    .font(.subheadline)
-                                    .foregroundColor(.white)
-                            }
                         }
                         
                         HStack {
@@ -141,7 +131,7 @@ struct AccountProfileView: View {
                 }
             }
             .background(Color.clear)
-
+            
         }
         .frame(maxWidth: .infinity)
         .background(

@@ -2,7 +2,7 @@
 //  AccountProfileViewModel.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 6/6/23.
+//  Created by Spencer Sliffe on 6/6/23.
 //
 
 import Foundation
@@ -70,7 +70,8 @@ class AccountProfileViewModel: ObservableObject {
                 let subscription = data["subscription"] as? Bool ?? false
                 let followers = data["followers"] as? [String] ?? []  // Holds emails
                 let following = data["following"] as? [String] ?? []  // Holds emails
-                var account = Account(id: self.accountId, email: email, subscription: subscription, packageData: nil, profilePicture: nil, followers: followers, following: following)
+                let package = data["package"] as? String ?? ""
+                var account = Account(id: self.accountId, email: email, subscription: subscription, package: package, profilePicture: nil, followers: followers, following: following)
                 
                 // Fetch and assign profile picture URL if available
                 if let profilePictureURLString = data["profilePicture"] as? String,
@@ -82,7 +83,7 @@ class AccountProfileViewModel: ObservableObject {
             }
         }
     }
-
+    
     
     func toggleFollow() {
         guard let currentUserEmail = UserDefaults.standard.string(forKey: "currentUserEmail") else { return }

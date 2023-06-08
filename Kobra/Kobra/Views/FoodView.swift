@@ -2,7 +2,7 @@
 //  FoodView.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 5/19/23.
+//  Created by Spencer Sliffe on 5/19/23.
 //
 
 import Foundation
@@ -13,7 +13,7 @@ struct FoodView: View {
     @State private var isPresentingCreateFoodView = false
     @State private var selectedMealType: MealType = .breakfast
     @State private var selectedCuisineType: CuisineType = .italian
-
+    
     var body: some View {
         VStack {
             if viewModel.isLoading {
@@ -44,7 +44,7 @@ struct FoodView: View {
             CreateFoodView().environmentObject(viewModel)
         }
     }
-
+    
     private func customToolbar() -> some View {
         HStack(spacing: 20) {
             Picker("Meal Type", selection: $selectedMealType) {
@@ -53,7 +53,7 @@ struct FoodView: View {
                 }
             }
             .pickerStyle(MenuPickerStyle())
-
+            
             Picker("Cuisine Type", selection: $selectedCuisineType) {
                 ForEach(CuisineType.allCases, id: \.self) { cuisine in
                     Text(cuisine.rawValue).tag(cuisine)

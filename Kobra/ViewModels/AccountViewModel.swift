@@ -57,8 +57,8 @@ class AccountViewModel: ObservableObject {
                 let subscription = data["subscription"] as? Bool ?? false
                 let followers = data["followers"] as? [String] ?? []
                 let following = data["following"] as? [String] ?? []
-                
-                var account = Account(id: user.uid, email: email, subscription: subscription, packageData: nil, profilePicture: nil, followers: followers, following: following)
+                let package = data["package"] as? String ?? ""
+                var account = Account(id: user.uid, email: email, subscription: subscription, package: package, profilePicture: nil, followers: followers, following: following)
                 
                 // Fetch and assign package data
                 // Assign profile picture URL if available
@@ -66,12 +66,12 @@ class AccountViewModel: ObservableObject {
                    let profilePictureURL = URL(string: profilePictureURLString) {
                     account.profilePicture = profilePictureURL
                 }
-
+                
                 promise(.success(account))
             }
         }
     }
-
+    
     private func fetchUserPosts() -> Future<[Post], Error> {
         Future { promise in
             guard let user = Auth.auth().currentUser else {

@@ -73,7 +73,7 @@ struct InboxView: View {
         .progressViewStyle(CircularProgressViewStyle())
         .accentColor(.white)
     }
-
+    
     
     private var addButton: some View {
         Button(action: {

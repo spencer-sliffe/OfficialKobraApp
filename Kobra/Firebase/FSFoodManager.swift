@@ -2,7 +2,7 @@
 //  FSFoodManager.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 5/19/23.
+//  Created by Spencer Sliffe on 5/19/23.
 //
 
 import Foundation
@@ -34,14 +34,14 @@ class FSFoodManager {
     }
     
     func deleteFood(_ food: Food, completion: @escaping (Result<Void, Error>) -> Void) {
-            db.collection(foodsCollection).document(food.id).delete() { error in
-                if let error = error {
-                    completion(.failure(error))
-                } else {
-                    completion(.success(()))
-                }
+        db.collection(foodsCollection).document(food.id).delete() { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(()))
             }
         }
+    }
     
     func uploadImage(_ image: UIImage, foodId: String, completion: @escaping (Result<String, Error>) -> Void) {
         guard let imageData = image.jpegData(compressionQuality: 0.5) else {

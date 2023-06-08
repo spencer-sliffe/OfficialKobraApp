@@ -2,7 +2,7 @@
 //  PasswordResetView.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 5/2/23.
+//  Created by Spencer Sliffe on 5/2/23.
 //
 
 import Foundation
@@ -14,7 +14,7 @@ struct ChangePasswordView: View {
     @State private var showAlert = false
     @State private var alertMessage = ""
     @Environment(\.presentationMode) var presentationMode
-
+    
     var body: some View {
         VStack {
             Text("Reset Password")

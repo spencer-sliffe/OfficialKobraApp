@@ -2,7 +2,7 @@
 //  DiscoverViewModel.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 5/18/23.
+//  Created by Spencer Sliffe on 5/18/23.
 //
 
 import Foundation
@@ -28,7 +28,7 @@ class DiscoverViewModel: ObservableObject {
                         id: document.documentID, // use documentID as the account's id
                         email: data["email"] as? String ?? "",
                         subscription: data["subscription"] as? Bool ?? false,
-                        packageData: data["package"] as? [String: Any],
+                        package: data["package"] as? String ?? "",
                         profilePicture: data["profilePicture"] as? String,
                         followers: data["followers"] as? [String] ?? [""],
                         following: data["following"] as? [String] ?? [""]

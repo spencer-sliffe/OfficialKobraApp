@@ -2,7 +2,7 @@
 //  AccountPostRow.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 5/4/23.
+//  Created by Spencer Sliffe on 5/4/23.
 //
 
 import Foundation
@@ -51,13 +51,13 @@ struct AccountPostRow: View {
                 Text(post.timestamp.formatted())
                     .font(.caption)
                     .foregroundColor(.secondary)
-               
-                    Button(action: {
-                        showingDeleteAlert.toggle()
-                    }) {
-                        Image(systemName: "trash")
-                            .foregroundColor(.red)
-                    }
+                
+                Button(action: {
+                    showingDeleteAlert.toggle()
+                }) {
+                    Image(systemName: "trash")
+                        .foregroundColor(.red)
+                }
                 
             }
             

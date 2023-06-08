@@ -2,7 +2,7 @@
 //  CreateFoodView.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 5/28/23.
+//  Created by Spencer Sliffe on 5/28/23.
 //
 
 import SwiftUI
@@ -22,19 +22,19 @@ struct CreateFoodView: View {
     @State private var isImagePickerPresented = false
     @State private var isMealTypeExpanded = false
     @State private var isCuisineTypeExpanded = false
-
+    
     var selectedMealType: MealType {
         MealType(rawValue: selectedMealTypeRaw) ?? .breakfast
     }
-
+    
     var selectedCuisine: CuisineType {
         CuisineType(rawValue: selectedCuisineRaw) ?? .italian
     }
-
+    
     var isFoodDataValid: Bool {
         !(name.isEmpty || ingredients.isEmpty || steps.isEmpty || preparationTime.isEmpty)
     }
-
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -123,15 +123,15 @@ struct CreateFoodView: View {
             })
         }
     }
-
+    
     func loadImage() {
         guard let _ = image else { return }
     }
-
+    
     private func addFood() {
         let ingredientArray = ingredients.components(separatedBy: ",").map { $0.trimmingCharacters(in: .whitespaces) }
         let stepArray = steps.components(separatedBy: ",").map { $0.trimmingCharacters(in: .whitespaces) }
-
+        
         let newFood = Food(
             name: name,
             ingredients: ingredientArray,
@@ -144,7 +144,7 @@ struct CreateFoodView: View {
             likes: 0,  // initial likes count is zero
             likingUsers: []  // initial liking users list is empty
         )
-
+        
         viewModel.addFood(newFood, image: image) { result in
             switch result {
             case .success:

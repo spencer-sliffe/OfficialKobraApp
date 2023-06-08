@@ -2,7 +2,7 @@
 //  MainAppView.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 5/2/23.
+//  Created by Spencer Sliffe on 5/2/23.
 //
 
 import Foundation
@@ -12,7 +12,7 @@ import Firebase
 struct MainAppView: View {
     @EnvironmentObject var authViewModel: AuthenticationViewModel
     @StateObject private var settingsViewModel = SettingsViewModel()
-
+    
     var body: some View {
         Group {
             if authViewModel.isAuthenticated {

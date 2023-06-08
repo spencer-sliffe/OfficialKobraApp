@@ -2,7 +2,7 @@
 //  DiscoverView.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 5/18/23.
+//  Created by Spencer Sliffe on 5/18/23.
 //
 
 import Foundation
@@ -12,11 +12,10 @@ struct DiscoverView: View {
     @StateObject var viewModel = DiscoverViewModel()
     @State var searchText = ""
     @EnvironmentObject var kobraViewModel: KobraViewModel
-
+    
     var body: some View {
         VStack(spacing: 0) {
             AccountSearchBar(text: $searchText)
-            
             ScrollView {
                 // Only show the list when searchText is not empty
                 if !searchText.isEmpty {

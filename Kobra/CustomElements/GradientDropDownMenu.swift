@@ -2,7 +2,7 @@
 //  GradientDropDownMenu.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 5/18/23.
+//  Created by Spencer Sliffe on 5/18/23.
 //
 
 import Foundation
