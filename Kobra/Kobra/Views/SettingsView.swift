@@ -42,12 +42,12 @@ struct SettingsView: View {
                 }
                 
                 Toggle(isOn: $settingsViewModel.isDarkMode) {
-                    Text(NSLocalizedString("Dark Mode", comment: ""))
+                    Text(NSLocalizedString("Dark Mode(Soon)", comment: ""))
                         .font(.system(size: 24, weight: .bold, design: .rounded))
                         .foregroundColor(Color.white)
                 }
                 Toggle(isOn: $settingsViewModel.pushNotificationsEnabled) {
-                    Text(NSLocalizedString("Push Notifications", comment: ""))
+                    Text(NSLocalizedString("Push Notifications(Soon)", comment: ""))
                         .font(.system(size: 24, weight: .bold, design: .rounded))
                         .foregroundColor(Color.white)
                 }
@@ -65,6 +65,11 @@ struct SettingsView: View {
                         isLanguageExpanded = false
                     }
                 }
+                
+                Link("App Site: kobracoding.com", destination: URL(string: "https://kobracoding.com")!)  // add your link here
+                    .font(.system(size: 24, weight: .bold, design: .rounded))
+                    .foregroundColor(Color.blue)
+                    .padding(.top, 10)
                 
                 CustomButton(title: NSLocalizedString("Change Password", comment: "")) {
                     showChangePasswordView.toggle()

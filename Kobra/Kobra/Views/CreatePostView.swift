@@ -42,7 +42,7 @@ struct CreatePostView: View {
                     VStack(alignment: .leading, spacing: 20) {
                         DropDownMenu(
                             isExpanded: $postTypeExpanded,
-                            options: ["Advertisement", "Help", "News", "Market"],
+                            options: ["Advertisement", "Help", "News", "Market", "Bug"],
                             selection: $postType,
                             onOptionSelected: { _ in }
                         )
@@ -104,6 +104,9 @@ struct CreatePostView: View {
                     case "News":
                         let newsPost = NewsPost(poster: username, headline: title, article: content, category: category)
                         postType = .news(newsPost)
+                    case "Bug":
+                        let bugPost = AppBugPost(poster: username, title: title, content: content, category: category)
+                        postType = .bug(bugPost)
                     case "Market":
                         let marketPostType: MarketPost.MarketPostType
                         switch self.marketPostType {

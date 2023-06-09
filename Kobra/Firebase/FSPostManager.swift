@@ -94,13 +94,19 @@ class FSPostManager {
             let category = data["category"] as? String ?? ""
             let newsPost = NewsPost(poster: poster, headline: headline, article: article, category: category)
             postType = .news(newsPost)
+        case "bug":
+            let poster = data["poster"] as? String ?? ""
+            let title = data["title"] as? String ?? ""
+            let content = data["content"] as? String ?? ""
+            let category = data["category"] as? String ?? ""
+            let bugPost = AppBugPost(poster: poster, title: title, content: content, category: category)
+            postType = .bug(bugPost)
         case "market":
             let vendor = data["vendor"] as? String ?? ""
             let marketPostTypeString = data["marketPostType"] as? String ?? ""
             let price = data["price"] as? Double ?? 0.0
             let category = data["category"] as? String ?? ""
             var marketPostType: MarketPost.MarketPostType
-            
             switch marketPostTypeString {
             case "hardware":
                 let name = data["name"] as? String ?? ""
@@ -179,6 +185,12 @@ class FSPostManager {
             data["headline"] = newsPost.headline
             data["article"] = newsPost.article
             data["category"] = newsPost.category
+        case .bug(let bugPost):
+            postTypeString = "bug"
+            data["poster"] = bugPost.poster
+            data["title"] = bugPost.title
+            data["content"] = bugPost.content
+            data["category"] = bugPost.category
         case .market(let marketPost):
             postTypeString = "market"
             data["vendor"] = marketPost.vendor

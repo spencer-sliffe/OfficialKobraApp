@@ -23,7 +23,7 @@ struct AuthenticationView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height: UIScreen.main.bounds.height * 0.25)
-                    .padding(.top, UIScreen.main.bounds.height * 0.13)
+                    .padding(.top, UIScreen.main.bounds.height * 0.05) // Reduced padding here
                     .shadow(color: .black.opacity(1), radius: 2, x: 0, y: 0)
                 VStack {
                     Picker(selection: $selection, label: Text("Sign In or Sign Up")) {
@@ -132,4 +132,3 @@ struct AuthenticationView: View {
         .navigationBarHidden(true)
     }
 }
-

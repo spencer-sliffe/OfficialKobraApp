@@ -23,6 +23,8 @@ struct KobraView: View {
             if case .news = post.type { return true }
         case .market:
             if case .market = post.type { return true }
+        case .bug:
+            if case .bug = post.type { return true }
         }
         return false
     }
@@ -59,6 +61,12 @@ struct KobraView: View {
                                 .frame(width: selectedFeed == feedType ? 26 : 22, height: selectedFeed == feedType ? 26 : 22)
                                 .foregroundColor(selectedFeed == feedType ? .yellow : .white)
                                 .padding(0)
+                        } else   if(feedType.rawValue == "Bug") {
+                            Image(systemName: "ant") // Replace with appropriate icons
+                                .resizable()
+                                .frame(width: selectedFeed == feedType ? 26 : 22, height: selectedFeed == feedType ? 26 : 22)
+                                .foregroundColor(selectedFeed == feedType ? .yellow : .white)
+                                .padding(0)
                         }
                         
                     }
@@ -85,6 +93,7 @@ struct KobraView: View {
         case help = "Help"
         case news = "News"
         case market = "Market"
+        case bug = "Bug"
         var id: String { self.rawValue }
     }
     
@@ -121,6 +130,10 @@ struct KobraView: View {
                             .foregroundColor(.white)
                     } else if(selectedFeed.rawValue == "Help") {
                         Text("Help Feed")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                    } else if(selectedFeed.rawValue == "Bug") {
+                        Text("Bug Feed")
                             .font(.headline)
                             .foregroundColor(.white)
                     }

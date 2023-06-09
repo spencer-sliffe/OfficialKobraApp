@@ -74,6 +74,10 @@ struct AccountPostRow: View {
                 PostContent(title: newsPost.headline,
                             content: newsPost.article,
                             imageURL: post.imageURL)
+            case .bug(let bugPost):
+                PostContent(title: bugPost.title,
+                            content: bugPost.content,
+                            imageURL: post.imageURL)
             case .market(let marketPost):
                 MarketPostContent(marketPost: marketPost, imageURL: post.imageURL)
             }
@@ -154,6 +158,8 @@ struct AccountPostRow: View {
             return "Help Request by \(helpPost.poster)"
         case .news(let newsPost):
             return "Article by \(newsPost.poster)"
+        case .bug(let bugPost):
+            return "Bug by \(bugPost.poster)"
         case .market(let marketPost):
             return "Product by \(marketPost.vendor)"
         }

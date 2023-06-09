@@ -23,7 +23,7 @@
 		452CB79A2A030BDE001D8195 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452CB7992A030BDE001D8195 /* CustomButton.swift */; };
 		452CB79C2A03F7FF001D8195 /* AccountPostRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452CB79B2A03F7FF001D8195 /* AccountPostRow.swift */; };
 		453314062A23245800DEE73E /* CreateFoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453314052A23245800DEE73E /* CreateFoodView.swift */; };
-		4543FE6129DB4A0C003B3CCC /* CustomUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543FE6029DB4A0C003B3CCC /* CustomUITextField.swift */; };
+		4543FE6129DB4A0C003B3CCC /* CustomTextFieldUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543FE6029DB4A0C003B3CCC /* CustomTextFieldUI.swift */; };
 		4543FE6329DB4A24003B3CCC /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543FE6229DB4A24003B3CCC /* CustomTextField.swift */; };
 		455B2B242A317E0800136D6D /* AccountSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455B2B232A317E0800136D6D /* AccountSearchBar.swift */; };
 		455C6E5729D7E72600446520 /* KobraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455C6E5629D7E72600446520 /* KobraViewModel.swift */; };
@@ -94,7 +94,7 @@
 		452CB7992A030BDE001D8195 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		452CB79B2A03F7FF001D8195 /* AccountPostRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountPostRow.swift; sourceTree = "<group>"; };
 		453314052A23245800DEE73E /* CreateFoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFoodView.swift; sourceTree = "<group>"; };
-		4543FE6029DB4A0C003B3CCC /* CustomUITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUITextField.swift; sourceTree = "<group>"; };
+		4543FE6029DB4A0C003B3CCC /* CustomTextFieldUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFieldUI.swift; sourceTree = "<group>"; };
 		4543FE6229DB4A24003B3CCC /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		455B2B232A317E0800136D6D /* AccountSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSearchBar.swift; sourceTree = "<group>"; };
 		455C6E5629D7E72600446520 /* KobraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KobraViewModel.swift; sourceTree = "<group>"; };
@@ -173,7 +173,7 @@
 				45CAAA2329DA7EF500BBD9FE /* SwipeableTabView.swift */,
 				452430F929DAA0E40000B5AB /* SearchBar.swift */,
 				4525CFC329DB407E005C0CE8 /* KobraPicker.swift */,
-				4543FE6029DB4A0C003B3CCC /* CustomUITextField.swift */,
+				4543FE6029DB4A0C003B3CCC /* CustomTextFieldUI.swift */,
 				4543FE6229DB4A24003B3CCC /* CustomTextField.swift */,
 				457D1F5029DF4D9B00EF722D /* ImagePicker.swift */,
 				45074EE829E8681C0096C82A /* CommentRow.swift */,
@@ -504,7 +504,7 @@
 				455C6E5929D7E9B700446520 /* Post.swift in Sources */,
 				45EA727F29B7B74C000FD738 /* PackageView.swift in Sources */,
 				4590144A2A2E2C0100A778A6 /* AccountProfileView.swift in Sources */,
-				4543FE6129DB4A0C003B3CCC /* CustomUITextField.swift in Sources */,
+				4543FE6129DB4A0C003B3CCC /* CustomTextFieldUI.swift in Sources */,
 				45C7171E29C63AF700679626 /* InboxViewModel.swift in Sources */,
 				459BE6042A18032100625E53 /* FoodViewModel.swift in Sources */,
 				459246B22A2FE0FD00D564AE /* AccountProfileViewModel.swift in Sources */,

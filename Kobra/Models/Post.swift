@@ -12,6 +12,7 @@ class Post: Identifiable, ObservableObject {
         case help(HelpPost)
         case news(NewsPost)
         case market(MarketPost)
+        case bug(AppBugPost)
     }
     
     var id = UUID()
@@ -35,6 +36,13 @@ class Post: Identifiable, ObservableObject {
         self.comments = comments
         self.dislikes = dislikes
     }
+}
+
+struct AppBugPost {
+    var poster: String
+    var title: String
+    var content: String
+    var category: String
 }
 
 struct AdvertisementPost {

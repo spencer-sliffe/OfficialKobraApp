@@ -11,6 +11,11 @@ import FirebaseFirestore
 import Combine
 import SwiftUI
 
+import Foundation
+import FirebaseAuth
+import Combine
+import FirebaseFirestore
+
 class AuthenticationViewModel: ObservableObject {
     @Published var email = ""
     @Published var username = ""
@@ -24,18 +29,9 @@ class AuthenticationViewModel: ObservableObject {
     @Published var user: User?
     
     let signedOut = PassthroughSubject<Void, Never>()
-    func signOut() {
-        do {
-            try Auth.auth().signOut()
-            signedOut.send()
-            isAuthenticated = false
-        } catch {
-            print("Error signing out: \(error.localizedDescription)")
-        }
-    }
     
     private var handle: AuthStateDidChangeListenerHandle?
-    
+
     func signIn() {
         isLoading1 = true
         isError = false
@@ -56,18 +52,28 @@ class AuthenticationViewModel: ObservableObject {
         isLoading1 = true
         isError = false
         errorMessage = ""
+
+        guard username.count >= 5 else {
+            isError = true
+            errorMessage = "Username must be at least 5 characters long."
+            isLoading1 = false
+            return
+        }
+        
         guard !email.isEmpty, !password.isEmpty, !confirmPassword.isEmpty else {
-            self.isError = true
-            self.errorMessage = "Please fill out all fields."
-            self.isLoading1 = false
+            isError = true
+            errorMessage = "Please fill out all fields."
+            isLoading1 = false
             return
         }
+
         guard password == confirmPassword else {
-            self.isError = true
-            self.errorMessage = "Passwords do not match."
-            self.isLoading1 = false
+            isError = true
+            errorMessage = "Passwords do not match."
+            isLoading1 = false
             return
         }
+        
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             self.isLoading1 = false
             if let error = error {
@@ -75,7 +81,7 @@ class AuthenticationViewModel: ObservableObject {
                 self.errorMessage = error.localizedDescription
                 return
             }
-            // Add the user's account information to the "Accounts" collection on Firebase
+
             let db = Firestore.firestore()
             db.collection("Accounts").document(authResult!.user.uid).setData([
                 "email": self.email,
@@ -96,6 +102,16 @@ class AuthenticationViewModel: ObservableObject {
         }
     }
     
+    func signOut() {
+        do {
+            try Auth.auth().signOut()
+            signedOut.send()
+            isAuthenticated = false
+        } catch {
+            print("Error signing out: \(error.localizedDescription)")
+        }
+    }
+
     func startListening() {
         handle = Auth.auth().addStateDidChangeListener { [weak self] _, user in
             self?.user = user
@@ -108,3 +124,4 @@ class AuthenticationViewModel: ObservableObject {
         }
     }
 }
+
