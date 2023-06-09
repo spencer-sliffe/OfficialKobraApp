@@ -32,27 +32,47 @@ struct AuthenticationView: View {
                         
                         Text("Sign Up").tag(1)
                             .font(.system(size: 18 * 3))
-                        
                     }
                     .pickerStyle(SegmentedPickerStyle())
                     .background(Color.white.opacity(0.5))
                     .cornerRadius(10)
                     .frame(maxWidth: .infinity, maxHeight: 50)
-                    TextField("Email", text: $authViewModel.email)
-                        .padding()
-                        .background(Color.white.opacity(0.5))
-                        .cornerRadius(10)
-                        .font(.system(size: 18))
-                        .autocapitalization(.none)
-                        .disableAutocorrection(true)
-                    
-                    SecureField("Password", text: $authViewModel.password)
-                        .padding()
-                        .background(Color.white.opacity(0.5))
-                        .cornerRadius(10)
-                        .font(.system(size: 18))
-                    
-                    if selection == 1 {
+                    if selection == 0 {
+                        TextField("Email", text: $authViewModel.email)
+                            .padding()
+                            .background(Color.white.opacity(0.5))
+                            .cornerRadius(10)
+                            .font(.system(size: 18))
+                            .autocapitalization(.none)
+                            .disableAutocorrection(true)
+                        
+                        SecureField("Password", text: $authViewModel.password)
+                            .padding()
+                            .background(Color.white.opacity(0.5))
+                            .cornerRadius(10)
+                            .font(.system(size: 18))
+                        
+                    } else if selection == 1 {
+                        TextField("Email", text: $authViewModel.email)
+                            .padding()
+                            .background(Color.white.opacity(0.5))
+                            .cornerRadius(10)
+                            .font(.system(size: 18))
+                            .autocapitalization(.none)
+                            .disableAutocorrection(true)
+                        TextField("Username", text: $authViewModel.username)
+                            .padding()
+                            .background(Color.white.opacity(0.5))
+                            .cornerRadius(10)
+                            .font(.system(size:18))
+                            .autocapitalization(.none)
+                            .disableAutocorrection(true)
+                        SecureField("Password", text: $authViewModel.password)
+                            .padding()
+                            .background(Color.white.opacity(0.5))
+                            .cornerRadius(10)
+                            .font(.system(size: 18))
+                        
                         SecureField("Confirm Password", text: $authViewModel.confirmPassword)
                             .padding()
                             .background(Color.white.opacity(0.5))

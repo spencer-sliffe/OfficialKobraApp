@@ -13,6 +13,7 @@ import SwiftUI
 
 class AuthenticationViewModel: ObservableObject {
     @Published var email = ""
+    @Published var username = ""
     @Published var password = ""
     @Published var confirmPassword = ""
     @Published var isSignIn = true
@@ -79,6 +80,7 @@ class AuthenticationViewModel: ObservableObject {
             db.collection("Accounts").document(authResult!.user.uid).setData([
                 "email": self.email,
                 "subscription": false,
+                "username": self.username,
                 "package": "",
                 "followers": [String](),
                 "following": [String]()

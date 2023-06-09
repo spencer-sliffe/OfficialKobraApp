@@ -67,11 +67,12 @@ class AccountProfileViewModel: ObservableObject {
                 }
                 let data = document.data()!
                 let email = data["email"] as? String ?? ""
+                let username = data["username"] as? String ?? ""
                 let subscription = data["subscription"] as? Bool ?? false
                 let followers = data["followers"] as? [String] ?? []  // Holds emails
                 let following = data["following"] as? [String] ?? []  // Holds emails
                 let package = data["package"] as? String ?? ""
-                var account = Account(id: self.accountId, email: email, subscription: subscription, package: package, profilePicture: nil, followers: followers, following: following)
+                var account = Account(id: self.accountId, email: email, username: username, subscription: subscription, package: package, profilePicture: nil, followers: followers, following: following)
                 
                 // Fetch and assign profile picture URL if available
                 if let profilePictureURLString = data["profilePicture"] as? String,
@@ -82,23 +83,6 @@ class AccountProfileViewModel: ObservableObject {
                 promise(.success(account))
             }
         }
-    }
-    
-    
-    func toggleFollow() {
-        guard let currentUserEmail = UserDefaults.standard.string(forKey: "currentUserEmail") else { return }
-        if isFollowing {
-            // Unfollow logic here
-            if let index = account?.followers.firstIndex(of: currentUserEmail) {
-                account?.followers.remove(at: index)
-                dataManager.unfollow(userToUnfollow: self.accountId)  // Pass the user's accountId here, not the currentUserEmail
-            }
-        } else {
-            // Follow logic here
-            account?.followers.append(currentUserEmail)
-            dataManager.follow(userToFollow: self.accountId)  // Pass the user's accountId here, not the currentUserEmail
-        }
-        isFollowing.toggle()
     }
     
     private func fetchUserPosts() -> Future<[Post], Error> {

@@ -4,6 +4,7 @@
 //
 //  Created by Spencer Sliffe on 2/28/23.
 //
+
 import SwiftUI
 import Foundation
 
@@ -11,8 +12,72 @@ struct HomePageView: View {
     @State private var selectedTab = 3
     @ObservedObject var authViewModel = AuthenticationViewModel()
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
-    
+
     @StateObject var kobraViewModel = KobraViewModel()
+
+    var body: some View {
+        NavigationView {
+            ZStack {
+                if !authViewModel.isAuthenticated {
+                    AuthenticationView(authViewModel: authViewModel)
+                } else {
+                    VStack {
+                        TabView(selection: $selectedTab) {
+                            ForEach(0..<7) { index in
+                                self.getView(for: index)
+                                    .tag(index)
+                            }
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                        .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .never))
+
+                        HStack(spacing: 0) {
+                            ForEach(0..<7) { index in
+                                self.createTabButton(icon: self.getIcon(for: index), tabIndex: index)
+                            }
+                        }
+                        .padding(.bottom, 16)
+                    }
+                    .navigationBarHidden(true)
+                    .edgesIgnoringSafeArea(.bottom)
+                    .background(
+                        LinearGradient(
+                            gradient: Gradient(
+                                colors: [
+                                    gradientOptions[settingsViewModel.gradientIndex].0,
+                                    gradientOptions[settingsViewModel.gradientIndex].1
+                                ]
+                            ),
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+    private func getIcon(for index: Int) -> String {
+        switch index {
+        case 0:
+            return "gear"
+        case 1:
+            return "person"
+        case 2:
+            return "magnifyingglass"
+        case 3:
+            return "house"
+        case 4:
+            return "envelope"
+        case 5:
+            return "leaf"
+        case 6:
+            return "shippingbox"
+        default:
+            return "questionmark"
+        }
+    }
     
     @ViewBuilder
     private func getView(for index: Int) -> some View {
@@ -38,45 +103,6 @@ struct HomePageView: View {
         }
     }
     
-    var body: some View {
-        NavigationView {
-            ZStack {
-                if !authViewModel.isAuthenticated {
-                    AuthenticationView(authViewModel: authViewModel)
-                } else {
-                    VStack {
-                        getView(for: selectedTab)
-                            .transition(.slide)
-                        HStack(spacing: 0) {
-                            createTabButton(icon: "gear", tabIndex: 0)
-                            createTabButton(icon: "person", tabIndex: 1)
-                            createTabButton(icon: "magnifyingglass", tabIndex: 2)
-                            createTabButton(icon: "house", tabIndex: 3)
-                            createTabButton(icon: "envelope", tabIndex: 4)
-                            createTabButton(icon: "leaf", tabIndex: 5)
-                            createTabButton(icon: "shippingbox", tabIndex: 6)
-                        }
-                        .padding(.bottom, 16)
-                    }
-                    .navigationBarHidden(true)
-                }
-            }
-            .edgesIgnoringSafeArea(.bottom)
-            .background(
-                LinearGradient(
-                    gradient: Gradient(
-                        colors: [
-                            gradientOptions[settingsViewModel.gradientIndex].0,
-                            gradientOptions[settingsViewModel.gradientIndex].1
-                        ]
-                    ),
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-            )
-        }
-    }
-    
     @ViewBuilder
     private func createTabButton(icon: String, tabIndex: Int) -> some View {
         Button(action: {
@@ -84,11 +110,13 @@ struct HomePageView: View {
         }) {
             Image(systemName: icon)
                 .resizable()
-                .frame(width: selectedTab == tabIndex ? 30 : 24, height: selectedTab == tabIndex ? 26 : 20)
+                .frame(width: selectedTab == tabIndex ? 28 : 24, height: selectedTab == tabIndex ? 26 : 22)
                 .foregroundColor(selectedTab == tabIndex ? .yellow : .white)
         }
         .frame(maxWidth: .infinity)
     }
 }
+
+
 
 

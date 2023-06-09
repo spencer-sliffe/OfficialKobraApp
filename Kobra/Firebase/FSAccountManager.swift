@@ -30,64 +30,7 @@ class FSAccountManager: ObservableObject {
         }
     }
     
-    func follow(userToFollow: String) {
-        guard let currentUserId = UserDefaults.standard.string(forKey: "currentUserEmail") else { return }
-        
-        self.db.collection(self.accountCollection).document(currentUserId).getDocument { (document, error) in  // use self
-            if let document = document, let data = document.data() {
-                var following = data["following"] as? [String] ?? []
-                following.append(userToFollow)
-                document.reference.updateData(["following": following])
-                
-                self.db.collection(self.accountCollection).document(userToFollow).getDocument { (document, error) in  // use self
-                    if let document = document, let data = document.data() {
-                        var followers = data["followers"] as? [String] ?? []
-                        followers.append(currentUserId)
-                        document.reference.updateData(["followers": followers]) { error in
-                            if let error = error {
-                                self.accountDidUpdate?(.failure(error))  // use self
-                            } else {
-                                // Call the closure with the updated account
-                                self.fetchAccountById(userToFollow) { result in  // use self
-                                    self.accountDidUpdate?(result)  // use self
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    func unfollow(userToUnfollow: String) {
-        guard let currentUserId = UserDefaults.standard.string(forKey: "currentUserEmail") else { return }
-        
-        self.db.collection(self.accountCollection).document(currentUserId).getDocument { (document, error) in  // use self
-            if let document = document, let data = document.data() {
-                var following = data["following"] as? [String] ?? []
-                following.removeAll { $0 == userToUnfollow }
-                document.reference.updateData(["following": following])
-                
-                self.db.collection(self.accountCollection).document(userToUnfollow).getDocument { (document, error) in  // use self
-                    if let document = document, let data = document.data() {
-                        var followers = data["followers"] as? [String] ?? []
-                        followers.removeAll { $0 == currentUserId }
-                        document.reference.updateData(["followers": followers]) { error in
-                            if let error = error {
-                                self.accountDidUpdate?(.failure(error))  // use self
-                            } else {
-                                // Call the closure with the updated account
-                                self.fetchAccountById(userToUnfollow) { result in  // use self
-                                    self.accountDidUpdate?(result)  // use self
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
+  
     func fetchAccounts(completion: @escaping (Result<[Account], Error>) -> Void) {
         db.collection(accountCollection).getDocuments { (querySnapshot, error) in
             if let error = error {
@@ -108,6 +51,7 @@ class FSAccountManager: ObservableObject {
         let data: [String: Any] = [
             "id": account.id,
             "email": account.email,
+            "username": account.username,
             "subscription": account.subscription,
             "profilePicture": account.profilePicture?.absoluteString ?? "",
             "followers": account.followers,
@@ -128,6 +72,7 @@ class FSAccountManager: ObservableObject {
         let documentRef = db.collection(accountCollection).document(account.id)
         documentRef.setData([
             "email": account.email,
+            "username": account.username,
             "subscription": account.subscription,
             "profilePicture": account.profilePicture?.absoluteString ?? "",
             "followers": account.followers,
@@ -154,13 +99,14 @@ class FSAccountManager: ObservableObject {
     private func createAccountFrom(data: [String: Any]) -> Account {
         let id = data["id"] as? String ?? ""
         let email = data["email"] as? String ?? ""
+        let username = data["username"] as? String ?? ""
         let subscription = data["subscription"] as? Bool ?? false
         let package = data["package"] as? String ?? ""
         let profilePicture = data["profilePicture"] as? String
         let followers = data["followers"] as? [String] ?? []
         let following = data["following"] as? [String] ?? []
         
-        return Account(id: id, email: email, subscription: subscription, package: package, profilePicture: profilePicture, followers: followers, following: following)
+        return Account(id: id, email: email, username: username, subscription: subscription, package: package, profilePicture: profilePicture, followers: followers, following: following)
     }
     
     func deleteProfilePicture(imageURL: String, completion: @escaping (Result<Void, Error>) -> Void) {

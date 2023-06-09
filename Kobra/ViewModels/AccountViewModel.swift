@@ -54,11 +54,12 @@ class AccountViewModel: ObservableObject {
                 }
                 let data = document.data()!
                 let email = user.email ?? ""
+                let username = data["username"] as? String ?? ""
                 let subscription = data["subscription"] as? Bool ?? false
                 let followers = data["followers"] as? [String] ?? []
                 let following = data["following"] as? [String] ?? []
                 let package = data["package"] as? String ?? ""
-                var account = Account(id: user.uid, email: email, subscription: subscription, package: package, profilePicture: nil, followers: followers, following: following)
+                var account = Account(id: user.uid, email: email, username: username, subscription: subscription, package: package, profilePicture: nil, followers: followers, following: following)
                 
                 // Fetch and assign package data
                 // Assign profile picture URL if available

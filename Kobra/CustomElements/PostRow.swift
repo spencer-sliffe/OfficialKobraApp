@@ -16,19 +16,17 @@ struct PostRow: View {
     @State private var dislikes = 0
     @EnvironmentObject var kobraViewModel: KobraViewModel
     @State private var showingComments = false
-    
-    // Add a property for the current user's ID
+    @State private var showingFullImage = false // new state for full screen image
     let currentUserId: String = Auth.auth().currentUser?.uid ?? ""
-    
+
     init(post: Post) {
         self.post = post
         _likes = State(initialValue: post.likes)
         _dislikes = State(initialValue: post.dislikes)
-        
         _isLiked = State(initialValue: post.likingUsers.contains(currentUserId))
         _isDisliked = State(initialValue: post.dislikingUsers.contains(currentUserId))
     }
-    
+
     var priceFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.locale = Locale(identifier: "en_US")
@@ -37,7 +35,7 @@ struct PostRow: View {
         formatter.minimumFractionDigits = 2
         return formatter
     }()
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
@@ -49,7 +47,6 @@ struct PostRow: View {
                 Text(post.timestamp.formatted())
                     .font(.caption)
                     .foregroundColor(.secondary)
-                
             }
             
             switch post.type {
@@ -128,7 +125,6 @@ struct PostRow: View {
         }
     }
     
-    
     func getPosterName() -> String {
         switch post.type {
         case .advertisement(let advertisementPost):
@@ -141,16 +137,14 @@ struct PostRow: View {
             return "Product by \(marketPost.vendor)"
         }
     }
-    
+
     func canLike() -> Bool {
         return !post.likingUsers.contains(currentUserId)
     }
     
-    // Add a function to check if the user can dislike the post
     func canDislike() -> Bool {
         return !post.dislikingUsers.contains(currentUserId)
     }
-    
     
     func PostContent(title: String, content: String, imageURL: String?) -> some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -165,10 +159,29 @@ struct PostRow: View {
                         .resizable()
                         .scaledToFit()
                         .cornerRadius(8)
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            showingFullImage = true
+                        }
                 } placeholder: {
                     ProgressView()
                 }
                 .frame(maxHeight: 300)
+                .fullScreenCover(isPresented: $showingFullImage) {
+                    ZStack {
+                        AsyncImage(url: url) { image in
+                            image
+                                .resizable()
+                                .scaledToFit()
+                        } placeholder: {
+                            ProgressView()
+                        }
+                        .ignoresSafeArea()
+                        .onTapGesture {
+                            showingFullImage = false
+                        }
+                    }
+                }
             }
             
             Text(content)
@@ -220,10 +233,29 @@ struct PostRow: View {
                         .resizable()
                         .scaledToFit()
                         .cornerRadius(8)
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            showingFullImage = true
+                        }
                 } placeholder: {
                     ProgressView()
                 }
                 .frame(maxHeight: 300)
+                .fullScreenCover(isPresented: $showingFullImage) {
+                    ZStack {
+                        AsyncImage(url: url) { image in
+                            image
+                                .resizable()
+                                .scaledToFit()
+                        } placeholder: {
+                            ProgressView()
+                        }
+                        .ignoresSafeArea()
+                    }
+                    .onTapGesture {
+                        showingFullImage = false
+                    }
+                }
             }
             
             Text("Price: \(priceFormatter.string(from: NSNumber(value: marketPost.price)) ?? "")")
@@ -236,3 +268,4 @@ struct PostRow: View {
         }
     }
 }
+

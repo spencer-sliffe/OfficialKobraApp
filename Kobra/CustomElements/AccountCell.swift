@@ -42,7 +42,7 @@ struct AccountCell: View {
             }
             VStack(alignment: .leading) {
                 // Display only the part of the email before the '@'
-                Text(account.email.split(separator: "@")[0].description)
+                Text(account.username.uppercased())
                     .font(.system(size: 15, weight: .semibold))
                     .foregroundColor(Color.black.opacity(0.7))
                 

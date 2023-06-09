@@ -27,6 +27,7 @@ class DiscoverViewModel: ObservableObject {
                     let newAccount = Account(
                         id: document.documentID, // use documentID as the account's id
                         email: data["email"] as? String ?? "",
+                        username: data["username"] as? String ?? "",
                         subscription: data["subscription"] as? Bool ?? false,
                         package: data["package"] as? String ?? "",
                         profilePicture: data["profilePicture"] as? String,

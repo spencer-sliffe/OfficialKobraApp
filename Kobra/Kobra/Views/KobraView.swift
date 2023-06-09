@@ -38,25 +38,25 @@ struct KobraView: View {
                         if(feedType.rawValue == "Advertisement") {
                             Image(systemName: "radio") // Replace with appropriate icons
                                 .resizable()
-                                .frame(width: selectedFeed == feedType ? 26 : 20, height: selectedFeed == feedType ? 26 : 20)
+                                .frame(width: selectedFeed == feedType ? 26 : 22, height: selectedFeed == feedType ? 26 : 22)
                                 .foregroundColor(selectedFeed == feedType ? .yellow : .white)
                                 .padding(0)
                         } else if(feedType.rawValue == "Market") {
                             Image(systemName: "dollarsign.circle") // Replace with appropriate icons
                                 .resizable()
-                                .frame(width: selectedFeed == feedType ? 26 : 20, height: selectedFeed == feedType ? 26 : 20)
+                                .frame(width: selectedFeed == feedType ? 26 : 22, height: selectedFeed == feedType ? 26 : 22)
                                 .foregroundColor(selectedFeed == feedType ? .yellow : .white)
                                 .padding(0)
                         } else if(feedType.rawValue == "News") {
                             Image(systemName: "newspaper") // Replace with appropriate icons
                                 .resizable()
-                                .frame(width: selectedFeed == feedType ? 26 : 20, height: selectedFeed == feedType ? 26 : 20)
+                                .frame(width: selectedFeed == feedType ? 26 : 22, height: selectedFeed == feedType ? 26 : 22)
                                 .foregroundColor(selectedFeed == feedType ? .yellow : .white)
                                 .padding(0)
                         } else if(feedType.rawValue == "Help") {
                             Image(systemName: "questionmark.circle") // Replace with appropriate icons
                                 .resizable()
-                                .frame(width: selectedFeed == feedType ? 26 : 20, height: selectedFeed == feedType ? 26 : 20)
+                                .frame(width: selectedFeed == feedType ? 26 : 22, height: selectedFeed == feedType ? 26 : 22)
                                 .foregroundColor(selectedFeed == feedType ? .yellow : .white)
                                 .padding(0)
                         }

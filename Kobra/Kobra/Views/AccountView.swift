@@ -19,8 +19,7 @@ struct AccountView: View {
             if viewModel.isLoading {
                 ProgressView()
             } else if let account = viewModel.account {
-                let emailComponents = account.email.split(separator: "@")
-                let displayName = String(emailComponents[0]).uppercased()
+                let displayName = account.username.uppercased()
                 
                 HStack {
                     // Profile picture
