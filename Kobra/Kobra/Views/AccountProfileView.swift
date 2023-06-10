@@ -101,7 +101,7 @@ struct AccountProfileView: View {
                         .foregroundColor(.white)
                         Button(action: {
                         }) {
-                            Text(viewModel.isFollowing ? "Unfollow" : "Follow(Soon)")
+                            Text(viewModel.isFollowing ? "Unfollow" : "(Coming Soon)")
                                 .fontWeight(.bold)
                                 .foregroundColor(.white)
                                 .padding(.horizontal, 12)

@@ -25,6 +25,8 @@ struct KobraView: View {
             if case .market = post.type { return true }
         case .bug:
             if case .bug = post.type { return true }
+        case .meme:
+            if case .meme = post.type { return true }
         }
         return false
     }
@@ -61,8 +63,14 @@ struct KobraView: View {
                                 .frame(width: selectedFeed == feedType ? 26 : 22, height: selectedFeed == feedType ? 26 : 22)
                                 .foregroundColor(selectedFeed == feedType ? .yellow : .white)
                                 .padding(0)
-                        } else   if(feedType.rawValue == "Bug") {
+                        } else if(feedType.rawValue == "Bug") {
                             Image(systemName: "ant") // Replace with appropriate icons
+                                .resizable()
+                                .frame(width: selectedFeed == feedType ? 26 : 22, height: selectedFeed == feedType ? 26 : 22)
+                                .foregroundColor(selectedFeed == feedType ? .yellow : .white)
+                                .padding(0)
+                        } else if(feedType.rawValue == "Meme") {
+                            Image(systemName: "photo") // Replace with appropriate icons
                                 .resizable()
                                 .frame(width: selectedFeed == feedType ? 26 : 22, height: selectedFeed == feedType ? 26 : 22)
                                 .foregroundColor(selectedFeed == feedType ? .yellow : .white)
@@ -94,6 +102,7 @@ struct KobraView: View {
         case news = "News"
         case market = "Market"
         case bug = "Bug"
+        case meme = "Meme"
         var id: String { self.rawValue }
     }
     
@@ -116,7 +125,12 @@ struct KobraView: View {
                     Text("\(Date(), formatter: dateFormatter)")
                         .foregroundColor(.white)
                     Spacer()
-                    if(selectedFeed.rawValue == "Advertisement") {
+                    // Add a new condition to handle the title of the meme feed
+                    if(selectedFeed.rawValue == "Meme") {
+                        Text("Meme Feed")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                    } else if(selectedFeed.rawValue == "Advertisement") {
                         Text("Advertisement Feed")
                             .font(.headline)
                             .foregroundColor(.white)

@@ -13,6 +13,7 @@ class Post: Identifiable, ObservableObject {
         case news(NewsPost)
         case market(MarketPost)
         case bug(AppBugPost)
+        case meme(MemePost)
     }
     
     var id = UUID()
@@ -36,6 +37,12 @@ class Post: Identifiable, ObservableObject {
         self.comments = comments
         self.dislikes = dislikes
     }
+}
+
+struct MemePost {
+    var poster: String
+    var title: String
+    var content: String
 }
 
 struct AppBugPost {

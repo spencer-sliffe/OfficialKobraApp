@@ -26,7 +26,7 @@ struct CreatePostView: View {
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
     
     var isPostDataValid: Bool {
-        if title.isEmpty || content.isEmpty || category.isEmpty {
+        if title.isEmpty || content.isEmpty || (postType != "Meme" && category.isEmpty) {
             return false
         }
         if postType == "Market" && (stepperPrice == 0 || (marketPostType == "Hardware" && hardwareCondition.isEmpty)) {
@@ -42,7 +42,7 @@ struct CreatePostView: View {
                     VStack(alignment: .leading, spacing: 20) {
                         DropDownMenu(
                             isExpanded: $postTypeExpanded,
-                            options: ["Advertisement", "Help", "News", "Market", "Bug"],
+                            options: ["Advertisement", "Help", "News", "Market", "Bug", "Meme"],
                             selection: $postType,
                             onOptionSelected: { _ in }
                         )
@@ -51,7 +51,7 @@ struct CreatePostView: View {
                         CustomTextField(text: $title, placeholder: NSLocalizedString("Title", comment: ""))
                         CustomTextField(text: $content, placeholder: NSLocalizedString("Content", comment: ""))
                         
-                        if postType != "Market" {
+                        if postType != "Market" && postType != "Meme" {
                             CustomTextField(text: $category, placeholder: NSLocalizedString("Category", comment: ""))
                         }
                         if postType == "Market" {
@@ -107,6 +107,9 @@ struct CreatePostView: View {
                     case "Bug":
                         let bugPost = AppBugPost(poster: username, title: title, content: content, category: category)
                         postType = .bug(bugPost)
+                    case "Meme":
+                        let memePost = MemePost(poster: username, title: title, content: content)
+                        postType = .meme(memePost)
                     case "Market":
                         let marketPostType: MarketPost.MarketPostType
                         switch self.marketPostType {
@@ -228,3 +231,4 @@ struct CreatePostView: View {
         }
     }
 }
+

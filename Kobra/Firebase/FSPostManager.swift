@@ -101,6 +101,12 @@ class FSPostManager {
             let category = data["category"] as? String ?? ""
             let bugPost = AppBugPost(poster: poster, title: title, content: content, category: category)
             postType = .bug(bugPost)
+        case "meme":
+            let poster = data["poster"] as? String ?? ""
+            let title = data["title"] as? String ?? ""
+            let content = data["content"] as? String ?? ""
+            let memePost = MemePost(poster: poster, title: title, content: content)
+            postType = .meme(memePost)
         case "market":
             let vendor = data["vendor"] as? String ?? ""
             let marketPostTypeString = data["marketPostType"] as? String ?? ""
@@ -191,6 +197,11 @@ class FSPostManager {
             data["title"] = bugPost.title
             data["content"] = bugPost.content
             data["category"] = bugPost.category
+        case.meme(let memePost):
+            postTypeString = "meme"
+            data["poster"] = memePost.poster
+            data["title"] = memePost.title
+            data["content"] = memePost.content
         case .market(let marketPost):
             postTypeString = "market"
             data["vendor"] = marketPost.vendor

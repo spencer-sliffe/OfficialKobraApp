@@ -42,12 +42,12 @@ struct SettingsView: View {
                 }
                 
                 Toggle(isOn: $settingsViewModel.isDarkMode) {
-                    Text(NSLocalizedString("Dark Mode(Soon)", comment: ""))
+                    Text(NSLocalizedString("(Coming Soon)", comment: ""))
                         .font(.system(size: 24, weight: .bold, design: .rounded))
                         .foregroundColor(Color.white)
                 }
                 Toggle(isOn: $settingsViewModel.pushNotificationsEnabled) {
-                    Text(NSLocalizedString("Push Notifications(Soon)", comment: ""))
+                    Text(NSLocalizedString("(Coming Soon)", comment: ""))
                         .font(.system(size: 24, weight: .bold, design: .rounded))
                         .foregroundColor(Color.white)
                 }
