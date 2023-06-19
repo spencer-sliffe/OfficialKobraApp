@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 let gradientOptions: [(Color, Color)] = [
-    (.black, .black),
+    (.black, .gray),
     (.white, .white),
     (.red, .red),
     (.orange, .orange),
@@ -29,7 +29,7 @@ let gradientOptions: [(Color, Color)] = [
     (.pink, .orange),
     (.red, .yellow),
     (.green, .blue),
-    (.black, .gray),
+    (.black, .black),
     (.blue, .green),
     (.yellow, .orange),
     (.purple, .pink),

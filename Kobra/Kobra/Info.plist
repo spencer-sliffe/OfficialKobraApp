@@ -7,5 +7,14 @@
 		<string>Exo-Italic-VariableFont_wght.ttf</string>
 		<string>Exo-VariableFont_wght.ttf</string>
 	</array>
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIColorName</key>
+		<string>launch-screen-background</string>
+		<key>UIImageName</key>
+		<string>icon</string>
+		<key>UIImageRespectsSafeAreaInsets</key>
+		<true/>
+	</dict>
 </dict>
 </plist>
