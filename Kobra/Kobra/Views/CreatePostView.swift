@@ -85,6 +85,10 @@ struct CreatePostView: View {
                 }
                 Spacer()
                 Button(action: {
+                    guard let posterId = Auth.auth().currentUser?.uid else {
+                        print("Error: User not logged in or uid not found")
+                        return
+                    }
                     guard let userEmail = Auth.auth().currentUser?.email else {
                         print("Error: User not logged in or email not found")
                         return
@@ -135,7 +139,7 @@ struct CreatePostView: View {
                     }
                     
                     let timestamp = Date()
-                    let post = Post(id: id, type: postType, likes: 0, timestamp: timestamp, imageURL: nil, likingUsers: [""], comments: [])
+                    let post = Post(id: id, type: postType, likes: 0, timestamp: timestamp, imageURL: nil, likingUsers: [""], comments: [], posterId: posterId)
                     
                     if let image = selectedImage {
                         kobraViewModel.uploadImage(image, postId: id.uuidString) { result in

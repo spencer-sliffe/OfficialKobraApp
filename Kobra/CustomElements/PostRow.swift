@@ -18,7 +18,7 @@ struct PostRow: View {
     @State private var showingComments = false
     @State private var showingFullImage = false // new state for full screen image
     let currentUserId: String = Auth.auth().currentUser?.uid ?? ""
-
+    
     init(post: Post) {
         self.post = post
         _likes = State(initialValue: post.likes)
@@ -26,7 +26,7 @@ struct PostRow: View {
         _isLiked = State(initialValue: post.likingUsers.contains(currentUserId))
         _isDisliked = State(initialValue: post.dislikingUsers.contains(currentUserId))
     }
-
+    
     var priceFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.locale = Locale(identifier: "en_US")
@@ -35,14 +35,13 @@ struct PostRow: View {
         formatter.minimumFractionDigits = 2
         return formatter
     }()
-
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack {
-                Text(getPosterName())
-                    .font(.headline)
-                    .fontWeight(.bold)
-                    .foregroundColor(.primary)
+                NavigationLink(destination: AccountProfileView(accountId: post.posterId)) {
+                    getPosterName()
+                }
                 Spacer()
                 Text(post.timestamp.formatted())
                     .font(.caption)
@@ -133,23 +132,61 @@ struct PostRow: View {
         }
     }
     
-    func getPosterName() -> String {
+    func getPosterName() -> some View {
         switch post.type {
         case .advertisement(let advertisementPost):
-            return "Advertisement by \(advertisementPost.poster)"
+            return Text("Advertisement by ")
+                .font(.headline)
+                .fontWeight(.bold)
+                .foregroundColor(.black) +
+                Text(advertisementPost.poster)
+                .font(.headline)
+                .foregroundColor(.blue)
         case .help(let helpPost):
-            return "Help Request by \(helpPost.poster)"
+            return Text("Help Request by ")
+                .font(.headline)
+                .fontWeight(.bold)
+                .foregroundColor(.black) +
+                Text(helpPost.poster)
+                .font(.headline)
+                .foregroundColor(.blue)
         case .news(let newsPost):
-            return "Article by \(newsPost.poster)"
+            return Text("Article by ")
+                .font(.headline)
+                .fontWeight(.bold)
+                .foregroundColor(.black) +
+                Text(newsPost.poster)
+                .font(.headline)
+                .foregroundColor(.blue)
         case .bug(let bugPost):
-            return "Bug by \(bugPost.poster)"
+            return Text("Bug by ")
+                .font(.headline)
+                .fontWeight(.bold)
+                .foregroundColor(.black) +
+                Text(bugPost.poster)
+                .font(.headline)
+                .foregroundColor(.blue)
         case .meme(let memePost):
-            return "Meme by \(memePost.poster)"
+            return Text("Meme by ")
+                .font(.headline)
+                .fontWeight(.bold)
+                .foregroundColor(.black) +
+                Text(memePost.poster)
+                .font(.headline)
+                .foregroundColor(.blue)
         case .market(let marketPost):
-            return "Product by \(marketPost.vendor)"
+            return Text("Product by ")
+                .font(.headline)
+                .fontWeight(.bold)
+                .foregroundColor(.black) +
+                Text(marketPost.vendor)
+                .font(.headline)
+                .foregroundColor(.blue)
         }
     }
 
+
+    
     func canLike() -> Bool {
         return !post.likingUsers.contains(currentUserId)
     }
