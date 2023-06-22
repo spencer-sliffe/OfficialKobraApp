@@ -349,7 +349,6 @@ class FSPostManager {
     
     func updateLikeCount(_ post: Post, likeCount: Int, userId: String, isAdding: Bool) {
         let postId = post.id
-        
         let query = db.collection(postsCollection).whereField("id", isEqualTo: postId.uuidString)
         
         query.getDocuments { (querySnapshot, error) in
@@ -363,9 +362,12 @@ class FSPostManager {
                 return
             }
             
+            let likingUsers = document.get("likingUsers") as? [String] ?? []
+            let updatedUsers: Any = likingUsers.isEmpty && isAdding ? ["", userId] : (isAdding ? FieldValue.arrayUnion([userId]) : FieldValue.arrayRemove([userId]))
+            
             document.reference.updateData([
                 "likes": likeCount,
-                "likingUsers": isAdding ? FieldValue.arrayUnion([userId]) : FieldValue.arrayRemove([userId])
+                "likingUsers": updatedUsers
             ]) { error in
                 if let error = error {
                     print("Error updating like count: \(error.localizedDescription)")
@@ -375,10 +377,9 @@ class FSPostManager {
             }
         }
     }
-    
+
     func updateDislikeCount(_ post: Post, dislikeCount: Int, userId: String, isAdding: Bool) {
         let postId = post.id
-        
         let query = db.collection(postsCollection).whereField("id", isEqualTo: postId.uuidString)
         
         query.getDocuments { (querySnapshot, error) in
@@ -392,9 +393,12 @@ class FSPostManager {
                 return
             }
             
+            let dislikingUsers = document.get("dislikingUsers") as? [String] ?? []
+            let updatedUsers: Any = dislikingUsers.isEmpty && isAdding ? ["", userId] : (isAdding ? FieldValue.arrayUnion([userId]) : FieldValue.arrayRemove([userId]))
+            
             document.reference.updateData([
                 "dislikes": dislikeCount,
-                "dislikingUsers": isAdding ? FieldValue.arrayUnion([userId]) : FieldValue.arrayRemove([userId])
+                "dislikingUsers": updatedUsers
             ]) { error in
                 if let error = error {
                     print("Error updating dislike count: \(error.localizedDescription)")
@@ -404,6 +408,7 @@ class FSPostManager {
             }
         }
     }
+
     
     func addPostWithImage(_ post: Post, image: UIImage, completion: @escaping (Result<Void, Error>) -> Void) {
         self.addPost(post) { result in

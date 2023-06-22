@@ -18,6 +18,7 @@ struct PostRow: View {
     @State private var showingComments = false
     @State private var showingFullImage = false // new state for full screen image
     let currentUserId: String = Auth.auth().currentUser?.uid ?? ""
+    @State private var showingDeleteConfirmation = false
     
     init(post: Post) {
         self.post = post
@@ -37,7 +38,7 @@ struct PostRow: View {
     }()
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: 10) {
             HStack {
                 NavigationLink(destination: AccountProfileView(accountId: post.posterId)) {
                     getPosterName()
@@ -46,33 +47,44 @@ struct PostRow: View {
                 Text(post.timestamp.formatted())
                     .font(.caption)
                     .foregroundColor(.secondary)
+                    
+                if currentUserId == post.posterId {
+                    Button(action: deletePost) {
+                        Image(systemName: "trash")
+                            .foregroundColor(.red)
+                    }
+                }
             }
-            
-            switch post.type {
-            case .advertisement(let advertisementPost):
-                PostContent(title: advertisementPost.title,
-                            content: advertisementPost.content,
-                            imageURL: post.imageURL)
-            case .help(let helpPost):
-                PostContent(title: helpPost.question,
-                            content: helpPost.details,
-                            imageURL: post.imageURL)
-            case .news(let newsPost):
-                PostContent(title: newsPost.headline,
-                            content: newsPost.article,
-                            imageURL: post.imageURL)
-            case .bug(let bugPost):
-                PostContent(title: bugPost.title,
-                            content: bugPost.content,
-                            imageURL: post.imageURL)
-            case .meme(let memePost):
-                PostContent(title: memePost.title,
-                            content: memePost.content,
-                            imageURL: post.imageURL)
-            case .market(let marketPost):
-                MarketPostContent(marketPost: marketPost, imageURL: post.imageURL)
+            .padding(.bottom, 2)
+
+            VStack {
+                switch post.type {
+                case .advertisement(let advertisementPost):
+                    PostContent(title: advertisementPost.title,
+                                content: advertisementPost.content,
+                                imageURL: post.imageURL)
+                case .help(let helpPost):
+                    PostContent(title: helpPost.question,
+                                content: helpPost.details,
+                                imageURL: post.imageURL)
+                case .news(let newsPost):
+                    PostContent(title: newsPost.headline,
+                                content: newsPost.article,
+                                imageURL: post.imageURL)
+                case .bug(let bugPost):
+                    PostContent(title: bugPost.title,
+                                content: bugPost.content,
+                                imageURL: post.imageURL)
+                case .meme(let memePost):
+                    PostContent(title: memePost.title,
+                                content: memePost.content,
+                                imageURL: post.imageURL)
+                case .market(let marketPost):
+                    MarketPostContent(marketPost: marketPost, imageURL: post.imageURL)
+                }
             }
-            
+            .padding(.top, -8)
+
             HStack {
                 Button(action: {
                     isLiked.toggle()
@@ -82,6 +94,11 @@ struct PostRow: View {
                     } else {
                         likes -= 1
                         post.likingUsers.removeAll { $0 == currentUserId }
+                    }
+                    if isDisliked {
+                        isDisliked.toggle()
+                        dislikes -= 1
+                        kobraViewModel.updateDislikeCount(post, dislikeCount: dislikes, userId: currentUserId, isAdding: isDisliked)
                     }
                     kobraViewModel.updateLikeCount(post, likeCount: likes, userId: currentUserId, isAdding: isLiked)
                 }) {
@@ -100,6 +117,12 @@ struct PostRow: View {
                     } else {
                         dislikes -= 1
                         post.dislikingUsers.removeAll { $0 == currentUserId }
+                    }
+                    if isLiked {
+                        isLiked.toggle()
+                        likes -= 1
+                        post.likingUsers.removeAll { $0 == currentUserId }
+                        kobraViewModel.updateLikeCount(post, likeCount: likes, userId: currentUserId, isAdding: isLiked)
                     }
                     kobraViewModel.updateDislikeCount(post, dislikeCount: dislikes, userId: currentUserId, isAdding: isDisliked)
                 }) {
@@ -122,71 +145,113 @@ struct PostRow: View {
                     }
                 }
             }
+            .padding(.top, 2)
         }
-        .padding()
-        .background(Color(.systemBackground).opacity(0.6))
-        .border(Color(.separator), width: 1)
-        .cornerRadius(8)
+        .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
+        .background(
+            RoundedRectangle(cornerRadius: 10)
+                .fill(Color(.systemBackground))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+        )
         .sheet(isPresented: $showingComments) {
             CommentView(viewModel: kobraViewModel, post: post)
         }
+        .alert(isPresented: $showingDeleteConfirmation) {
+            Alert(
+                title: Text("Delete Post"),
+                message: Text("Are you sure you want to delete this post?"),
+                primaryButton: .destructive(Text("Delete")) {
+                    kobraViewModel.deletePost(post)
+                },
+                secondaryButton: .cancel()
+            )
+        }
+    }
+
+    func deletePost() {
+        showingDeleteConfirmation = true
     }
     
     func getPosterName() -> some View {
+        let image = Image(systemName: "person.circle")
+            .resizable()
+            .frame(width: 30, height: 30)
+            .foregroundColor(Color(.gray))
+            
         switch post.type {
         case .advertisement(let advertisementPost):
-            return Text("Advertisement by ")
-                .font(.headline)
-                .fontWeight(.bold)
-                .foregroundColor(.black) +
+            return HStack {
+                image
+                Text("Advertisement by ")
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.purple) +
                 Text(advertisementPost.poster)
-                .font(.headline)
-                .foregroundColor(.blue)
+                    .font(.headline)
+                    .foregroundColor(.blue)
+            }
         case .help(let helpPost):
-            return Text("Help Request by ")
-                .font(.headline)
-                .fontWeight(.bold)
-                .foregroundColor(.black) +
+            return HStack {
+                image
+                Text("Help Request by ")
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.green) +
                 Text(helpPost.poster)
-                .font(.headline)
-                .foregroundColor(.blue)
+                    .font(.headline)
+                    .foregroundColor(.blue)
+            }
         case .news(let newsPost):
-            return Text("Article by ")
-                .font(.headline)
-                .fontWeight(.bold)
-                .foregroundColor(.black) +
+            return HStack {
+                image
+                Text("Article by ")
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.red) +
                 Text(newsPost.poster)
-                .font(.headline)
-                .foregroundColor(.blue)
+                    .font(.headline)
+                    .foregroundColor(.blue)
+            }
         case .bug(let bugPost):
-            return Text("Bug by ")
-                .font(.headline)
-                .fontWeight(.bold)
-                .foregroundColor(.black) +
+            return HStack {
+                image
+                Text("Bug by ")
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.orange) +
                 Text(bugPost.poster)
-                .font(.headline)
-                .foregroundColor(.blue)
+                    .font(.headline)
+                    .foregroundColor(.blue)
+            }
         case .meme(let memePost):
-            return Text("Meme by ")
-                .font(.headline)
-                .fontWeight(.bold)
-                .foregroundColor(.black) +
+            return HStack {
+                image
+                Text("Meme by ")
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.pink) +
                 Text(memePost.poster)
-                .font(.headline)
-                .foregroundColor(.blue)
+                    .font(.headline)
+                    .foregroundColor(.blue)
+            }
         case .market(let marketPost):
-            return Text("Product by ")
-                .font(.headline)
-                .fontWeight(.bold)
-                .foregroundColor(.black) +
+            return HStack {
+                image
+                Text("Product by ")
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.yellow) +
                 Text(marketPost.vendor)
-                .font(.headline)
-                .foregroundColor(.blue)
+                    .font(.headline)
+                    .foregroundColor(.blue)
+            }
         }
     }
 
 
-    
     func canLike() -> Bool {
         return !post.likingUsers.contains(currentUserId)
     }
@@ -317,4 +382,3 @@ struct PostRow: View {
         }
     }
 }
-

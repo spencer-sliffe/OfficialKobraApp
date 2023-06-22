@@ -122,7 +122,7 @@ struct AccountView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 10) {
                     ForEach(viewModel.userPosts.sorted(by: { $0.timestamp.compare($1.timestamp) == .orderedDescending })) { post in
-                        AccountPostRow(post: post)
+                        PostRow(post: post)
                             .background(Color.clear)
                             .environmentObject(kobraViewModel)
                     }

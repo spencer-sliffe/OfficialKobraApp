@@ -36,9 +36,9 @@ struct KobraView: View {
             ForEach(FeedType.allCases) { feedType in
                 Button(action: {
                     selectedFeed = feedType
+                    viewModel.fetchPosts()
                 }) {
                     VStack {
-                        
                         if(feedType.rawValue == "Advertisement") {
                             Image(systemName: "radio") // Replace with appropriate icons
                                 .resizable()
@@ -152,23 +152,30 @@ struct KobraView: View {
                             .foregroundColor(.white)
                     }
                     Spacer()
-                    
                     Text("\(Date(), formatter: timeFormatter)")
                         .foregroundColor(.white)
                 }
                 .padding(.horizontal)
             }.frame(height: 20)
             Spacer()
-            ScrollView {
-                VStack(alignment: .leading, spacing: 10) {
-                    ForEach(viewModel.posts.sorted(by: { $0.timestamp > $1.timestamp }).filter(isPostTypeVisible)) { post in
-                        PostRow(post: post)
-                            .environmentObject(viewModel)
-                            .background(Color.clear)
+            GeometryReader { geometry in
+                ScrollView(showsIndicators: false) {
+                    VStack(alignment: .leading, spacing: 10) {
+                        ForEach(viewModel.posts.sorted(by: { $0.timestamp > $1.timestamp }).filter(isPostTypeVisible)) { post in
+                            PostRow(post: post)
+                                .environmentObject(viewModel)
+                                .background(Color.clear)
+                        }
                     }
                 }
+                .padding(.trailing, 1)  // Add some padding to the right side of the ScrollView
+                .background(Color.clear)
+                .overlay(  // Add an overlay to the right side of the ScrollView
+                    Color.clear
+                        .frame(width: 1)  // Set width to the same value as the padding above
+                        .edgesIgnoringSafeArea(.all), alignment: .trailing
+                )
             }
-            .background(Color.clear)
             customToolbar()
         }
         .background(Color.clear)
