@@ -21,7 +21,6 @@ class AccountProfileViewModel: ObservableObject {
     init(accountId: String) {
         self.accountId = accountId
         fetchAccount()
-        checkFollowStatus()
     }
     
     private var cancellables: Set<AnyCancellable> = []
@@ -40,7 +39,6 @@ class AccountProfileViewModel: ObservableObject {
                 self.account = userData
                 self.userPosts = userPosts
                 self.isLoading = false
-                self.checkFollowStatus()  // Call checkFollowStatus here
             })
             .store(in: &cancellables)
         
@@ -49,7 +47,6 @@ class AccountProfileViewModel: ObservableObject {
             switch result {
             case .success(let updatedAccount):
                 self.account = updatedAccount
-                self.checkFollowStatus()
             case .failure(let error):
                 print("Error: \(error)")
             }
@@ -110,9 +107,6 @@ class AccountProfileViewModel: ObservableObject {
         }
     }
     
-    private func checkFollowStatus() {
-        guard let currentUserEmail = UserDefaults.standard.string(forKey: "currentUserEmail"), let account = account else { return }
-        isFollowing = account.followers.contains(currentUserEmail)
-    }
+
 }
 

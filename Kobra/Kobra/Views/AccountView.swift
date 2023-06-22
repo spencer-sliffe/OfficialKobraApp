@@ -13,14 +13,14 @@ struct AccountView: View {
     @State var isLoggedOut = false
     @State private var isShowingImagePicker = false
     @State private var inputImage: UIImage?
-    
+    @State private var showingActionSheet = false // Added this line
+
     var body: some View {
         VStack {
             if viewModel.isLoading {
                 ProgressView()
             } else if let account = viewModel.account {
                 let displayName = account.username.uppercased()
-                
                 HStack {
                     // Profile picture
                     ZStack {
@@ -50,18 +50,29 @@ struct AccountView: View {
                                 .padding(.leading, 20)
                         }
                         Button(action: {
-                            isShowingImagePicker = true
+                            showingActionSheet = true
                         }) {
-                            Image(systemName: "plus")
-                                .resizable() // add this to allow changing the size
-                                .frame(width: 20, height: 20) // change width and height to adjust size
-                                .foregroundColor(.blue) // change color here
+                            Image(systemName: "ellipsis")
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                                .foregroundColor(.blue)
                                 .padding()
                                 .background(Color.white)
                                 .clipShape(Circle())
                                 .shadow(radius: 10)
                         }
                         .offset(x: 40, y: 40)
+                        .actionSheet(isPresented: $showingActionSheet) {
+                            ActionSheet(title: Text("Profile Picture Options"), buttons: [
+                                .default(Text("Upload a new picture")) {
+                                    isShowingImagePicker = true
+                                },
+                                .destructive(Text("Delete current picture")) {
+                                    viewModel.deleteProfilePicture()
+                                },
+                                .cancel()
+                            ])
+                        }
                         .sheet(isPresented: $isShowingImagePicker, onDismiss: loadImage) {
                             ImagePicker(image: $inputImage)
                         }
@@ -135,12 +146,10 @@ struct AccountView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .navigationBarHidden(true)
     }
-    
+
     func loadImage() {
         guard let inputImage = inputImage else { return }
         viewModel.updateProfilePicture(image: inputImage)
     }
 }
-
-
 

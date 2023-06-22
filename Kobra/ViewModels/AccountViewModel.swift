@@ -107,4 +107,26 @@ class AccountViewModel: ObservableObject {
             }
         }
     }
+    
+    func deleteProfilePicture() {
+        guard let imageUrl = self.account?.profilePicture?.absoluteString else {
+            print("No image URL found for account")
+            return
+        }
+        
+        isLoading = true
+        accountManager.deleteProfilePicture(imageURL: imageUrl) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    self?.account?.profilePicture = nil
+                    print("Profile picture deleted successfully")
+                case .failure(let error):
+                    print("Error deleting profile picture: \(error.localizedDescription)")
+                }
+                self?.isLoading = false
+            }
+        }
+    }
+
 }

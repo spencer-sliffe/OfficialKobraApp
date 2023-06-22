@@ -29,7 +29,6 @@ class FSAccountManager: ObservableObject {
             }
         }
     }
-    
   
     func fetchAccounts(completion: @escaping (Result<[Account], Error>) -> Void) {
         db.collection(accountCollection).getDocuments { (querySnapshot, error) in
@@ -76,7 +75,8 @@ class FSAccountManager: ObservableObject {
             "subscription": account.subscription,
             "profilePicture": account.profilePicture?.absoluteString ?? "",
             "followers": account.followers,
-            "following": account.following
+            "following": account.following,
+            "package": account.package
         ]) { error in
             if let error = error {
                 completion(.failure(error))
@@ -95,7 +95,7 @@ class FSAccountManager: ObservableObject {
             }
         }
     }
-    
+        
     private func createAccountFrom(data: [String: Any]) -> Account {
         let id = data["id"] as? String ?? ""
         let email = data["email"] as? String ?? ""

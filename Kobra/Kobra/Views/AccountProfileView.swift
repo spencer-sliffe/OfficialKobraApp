@@ -16,10 +16,10 @@ struct AccountProfileView: View {
     @EnvironmentObject var kobraViewModel: KobraViewModel
 
     init(accountId: String) {
-           self.accountId = accountId
-           self.viewModel = AccountProfileViewModel(accountId: accountId)
-           self.viewModel.fetchAccount()
-       }
+        self.accountId = accountId
+        self.viewModel = AccountProfileViewModel(accountId: accountId)
+        self.viewModel.fetchAccount()
+    }
     
     var body: some View {
         VStack {
@@ -27,8 +27,8 @@ struct AccountProfileView: View {
                 ProgressView()
             } else if let account = viewModel.account {
                 let displayName = account.username.uppercased()
-                
-                HStack {
+
+                HStack(alignment: .top) {
                     // Profile picture
                     if let profilePictureString = account.profilePicture {
                         AsyncImage(url: profilePictureString) { image in
@@ -45,7 +45,7 @@ struct AccountProfileView: View {
                                 .frame(width: 120, height: 120)
                                 .clipShape(Circle())
                         }
-                        .padding(.leading, 10) // Reduced padding
+                        .padding(.leading, 20)
                     } else {
                         Image(systemName: "person.circle.fill")
                             .resizable()
@@ -53,72 +53,72 @@ struct AccountProfileView: View {
                             .foregroundColor(.gray)
                             .frame(width: 120, height: 120)
                             .clipShape(Circle())
-                            .padding(.leading, 10) // Reduced padding
+                            .padding(.leading, 20)
                     }
 
-                    // Account name, subscription, and following information
-                    VStack(alignment: .leading, spacing: 10) {
-                        VStack(alignment: .leading, spacing: 5) {
+                    VStack(alignment: .center) { // Changed from .leading to .center
+                        // Account name, Following and followers
+                        VStack(alignment: .center, spacing: 10) { // Changed from .leading to .center
                             Text(displayName)
                                 .font(.largeTitle)
                                 .fontWeight(.bold)
                                 .foregroundColor(.white)
                                 .minimumScaleFactor(0.5)
                                 .lineLimit(1)
-                        }
-                        
-                        HStack {
-                            VStack {
-                                Text("\(account.followers.count)")
-                                    .font(.subheadline)
-                                    .fontWeight(.bold)
-                                Text("Followers")
-                                    .font(.caption)
-                                    .fontWeight(.medium)
+
+                            HStack {
+                                VStack {
+                                    Text("\(account.followers.count)")
+                                        .font(.subheadline)
+                                        .fontWeight(.bold)
+                                    Text("Followers")
+                                        .font(.caption)
+                                        .fontWeight(.medium)
+                                }
+                                .padding(2)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .stroke(Color.white, lineWidth: 2)
+                                )
+                                .padding(.trailing)
+                                VStack {
+                                    Text("\(account.following.count)")
+                                        .font(.subheadline)
+                                        .fontWeight(.bold)
+                                    Text("Following")
+                                        .font(.caption)
+                                        .fontWeight(.medium)
+                                }
+                                .padding(2)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .stroke(Color.white, lineWidth: 2)
+                                )
+                                .padding(.trailing)
                             }
-                            .padding(2)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 5)
-                                    .stroke(Color.white, lineWidth: 2)
-                            )
-                            .padding(.trailing)
-                            
-                            VStack {
-                                Text("\(account.following.count)")
-                                    .font(.subheadline)
-                                    .fontWeight(.bold)
-                                Text("Following")
-                                    .font(.caption)
-                                    .fontWeight(.medium)
+                            .foregroundColor(.white)
+                            HStack {
+                                Button(action: {
+                                }) {
+                                    Text(viewModel.isFollowing ? "Following" : "Follow")
+                                        .fontWeight(.bold)
+                                        .foregroundColor(.white)
+                                        .padding(.horizontal, 20)
+                                        .padding(.vertical, 3)
+                                        .background(Color.blue)
+                                        .cornerRadius(8)
+                                }
+                                .padding(.top, 1)
                             }
-                            .padding(2)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 5)
-                                    .stroke(Color.white, lineWidth: 2)
-                            )
-                            .padding(.trailing)
                         }
-                        .foregroundColor(.white)
-                        Button(action: {
-                        }) {
-                            Text(viewModel.isFollowing ? "Unfollow" : "(Coming Soon)")
-                                .fontWeight(.bold)
-                                .foregroundColor(.white)
-                                .padding(.horizontal, 12)
-                                .padding(.vertical, 5)
-                                .background(Color.blue)
-                                .cornerRadius(8)
-                        }
-                        .padding(.top, 10)
+                        .padding(.bottom, 2)
                     }
                 }
-                .padding(.bottom, 2)
                 .foregroundColor(.white)
             } else {
                 Text("Failed to fetch account data")
                     .foregroundColor(.white)
             }
-            
             Spacer()
             ScrollView {
                 VStack(alignment: .leading, spacing: 10) {
@@ -129,7 +129,6 @@ struct AccountProfileView: View {
                 }
             }
             .background(Color.clear)
-
         }
         .frame(maxWidth: .infinity)
         .background(
