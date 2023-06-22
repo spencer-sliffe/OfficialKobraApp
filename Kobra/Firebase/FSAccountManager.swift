@@ -95,7 +95,7 @@ class FSAccountManager: ObservableObject {
             }
         }
     }
-        
+    
     private func createAccountFrom(data: [String: Any]) -> Account {
         let id = data["id"] as? String ?? ""
         let email = data["email"] as? String ?? ""

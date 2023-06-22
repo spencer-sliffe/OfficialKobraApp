@@ -21,7 +21,6 @@
 		4527837D29D8B56D00B633FB /* CreatePostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4527837C29D8B56D00B633FB /* CreatePostView.swift */; };
 		4528556229B1AED800F088CD /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4528556129B1AED800F088CD /* AuthenticationViewModel.swift */; };
 		452CB79A2A030BDE001D8195 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452CB7992A030BDE001D8195 /* CustomButton.swift */; };
-		452CB79C2A03F7FF001D8195 /* AccountPostRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452CB79B2A03F7FF001D8195 /* AccountPostRow.swift */; };
 		453314062A23245800DEE73E /* CreateFoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453314052A23245800DEE73E /* CreateFoodView.swift */; };
 		4543FE6129DB4A0C003B3CCC /* CustomTextFieldUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543FE6029DB4A0C003B3CCC /* CustomTextFieldUI.swift */; };
 		4543FE6329DB4A24003B3CCC /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543FE6229DB4A24003B3CCC /* CustomTextField.swift */; };
@@ -92,7 +91,6 @@
 		4527837C29D8B56D00B633FB /* CreatePostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePostView.swift; sourceTree = "<group>"; };
 		4528556129B1AED800F088CD /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		452CB7992A030BDE001D8195 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
-		452CB79B2A03F7FF001D8195 /* AccountPostRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountPostRow.swift; sourceTree = "<group>"; };
 		453314052A23245800DEE73E /* CreateFoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFoodView.swift; sourceTree = "<group>"; };
 		4543FE6029DB4A0C003B3CCC /* CustomTextFieldUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFieldUI.swift; sourceTree = "<group>"; };
 		4543FE6229DB4A24003B3CCC /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
@@ -180,7 +178,6 @@
 				457EFD3829F8AECB006F53F2 /* DropDownMenu.swift */,
 				451C33F32A0168A500259B86 /* gradientOptions.swift */,
 				452CB7992A030BDE001D8195 /* CustomButton.swift */,
-				452CB79B2A03F7FF001D8195 /* AccountPostRow.swift */,
 				459B437B2A16C2750029D90B /* GradientDropDownMenu.swift */,
 				45895C0A2A1B272F0022DF98 /* FoodRow.swift */,
 				459014472A2E2A6F00A778A6 /* AccountCell.swift */,
@@ -488,7 +485,6 @@
 				45074EEB29E8699B0096C82A /* CommentView.swift in Sources */,
 				4543FE6329DB4A24003B3CCC /* CustomTextField.swift in Sources */,
 				451C33FC2A0190F200259B86 /* ChangePasswordView.swift in Sources */,
-				452CB79C2A03F7FF001D8195 /* AccountPostRow.swift in Sources */,
 				459B43782A169BAE0029D90B /* DiscoverView.swift in Sources */,
 				45CFE93629C04EF6003806D5 /* Chat.swift in Sources */,
 				45A908CB29B037FE00792FC2 /* FSAccountManager.swift in Sources */,
