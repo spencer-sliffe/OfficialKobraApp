@@ -25,31 +25,22 @@ struct AccountView: View {
                 let displayName = account.username.uppercased()
                 HStack {
                     ZStack {
-                        if let profilePicture = account.profilePicture {
-                            AsyncImage(url: profilePicture) { image in
-                                image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 120, height: 120)
-                                    .clipShape(Circle())
-                            } placeholder: {
-                                Image(systemName: "person.circle.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(.gray)
-                                    .frame(width: 120, height: 120)
-                                    .clipShape(Circle())
-                            }
-                            .padding(.leading, 20)
-                        } else {
+                        AsyncImage(url: account.profilePicture) { image in
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 120, height: 120)
+                                .clipShape(Circle())
+                        } placeholder: {
                             Image(systemName: "person.circle.fill")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .foregroundColor(.gray)
                                 .frame(width: 120, height: 120)
                                 .clipShape(Circle())
-                                .padding(.leading, 20)
                         }
+                        .padding(.leading, 20)
+
                         Button(action: {
                             showingActionSheet = true
                         }) {
@@ -78,6 +69,7 @@ struct AccountView: View {
                             ImagePicker(image: $inputImage)
                         }
                     }
+
                     VStack(alignment: .leading, spacing: 10) {
                         VStack(alignment: .leading, spacing: 5) {
                             Text(displayName)
@@ -86,7 +78,7 @@ struct AccountView: View {
                                 .foregroundColor(.white)
                                 .minimumScaleFactor(0.5)
                                 .lineLimit(1)
-                            
+
                             // Bio
                             if isEditingBio {
                                 TextField("Bio", text: $bioInput)
@@ -121,7 +113,7 @@ struct AccountView: View {
                                         .foregroundColor(.blue)
                                 }
                             }
-                            
+
                             HStack {
                                 VStack {
                                     Text("\(account.followers.count)")
@@ -137,7 +129,7 @@ struct AccountView: View {
                                         .stroke(Color.white, lineWidth: 2)
                                 )
                                 .padding(.trailing)
-                                
+
                                 VStack {
                                     Text("\(account.following.count)")
                                         .font(.subheadline)
@@ -159,21 +151,23 @@ struct AccountView: View {
                 }
                 .padding(.bottom, 2)
                 .foregroundColor(.white)
+
+                Spacer()
+
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 10) {
+                        ForEach(viewModel.userPosts.sorted(by: { $0.timestamp.compare($1.timestamp) == .orderedDescending })) { post in
+                            PostRow(post: post)
+                                .background(Color.clear)
+                                .environmentObject(kobraViewModel)
+                        }
+                    }
+                }
+                .background(Color.clear)
             } else {
                 Text("Failed to fetch account data")
                     .foregroundColor(.white)
             }
-            Spacer()
-            ScrollView {
-                VStack(alignment: .leading, spacing: 10) {
-                    ForEach(viewModel.userPosts.sorted(by: { $0.timestamp.compare($1.timestamp) == .orderedDescending })) { post in
-                        PostRow(post: post)
-                            .background(Color.clear)
-                            .environmentObject(kobraViewModel)
-                    }
-                }
-            }
-            .background(Color.clear)
         }
         .background(Color.clear)
         .foregroundColor(.white)
@@ -186,5 +180,6 @@ struct AccountView: View {
         viewModel.updateProfilePicture(image: inputImage)
     }
 }
+
 
 
