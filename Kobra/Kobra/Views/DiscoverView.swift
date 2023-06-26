@@ -41,8 +41,3 @@ struct DiscoverView: View {
         }
     }
 }
-
-
-
-
-

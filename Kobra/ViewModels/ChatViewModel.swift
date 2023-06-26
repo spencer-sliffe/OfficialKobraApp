@@ -13,45 +13,44 @@ protocol ChatDelegate: AnyObject {
 }
 
 class ChatViewModel: ObservableObject {
-    weak var delegate: ChatDelegate?
-    var chat: Chat
+    @Published var chat: Chat
     @Published var messages: [ChatMessage] = []
-    @Published var isLoading2 = false
-    private var cancellables = Set<AnyCancellable>()
-    private let firestoreManager = FSChatManager.shared
-    var chatListener: ListenerRegistration?
+    @Published var isLoading = false
     
-    init(chat: Chat) {
+    private let firestoreManager: FSChatManager
+    private var chatListener: ListenerRegistration?
+    
+    weak var delegate: ChatDelegate?
+    
+    var currentUserEmail: String {
+        Auth.auth().currentUser?.email ?? ""
+    }
+    
+    init(chat: Chat, firestoreManager: FSChatManager = FSChatManager.shared) {
         self.chat = chat
+        self.firestoreManager = firestoreManager
+        fetchMessages()
     }
     
     deinit {
         chatListener?.remove()
     }
     
-    var currentUserEmail: String {
-        return Auth.auth().currentUser?.email ?? ""
-    }
-    
     func fetchMessages() {
-        isLoading2 = true
-        // chatListener?.remove() // Remove any existing listener
+        isLoading = true
         chatListener = firestoreManager.observeMessages(forChat: chat) { [weak self] result in
-            guard let self = self else { return } // make sure self is still available
-            self.isLoading2 = false
-            
-            switch result {
-            case .success(let messages):
-                self.messages = messages
-                self.delegate?.didUpdateChat(self.chat)
-                guard let currentUserEmail = Auth.auth().currentUser?.email else {
-                    return
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.isLoading = false
+                switch result {
+                case .failure(let error):
+                    print(error.localizedDescription)
+                case .success(let messages):
+                    self.messages = messages
+                    self.markMessagesAsRead()
+                    self.delegate?.didUpdateChat(self.chat)
                 }
-                self.firestoreManager.markMessagesAsRead(forChat: self.chat, currentUserEmail: currentUserEmail)
-            case .failure(let error):
-                print(error.localizedDescription)
             }
-            
         }
     }
     
@@ -69,41 +68,5 @@ class ChatViewModel: ObservableObject {
     }
     func markMessagesAsRead() {
         firestoreManager.markMessagesAsRead(forChat: chat, currentUserEmail: currentUserEmail)
-    }
-}
-
-struct MessageRow: View {
-    var message: ChatMessage
-    var isFromCurrentUser: Bool
-    
-    var body: some View {
-        HStack {
-            if isFromCurrentUser {
-                Spacer()
-                VStack(alignment: .trailing) { // Align content to the trailing edge
-                    Text(message.text)
-                        .foregroundColor(.white)
-                        .padding(1)
-                        .background(Color.clear)
-                        .multilineTextAlignment(.trailing)
-                    Text(message.timestamp, style: .time)
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-                }
-            } else {
-                VStack(alignment: .leading) { // Align content to the leading edge
-                    Text(message.text)
-                        .foregroundColor(.white)
-                        .padding(1)
-                        .background(Color.clear)
-                        .multilineTextAlignment(.leading)
-                    Text(message.timestamp, style: .time)
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-                }
-                Spacer()
-            }
-            
-        }
     }
 }

@@ -12,7 +12,6 @@ struct HomePageView: View {
     @State private var selectedTab = 3
     @ObservedObject var authViewModel = AuthenticationViewModel()
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
-
     @StateObject var kobraViewModel = KobraViewModel()
 
     var body: some View {
@@ -116,7 +115,3 @@ struct HomePageView: View {
         .frame(maxWidth: .infinity)
     }
 }
-
-
-
-

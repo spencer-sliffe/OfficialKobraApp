@@ -32,7 +32,8 @@ class DiscoverViewModel: ObservableObject {
                         package: data["package"] as? String ?? "",
                         profilePicture: data["profilePicture"] as? String,
                         followers: data["followers"] as? [String] ?? [""],
-                        following: data["following"] as? [String] ?? [""]
+                        following: data["following"] as? [String] ?? [""],
+                        bio: data["bio"] as? String ?? ""
                     )
                     self.accounts.append(newAccount)
                 }

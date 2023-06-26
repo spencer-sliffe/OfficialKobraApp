@@ -15,8 +15,9 @@ struct Account {
     var profilePicture: URL?
     var followers: [String]  // Now holds emails
     var following: [String]  // Now holds emails
+    var bio: String
 
-    init(id: String, email: String, username: String, subscription: Bool, package: String, profilePicture: String?, followers: [String] = [], following: [String] = []) {
+    init(id: String, email: String, username: String, subscription: Bool, package: String, profilePicture: String?, followers: [String] = [], following: [String] = [], bio: String) {
         self.id = id
         self.email = email
         self.username = username
@@ -25,5 +26,6 @@ struct Account {
         self.profilePicture = profilePicture.flatMap { URL(string: $0) }
         self.followers = followers
         self.following = following
+        self.bio = bio
     }
 }

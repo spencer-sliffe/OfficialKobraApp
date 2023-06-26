@@ -66,10 +66,11 @@ class AccountProfileViewModel: ObservableObject {
                 let email = data["email"] as? String ?? ""
                 let username = data["username"] as? String ?? ""
                 let subscription = data["subscription"] as? Bool ?? false
-                let followers = data["followers"] as? [String] ?? []  // Holds emails
-                let following = data["following"] as? [String] ?? []  // Holds emails
+                let followers = data["followers"] as? [String] ?? []  // Holds ids
+                let following = data["following"] as? [String] ?? []  // Holds ids
                 let package = data["package"] as? String ?? ""
-                var account = Account(id: self.accountId, email: email, username: username, subscription: subscription, package: package, profilePicture: nil, followers: followers, following: following)
+                let bio = data["bio"] as? String ?? ""
+                var account = Account(id: self.accountId, email: email, username: username, subscription: subscription, package: package, profilePicture: nil, followers: followers, following: following, bio: bio)
                 
                 // Fetch and assign profile picture URL if available
                 if let profilePictureURLString = data["profilePicture"] as? String,
@@ -77,7 +78,15 @@ class AccountProfileViewModel: ObservableObject {
                     account.profilePicture = profilePictureURL
                 }
                 
+                // Check if the current user is following this account
+                if let currentUserId = Auth.auth().currentUser?.uid {
+                    self.isFollowing = followers.contains(currentUserId)
+                }
+                
                 promise(.success(account))
+                
+                
+                
             }
         }
     }
@@ -107,6 +116,76 @@ class AccountProfileViewModel: ObservableObject {
         }
     }
     
-
+    func followAccountById() {
+        guard let currentUser = Auth.auth().currentUser else {
+            print("Error: No user is currently signed in.")
+            return
+        }
+        
+        let currentUserId = currentUser.uid
+        let db = Firestore.firestore()
+        
+        // Update the following list of the current user
+        db.collection("Accounts").document(currentUserId).updateData([
+            "following": FieldValue.arrayUnion([self.accountId])
+        ]) { error in
+            if let error = error {
+                print("Error following account: \(error)")
+                return
+            }
+            
+            // If no error, update the followers list of the target user
+            db.collection("Accounts").document(self.accountId).updateData([
+                "followers": FieldValue.arrayUnion([currentUserId])
+            ]) { error in
+                if let error = error {
+                    print("Error updating followers list of the account: \(error)")
+                    return
+                }
+                
+                // If both updates are successful, update the UI and fetch new account data
+                DispatchQueue.main.async {
+                    self.isFollowing = true
+                    self.fetchAccount()  // Refresh account data
+                }
+            }
+        }
+    }
+    
+    func unfollowAccountById() {
+        guard let currentUser = Auth.auth().currentUser else {
+            print("Error: No user is currently signed in.")
+            return
+        }
+        
+        let currentUserId = currentUser.uid
+        let db = Firestore.firestore()
+        
+        // Update the following list of the current user
+        db.collection("Accounts").document(currentUserId).updateData([
+            "following": FieldValue.arrayRemove([self.accountId])
+        ]) { error in
+            if let error = error {
+                print("Error unfollowing account: \(error)")
+                return
+            }
+            
+            // If no error, update the followers list of the target user
+            db.collection("Accounts").document(self.accountId).updateData([
+                "followers": FieldValue.arrayRemove([currentUserId])
+            ]) { error in
+                if let error = error {
+                    print("Error updating followers list of the account: \(error)")
+                    return
+                }
+                
+                // If both updates are successful, update the UI and fetch new account data
+                DispatchQueue.main.async {
+                    self.isFollowing = false
+                    self.fetchAccount()  // Refresh account data
+                }
+            }
+        }
+    }
 }
 

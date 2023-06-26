@@ -13,7 +13,9 @@ struct AccountView: View {
     @State var isLoggedOut = false
     @State private var isShowingImagePicker = false
     @State private var inputImage: UIImage?
-    @State private var showingActionSheet = false // Added this line
+    @State private var showingActionSheet = false
+    @State private var isEditingBio = false
+    @State private var bioInput: String = ""
 
     var body: some View {
         VStack {
@@ -22,7 +24,6 @@ struct AccountView: View {
             } else if let account = viewModel.account {
                 let displayName = account.username.uppercased()
                 HStack {
-                    // Profile picture
                     ZStack {
                         if let profilePicture = account.profilePicture {
                             AsyncImage(url: profilePicture) { image in
@@ -77,53 +78,86 @@ struct AccountView: View {
                             ImagePicker(image: $inputImage)
                         }
                     }
-                    // Account name, subscription, and following information
                     VStack(alignment: .leading, spacing: 10) {
-                        VStack(alignment: .leading, spacing: 5) { // Adjusted spacing from 10 to 5
+                        VStack(alignment: .leading, spacing: 5) {
                             Text(displayName)
                                 .font(.largeTitle)
                                 .fontWeight(.bold)
                                 .foregroundColor(.white)
                                 .minimumScaleFactor(0.5)
                                 .lineLimit(1)
-                        }
-                        
-                        HStack {
-                            VStack {
-                                Text("\(account.followers.count)")
-                                    .font(.subheadline)
-                                    .fontWeight(.bold)
-                                Text("Followers")
-                                    .font(.caption)
-                                    .fontWeight(.medium)
-                            }
-                            .padding(2)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 5)
-                                    .stroke(Color.white, lineWidth: 2)
-                            )
-                            .padding(.trailing)
                             
-                            VStack {
-                                Text("\(account.following.count)")
+                            // Bio
+                            if isEditingBio {
+                                TextField("Bio", text: $bioInput)
+                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                                    .padding(2)
+                                    .foregroundColor(.black)
+                                HStack {
+                                    Button(action: {
+                                        isEditingBio = false
+                                        viewModel.updateBio(bio: bioInput)
+                                    }) {
+                                        Text("Save")
+                                    }
+                                    Button(action: {
+                                        isEditingBio = false
+                                        viewModel.deleteBio()
+                                    }) {
+                                        Text("Delete")
+                                    }
+                                }
+                            } else {
+                                Text(account.bio)
                                     .font(.subheadline)
-                                    .fontWeight(.bold)
-                                Text("Following")
-                                    .font(.caption)
                                     .fontWeight(.medium)
+                                    .foregroundColor(.white)
+                                Button(action: {
+                                    isEditingBio = true
+                                    bioInput = account.bio
+                                }) {
+                                    Text("Edit Bio")
+                                        .font(.caption)
+                                        .foregroundColor(.blue)
+                                }
                             }
-                            .padding(2)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 5)
-                                    .stroke(Color.white, lineWidth: 2)
-                            )
-                            .padding(.trailing)
+                            
+                            HStack {
+                                VStack {
+                                    Text("\(account.followers.count)")
+                                        .font(.subheadline)
+                                        .fontWeight(.bold)
+                                    Text("Followers")
+                                        .font(.caption)
+                                        .fontWeight(.medium)
+                                }
+                                .padding(2)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .stroke(Color.white, lineWidth: 2)
+                                )
+                                .padding(.trailing)
+                                
+                                VStack {
+                                    Text("\(account.following.count)")
+                                        .font(.subheadline)
+                                        .fontWeight(.bold)
+                                    Text("Following")
+                                        .font(.caption)
+                                        .fontWeight(.medium)
+                                }
+                                .padding(2)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .stroke(Color.white, lineWidth: 2)
+                                )
+                                .padding(.trailing)
+                            }
+                            .foregroundColor(.white)
                         }
-                        .foregroundColor(.white)
                     }
                 }
                 .padding(.bottom, 2)
-                
                 .foregroundColor(.white)
             } else {
                 Text("Failed to fetch account data")
@@ -152,4 +186,5 @@ struct AccountView: View {
         viewModel.updateProfilePicture(image: inputImage)
     }
 }
+
 

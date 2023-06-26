@@ -14,7 +14,7 @@ struct AccountProfileView: View {
     @ObservedObject var viewModel: AccountProfileViewModel
     @EnvironmentObject var settingsViewModel: SettingsViewModel
     @EnvironmentObject var kobraViewModel: KobraViewModel
-
+    
     init(accountId: String) {
         self.accountId = accountId
         self.viewModel = AccountProfileViewModel(accountId: accountId)
@@ -27,7 +27,7 @@ struct AccountProfileView: View {
                 ProgressView()
             } else if let account = viewModel.account {
                 let displayName = account.username.uppercased()
-
+                
                 HStack(alignment: .top) {
                     // Profile picture
                     if let profilePictureString = account.profilePicture {
@@ -55,9 +55,9 @@ struct AccountProfileView: View {
                             .clipShape(Circle())
                             .padding(.leading, 20)
                     }
-
+                    
                     VStack(alignment: .center) { // Changed from .leading to .center
-                        // Account name, Following and followers
+                        // Account name, bio, Following and followers
                         VStack(alignment: .center, spacing: 10) { // Changed from .leading to .center
                             Text(displayName)
                                 .font(.largeTitle)
@@ -65,7 +65,12 @@ struct AccountProfileView: View {
                                 .foregroundColor(.white)
                                 .minimumScaleFactor(0.5)
                                 .lineLimit(1)
-
+                            
+                            Text(account.bio) // Adding account bio here
+                                .font(.caption)
+                                .italic()
+                                .foregroundColor(.gray)
+                            
                             HStack {
                                 VStack {
                                     Text("\(account.followers.count)")
@@ -99,16 +104,21 @@ struct AccountProfileView: View {
                             .foregroundColor(.white)
                             HStack {
                                 Button(action: {
+                                    if viewModel.isFollowing {
+                                        viewModel.unfollowAccountById()
+                                    } else {
+                                        viewModel.followAccountById()
+                                    }
                                 }) {
                                     Text(viewModel.isFollowing ? "Following" : "Follow")
                                         .fontWeight(.bold)
                                         .foregroundColor(.white)
                                         .padding(.horizontal, 20)
-                                        .padding(.vertical, 3)
-                                        .background(Color.blue)
+                                        .padding(.vertical, 2)
+                                        .background(viewModel.isFollowing ? Color.gray : Color.blue)
                                         .cornerRadius(8)
                                 }
-                                .padding(.top, 1)
+                                .padding(.top, -5)
                             }
                         }
                         .padding(.bottom, 2)
@@ -147,3 +157,4 @@ struct AccountProfileView: View {
         .foregroundColor(.white)
     }
 }
+

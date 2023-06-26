@@ -7,22 +7,17 @@
 import SwiftUI
 import Combine
 import Firebase
-import FirebaseFirestore
-import Foundation
 
 struct ChatView: View {
     @ObservedObject var viewModel: ChatViewModel
     @State private var chatInput = ""
-    @State private var showSearchBar = false
-    @State private var searchButtonLabel = "Cancel"
-    @State private var keyboardHeight: CGFloat = 0
     @Environment(\.presentationMode) private var presentationMode
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
     
     var body: some View {
         VStack(spacing: 0) {
-            ScrollView {
-                ScrollViewReader { scrollView in
+            ScrollViewReader { scrollView in
+                ScrollView {
                     LazyVStack(alignment: .leading, spacing: 10) {
                         ForEach(viewModel.messages, id: \.self) { message in
                             MessageRow(message: message, isFromCurrentUser: message.sender == Auth.auth().currentUser?.email)
@@ -32,9 +27,9 @@ struct ChatView: View {
                         viewModel.fetchMessages()
                         viewModel.markMessagesAsRead()
                     }
-                    .onChange(of: viewModel.messages.count, perform: { _ in
-                        scrollView.scrollTo(viewModel.messages.count - 1)
-                    })
+                    .onChange(of: viewModel.messages.count) { _ in
+                        scrollView.scrollTo(viewModel.messages.last, anchor: .bottom)
+                    }
                     .padding(.horizontal)
                     .padding(.top)
                 }
@@ -62,8 +57,6 @@ struct ChatView: View {
             }
             .foregroundColor(Color.white)
             .padding(.horizontal)
-            .background(Color.clear)
-            .padding(.bottom, keyboardHeight)
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading:
@@ -76,12 +69,6 @@ struct ChatView: View {
             }
         }
         )
-        .onAppear {
-            viewModel.fetchMessages()
-        }
-        .onDisappear {
-            viewModel.chatListener?.remove()
-        }
         .background(
             LinearGradient(
                 gradient: Gradient(
@@ -94,30 +81,7 @@ struct ChatView: View {
                 endPoint: .bottomTrailing
             )
         )
+        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 }
 
-struct KeyboardAwareModifier: ViewModifier {
-    @State private var keyboardHeight: CGFloat = 0
-    
-    func body(content: Content) -> some View {
-        content
-            .padding(.bottom, keyboardHeight)
-            .onAppear {
-                NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { (notification) in
-                    let value = notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
-                    self.keyboardHeight = value.height
-                }
-                
-                NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { (notification) in
-                    self.keyboardHeight = 0
-                }
-            }
-    }
-}
-
-extension View {
-    func keyboardAware() -> ModifiedContent<Self, KeyboardAwareModifier> {
-        return modifier(KeyboardAwareModifier())
-    }
-}

@@ -99,17 +99,22 @@ class FSChatManager {
                     return
                 }
                 guard let snapshot = snapshot else { return }
+                
+                let batch = self.db.batch()
                 for document in snapshot.documents {
-                    self.db.collection("chats")
+                    let docRef = self.db.collection("chats")
                         .document(chat.id)
                         .collection("messages")
                         .document(document.documentID)
-                        .updateData(["isRead": true]) { error in
-                            if let error = error {
-                                print("Error updating message as read: \(error.localizedDescription)")
-                            }
-                            print("Messages updated as read successfully")
-                        }
+                    batch.updateData(["isRead": true], forDocument: docRef)
+                }
+                
+                batch.commit { error in
+                    if let error = error {
+                        print("Error updating message as read: \(error.localizedDescription)")
+                    } else {
+                        print("Messages updated as read successfully")
+                    }
                 }
             }
     }

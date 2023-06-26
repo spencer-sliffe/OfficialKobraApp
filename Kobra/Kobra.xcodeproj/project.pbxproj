@@ -62,6 +62,7 @@
 		45CFE93629C04EF6003806D5 /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45CFE93529C04EF6003806D5 /* Chat.swift */; };
 		45D5110329D0AB9100290720 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D5110229D0AB9100290720 /* SettingsView.swift */; };
 		45D5110529D0ABAF00290720 /* KobraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D5110429D0ABAF00290720 /* KobraView.swift */; };
+		45DBF7172A441F0100F0C904 /* MessageRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45DBF7162A441F0100F0C904 /* MessageRow.swift */; };
 		45E5ABDB299D8AC300DFFDC8 /* KobraApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E5ABDA299D8AC300DFFDC8 /* KobraApp.swift */; };
 		45E5ABDF299D8AC500DFFDC8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45E5ABDE299D8AC500DFFDC8 /* Assets.xcassets */; };
 		45E5ABE2299D8AC500DFFDC8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45E5ABE1299D8AC500DFFDC8 /* Preview Assets.xcassets */; };
@@ -134,6 +135,7 @@
 		45CFE93529C04EF6003806D5 /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		45D5110229D0AB9100290720 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		45D5110429D0ABAF00290720 /* KobraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KobraView.swift; sourceTree = "<group>"; };
+		45DBF7162A441F0100F0C904 /* MessageRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRow.swift; sourceTree = "<group>"; };
 		45E5ABD7299D8AC300DFFDC8 /* Kobra.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kobra.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45E5ABDA299D8AC300DFFDC8 /* KobraApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KobraApp.swift; sourceTree = "<group>"; };
 		45E5ABDE299D8AC500DFFDC8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 				45895C0A2A1B272F0022DF98 /* FoodRow.swift */,
 				459014472A2E2A6F00A778A6 /* AccountCell.swift */,
 				455B2B232A317E0800136D6D /* AccountSearchBar.swift */,
+				45DBF7162A441F0100F0C904 /* MessageRow.swift */,
 			);
 			path = CustomElements;
 			sourceTree = "<group>";
@@ -499,6 +502,7 @@
 				456429EF29FAFB1D00BC5D8F /* FSChatManager.swift in Sources */,
 				455C6E5929D7E9B700446520 /* Post.swift in Sources */,
 				45EA727F29B7B74C000FD738 /* PackageView.swift in Sources */,
+				45DBF7172A441F0100F0C904 /* MessageRow.swift in Sources */,
 				4590144A2A2E2C0100A778A6 /* AccountProfileView.swift in Sources */,
 				4543FE6129DB4A0C003B3CCC /* CustomTextFieldUI.swift in Sources */,
 				45C7171E29C63AF700679626 /* InboxViewModel.swift in Sources */,

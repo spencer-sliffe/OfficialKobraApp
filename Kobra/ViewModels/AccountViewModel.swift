@@ -59,7 +59,8 @@ class AccountViewModel: ObservableObject {
                 let followers = data["followers"] as? [String] ?? []
                 let following = data["following"] as? [String] ?? []
                 let package = data["package"] as? String ?? ""
-                var account = Account(id: user.uid, email: email, username: username, subscription: subscription, package: package, profilePicture: nil, followers: followers, following: following)
+                let bio = data["bio"] as? String ?? ""
+                var account = Account(id: user.uid, email: email, username: username, subscription: subscription, package: package, profilePicture: nil, followers: followers, following: following, bio: bio)
                 
                 // Fetch and assign package data
                 // Assign profile picture URL if available
@@ -67,7 +68,6 @@ class AccountViewModel: ObservableObject {
                    let profilePictureURL = URL(string: profilePictureURLString) {
                     account.profilePicture = profilePictureURL
                 }
-                
                 promise(.success(account))
             }
         }
@@ -128,5 +128,46 @@ class AccountViewModel: ObservableObject {
             }
         }
     }
+    
+    func updateBio(bio: String) {
+        guard let user = Auth.auth().currentUser else {
+            print("No user is currently signed in.")
+            return
+        }
 
+        isLoading = true
+        accountManager.updateBio(userId: user.uid, bio: bio) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let updatedBio):
+                    self?.account?.bio = updatedBio
+                    print("Bio updated successfully")
+                case .failure(let error):
+                    print("Error updating bio: \(error.localizedDescription)")
+                }
+                self?.isLoading = false
+            }
+        }
+    }
+
+    func deleteBio() {
+        guard let user = Auth.auth().currentUser else {
+            print("No user is currently signed in.")
+            return
+        }
+
+        isLoading = true
+        accountManager.updateBio(userId: user.uid, bio: "") { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    self?.account?.bio = ""
+                    print("Bio deleted successfully")
+                case .failure(let error):
+                    print("Error deleting bio: \(error.localizedDescription)")
+                }
+                self?.isLoading = false
+            }
+        }
+    }
 }

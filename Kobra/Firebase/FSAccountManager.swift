@@ -55,7 +55,8 @@ class FSAccountManager: ObservableObject {
             "profilePicture": account.profilePicture?.absoluteString ?? "",
             "followers": account.followers,
             "following": account.following,
-            "package": account.package
+            "package": account.package,
+            "bio": account.bio
         ]
         
         db.collection(accountCollection).document(account.id).setData(data) { error in  // updated here
@@ -76,7 +77,8 @@ class FSAccountManager: ObservableObject {
             "profilePicture": account.profilePicture?.absoluteString ?? "",
             "followers": account.followers,
             "following": account.following,
-            "package": account.package
+            "package": account.package,
+            "bio": account.bio
         ]) { error in
             if let error = error {
                 completion(.failure(error))
@@ -105,8 +107,9 @@ class FSAccountManager: ObservableObject {
         let profilePicture = data["profilePicture"] as? String
         let followers = data["followers"] as? [String] ?? []
         let following = data["following"] as? [String] ?? []
+        let bio = data["bio"] as? String ?? ""
         
-        return Account(id: id, email: email, username: username, subscription: subscription, package: package, profilePicture: profilePicture, followers: followers, following: following)
+        return Account(id: id, email: email, username: username, subscription: subscription, package: package, profilePicture: profilePicture, followers: followers, following: following, bio: bio)
     }
     
     func deleteProfilePicture(imageURL: String, completion: @escaping (Result<Void, Error>) -> Void) {
@@ -163,4 +166,17 @@ class FSAccountManager: ObservableObject {
             }
         }
     }
+    
+    func updateBio(userId: String, bio: String, completion: @escaping (Result<String, Error>) -> Void) {
+           let accountRef = db.collection(accountCollection).document(userId)
+           accountRef.updateData([
+               "bio": bio
+           ]) { error in
+               if let error = error {
+                   completion(.failure(error))
+               } else {
+                   completion(.success(bio))
+               }
+           }
+       }
 }
