@@ -65,6 +65,7 @@ struct AccountProfileView: View {
                                 .foregroundColor(.white)
                                 .minimumScaleFactor(0.5)
                                 .lineLimit(1)
+                                .padding(.trailing, 10)
                             
                             Text(account.bio) // Adding account bio here
                                 .font(.caption)
