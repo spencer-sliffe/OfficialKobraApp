@@ -72,6 +72,7 @@ class FSPostManager {
         let comments = data["comments"] as? [Comment] ?? []
         let dislikes = data["dislikes"] as? Int ?? 0
         let posterId = data["posterId"] as? String ?? ""
+        let numComments = data["numComments"] as? Int ?? 0
         
         switch postTypeString {
         case "advertisement":
@@ -145,7 +146,7 @@ class FSPostManager {
             fatalError("Unknown post type")
         }
         let imageURL = data["imageURL"] as? String
-        return Post(id: id, type: postType, likes: likes, timestamp: timestamp, imageURL: imageURL, likingUsers: likingUsers, dislikingUsers: dislikingUsers, comments: comments, dislikes: dislikes, posterId: posterId)
+        return Post(id: id, type: postType, likes: likes, timestamp: timestamp, imageURL: imageURL, likingUsers: likingUsers, dislikingUsers: dislikingUsers, comments: comments, dislikes: dislikes, posterId: posterId, numComments: numComments)
     }
     
     func addPost(_ post: Post, completion: @escaping (Result<Void, Error>) -> Void) {
@@ -169,7 +170,8 @@ class FSPostManager {
             "dislikes": post.dislikes,
             "dislikingUsers": post.dislikingUsers,
             "comments": post.comments,
-            "posterId": post.posterId
+            "posterId": post.posterId,
+            "numComments": post.numComments
         ]
         
         var postTypeString: String
@@ -455,6 +457,7 @@ class FSPostManager {
             }
         }
     }
+    
     func fetchUserPosts(userEmail: String, completion: @escaping (Result<[Post], Error>) -> Void) {
         db.collection(postsCollection).whereField("poster", isEqualTo: userEmail).getDocuments { (querySnapshot, error) in
             if let error = error {
@@ -497,9 +500,43 @@ class FSPostManager {
                 if let error = error {
                     completion(.failure(error))
                 } else {
-                    completion(.success(()))
+                    document.reference.updateData(["numComments": FieldValue.increment(Int64(1))]) { error in
+                        if let error = error {
+                            print("Error updating document: \(error)")
+                            completion(.failure(error))
+                        } else {
+                            print("Document successfully updated")
+                            completion(.success(()))
+                        }
+                    }
                 }
             }
         }
     }
+    
+    func fetchProfilePicture(_ post: Post, completion: @escaping (Result<URL, Error>) -> Void) {
+        let accountId = post.posterId
+        let ref = db.collection("Accounts").document(accountId)
+
+        ref.getDocument { (document, error) in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+
+            guard let document = document, document.exists else {
+                completion(.failure(NSError(domain: "Error fetching account data", code: 0, userInfo: nil)))
+                return
+            }
+
+            let data = document.data()!
+            if let profilePictureURLString = data["profilePicture"] as? String,
+               let profilePictureURL = URL(string: profilePictureURLString) {
+                completion(.success(profilePictureURL))
+            } else {
+                completion(.failure(NSError(domain: "Invalid URL string", code: 0, userInfo: nil)))
+            }
+        }
+    }
+
 }

@@ -97,6 +97,10 @@ class KobraViewModel: ObservableObject {
         }
     }
     
+    func fetchProfilePicture(_ post: Post) {
+        
+    }
+    
     func deletePost(_ post: Post) {
         postManager.deletePost(post) { [weak self] result in
             DispatchQueue.main.async {
@@ -131,5 +135,19 @@ class KobraViewModel: ObservableObject {
     
     func addComment(_ comment: Comment, to post: Post, completion: @escaping (Result<Void, Error>) -> Void) {
         postManager.addComment(comment, to: post, completion: completion)
+    }
+    
+    func fetchProfilePicture(for post: Post, completion: @escaping (Result<URL, Error>) -> Void) {
+        postManager.fetchProfilePicture(post) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let url):
+                    completion(.success(url))
+                case .failure(let error):
+                    print("Error fetching profile picture: \(error.localizedDescription)")
+                    completion(.failure(error))
+                }
+            }
+        }
     }
 }

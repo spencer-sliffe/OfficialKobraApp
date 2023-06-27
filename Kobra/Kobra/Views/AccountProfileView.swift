@@ -13,7 +13,7 @@ struct AccountProfileView: View {
     let accountId: String
     @ObservedObject var viewModel: AccountProfileViewModel
     @EnvironmentObject var settingsViewModel: SettingsViewModel
-    @EnvironmentObject var kobraViewModel: KobraViewModel
+    @ObservedObject var kobraViewModel = KobraViewModel()
     
     init(accountId: String) {
         self.accountId = accountId
@@ -64,9 +64,7 @@ struct AccountProfileView: View {
                                 .fontWeight(.bold)
                                 .foregroundColor(.white)
                                 .minimumScaleFactor(0.5)
-                                .lineLimit(1)
-                                .padding(.trailing, 10)
-                            
+                                .lineLimit(1)                            
                             Text(account.bio) // Adding account bio here
                                 .font(.caption)
                                 .italic()
@@ -135,6 +133,7 @@ struct AccountProfileView: View {
                 VStack(alignment: .leading, spacing: 10) {
                     ForEach(viewModel.userPosts.sorted(by: { $0.timestamp.compare($1.timestamp) == .orderedDescending })) { post in
                         PostRow(post: post)
+                            .environmentObject(kobraViewModel)
                             .background(Color.clear)
                     }
                 }

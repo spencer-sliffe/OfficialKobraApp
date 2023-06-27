@@ -11,8 +11,7 @@ import SwiftUI
 struct DiscoverView: View {
     @StateObject var viewModel = DiscoverViewModel()
     @State var searchText = ""
-    @EnvironmentObject var kobraViewModel: KobraViewModel
-    
+
     var body: some View {
         VStack(spacing: 0) {
             AccountSearchBar(text: $searchText)
@@ -22,7 +21,7 @@ struct DiscoverView: View {
                     LazyVStack(spacing: 0) {
                         ForEach(viewModel.accounts.filter({$0.email.lowercased().contains(searchText.lowercased())}), id: \.id) { account in
                             NavigationLink(
-                                destination: AccountProfileView(accountId: account.id).environmentObject(kobraViewModel), // pass account id to AccountProfileView
+                                destination: AccountProfileView(accountId: account.id),
                                 label: {
                                     AccountCell(account: account)
                                 })

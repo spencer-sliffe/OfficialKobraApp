@@ -84,9 +84,6 @@ class AccountProfileViewModel: ObservableObject {
                 }
                 
                 promise(.success(account))
-                
-                
-                
             }
         }
     }

@@ -19,6 +19,7 @@ struct PostRow: View {
     @State private var showingFullImage = false // new state for full screen image
     let currentUserId: String = Auth.auth().currentUser?.uid ?? ""
     @State private var showingDeleteConfirmation = false
+    @State private var profilePictureURL: URL?
     
     init(post: Post) {
         self.post = post
@@ -40,14 +41,14 @@ struct PostRow: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
-                NavigationLink(destination: AccountProfileView(accountId: post.posterId)) {
+                NavigationLink(destination: AccountProfileView(accountId: post.posterId).environmentObject(kobraViewModel)) {
                     getPosterName()
                 }
                 Spacer()
                 Text(post.timestamp.formatted())
                     .font(.caption)
                     .foregroundColor(.secondary)
-                    
+                
                 if currentUserId == post.posterId {
                     Button(action: deletePost) {
                         Image(systemName: "trash")
@@ -56,7 +57,7 @@ struct PostRow: View {
                 }
             }
             .padding(.bottom, 2)
-
+            
             VStack {
                 switch post.type {
                 case .advertisement(let advertisementPost):
@@ -84,7 +85,7 @@ struct PostRow: View {
                 }
             }
             .padding(.top, -8)
-
+            
             HStack {
                 Button(action: {
                     isLiked.toggle()
@@ -107,6 +108,13 @@ struct PostRow: View {
                             .foregroundColor(isLiked ? .red : .gray)
                         Text("\(likes)")
                             .foregroundColor(.primary)
+                            .font(.caption)
+                            .padding(5)
+                            .background(Color.red.opacity(0.1))
+                            .clipShape(Circle())
+                            .overlay(
+                                Circle().stroke(Color.red, lineWidth: 1)
+                            )
                     }
                 }
                 Button(action: {
@@ -128,9 +136,16 @@ struct PostRow: View {
                 }) {
                     HStack {
                         Image(systemName: isDisliked ? "hand.thumbsdown.fill" : "hand.thumbsdown")
-                            .foregroundColor(isDisliked ? .red : .gray)
+                            .foregroundColor(isDisliked ? .black : .gray)
                         Text("\(dislikes)")
                             .foregroundColor(.primary)
+                            .font(.caption)
+                            .padding(5)
+                            .background(Color.black.opacity(0.1))
+                            .clipShape(Circle())
+                            .overlay(
+                                Circle().stroke(Color.black, lineWidth: 1)
+                            )
                     }
                 }
                 Spacer()
@@ -138,10 +153,17 @@ struct PostRow: View {
                     showingComments.toggle()
                 }) {
                     HStack {
-                        Image(systemName: "bubble.right")
-                            .foregroundColor(.gray)
-                        Text("Comment")
+                        Text("\(post.numComments)")
                             .foregroundColor(.primary)
+                            .font(.caption)
+                            .padding(5)
+                            .background(Color.blue.opacity(0.1))
+                            .clipShape(Circle())
+                            .overlay(
+                                Circle().stroke(Color.blue, lineWidth: 1)
+                            )
+                        Image(systemName: "bubble.right")
+                            .foregroundColor(.blue)
                     }
                 }
             }
@@ -157,7 +179,7 @@ struct PostRow: View {
                 .stroke(Color.gray.opacity(0.2), lineWidth: 1)
         )
         .sheet(isPresented: $showingComments) {
-            CommentView(viewModel: kobraViewModel, post: post)
+            CommentView(post: post).environmentObject(kobraViewModel)
         }
         .alert(isPresented: $showingDeleteConfirmation) {
             Alert(
@@ -169,22 +191,49 @@ struct PostRow: View {
                 secondaryButton: .cancel()
             )
         }
+        .onTapGesture(count: 2) {
+            if canLike() {
+                isLiked.toggle()
+                likes += 1
+                post.likingUsers.append(currentUserId)
+                if isDisliked {
+                    isDisliked.toggle()
+                    dislikes -= 1
+                    kobraViewModel.updateDislikeCount(post, dislikeCount: dislikes, userId: currentUserId, isAdding: isDisliked)
+                }
+                kobraViewModel.updateLikeCount(post, likeCount: likes, userId: currentUserId, isAdding: isLiked)
+            }
+        }
     }
-
+    
     func deletePost() {
         showingDeleteConfirmation = true
     }
     
     func getPosterName() -> some View {
-        let image = Image(systemName: "person.circle")
-            .resizable()
-            .frame(width: 30, height: 30)
-            .foregroundColor(Color(.gray))
+        HStack {
+            if let url = profilePictureURL {
+                AsyncImage(url: url) { image in
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 30, height: 30)
+                        .clipShape(Circle())
+                } placeholder: {
+                    Image(systemName: "person.circle")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(Color(.gray))
+                }
+            } else {
+                Image(systemName: "person.circle")
+                    .resizable()
+                    .frame(width: 30, height: 30)
+                    .foregroundColor(Color(.gray))
+            }
             
-        switch post.type {
-        case .advertisement(let advertisementPost):
-            return HStack {
-                image
+            switch post.type {
+            case .advertisement(let advertisementPost):
                 Text("Advertisement by ")
                     .font(.headline)
                     .fontWeight(.bold)
@@ -192,10 +241,7 @@ struct PostRow: View {
                 Text(advertisementPost.poster)
                     .font(.headline)
                     .foregroundColor(.blue)
-            }
-        case .help(let helpPost):
-            return HStack {
-                image
+            case .help(let helpPost):
                 Text("Help Request by ")
                     .font(.headline)
                     .fontWeight(.bold)
@@ -203,10 +249,7 @@ struct PostRow: View {
                 Text(helpPost.poster)
                     .font(.headline)
                     .foregroundColor(.blue)
-            }
-        case .news(let newsPost):
-            return HStack {
-                image
+            case .news(let newsPost):
                 Text("Article by ")
                     .font(.headline)
                     .fontWeight(.bold)
@@ -214,10 +257,7 @@ struct PostRow: View {
                 Text(newsPost.poster)
                     .font(.headline)
                     .foregroundColor(.blue)
-            }
-        case .bug(let bugPost):
-            return HStack {
-                image
+            case .bug(let bugPost):
                 Text("Bug by ")
                     .font(.headline)
                     .fontWeight(.bold)
@@ -225,10 +265,7 @@ struct PostRow: View {
                 Text(bugPost.poster)
                     .font(.headline)
                     .foregroundColor(.blue)
-            }
-        case .meme(let memePost):
-            return HStack {
-                image
+            case .meme(let memePost):
                 Text("Meme by ")
                     .font(.headline)
                     .fontWeight(.bold)
@@ -236,10 +273,7 @@ struct PostRow: View {
                 Text(memePost.poster)
                     .font(.headline)
                     .foregroundColor(.blue)
-            }
-        case .market(let marketPost):
-            return HStack {
-                image
+            case .market(let marketPost):
                 Text("Product by ")
                     .font(.headline)
                     .fontWeight(.bold)
@@ -249,9 +283,18 @@ struct PostRow: View {
                     .foregroundColor(.blue)
             }
         }
+        .onAppear {
+            kobraViewModel.fetchProfilePicture(for: post) { result in
+                switch result {
+                case .success(let url):
+                    self.profilePictureURL = url
+                case .failure(let error):
+                    print("Error fetching profile picture: \(error.localizedDescription)")
+                }
+            }
+        }
     }
-
-
+    
     func canLike() -> Bool {
         return !post.likingUsers.contains(currentUserId)
     }
@@ -274,7 +317,7 @@ struct PostRow: View {
                         .scaledToFit()
                         .cornerRadius(8)
                         .contentShape(Rectangle())
-                        .onTapGesture {
+                        .onLongPressGesture {
                             showingFullImage = true
                         }
                 } placeholder: {
@@ -297,7 +340,6 @@ struct PostRow: View {
                     }
                 }
             }
-            
             Text(content)
                 .font(.subheadline)
                 .foregroundColor(.primary)
@@ -348,7 +390,7 @@ struct PostRow: View {
                         .scaledToFit()
                         .cornerRadius(8)
                         .contentShape(Rectangle())
-                        .onTapGesture {
+                        .onLongPressGesture {
                             showingFullImage = true
                         }
                 } placeholder: {

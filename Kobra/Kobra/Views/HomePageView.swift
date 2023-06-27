@@ -85,10 +85,8 @@ struct HomePageView: View {
             SettingsView(authViewModel: authViewModel)
         case 1:
             AccountView()
-                .environmentObject(kobraViewModel)
         case 2:
             DiscoverView()
-                .environmentObject(kobraViewModel)
         case 3:
             KobraView()
         case 4:

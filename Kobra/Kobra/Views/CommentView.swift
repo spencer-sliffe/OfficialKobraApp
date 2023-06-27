@@ -10,7 +10,7 @@ import SwiftUI
 import FirebaseAuth
 
 struct CommentView: View {
-    @ObservedObject var viewModel: KobraViewModel
+    @EnvironmentObject var viewModel: KobraViewModel
     @ObservedObject var post: Post
     @State private var newCommentText = ""
     
