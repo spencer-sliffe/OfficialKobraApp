@@ -13,17 +13,17 @@ struct CommentRow: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text(comment.commenter) // Display the user ID for now
+                Text(comment.commenter)
                     .font(.headline)
                     .foregroundColor(.primary)
+                Text("•")
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                Text(comment.text)
+                    .font(.body)
+                    .foregroundColor(.primary)
                 Spacer()
-                Text(comment.timestamp, style: .date)
-                    .font(.caption2)
-                    .foregroundColor(.secondary)
             }
-            Text(comment.text)
-                .font(.body)
-                .foregroundColor(.primary)
         }
         .padding(.vertical, 8)
     }

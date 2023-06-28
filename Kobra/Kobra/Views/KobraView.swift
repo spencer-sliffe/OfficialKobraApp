@@ -11,7 +11,7 @@ import Foundation
 struct KobraView: View {
     @State private var isPresentingCreatePostView = false
     @ObservedObject var viewModel = KobraViewModel()
-    @State private var selectedFeed: FeedType = .advertisement
+    @State private var selectedFeed: FeedType = .market
     
     func isPostTypeVisible(post: Post) -> Bool {
         switch selectedFeed {

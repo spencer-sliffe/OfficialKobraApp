@@ -84,6 +84,21 @@ class KobraViewModel: ObservableObject {
         fetchPosts()
     }
     
+    func deleteComment(_ comment: Comment, from post: Post, completion: @escaping (Result<Void, Error>) -> Void) {
+        postManager.deleteComment(comment, from: post) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    self?.fetchPosts()
+                    completion(.success(()))
+                case .failure(let error):
+                    print("Error deleting comment: \(error.localizedDescription)")
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
+    
     func updatePost(_ post: Post) {
         postManager.updatePost(post) { [weak self] result in
             DispatchQueue.main.async {
@@ -95,10 +110,6 @@ class KobraViewModel: ObservableObject {
                 }
             }
         }
-    }
-    
-    func fetchProfilePicture(_ post: Post) {
-        
     }
     
     func deletePost(_ post: Post) {

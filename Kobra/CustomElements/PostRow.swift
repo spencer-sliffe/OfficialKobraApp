@@ -39,9 +39,9 @@ struct PostRow: View {
     }()
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: 4) {
             HStack {
-                NavigationLink(destination: AccountProfileView(accountId: post.posterId).environmentObject(kobraViewModel)) {
+                NavigationLink(destination: AccountProfileView(accountId: post.posterId)) {
                     getPosterName()
                 }
                 Spacer()
@@ -56,7 +56,6 @@ struct PostRow: View {
                     }
                 }
             }
-            .padding(.bottom, 2)
             
             VStack {
                 switch post.type {
@@ -84,7 +83,6 @@ struct PostRow: View {
                     MarketPostContent(marketPost: marketPost, imageURL: post.imageURL)
                 }
             }
-            .padding(.top, -8)
             
             HStack {
                 Button(action: {
@@ -167,7 +165,6 @@ struct PostRow: View {
                     }
                 }
             }
-            .padding(.top, 2)
         }
         .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
         .background(
@@ -190,19 +187,6 @@ struct PostRow: View {
                 },
                 secondaryButton: .cancel()
             )
-        }
-        .onTapGesture(count: 2) {
-            if canLike() {
-                isLiked.toggle()
-                likes += 1
-                post.likingUsers.append(currentUserId)
-                if isDisliked {
-                    isDisliked.toggle()
-                    dislikes -= 1
-                    kobraViewModel.updateDislikeCount(post, dislikeCount: dislikes, userId: currentUserId, isAdding: isDisliked)
-                }
-                kobraViewModel.updateLikeCount(post, likeCount: likes, userId: currentUserId, isAdding: isLiked)
-            }
         }
     }
     
@@ -304,12 +288,12 @@ struct PostRow: View {
     }
     
     func PostContent(title: String, content: String, imageURL: String?) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 1) { // reduce spacing from 8 to 2
             Text(title)
                 .font(.title2)
                 .fontWeight(.bold)
                 .foregroundColor(.primary)
-            
+
             if let imageURL = imageURL, let url = URL(string: imageURL) {
                 AsyncImage(url: url) { image in
                     image
@@ -347,7 +331,7 @@ struct PostRow: View {
     }
     
     func MarketPostContent(marketPost: MarketPost, imageURL: String?) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 1) {
             switch marketPost.type {
             case .hardware(let hardware):
                 Text("Hardware: \(hardware.name)")

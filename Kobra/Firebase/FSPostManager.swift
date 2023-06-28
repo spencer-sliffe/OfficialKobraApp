@@ -514,6 +514,53 @@ class FSPostManager {
         }
     }
     
+    func deleteComment(_ comment: Comment, from post: Post, completion: @escaping (Result<Void, Error>) -> Void) {
+        let postId = post.id
+        let query = db.collection(postsCollection).whereField("id", isEqualTo: postId.uuidString)
+        
+        query.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            guard let document = querySnapshot?.documents.first else {
+                completion(.failure(NSError(domain: "Kobra", code: -1, userInfo: [NSLocalizedDescriptionKey: "No document found with matching post id"])))
+                return
+            }
+            
+            let commentsCollection = document.reference.collection("comments")
+            commentsCollection.whereField("id", isEqualTo: comment.id.uuidString).getDocuments { (querySnapshot, error) in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+                
+                guard let commentDocument = querySnapshot?.documents.first else {
+                    completion(.failure(NSError(domain: "Kobra", code: -1, userInfo: [NSLocalizedDescriptionKey: "No comment found with matching id"])))
+                    return
+                }
+                
+                commentDocument.reference.delete { error in
+                    if let error = error {
+                        print("Error deleting comment: \(error)")
+                        completion(.failure(error))
+                    } else {
+                        document.reference.updateData(["numComments": FieldValue.increment(Int64(-1))]) { error in
+                            if let error = error {
+                                print("Error updating document: \(error)")
+                                completion(.failure(error))
+                            } else {
+                                print("Document successfully updated")
+                                completion(.success(()))
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     func fetchProfilePicture(_ post: Post, completion: @escaping (Result<URL, Error>) -> Void) {
         let accountId = post.posterId
         let ref = db.collection("Accounts").document(accountId)

@@ -30,7 +30,7 @@ struct CommentView: View {
                 .listStyle(InsetGroupedListStyle())
                 
                 HStack {
-                    TextField("Write a comment...", text: $newCommentText)
+                    TextField("Add a comment...", text: $newCommentText)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding(.horizontal)
                         .foregroundColor(.primary)
@@ -49,7 +49,6 @@ struct CommentView: View {
                 }
                 .padding()
             }
-            .navigationTitle("Comments")
         }
     }
     
