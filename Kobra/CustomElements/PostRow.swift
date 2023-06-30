@@ -218,7 +218,7 @@ struct PostRow: View {
             
             switch post.type {
             case .advertisement(let advertisementPost):
-                Text("Advertisement by ")
+                Text("Ad : ")
                     .font(.headline)
                     .fontWeight(.bold)
                     .foregroundColor(.purple) +
@@ -226,7 +226,7 @@ struct PostRow: View {
                     .font(.headline)
                     .foregroundColor(.blue)
             case .help(let helpPost):
-                Text("Help Request by ")
+                Text("Help : ")
                     .font(.headline)
                     .fontWeight(.bold)
                     .foregroundColor(.green) +
@@ -234,7 +234,7 @@ struct PostRow: View {
                     .font(.headline)
                     .foregroundColor(.blue)
             case .news(let newsPost):
-                Text("Article by ")
+                Text("News : ")
                     .font(.headline)
                     .fontWeight(.bold)
                     .foregroundColor(.red) +
@@ -242,7 +242,7 @@ struct PostRow: View {
                     .font(.headline)
                     .foregroundColor(.blue)
             case .bug(let bugPost):
-                Text("Bug by ")
+                Text("Bug : ")
                     .font(.headline)
                     .fontWeight(.bold)
                     .foregroundColor(.orange) +
@@ -250,7 +250,7 @@ struct PostRow: View {
                     .font(.headline)
                     .foregroundColor(.blue)
             case .meme(let memePost):
-                Text("Meme by ")
+                Text("Meme : ")
                     .font(.headline)
                     .fontWeight(.bold)
                     .foregroundColor(.pink) +
@@ -258,7 +258,7 @@ struct PostRow: View {
                     .font(.headline)
                     .foregroundColor(.blue)
             case .market(let marketPost):
-                Text("Product by ")
+                Text("Item : ")
                     .font(.headline)
                     .fontWeight(.bold)
                     .foregroundColor(.yellow) +
@@ -288,7 +288,7 @@ struct PostRow: View {
     }
     
     func PostContent(title: String, content: String, imageURL: String?) -> some View {
-        VStack(alignment: .leading, spacing: 1) { // reduce spacing from 8 to 2
+        VStack(alignment: .leading, spacing: 1) {
             Text(title)
                 .font(.title2)
                 .fontWeight(.bold)
@@ -301,6 +301,8 @@ struct PostRow: View {
                         .scaledToFit()
                         .cornerRadius(8)
                         .contentShape(Rectangle())
+                        .overlay(RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.gray, lineWidth: 2)) // Add outline around the image
                         .onLongPressGesture {
                             showingFullImage = true
                         }
@@ -329,6 +331,7 @@ struct PostRow: View {
                 .foregroundColor(.primary)
         }
     }
+
     
     func MarketPostContent(marketPost: MarketPost, imageURL: String?) -> some View {
         VStack(alignment: .leading, spacing: 1) {
@@ -358,12 +361,12 @@ struct PostRow: View {
                     .font(.subheadline)
                     .foregroundColor(.primary)
             case .other(let other):
-                Text(other.description)
-                    .font(.subheadline)
-                    .foregroundColor(.primary)
                 Text("Other: \(other.title)")
                     .font(.title2)
                     .fontWeight(.bold)
+                    .foregroundColor(.primary)
+                Text(other.description)
+                    .font(.subheadline)
                     .foregroundColor(.primary)
             }
             
@@ -374,6 +377,8 @@ struct PostRow: View {
                         .scaledToFit()
                         .cornerRadius(8)
                         .contentShape(Rectangle())
+                        .overlay(RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.gray, lineWidth: 2)) // Add outline around the image
                         .onLongPressGesture {
                             showingFullImage = true
                         }

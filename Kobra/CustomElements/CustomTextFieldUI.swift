@@ -14,44 +14,66 @@ struct CustomTextFieldUI: UIViewRepresentable {
     var placeholder: String
     var onEditingChanged: (Bool) -> Void = { _ in }
     
-    func makeUIView(context: Context) -> UITextField {
-        let textField = UITextField()
-        textField.placeholder = placeholder
-        textField.textColor = .white
-        textField.attributedPlaceholder = NSAttributedString(
-            string: textField.placeholder ?? "",
-            attributes: [.foregroundColor: UIColor.white]
-        )
-        textField.delegate = context.coordinator
-        textField.addTarget(context.coordinator, action: #selector(Coordinator.textFieldDidChange), for: .editingChanged)
-        return textField
+    func makeUIView(context: Context) -> UITextView {
+        let textView = UITextView()
+        textView.delegate = context.coordinator
+        textView.text = text
+        textView.textColor = .white
+        textView.backgroundColor = .clear
+        textView.font = .systemFont(ofSize: 16)
+        textView.isScrollEnabled = true
+        textView.textContainer.lineBreakMode = .byWordWrapping
+        textView.textContainer.maximumNumberOfLines = 0
+        
+        if textView.text.isEmpty {
+            textView.text = placeholder
+            textView.textColor = .gray
+        }
+        
+        return textView
     }
     
-    func updateUIView(_ uiView: UITextField, context: Context) {
-        uiView.text = text
+    func updateUIView(_ uiView: UITextView, context: Context) {
+        if uiView.text == placeholder {
+            uiView.text = nil
+            uiView.textColor = .white
+        }
     }
     
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
     
-    class Coordinator: NSObject, UITextFieldDelegate {
+    class Coordinator: NSObject, UITextViewDelegate {
         var parent: CustomTextFieldUI
         
         init(_ parent: CustomTextFieldUI) {
             self.parent = parent
         }
         
-        @objc func textFieldDidChange(_ textField: UITextField) {
-            parent.text = textField.text ?? ""
+        func textViewDidChange(_ textView: UITextView) {
+            if textView.text == parent.placeholder {
+                textView.text = nil
+                textView.textColor = .white
+            }
+            parent.text = textView.text
         }
         
-        func textFieldDidBeginEditing(_ textField: UITextField) {
+        func textViewDidBeginEditing(_ textView: UITextView) {
+            if textView.text == parent.placeholder {
+                textView.text = nil
+                textView.textColor = .white
+            }
             parent.onEditingChanged(true)
         }
         
-        func textFieldDidEndEditing(_ textField: UITextField) {
+        func textViewDidEndEditing(_ textView: UITextView) {
+            if textView.text.isEmpty {
+                textView.text = parent.placeholder
+                textView.textColor = .gray
+            }
             parent.onEditingChanged(false)
         }
     }
 }
+

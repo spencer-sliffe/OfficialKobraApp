@@ -79,10 +79,7 @@ class AccountViewModel: ObservableObject {
                 promise(.failure(NSError(domain: "No user is currently signed in.", code: 0, userInfo: nil)))
                 return
             }
-            let userEmail = user.email ?? ""
-            let emailComponents = userEmail.split(separator: "@")
-            let displayName = String(emailComponents[0])
-            FSPostManager.shared.fetchUserPosts(userEmail: displayName) { result in
+            FSPostManager.shared.fetchUserPosts(userId: user.uid) { result in
                 switch result {
                 case .success(let posts):
                     promise(.success(posts))
@@ -165,6 +162,27 @@ class AccountViewModel: ObservableObject {
                     print("Bio deleted successfully")
                 case .failure(let error):
                     print("Error deleting bio: \(error.localizedDescription)")
+                }
+                self?.isLoading = false
+            }
+        }
+    }
+    
+    func updateUsername(username: String) {
+        guard let user = Auth.auth().currentUser else {
+            print("No user is currently signed in.")
+            return
+        }
+
+        isLoading = true
+        accountManager.updateUsername(userId: user.uid, username: username) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let updatedUsername):
+                    self?.account?.username = updatedUsername
+                    print("Username updated successfully")
+                case .failure(let error):
+                    print("Error updating username: \(error.localizedDescription)")
                 }
                 self?.isLoading = false
             }

@@ -56,7 +56,7 @@ class FSAccountManager: ObservableObject {
             "followers": account.followers,
             "following": account.following,
             "package": account.package,
-            "bio": account.bio
+            "bio": account.bio ?? ""
         ]
         
         db.collection(accountCollection).document(account.id).setData(data) { error in  // updated here
@@ -78,7 +78,7 @@ class FSAccountManager: ObservableObject {
             "followers": account.followers,
             "following": account.following,
             "package": account.package,
-            "bio": account.bio
+            "bio": account.bio ?? ""
         ]) { error in
             if let error = error {
                 completion(.failure(error))
@@ -179,4 +179,17 @@ class FSAccountManager: ObservableObject {
                }
            }
        }
+    
+    func updateUsername(userId: String, username: String, completion: @escaping (Result<String, Error>) -> Void) {
+        let accountRef = db.collection(accountCollection).document(userId)
+        accountRef.updateData([
+            "username": username
+        ]) { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(username))
+            }
+        }
+    }
 }

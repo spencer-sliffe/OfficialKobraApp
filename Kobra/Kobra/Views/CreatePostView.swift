@@ -24,6 +24,7 @@ struct CreatePostView: View {
     @State private var marketPostTypeExpanded = false
     @State private var hardwareConditionExpanded = false
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
+    @State private var username: String = ""
     
     var isPostDataValid: Bool {
         if title.isEmpty || content.isEmpty || (postType != "Meme" && category.isEmpty) {
@@ -85,78 +86,83 @@ struct CreatePostView: View {
                 }
                 Spacer()
                 Button(action: {
-                    guard let posterId = Auth.auth().currentUser?.uid else {
-                        print("Error: User not logged in or uid not found")
-                        return
-                    }
-                    guard let userEmail = Auth.auth().currentUser?.email else {
-                        print("Error: User not logged in or email not found")
-                        return
-                    }
-                    
-                    let username = userEmail.components(separatedBy: "@")[0]
-                    let id = UUID()
-                    let postType: Post.PostType
-                    
-                    switch self.postType {
-                    case "Advertisement":
-                        let advertisementPost = AdvertisementPost(poster: username, title: title, content: content, category: category)
-                        postType = .advertisement(advertisementPost)
-                    case "Help":
-                        let helpPost = HelpPost(poster: username, question: title, details: content, category: category)
-                        postType = .help(helpPost)
-                    case "News":
-                        let newsPost = NewsPost(poster: username, headline: title, article: content, category: category)
-                        postType = .news(newsPost)
-                    case "Bug":
-                        let bugPost = AppBugPost(poster: username, title: title, content: content, category: category)
-                        postType = .bug(bugPost)
-                    case "Meme":
-                        let memePost = MemePost(poster: username, title: title, content: content)
-                        postType = .meme(memePost)
-                    case "Market":
-                        let marketPostType: MarketPost.MarketPostType
-                        switch self.marketPostType {
-                        case "Hardware":
-                            let hardware = Hardware(name: title, condition: Hardware.HardwareCondition(rawValue: hardwareCondition)!, description: content)
-                            marketPostType = .hardware(hardware)
-                        case "Software":
-                            let software = Software(name: title, description: content)
-                            marketPostType = .software(software)
-                        case "Service":
-                            let service = Service(name: title, description: content)
-                            marketPostType = .service(service)
-                        case "Other":
-                            let other = Other(title: title, description: content)
-                            marketPostType = .other(other)
-                        default:
-                            fatalError("Unknown market post type")
-                        }
-                        let marketPost = MarketPost(vendor: username, type: marketPostType, price: stepperPrice, category: category)
-                        postType = .market(marketPost)
-                    default:
-                        fatalError("Unknown post type")
-                    }
-                    
-                    let timestamp = Date()
-                    let post = Post(id: id, type: postType, likes: 0, timestamp: timestamp, imageURL: nil, likingUsers: [""], comments: [], posterId: posterId)
-                    
-                    if let image = selectedImage {
-                        kobraViewModel.uploadImage(image, postId: id.uuidString) { result in
-                            switch result {
-                            case .success(let imageURL):
-                                let updatedPost = post
-                                updatedPost.imageURL = imageURL
-                                kobraViewModel.addPost(updatedPost) { _ in }
-                            case .failure(let error):
-                                print("Error uploading image: \(error.localizedDescription)")
+                    kobraViewModel.fetchUsername { result in
+                        switch result {
+                        case .success(let fetchedUsername):
+                            self.username = fetchedUsername
+
+                            guard let posterId = Auth.auth().currentUser?.uid else {
+                                print("Error: User not logged in or uid not found")
+                                return
                             }
+                            
+                            let id = UUID()
+                            let postType: Post.PostType
+                            
+                            switch self.postType {
+                            case "Advertisement":
+                                let advertisementPost = AdvertisementPost(poster: username, title: title, content: content, category: category)
+                                postType = .advertisement(advertisementPost)
+                            case "Help":
+                                let helpPost = HelpPost(poster: username, question: title, details: content, category: category)
+                                postType = .help(helpPost)
+                            case "News":
+                                let newsPost = NewsPost(poster: username, headline: title, article: content, category: category)
+                                postType = .news(newsPost)
+                            case "Bug":
+                                let bugPost = AppBugPost(poster: username, title: title, content: content, category: category)
+                                postType = .bug(bugPost)
+                            case "Meme":
+                                let memePost = MemePost(poster: username, title: title, content: content)
+                                postType = .meme(memePost)
+                            case "Market":
+                                let marketPostType: MarketPost.MarketPostType
+                                switch self.marketPostType {
+                                case "Hardware":
+                                    let hardware = Hardware(name: title, condition: Hardware.HardwareCondition(rawValue: hardwareCondition)!, description: content)
+                                    marketPostType = .hardware(hardware)
+                                case "Software":
+                                    let software = Software(name: title, description: content)
+                                    marketPostType = .software(software)
+                                case "Service":
+                                    let service = Service(name: title, description: content)
+                                    marketPostType = .service(service)
+                                case "Other":
+                                    let other = Other(title: title, description: content)
+                                    marketPostType = .other(other)
+                                default:
+                                    fatalError("Unknown market post type")
+                                }
+                                let marketPost = MarketPost(vendor: username, type: marketPostType, price: stepperPrice, category: category)
+                                postType = .market(marketPost)
+                            default:
+                                fatalError("Unknown post type")
+                            }
+                            
+                            let timestamp = Date()
+                            let post = Post(id: id, type: postType, likes: 0, timestamp: timestamp, imageURL: nil, likingUsers: [""], comments: [], posterId: posterId)
+                            
+                            if let image = selectedImage {
+                                kobraViewModel.uploadImage(image, postId: id.uuidString) { result in
+                                    switch result {
+                                    case .success(let imageURL):
+                                        let updatedPost = post
+                                        updatedPost.imageURL = imageURL
+                                        kobraViewModel.addPost(updatedPost) { _ in }
+                                    case .failure(let error):
+                                        print("Error uploading image: \(error.localizedDescription)")
+                                    }
+                                }
+                            } else {
+                                kobraViewModel.addPost(post) { _ in }
+                            }
+                            
+                            presentationMode.wrappedValue.dismiss()
+                        case .failure(let error):
+                            // Handle or print the error here
+                            print("Error: \(error)")
                         }
-                    } else {
-                        kobraViewModel.addPost(post) { _ in }
                     }
-                    
-                    presentationMode.wrappedValue.dismiss()
                 })  {
                     Text(NSLocalizedString("Post", comment: ""))
                         .foregroundColor(.white)
@@ -166,8 +172,9 @@ struct CreatePostView: View {
                         .cornerRadius(8)
                         .overlay(
                             RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.white, lineWidth: 1)
+                                .stroke(Color.white, lineWidth: 2)
                         )
+                        .padding([.top, .bottom])
                 }
                 .disabled(!isPostDataValid) // Disable the button if post data is not valid
                 .opacity(isPostDataValid ? 1 : 0.5) // Reduce opacity if post data is not valid

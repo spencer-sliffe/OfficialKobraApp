@@ -8,6 +8,8 @@
 import Foundation
 import Combine
 import SwiftUI
+import FirebaseAuth
+import Firebase
 
 class KobraViewModel: ObservableObject {
     @Published var posts: [Post] = []
@@ -161,4 +163,22 @@ class KobraViewModel: ObservableObject {
             }
         }
     }
+    
+    func fetchUsername(completion: @escaping (Result<String, Error>) -> Void) {
+           guard let user = Auth.auth().currentUser else {
+               completion(.failure(NSError(domain: "No user is currently signed in.", code: 0, userInfo: nil)))
+               return
+           }
+           let db = Firestore.firestore()
+           let ref = db.collection("Accounts").document(user.uid)
+           ref.getDocument { (document, error) in
+               if let error = error {
+                   completion(.failure(error))
+               } else if let document = document, document.exists, let data = document.data(), let username = data["username"] as? String {
+                   completion(.success(username))
+               } else {
+                   completion(.failure(NSError(domain: "Error fetching account data", code: 0, userInfo: nil)))
+               }
+           }
+       }
 }

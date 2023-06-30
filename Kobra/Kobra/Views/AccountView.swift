@@ -16,13 +16,13 @@ struct AccountView: View {
     @State private var showingActionSheet = false
     @State private var isEditingBio = false
     @State private var bioInput: String = ""
-
+    
     var body: some View {
         VStack {
             if viewModel.isLoading {
                 ProgressView()
             } else if let account = viewModel.account {
-                let displayName = account.username.uppercased()
+                let displayName = account.username
                 HStack {
                     ZStack {
                         if let profilePicture = account.profilePicture {
@@ -86,6 +86,7 @@ struct AccountView: View {
                                 .foregroundColor(.white)
                                 .minimumScaleFactor(0.5)
                                 .lineLimit(1)
+                                .padding(.leading, -10)
                             
                             // Bio
                             if isEditingBio {
@@ -108,13 +109,15 @@ struct AccountView: View {
                                     }
                                 }
                             } else {
-                                Text(account.bio)
-                                    .font(.subheadline)
-                                    .fontWeight(.medium)
-                                    .foregroundColor(.white)
+                                if let bio = account.bio {
+                                    Text(bio)
+                                        .font(.subheadline)
+                                        .fontWeight(.medium)
+                                        .foregroundColor(.white)
+                                }
                                 Button(action: {
                                     isEditingBio = true
-                                    bioInput = account.bio
+                                    bioInput = account.bio ?? ""
                                 }) {
                                     Text("Edit Bio")
                                         .font(.caption)
@@ -180,7 +183,7 @@ struct AccountView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .navigationBarHidden(true)
     }
-
+    
     func loadImage() {
         guard let inputImage = inputImage else { return }
         viewModel.updateProfilePicture(image: inputImage)

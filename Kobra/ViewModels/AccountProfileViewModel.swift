@@ -90,24 +90,12 @@ class AccountProfileViewModel: ObservableObject {
     
     private func fetchUserPosts() -> Future<[Post], Error> {
         Future { promise in
-            let db = Firestore.firestore()
-            let ref = db.collection("Accounts").document(self.accountId)
-            ref.getDocument { (document, error) in
-                guard let document = document, document.exists, error == nil else {
-                    promise(.failure(NSError(domain: "Error fetching account data", code: 0, userInfo: nil)))
-                    return
-                }
-                let data = document.data()!
-                let userEmail = data["email"] as? String ?? ""
-                let emailComponents = userEmail.split(separator: "@")
-                let displayName = String(emailComponents[0])
-                FSPostManager.shared.fetchUserPosts(userEmail: displayName) { result in
-                    switch result {
-                    case .success(let posts):
-                        promise(.success(posts))
-                    case .failure(let error):
-                        promise(.failure(error))
-                    }
+            FSPostManager.shared.fetchUserPosts(userId: self.accountId) { result in
+                switch result {
+                case .success(let posts):
+                    promise(.success(posts))
+                case .failure(let error):
+                    promise(.failure(error))
                 }
             }
         }
