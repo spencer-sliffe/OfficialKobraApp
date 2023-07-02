@@ -128,22 +128,23 @@ struct AccountProfileView: View {
                             .padding(.bottom, 12)
                             .padding(.leading, 13)
                     }
-                    
-                    Button(action: {
-                        if viewModel.isFollowing {
-                            viewModel.unfollowAccountById()
-                        } else {
-                            viewModel.followAccountById()
+                    if(viewModel.showFollowButton){
+                        Button(action: {
+                            if viewModel.isFollowing {
+                                viewModel.unfollowAccountById()
+                            } else {
+                                viewModel.followAccountById()
+                            }
+                        }) {
+                            Text(viewModel.isFollowing ? "Following" : "Follow")
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 40)
+                                .background(viewModel.isFollowing ? Color.gray : Color.blue)
+                                .cornerRadius(5)
                         }
-                    }) {
-                        Text(viewModel.isFollowing ? "Following" : "Follow")
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                            .padding(.horizontal, 40)
-                            .background(viewModel.isFollowing ? Color.gray : Color.blue)
-                            .cornerRadius(5)
+                        .padding(.leading, 14)
                     }
-                    .padding(.leading, 14)
                 }
                 .foregroundColor(.white)
                 .padding(.leading, 40) // move the VStack slightly to the right

@@ -16,46 +16,50 @@ struct DropDownMenu: View {
     
     var body: some View {
         VStack {
-            HStack {
-                Text(selection)
-                    .foregroundColor(.white)
-                    .font(.system(size: 20, weight: .bold, design: .rounded))
-                Spacer()
-                Image(systemName: "chevron.down")
-                    .resizable()
-                    .frame(width: 13, height: 6)
-                    .foregroundColor(.white)
-            }
-            .padding()
-            .background(Color.clear)
-            .cornerRadius(8)
-            .overlay(
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(Color.white, lineWidth: 1)
-            )
-            .shadow(radius: 5)
-            .onTapGesture {
+            Button(action: {
                 withAnimation(.spring()) {
                     isExpanded.toggle()
                 }
+            }) {
+                HStack {
+                    Text(selection)
+                        .foregroundColor(.white)
+                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                    Spacer()
+                    Image(systemName: "chevron.down")
+                        .resizable()
+                        .frame(width: 13, height: 6)
+                        .foregroundColor(.white)
+                }
+                .padding()
+                .background(Color.clear)
+                .cornerRadius(8)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.white, lineWidth: 1)
+                )
+                .shadow(radius: 5)
             }
+            
             if isExpanded {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 0) {
                         ForEach(options.indices, id: \.self) { index in
-                            Text(options[index])
-                                .font(.system(size: 18, weight: .semibold, design: .rounded))
-                                .foregroundColor(selection == options[index] ? .blue : .white)
-                                .padding(.vertical, 10)
-                                .padding(.horizontal)
-                                .background(Color.clear)
-                                .onTapGesture {
-                                    withAnimation(.spring()) {
-                                        selection = options[index]
-                                        isExpanded = false
-                                        onOptionSelected(index)
-                                    }
+                            Button(action: {
+                                withAnimation(.spring()) {
+                                    selection = options[index]
+                                    isExpanded = false
+                                    onOptionSelected(index)
                                 }
+                            }) {
+                                Text(options[index])
+                                    .font(.system(size: 18, weight: .semibold, design: .rounded))
+                                    .foregroundColor(selection == options[index] ? .blue : .white)
+                                    .padding(.vertical, 10)
+                                    .padding(.horizontal)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .background(Color.clear)
+                            }
                             if index != options.count - 1 {
                                 Divider().background(Color.white)
                             }

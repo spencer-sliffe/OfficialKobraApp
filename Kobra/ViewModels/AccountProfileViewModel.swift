@@ -19,7 +19,7 @@ class AccountProfileViewModel: ObservableObject {
     @Published var isFollowing = false
     @Published var followers: [String] = []
     @Published var following: [String] = []
-    
+    @Published var showFollowButton = true
     init(accountId: String) {
         self.accountId = accountId
         fetchAccount()
@@ -59,6 +59,14 @@ class AccountProfileViewModel: ObservableObject {
         Future { promise in
             let db = Firestore.firestore()
             let ref = db.collection("Accounts").document(self.accountId)
+            guard let currentUser = Auth.auth().currentUser else {
+                print("Error: No user is currently signed in.")
+                return
+            }
+            let currentUserId = currentUser.uid
+            if currentUserId == self.accountId {
+                self.showFollowButton = false
+            }
             ref.getDocument { (document, error) in
                 guard let document = document, document.exists, error == nil else {
                     promise(.failure(NSError(domain: "Error fetching account data", code: 0, userInfo: nil)))

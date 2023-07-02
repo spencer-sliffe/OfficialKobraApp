@@ -13,7 +13,7 @@ struct FollowingView: View {
 
     var body: some View {
         List {
-            ForEach(viewModel.following) { followed in
+            ForEach(viewModel.following, id: \.self) { followed in
                 FollowCell(accountId: followed)
             }
         }

@@ -2,7 +2,7 @@
 //  FollowCell.swift
 //  Kobra
 //
-//  Created by Spencer Sliffe on 7/2/23.
+//  Created by Spencer SLiffe on 7/2/23.
 //
 
 import Foundation
@@ -67,7 +67,6 @@ struct FollowCell: View {
                 }
                 Spacer() // Add this line
             }
-            
         }
         .padding(.all, 5)
         .background(Color.white)
