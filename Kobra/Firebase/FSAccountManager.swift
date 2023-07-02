@@ -29,7 +29,7 @@ class FSAccountManager: ObservableObject {
             }
         }
     }
-  
+    
     func fetchAccounts(completion: @escaping (Result<[Account], Error>) -> Void) {
         db.collection(accountCollection).getDocuments { (querySnapshot, error) in
             if let error = error {
@@ -168,17 +168,17 @@ class FSAccountManager: ObservableObject {
     }
     
     func updateBio(userId: String, bio: String, completion: @escaping (Result<String, Error>) -> Void) {
-           let accountRef = db.collection(accountCollection).document(userId)
-           accountRef.updateData([
-               "bio": bio
-           ]) { error in
-               if let error = error {
-                   completion(.failure(error))
-               } else {
-                   completion(.success(bio))
-               }
-           }
-       }
+        let accountRef = db.collection(accountCollection).document(userId)
+        accountRef.updateData([
+            "bio": bio
+        ]) { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(bio))
+            }
+        }
+    }
     
     func updateUsername(userId: String, username: String, completion: @escaping (Result<String, Error>) -> Void) {
         let accountRef = db.collection(accountCollection).document(userId)

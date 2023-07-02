@@ -6,7 +6,7 @@
 //
 import Foundation
 
-struct Account {
+struct Account: Identifiable{
     var id: String
     var email: String
     var username: String

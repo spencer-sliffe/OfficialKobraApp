@@ -17,6 +17,8 @@ class AccountProfileViewModel: ObservableObject {
     private var accountId: String
     var currentUserId: String = ""
     @Published var isFollowing = false
+    @Published var followers: [String] = []
+    @Published var following: [String] = []
     
     init(accountId: String) {
         self.accountId = accountId
@@ -67,7 +69,9 @@ class AccountProfileViewModel: ObservableObject {
                 let username = data["username"] as? String ?? ""
                 let subscription = data["subscription"] as? Bool ?? false
                 let followers = data["followers"] as? [String] ?? []  // Holds ids
+                self.followers = followers
                 let following = data["following"] as? [String] ?? []  // Holds ids
+                self.following = following
                 let package = data["package"] as? String ?? ""
                 let bio = data["bio"] as? String ?? ""
                 var account = Account(id: self.accountId, email: email, username: username, subscription: subscription, package: package, profilePicture: nil, followers: followers, following: following, bio: bio)

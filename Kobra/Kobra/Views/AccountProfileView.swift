@@ -14,6 +14,8 @@ struct AccountProfileView: View {
     @ObservedObject var viewModel: AccountProfileViewModel
     @EnvironmentObject var settingsViewModel: SettingsViewModel
     @ObservedObject var kobraViewModel = KobraViewModel()
+    @State var showFollowerView = false
+    @State var showFollowingView = false
     
     init(accountId: String) {
         self.accountId = accountId
@@ -65,41 +67,53 @@ struct AccountProfileView: View {
                         }
                         Spacer()
                         VStack {
-                            VStack(alignment: .center, spacing: 0) {
-                                Text("\(account.followers.count)")
-                                    .font(.headline)
-                                    .fontWeight(.bold)
-                                
-                                Text("Followers")
-                                    .font(.caption)
-                                    .fontWeight(.medium)
+                            Button(action: {
+                                showFollowerView = true
+                            }) {
+                                VStack(alignment: .center, spacing: 0) {
+                                    Text("\(account.followers.count)")
+                                        .font(.headline)
+                                        .fontWeight(.bold)
+                                    Text("Followers")
+                                        .font(.caption)
+                                        .fontWeight(.medium)
+                                }
+                                .padding(.leading, 5)
+                                .padding(.trailing, 5)
+                                .padding(.vertical, 2) // Padding inside the border
+                                .background(
+                                    RoundedRectangle(cornerRadius: 5) // Rounded Rectangle with corner radius of 15
+                                        .stroke(Color.white, lineWidth: 2) // White border with line width of 2
+                                )
                             }
-                            .padding(.leading, 5)
-                            .padding(.trailing, 5)
-                            .padding(.vertical, 2)// Padding inside the border
-                            .background(
-                                RoundedRectangle(cornerRadius: 5) // Rounded Rectangle with corner radius of 15
-                                    .stroke(Color.white, lineWidth: 2) // White border with line width of 2
-                            )
+                            .sheet(isPresented: $showFollowerView) {
+                                FollowerView(viewModel: viewModel) // Provide necessary inputs if needed
+                            }
                         }
                         
                         VStack {
-                            VStack(alignment: .center, spacing: 0) {
-                                Text("\(account.following.count)")
-                                    .font(.headline)
-                                    .fontWeight(.bold)
-                                
-                                Text("Following")
-                                    .font(.caption)
-                                    .fontWeight(.medium)
+                            Button(action: {
+                                showFollowingView = true
+                            }) {
+                                VStack(alignment: .center, spacing: 0) {
+                                    Text("\(account.following.count)")
+                                        .font(.headline)
+                                        .fontWeight(.bold)
+                                    Text("Following")
+                                        .font(.caption)
+                                        .fontWeight(.medium)
+                                }
+                                .padding(.leading, 5)
+                                .padding(.trailing, 5)
+                                .padding(.vertical, 2) // Padding inside the border
+                                .background(
+                                    RoundedRectangle(cornerRadius: 5) // Rounded Rectangle with corner radius of 15
+                                        .stroke(Color.white, lineWidth: 2) // White border with line width of 2
+                                )
                             }
-                            .padding(.leading, 5)
-                            .padding(.trailing, 5)
-                            .padding(.vertical, 2) // Padding inside the border
-                            .background(
-                                RoundedRectangle(cornerRadius: 5) // Rounded Rectangle with corner radius of 15
-                                    .stroke(Color.white, lineWidth: 2) // White border with line width of 2
-                            )
+                            .sheet(isPresented: $showFollowingView) {
+                                FollowingView(viewModel: viewModel) // Provide necessary inputs if needed
+                            }
                         }
                         Spacer()
                         Spacer()
