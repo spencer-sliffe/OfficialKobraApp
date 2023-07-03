@@ -122,11 +122,15 @@ struct AccountProfileView: View {
                     .padding(.bottom, -12)
                     
                     if let bio = account.bio {
-                        Text(bio)
-                            .font(.caption)
-                            .foregroundColor(.white)
-                            .padding(.bottom, 12)
-                            .padding(.leading, 13)
+                        VStack(alignment: .leading) {
+                            Text(bio)
+                                .font(.caption)
+                                .foregroundColor(.white)
+                                .lineLimit(nil) // Allows text to wrap onto as many lines as needed
+                        }
+                        .frame(maxWidth: 200) // Adjust this to fit your needs
+                        .padding(.bottom, 12)
+                        .padding(.leading, 13)
                     }
                     if(viewModel.showFollowButton){
                         Button(action: {

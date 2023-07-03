@@ -16,6 +16,9 @@ struct AccountView: View {
     @State private var showingActionSheet = false
     @State private var isEditingBio = false
     @State private var bioInput: String = ""
+    @State var showFollowerView = false
+    @State var showFollowingView = false
+    
     
     var body: some View {
         VStack {
@@ -90,10 +93,8 @@ struct AccountView: View {
                             
                             // Bio
                             if isEditingBio {
-                                TextField("Bio", text: $bioInput)
-                                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                                CustomTextField(text: $bioInput, placeholder: "Bio")
                                     .padding(2)
-                                    .foregroundColor(.black)
                                 HStack {
                                     Button(action: {
                                         isEditingBio = false
@@ -126,37 +127,52 @@ struct AccountView: View {
                             }
                             
                             HStack {
-                                VStack {
-                                    Text("\(account.followers.count)")
-                                        .font(.subheadline)
-                                        .fontWeight(.bold)
-                                    Text("Followers")
-                                        .font(.caption)
-                                        .fontWeight(.medium)
+                                Button(action: {
+                                    showFollowerView = true
+                                }) {
+                                    VStack {
+                                        Text("\(account.followers.count)")
+                                            .font(.subheadline)
+                                            .fontWeight(.bold)
+                                        Text("Followers")
+                                            .font(.caption)
+                                            .fontWeight(.medium)
+                                    }
+                                    .padding(2)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 5)
+                                            .stroke(Color.white, lineWidth: 2)
+                                    )
+                                    .padding(.trailing)
                                 }
-                                .padding(2)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 5)
-                                        .stroke(Color.white, lineWidth: 2)
-                                )
-                                .padding(.trailing)
+                                .sheet(isPresented: $showFollowerView) {
+                                    FollowerView(viewModel: AccountProfileViewModel(accountId: viewModel.accountId))
+                                }
                                 
-                                VStack {
-                                    Text("\(account.following.count)")
-                                        .font(.subheadline)
-                                        .fontWeight(.bold)
-                                    Text("Following")
-                                        .font(.caption)
-                                        .fontWeight(.medium)
+                                Button(action: {
+                                    showFollowingView = true
+                                }) {
+                                    VStack {
+                                        Text("\(account.following.count)")
+                                            .font(.subheadline)
+                                            .fontWeight(.bold)
+                                        Text("Following")
+                                            .font(.caption)
+                                            .fontWeight(.medium)
+                                    }
+                                    .padding(2)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 5)
+                                            .stroke(Color.white, lineWidth: 2)
+                                    )
+                                    .padding(.trailing)
                                 }
-                                .padding(2)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 5)
-                                        .stroke(Color.white, lineWidth: 2)
-                                )
-                                .padding(.trailing)
+                                .sheet(isPresented: $showFollowingView) {
+                                    FollowingView(viewModel: AccountProfileViewModel(accountId: viewModel.accountId)) 
+                                }
                             }
                             .foregroundColor(.white)
+                            
                         }
                     }
                 }

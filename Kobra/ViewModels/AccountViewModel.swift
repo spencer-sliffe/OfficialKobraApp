@@ -13,6 +13,7 @@ class AccountViewModel: ObservableObject {
     @Published var isLoading = true
     let accountManager = FSAccountManager.shared
     @Published var userPosts: [Post] = []
+    @Published var accountId = ""
     
     private var cancellables: Set<AnyCancellable> = []
     
@@ -36,6 +37,8 @@ class AccountViewModel: ObservableObject {
                 self.isLoading = false
             })
             .store(in: &cancellables)
+        let user = Auth.auth().currentUser
+        self.accountId = user?.uid ?? ""
     }
     
     private func fetchUserData() -> Future<Account, Error> {

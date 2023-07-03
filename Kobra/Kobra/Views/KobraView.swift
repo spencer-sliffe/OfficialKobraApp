@@ -168,6 +168,9 @@ struct KobraView: View {
                         }
                     }
                 }
+                .refreshable {
+                    viewModel.fetchPosts()
+                }
                 .padding(.trailing, 1)  // Add some padding to the right side of the ScrollView
                 .background(Color.clear)
                 .overlay(  // Add an overlay to the right side of the ScrollView
