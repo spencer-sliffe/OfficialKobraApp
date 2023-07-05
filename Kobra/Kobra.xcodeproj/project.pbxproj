@@ -14,6 +14,9 @@
 		451C33F62A01691B00259B86 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C33F52A01691B00259B86 /* SettingsViewModel.swift */; };
 		451C33FA2A0175FD00259B86 /* MainAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C33F92A0175FD00259B86 /* MainAppView.swift */; };
 		451C33FC2A0190F200259B86 /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451C33FB2A0190F200259B86 /* ChangePasswordView.swift */; };
+		451CADFF2A55D360009BC1F7 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CADFE2A55D360009BC1F7 /* Notification.swift */; };
+		451CAE012A55DBB3009BC1F7 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CAE002A55DBB3009BC1F7 /* NotificationView.swift */; };
+		451CAE032A55DBC6009BC1F7 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CAE022A55DBC6009BC1F7 /* NotificationViewModel.swift */; };
 		452430FA29DAA0E40000B5AB /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452430F929DAA0E40000B5AB /* SearchBar.swift */; };
 		4525CFC429DB407E005C0CE8 /* KobraPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4525CFC329DB407E005C0CE8 /* KobraPicker.swift */; };
 		4527837929D8AB3D00B633FB /* FSPostManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4527837829D8AB3D00B633FB /* FSPostManager.swift */; };
@@ -90,6 +93,9 @@
 		451C33F52A01691B00259B86 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		451C33F92A0175FD00259B86 /* MainAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppView.swift; sourceTree = "<group>"; };
 		451C33FB2A0190F200259B86 /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
+		451CADFE2A55D360009BC1F7 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		451CAE002A55DBB3009BC1F7 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
+		451CAE022A55DBC6009BC1F7 /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		452430F929DAA0E40000B5AB /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		4525CFC329DB407E005C0CE8 /* KobraPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KobraPicker.swift; sourceTree = "<group>"; };
 		4527837829D8AB3D00B633FB /* FSPostManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FSPostManager.swift; sourceTree = "<group>"; };
@@ -271,6 +277,7 @@
 				455C6E5829D7E9B700446520 /* Post.swift */,
 				45074EE629E866590096C82A /* Comment.swift */,
 				45895C082A1B25CB0022DF98 /* Food.swift */,
+				451CADFE2A55D360009BC1F7 /* Notification.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -290,6 +297,7 @@
 				459BE6032A18032100625E53 /* FoodViewModel.swift */,
 				459246B12A2FE0FD00D564AE /* AccountProfileViewModel.swift */,
 				45BB7BC62A51EE4D00A95831 /* FollowCellViewModel.swift */,
+				451CAE022A55DBC6009BC1F7 /* NotificationViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -324,6 +332,7 @@
 				459014492A2E2C0100A778A6 /* AccountProfileView.swift */,
 				45BB7BC02A4FE85A00A95831 /* FollowerView.swift */,
 				45BB7BC22A4FE86700A95831 /* FollowingView.swift */,
+				451CAE002A55DBB3009BC1F7 /* NotificationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -381,7 +390,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					45E5ABD6299D8AC300DFFDC8 = {
 						CreatedOnToolsVersion = 14.2;
@@ -493,14 +502,17 @@
 				45CAAA2429DA7EF500BBD9FE /* SwipeableTabView.swift in Sources */,
 				4592E55D29BD361200FF76E2 /* ChatViewModel.swift in Sources */,
 				45C7172029C63B0E00679626 /* InboxView.swift in Sources */,
+				451CADFF2A55D360009BC1F7 /* Notification.swift in Sources */,
 				452430FA29DAA0E40000B5AB /* SearchBar.swift in Sources */,
 				453314062A23245800DEE73E /* CreateFoodView.swift in Sources */,
+				451CAE032A55DBC6009BC1F7 /* NotificationViewModel.swift in Sources */,
 				4594203F29AEEFF400A100F1 /* HomePageView.swift in Sources */,
 				45EC905429B8475900E0A3A3 /* PackageWithImage.swift in Sources */,
 				459B437C2A16C2750029D90B /* GradientDropDownMenu.swift in Sources */,
 				45EC905029B8360F00E0A3A3 /* PackageViewModel.swift in Sources */,
 				4528556229B1AED800F088CD /* AuthenticationViewModel.swift in Sources */,
 				45EC904C29B8217100E0A3A3 /* StorageManager.swift in Sources */,
+				451CAE012A55DBB3009BC1F7 /* NotificationView.swift in Sources */,
 				45074EEB29E8699B0096C82A /* CommentView.swift in Sources */,
 				4543FE6329DB4A24003B3CCC /* CustomTextField.swift in Sources */,
 				451C33FC2A0190F200259B86 /* ChangePasswordView.swift in Sources */,
@@ -560,6 +572,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -592,6 +605,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -606,7 +620,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.5;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -620,6 +634,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -652,6 +667,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -660,7 +676,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.5;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -691,7 +707,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = A;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -726,7 +742,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = A;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
