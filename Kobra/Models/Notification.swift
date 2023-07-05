@@ -9,19 +9,22 @@ import Foundation
 
 class Notification: Identifiable  {
     enum NotificationType {
-        case postNotification(PostNotification)
-        case chatNotification(ChatNotification)
-        case followerNotification(FollowerNotification)
+        case post(PostNotification)
+        case chat(ChatNotification)
+        case follower(FollowerNotification)
     }
     var id = UUID()
-    var accountId: String
+    var receiverId: String
+    var senderId: String
     var type: NotificationType
     var timestamp: Date
     var seen: Bool
     
-    init(id: UUID = UUID(), accountId: String, type: NotificationType, timestamp: Date, seen: Bool) {
+    
+    init(id: UUID = UUID(), receiverId: String, senderId: String, type: NotificationType, timestamp: Date, seen: Bool) {
         self.id = id
-        self.accountId = accountId
+        self.receiverId = receiverId
+        self.senderId = senderId
         self.type = type
         self.timestamp = timestamp
         self.seen = seen
@@ -30,40 +33,36 @@ class Notification: Identifiable  {
 
 struct PostNotification {
     enum PostNotiType {
-        case likeNotification(LikeNotification)
-        case dislikeNotification(DislikeNotification)
-        case commentNotification(CommentNotification)
+        case like(LikeNotification)
+        case dislike(DislikeNotification)
+        case comment(CommentNotification)
     }
+    var type: PostNotiType
 }
 
 struct LikeNotification {
     var postId: String
-    var likerId: String
     var likerUsername: String
 }
 
 struct DislikeNotification {
     var postId: String
-    var dislikerId: String
     var dislikerUsername: String
 }
 
 struct CommentNotification {
     var postId: String
     var commentId: String
-    var authorId: String
     var commentText: String
     var authorUsername: String
 }
 
 struct ChatNotification {
     var chatId: String
-    var authorId: String
-    var authorUsername: String
+    var senderUsername: String
 }
 
 struct FollowerNotification {
-    var followerId: String
     var followerUsername: String
 }
 
