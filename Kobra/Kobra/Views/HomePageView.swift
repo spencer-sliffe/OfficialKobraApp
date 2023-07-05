@@ -92,7 +92,7 @@ struct HomePageView: View {
         case 4:
             NotificationView()
         case 5:
-            InboxView(viewModel: InboxViewModel())
+            EmptyView()
         case 6:
             FoodView()
         default:
