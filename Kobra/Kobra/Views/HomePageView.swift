@@ -68,11 +68,11 @@ struct HomePageView: View {
         case 3:
             return "house"
         case 4:
-            return "envelope"
+            return "bell"
         case 5:
-            return "leaf"
+            return "envelope"
         case 6:
-            return "shippingbox"
+            return "leaf"
         default:
             return "questionmark"
         }
@@ -90,11 +90,11 @@ struct HomePageView: View {
         case 3:
             KobraView()
         case 4:
-            InboxView(viewModel: InboxViewModel())
+            NotificationView()
         case 5:
-            FoodView()
+            InboxView(viewModel: InboxViewModel())
         case 6:
-            PackageView()
+            FoodView()
         default:
             EmptyView()
         }

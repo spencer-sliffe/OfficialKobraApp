@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct DiscoverView: View {
-    @StateObject var viewModel = DiscoverViewModel()
+    @ObservedObject var viewModel = DiscoverViewModel()
     @State var searchText = ""
 
     var body: some View {

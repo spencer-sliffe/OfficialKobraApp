@@ -10,7 +10,7 @@ import Combine
 import SwiftUI
 
 class FoodViewModel: ObservableObject {
-    @Published var isLoading = false
+    @Published var isLoading = true
     @Published var foods: [Food] = []
     private let foodManager = FSFoodManager.shared
     private var cancellables: Set<AnyCancellable> = []

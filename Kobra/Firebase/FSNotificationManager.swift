@@ -10,6 +10,7 @@ import Firebase
 import UIKit
 
 class FSNotificationManager {
+    static let shared = FSNotificationManager()
     private let db = Firestore.firestore()
     private let Collection = "Accounts"
     
@@ -67,7 +68,7 @@ class FSNotificationManager {
                 let postId = data["postId"] as? String ?? ""
                 let commentId = data["commentId"] as? String ?? ""
                 let commentText = data["commentText"] as? String ?? ""
-                let authorUsername = data["authorUserName"] as? String ?? ""
+                let authorUsername = data["authorUsername"] as? String ?? ""
                 let comment = CommentNotification(postId: postId, commentId: commentId, commentText: commentText, authorUsername: authorUsername)
                 postNotiType = .comment(comment)
             default:
@@ -133,10 +134,40 @@ class FSNotificationManager {
                 data["authorUsername"] = comment.authorUsername
             }
             if let postNotiTypeString = postNotiTypeString {
-                data["postNotiType"] = postNotiTypeString
+                data["postNotificationType"] = postNotiTypeString
             }
         }
         data["notificationType"] = notiTypeString
         return data
+    }
+    
+    func updateNotificationsAsSeen(accountId: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        let query = db.collection(Collection).document(accountId).collection("Notifications")
+        query.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            guard let documents = querySnapshot?.documents else {
+                completion(.failure(NSError(domain: "", code: -1, userInfo: ["description": "No documents found"])))
+                return
+            }
+            
+            let batch = self.db.batch()
+            
+            documents.forEach { document in
+                let docRef = self.db.collection(self.Collection).document(accountId).collection("Notifications").document(document.documentID)
+                batch.updateData(["seen" : true], forDocument: docRef)
+            }
+            
+            batch.commit { (batchError) in
+                if let batchError = batchError {
+                    completion(.failure(batchError))
+                } else {
+                    completion(.success(()))
+                }
+            }
+        }
     }
 }

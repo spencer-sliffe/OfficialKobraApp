@@ -15,6 +15,7 @@ class KobraViewModel: ObservableObject {
     @Published var posts: [Post] = []
     @Published var comments: [Comment] = []
     private let postManager = FSPostManager.shared
+    private let notificationManager = FSNotificationManager.shared
     private var cancellables: Set<AnyCancellable> = []
     
     init() {
@@ -71,15 +72,70 @@ class KobraViewModel: ObservableObject {
         }
     }
     
+
+    
     func updateLikeCount(_ post: Post, likeCount: Int, userId: String, isAdding: Bool) {
         postManager.updateLikeCount(post, likeCount: likeCount, userId: userId, isAdding: isAdding)
-        fetchPosts()
+        guard let user = Auth.auth().currentUser else {
+            print("No user is currently signed in.")
+            return
+        }
+        let db = Firestore.firestore()
+        let ref = db.collection("Accounts").document(user.uid)
+        ref.getDocument { [weak self] (document, error) in
+            if let document = document, document.exists, let data = document.data(), let username = data["username"] as? String {
+                let id = UUID()
+                let receiverId = post.posterId
+                let senderId = user.uid
+                let timestamp = Date()
+                let seen = false
+                let postId = post.id.uuidString
+                let likerUsername = username
+                let postNotiType: PostNotification.PostNotiType
+                let like = LikeNotification(postId: postId, likerUsername: likerUsername)
+                postNotiType = .like(like)
+                let postNotification = PostNotification(type: postNotiType)
+                let notificationType = Notification.NotificationType.post(postNotification)
+                let notification = Notification(id: id, receiverId: receiverId, senderId: senderId, type: notificationType, timestamp: timestamp, seen: seen)
+                self?.sendLikeNotification(notification)
+                self?.fetchPosts()
+            } else {
+                print("Error fetching account data: \(error?.localizedDescription ?? "Unknown error")")
+            }
+        }
     }
     
     func updateDislikeCount(_ post: Post, dislikeCount: Int, userId: String, isAdding: Bool) {
         postManager.updateDislikeCount(post, dislikeCount: dislikeCount, userId: userId, isAdding: isAdding)
-        fetchPosts()
+        guard let user = Auth.auth().currentUser else {
+            print("No user is currently signed in.")
+            return
+        }
+        let db = Firestore.firestore()
+        let ref = db.collection("Accounts").document(user.uid)
+        ref.getDocument { [weak self] (document, error) in
+            if let document = document, document.exists, let data = document.data(), let username = data["username"] as? String {
+                let id = UUID()
+                let receiverId = post.posterId
+                let senderId = user.uid
+                let timestamp = Date()
+                let seen = false
+                let postId = post.id.uuidString
+                let dislikerUsername = username
+                let postNotiType: PostNotification.PostNotiType
+                let dislike = DislikeNotification(postId: postId, dislikerUsername: dislikerUsername)
+                postNotiType = .dislike(dislike)
+                let postNotification = PostNotification(type: postNotiType)
+                let notificationType = Notification.NotificationType.post(postNotification)
+                let notification = Notification(id: id, receiverId: receiverId, senderId: senderId, type: notificationType, timestamp: timestamp, seen: seen)
+                self?.sendDislikeNotification(notification)
+                self?.fetchPosts()
+            } else {
+                print("Error fetching account data: \(error?.localizedDescription ?? "Unknown error")")
+            }
+        }
     }
+
     
     func updateComments(_ post: Post, comment: Comment){
         postManager.updateComments(post, comment: comment)
@@ -148,6 +204,28 @@ class KobraViewModel: ObservableObject {
     
     func addComment(_ comment: Comment, to post: Post, completion: @escaping (Result<Void, Error>) -> Void) {
         postManager.addComment(comment, to: post, completion: completion)
+        guard let user = Auth.auth().currentUser else {
+            completion(.failure(NSError(domain: "No user is currently signed in.", code: 0, userInfo: nil)))
+            return
+        }
+        let id = UUID()
+        let receiverId = post.posterId
+        let senderId = user.uid
+        let timestamp = Date()
+        let seen = false
+        let postId = post.id.uuidString
+        let commentId = comment.id.uuidString
+        let commentText = comment.text
+        let authorUsername = comment.commenter
+        let postNotiType: PostNotification.PostNotiType
+        let comment = CommentNotification(postId: postId, commentId: commentId, commentText: commentText, authorUsername: authorUsername)
+        postNotiType = .comment(comment)
+        let postNotification = PostNotification(type: postNotiType)
+        let notificationType: Notification.NotificationType
+        notificationType = .post(postNotification)
+        let notification = Notification(id: id, receiverId: receiverId, senderId: senderId, type: notificationType, timestamp: timestamp, seen: seen)
+        self.sendCommentNotification(notification)
+        
     }
     
     func fetchProfilePicture(for post: Post, completion: @escaping (Result<URL, Error>) -> Void) {
@@ -181,4 +259,43 @@ class KobraViewModel: ObservableObject {
                }
            }
        }
+    
+    private func sendLikeNotification(_ notification: Notification) {
+        notificationManager.addNotification(notification) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    print("Like notification sent successfully.")
+                case .failure(let error):
+                    print("Error sending like notification: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    private func sendDislikeNotification(_ notification: Notification) {
+        notificationManager.addNotification(notification) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    print("Dislike notification sent successfully.")
+                case .failure(let error):
+                    print("Error sending dislike notification: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    private func sendCommentNotification(_ notification: Notification) {
+        notificationManager.addNotification(notification) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    print("Comment notification sent successfully.")
+                case .failure(let error):
+                    print("Error sending comment notification: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
 }

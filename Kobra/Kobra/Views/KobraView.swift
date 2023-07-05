@@ -36,7 +36,6 @@ struct KobraView: View {
             ForEach(FeedType.allCases) { feedType in
                 Button(action: {
                     selectedFeed = feedType
-                    viewModel.fetchPosts()
                 }) {
                     VStack {
                         if(feedType.rawValue == "Advertisement") {
@@ -182,9 +181,6 @@ struct KobraView: View {
             customToolbar()
         }
         .background(Color.clear)
-        .onAppear {
-            viewModel.fetchPosts()
-        }
         .sheet(isPresented: $isPresentingCreatePostView) {
             CreatePostView().environmentObject(viewModel)
         }

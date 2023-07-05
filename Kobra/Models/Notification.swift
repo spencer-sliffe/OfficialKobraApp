@@ -21,6 +21,7 @@ class Notification: Identifiable  {
     var seen: Bool
     
     
+    
     init(id: UUID = UUID(), receiverId: String, senderId: String, type: NotificationType, timestamp: Date, seen: Bool) {
         self.id = id
         self.receiverId = receiverId
