@@ -10,9 +10,18 @@ import SwiftUI
 
 struct NotificationCell: View {
     var notification: Notification
+    @ObservedObject var viewModel = NotificationViewModel()
     
     var body: some View {
         HStack {
+            // Show a blue dot if the notification is not seen
+            if !notification.seen {
+                Circle()
+                    .frame(width: 10, height: 10)
+                    .foregroundColor(Color.blue)
+                    .padding(.trailing, 5)
+            }
+
             switch notification.type {
             case .post(let postNoti):
                 switch postNoti.type {
@@ -46,3 +55,4 @@ struct NotificationCell: View {
         return formatter.string(from: notification.timestamp)
     }
 }
+

@@ -101,7 +101,7 @@ class FSNotificationManager {
             "id": notification.id.uuidString,
             "receiverId": notification.receiverId,
             "senderId": notification.senderId,
-            "timeStamp": notification.timestamp,
+            "timestamp": notification.timestamp,
             "seen": notification.seen
         ]
         
@@ -141,33 +141,15 @@ class FSNotificationManager {
         return data
     }
     
-    func updateNotificationsAsSeen(accountId: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        let query = db.collection(Collection).document(accountId).collection("Notifications")
-        query.getDocuments { (querySnapshot, error) in
+    func updateNotificationAsSeen(accountId: String, notificationId: UUID, completion: @escaping (Result<Void, Error>) -> Void) {
+        let docRef = db.collection(Collection).document(accountId).collection("Notifications").document(notificationId.uuidString)
+        docRef.updateData(["seen" : true]) { error in
             if let error = error {
                 completion(.failure(error))
-                return
-            }
-            
-            guard let documents = querySnapshot?.documents else {
-                completion(.failure(NSError(domain: "", code: -1, userInfo: ["description": "No documents found"])))
-                return
-            }
-            
-            let batch = self.db.batch()
-            
-            documents.forEach { document in
-                let docRef = self.db.collection(self.Collection).document(accountId).collection("Notifications").document(document.documentID)
-                batch.updateData(["seen" : true], forDocument: docRef)
-            }
-            
-            batch.commit { (batchError) in
-                if let batchError = batchError {
-                    completion(.failure(batchError))
-                } else {
-                    completion(.success(()))
-                }
+            } else {
+                completion(.success(()))
             }
         }
     }
+
 }

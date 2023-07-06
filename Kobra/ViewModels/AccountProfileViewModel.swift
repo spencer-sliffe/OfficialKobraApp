@@ -12,7 +12,8 @@ import Firebase
 class AccountProfileViewModel: ObservableObject {
     @Published var account: Account?
     @Published var isLoading = true
-    let dataManager = FSAccountManager.shared
+    private let dataManager = FSAccountManager.shared
+    private let notiManager = FSNotificationManager.shared
     @Published var userPosts: [Post] = []
     private var accountId: String
     var currentUserId: String = ""
@@ -83,18 +84,15 @@ class AccountProfileViewModel: ObservableObject {
                 let package = data["package"] as? String ?? ""
                 let bio = data["bio"] as? String ?? ""
                 var account = Account(id: self.accountId, email: email, username: username, subscription: subscription, package: package, profilePicture: nil, followers: followers, following: following, bio: bio)
-                
                 // Fetch and assign profile picture URL if available
                 if let profilePictureURLString = data["profilePicture"] as? String,
                    let profilePictureURL = URL(string: profilePictureURLString) {
                     account.profilePicture = profilePictureURL
                 }
-                
                 // Check if the current user is following this account
                 if let currentUserId = Auth.auth().currentUser?.uid {
                     self.isFollowing = followers.contains(currentUserId)
                 }
-                
                 promise(.success(account))
             }
         }
@@ -118,7 +116,6 @@ class AccountProfileViewModel: ObservableObject {
             print("Error: No user is currently signed in.")
             return
         }
-        
         let currentUserId = currentUser.uid
         let db = Firestore.firestore()
         
@@ -130,7 +127,6 @@ class AccountProfileViewModel: ObservableObject {
                 print("Error following account: \(error)")
                 return
             }
-            
             // If no error, update the followers list of the target user
             db.collection("Accounts").document(self.accountId).updateData([
                 "followers": FieldValue.arrayUnion([currentUserId])
@@ -139,11 +135,43 @@ class AccountProfileViewModel: ObservableObject {
                     print("Error updating followers list of the account: \(error)")
                     return
                 }
-                
                 // If both updates are successful, update the UI and fetch new account data
                 DispatchQueue.main.async {
                     self.isFollowing = true
                     self.fetchAccount()  // Refresh account data
+                }
+            }
+        }
+        
+        let ref = db.collection("Accounts").document(currentUserId)
+        ref.getDocument { [weak self] (document, error) in
+            guard let strongSelf = self else { return }
+            if let document = document, document.exists, let data = document.data(), let username = data["username"] as? String {
+                let id = UUID()
+                let receiverId = strongSelf.accountId
+                let senderId = currentUserId
+                let timestamp = Date()
+                let seen = false
+                let followerUsername = username
+                let followerNotification = FollowerNotification(followerUsername: followerUsername)
+                let notificationType = Notification.NotificationType.follower(followerNotification)
+                let notification = Notification(id: id, receiverId: receiverId, senderId: senderId, type: notificationType, timestamp: timestamp, seen: seen)
+                strongSelf.sendFollowerNotification(notification)
+            } else {
+                print("Error fetching account data: \(error?.localizedDescription ?? "Unknown error")")
+            }
+        }
+    }
+
+    
+    private func sendFollowerNotification(_ notification: Notification) {
+        notiManager.addNotification(notification) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success:
+                    print("Follower notification sent successfully.")
+                case .failure(let error):
+                    print("Error sending follower notification: \(error.localizedDescription)")
                 }
             }
         }

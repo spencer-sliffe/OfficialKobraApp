@@ -38,20 +38,21 @@ class NotificationViewModel: ObservableObject {
         }
     }
     
-    private func updateNotificationsAsSeen() {
+    func updateNotificationAsSeen(notificationId: UUID) {
         guard let user = Auth.auth().currentUser else {
             print("No user is currently signed in.")
             return
         }
-        notiManager.updateNotificationsAsSeen(accountId: user.uid) { [weak self] result in
+        notiManager.updateNotificationAsSeen(accountId: user.uid, notificationId: notificationId) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(_):
-                    self?.notifications.forEach { $0.seen = true }
+                    self?.notifications.first(where: { $0.id == notificationId })?.seen = true
                 case .failure(let error):
-                    print("Error updating notifications as seen: \(error.localizedDescription)")
+                    print("Error updating notification as seen: \(error.localizedDescription)")
                 }
             }
         }
     }
 }
+
