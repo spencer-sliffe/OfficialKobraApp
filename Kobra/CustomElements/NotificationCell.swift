@@ -26,16 +26,16 @@ struct NotificationCell: View {
             case .post(let postNoti):
                 switch postNoti.type {
                 case .like(let like):
-                    Text("\(like.likerUsername) liked your post")
+                    NotificationLink(username: like.likerUsername, text: "liked your post", senderId: notification.senderId)
                 case .dislike(let dislike):
-                    Text("\(dislike.dislikerUsername) disliked your post")
+                    NotificationLink(username: dislike.dislikerUsername, text: "disliked your post", senderId: notification.senderId)
                 case .comment(let comment):
-                    Text("\(comment.authorUsername) commented on your post: \(comment.commentText)")
+                    NotificationLink(username: comment.authorUsername, text: "commented on your post: \(comment.commentText)", senderId: notification.senderId)
                 }
             case .chat(let chatNoti):
-                Text("\(chatNoti.senderUsername) messaged you")
+                NotificationLink(username: chatNoti.senderUsername, text: "messaged you", senderId: notification.senderId)
             case .follower(let follower):
-                Text("\(follower.followerUsername) started following you")
+                NotificationLink(username: follower.followerUsername, text: "started following you", senderId: notification.senderId)
             }
             Spacer()
             Text(getFormattedDate())
@@ -53,6 +53,22 @@ struct NotificationCell: View {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd MMM, hh:mm a"
         return formatter.string(from: notification.timestamp)
+    }
+    
+    struct NotificationLink: View {
+        var username: String
+        var text: String
+        var senderId: String
+
+        var body: some View {
+            HStack {
+                NavigationLink(destination: AccountProfileView(accountId: senderId)) {
+                    Text(username)
+                        .foregroundColor(.blue)
+                }
+                Text(text)
+            }
+        }
     }
 }
 
