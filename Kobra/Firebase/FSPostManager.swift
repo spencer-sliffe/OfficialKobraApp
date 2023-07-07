@@ -33,6 +33,24 @@ class FSPostManager {
         }
     }
     
+    func fetchPostById(postId: String, completion: @escaping (Result<Post, Error>) -> Void) {
+        db.collection(postsCollection)
+            .whereField("id", isEqualTo: postId)
+            .getDocuments { (querySnapshot, error) in
+                if let error = error {
+                    completion(.failure(error))
+                } else if let document = querySnapshot?.documents.first, document.exists {
+                    let data = document.data()
+                    let post = self.createPostFrom(data: data)
+                    completion(.success(post))
+                } else {
+                    completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Document does not exist"])))
+                }
+            }
+    }
+
+
+    
     func uploadImage(_ image: UIImage, postId: String, completion: @escaping (Result<String, Error>) -> Void) {
         guard let imageData = image.jpegData(compressionQuality: 0.5) else {
             completion(.failure(NSError(domain: "Kobra", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to convert image to data"])))

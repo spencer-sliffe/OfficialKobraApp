@@ -13,6 +13,8 @@ class NotificationViewModel: ObservableObject {
     @Published var notifications: [Notification] = []
     @Published var isLoading: Bool = true
     private let notiManager = FSNotificationManager.shared
+    @Published var post: Post?
+    private let postManager = FSPostManager.shared
     
     init() {
         fetchNotifications()
@@ -50,6 +52,19 @@ class NotificationViewModel: ObservableObject {
                     self?.notifications.first(where: { $0.id == notificationId })?.seen = true
                 case .failure(let error):
                     print("Error updating notification as seen: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    func fetchPostById(postId: String) {
+        postManager.fetchPostById(postId: postId) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let post):
+                    self?.post = post
+                case .failure(let error):
+                    print("Error fetching post: \(error.localizedDescription)")
                 }
             }
         }

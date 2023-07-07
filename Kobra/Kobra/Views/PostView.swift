@@ -8,15 +8,15 @@ import Foundation
 import SwiftUI
 import FirebaseAuth
 
-/*struct PostView: View {
+struct PostView: View {
     @ObservedObject var post: Post
     @State private var isLiked = false
     @State private var likes = 0
     @State private var isDisliked = false
     @State private var dislikes = 0
-    @EnvironmentObject var kobraViewModel: KobraViewModel
+    @ObservedObject var kobraViewModel = KobraViewModel()
     @State private var showingComments = false
-    @State private var showingFullImage = false
+    @State private var showingFullImage = false // new state for full screen image
     let currentUserId: String = Auth.auth().currentUser?.uid ?? ""
     @State private var showingDeleteConfirmation = false
     @State private var profilePictureURL: URL?
@@ -59,49 +59,112 @@ import FirebaseAuth
                 }
                 
                 VStack {
-                    Button(action: {
-                        showingFullImage.toggle()
-                    }) {
-                        PostContent(title: post.title,
-                                    content: post.content,
+                    switch post.type {
+                    case .advertisement(let advertisementPost):
+                        PostContent(title: advertisementPost.title,
+                                    content: advertisementPost.content,
                                     imageURL: post.imageURL)
-                        .scaledToFit()
-                    }
-                    .fullScreenCover(isPresented: $showingFullImage) {
-                        Image(uiImage: post.image)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .edgesIgnoringSafeArea(.all)
-                            .onTapGesture {
-                                showingFullImage.toggle()
-                            }
+                    case .help(let helpPost):
+                        PostContent(title: helpPost.question,
+                                    content: helpPost.details,
+                                    imageURL: post.imageURL)
+                    case .news(let newsPost):
+                        PostContent(title: newsPost.headline,
+                                    content: newsPost.article,
+                                    imageURL: post.imageURL)
+                    case .bug(let bugPost):
+                        PostContent(title: bugPost.title,
+                                    content: bugPost.content,
+                                    imageURL: post.imageURL)
+                    case .meme(let memePost):
+                        PostContent(title: memePost.title,
+                                    content: memePost.content,
+                                    imageURL: post.imageURL)
+                    case .market(let marketPost):
+                        MarketPostContent(marketPost: marketPost, imageURL: post.imageURL)
                     }
                 }
                 
                 HStack {
-                    Button(action: canLike ? like : unlike) {
-                        Image(systemName: isLiked ? "heart.fill" : "heart")
+                    Button(action: {
+                        isLiked.toggle()
+                        if isLiked {
+                            likes += 1
+                            post.likingUsers.append(currentUserId)
+                        } else {
+                            likes -= 1
+                            post.likingUsers.removeAll { $0 == currentUserId }
+                        }
+                        if isDisliked {
+                            isDisliked.toggle()
+                            dislikes -= 1
+                            kobraViewModel.updateDislikeCount(post, dislikeCount: dislikes, userId: currentUserId, isAdding: isDisliked)
+                        }
+                        kobraViewModel.updateLikeCount(post, likeCount: likes, userId: currentUserId, isAdding: isLiked)
+                    }) {
+                        HStack {
+                            Image(systemName: isLiked ? "heart.fill" : "heart")
+                                .foregroundColor(isLiked ? .red : .gray)
+                            Text("\(likes)")
+                                .foregroundColor(.primary)
+                                .font(.caption)
+                                .padding(5)
+                                .background(Color.red.opacity(0.1))
+                                .clipShape(Circle())
+                                .overlay(
+                                    Circle().stroke(Color.red, lineWidth: 1)
+                                )
+                        }
                     }
-                    .buttonStyle(PlainButtonStyle())
-                    
-                    Text("\(likes)")
-                    
-                    Button(action: canDislike ? dislike : undislike) {
-                        Image(systemName: isDisliked ? "hand.thumbsdown.fill" : "hand.thumbsdown")
+                    Button(action: {
+                        isDisliked.toggle()
+                        if isDisliked {
+                            dislikes += 1
+                            post.dislikingUsers.append(currentUserId)
+                        } else {
+                            dislikes -= 1
+                            post.dislikingUsers.removeAll { $0 == currentUserId }
+                        }
+                        if isLiked {
+                            isLiked.toggle()
+                            likes -= 1
+                            post.likingUsers.removeAll { $0 == currentUserId }
+                            kobraViewModel.updateLikeCount(post, likeCount: likes, userId: currentUserId, isAdding: isLiked)
+                        }
+                        kobraViewModel.updateDislikeCount(post, dislikeCount: dislikes, userId: currentUserId, isAdding: isDisliked)
+                    }) {
+                        HStack {
+                            Image(systemName: isDisliked ? "hand.thumbsdown.fill" : "hand.thumbsdown")
+                                .foregroundColor(isDisliked ? .black : .gray)
+                            Text("\(dislikes)")
+                                .foregroundColor(.primary)
+                                .font(.caption)
+                                .padding(5)
+                                .background(Color.black.opacity(0.1))
+                                .clipShape(Circle())
+                                .overlay(
+                                    Circle().stroke(Color.black, lineWidth: 1)
+                                )
+                        }
                     }
-                    .buttonStyle(PlainButtonStyle())
-                    
-                    Text("\(dislikes)")
-                    
-                    Button(action: { showingComments.toggle() }) {
-                        Image(systemName: "bubble.right")
+                    Spacer()
+                    Button(action: {
+                        showingComments.toggle()
+                    }) {
+                        HStack {
+                            Text("\(post.numComments)")
+                                .foregroundColor(.primary)
+                                .font(.caption)
+                                .padding(5)
+                                .background(Color.blue.opacity(0.1))
+                                .clipShape(Circle())
+                                .overlay(
+                                    Circle().stroke(Color.blue, lineWidth: 1)
+                                )
+                            Image(systemName: "bubble.right")
+                                .foregroundColor(.blue)
+                        }
                     }
-                    .buttonStyle(PlainButtonStyle())
-                }
-                
-                if showingComments {
-                    CommentView(post: post)
-                        .environmentObject(kobraViewModel)
                 }
             }
             .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
@@ -113,77 +176,126 @@ import FirebaseAuth
                 RoundedRectangle(cornerRadius: 10)
                     .stroke(Color.gray.opacity(0.2), lineWidth: 1)
             )
+            .sheet(isPresented: $showingComments) {
+                CommentView(post: post).environmentObject(kobraViewModel)
+            }
             .alert(isPresented: $showingDeleteConfirmation) {
                 Alert(
-                    title: Text("Confirm Deletion"),
-                    message: Text("Are you sure you want to delete this post? This action cannot be undone."),
+                    title: Text("Delete Post"),
+                    message: Text("Are you sure you want to delete this post?"),
                     primaryButton: .destructive(Text("Delete")) {
-                        kobraViewModel.deletePost(postId: post.id)
+                        kobraViewModel.deletePost(post)
                     },
                     secondaryButton: .cancel()
                 )
             }
         }
-        .onAppear {
-            fetchProfilePicture()
-        }
     }
     
-    private func like() {
-        kobraViewModel.likePost(postId: post.id, userId: currentUserId)
-        isLiked = true
-        likes += 1
-        if isDisliked {
-            undislike()
-        }
-    }
-    
-    private func unlike() {
-        kobraViewModel.unlikePost(postId: post.id, userId: currentUserId)
-        isLiked = false
-        likes -= 1
-    }
-    
-    private func dislike() {
-        kobraViewModel.dislikePost(postId: post.id, userId: currentUserId)
-        isDisliked = true
-        dislikes += 1
-        if isLiked {
-            unlike()
-        }
-    }
-    
-    private func undislike() {
-        kobraViewModel.undislikePost(postId: post.id, userId: currentUserId)
-        isDisliked = false
-        dislikes -= 1
-    }
-    
-    private func deletePost() {
+    func deletePost() {
         showingDeleteConfirmation = true
     }
     
-    private func fetchProfilePicture() {
-        if let profileUrl = post.profileURL {
-            profilePictureURL = URL(string: profileUrl)
+    func getPosterName() -> some View {
+        HStack {
+            if let url = profilePictureURL {
+                AsyncImage(url: url) { image in
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 30, height: 30)
+                        .clipShape(Circle())
+                } placeholder: {
+                    Image(systemName: "person.circle")
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                        .foregroundColor(Color(.gray))
+                }
+            } else {
+                Image(systemName: "person.circle")
+                    .resizable()
+                    .frame(width: 30, height: 30)
+                    .foregroundColor(Color(.gray))
+            }
+            
+            switch post.type {
+            case .advertisement(let advertisementPost):
+                Text("Ad : ")
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.purple) +
+                Text(advertisementPost.poster)
+                    .font(.headline)
+                    .foregroundColor(.blue)
+            case .help(let helpPost):
+                Text("Help : ")
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.green) +
+                Text(helpPost.poster)
+                    .font(.headline)
+                    .foregroundColor(.blue)
+            case .news(let newsPost):
+                Text("News : ")
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.red) +
+                Text(newsPost.poster)
+                    .font(.headline)
+                    .foregroundColor(.blue)
+            case .bug(let bugPost):
+                Text("Bug : ")
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.orange) +
+                Text(bugPost.poster)
+                    .font(.headline)
+                    .foregroundColor(.blue)
+            case .meme(let memePost):
+                Text("Meme : ")
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.pink) +
+                Text(memePost.poster)
+                    .font(.headline)
+                    .foregroundColor(.blue)
+            case .market(let marketPost):
+                Text("Item : ")
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.yellow) +
+                Text(marketPost.vendor)
+                    .font(.headline)
+                    .foregroundColor(.blue)
+            }
+        }
+        .onAppear {
+            kobraViewModel.fetchProfilePicture(for: post) { result in
+                switch result {
+                case .success(let url):
+                    self.profilePictureURL = url
+                case .failure(let error):
+                    print("Error fetching profile picture: \(error.localizedDescription)")
+                }
+            }
         }
     }
     
-    private func canLike() -> Bool {
+    func canLike() -> Bool {
         return !post.likingUsers.contains(currentUserId)
     }
     
-    private func canDislike() -> Bool {
+    func canDislike() -> Bool {
         return !post.dislikingUsers.contains(currentUserId)
     }
     
-    private func PostContent(title: String, content: String, imageURL: String?) -> some View {
+    func PostContent(title: String, content: String, imageURL: String?) -> some View {
         VStack(alignment: .leading, spacing: 1) {
             Text(title)
                 .font(.title2)
                 .fontWeight(.bold)
                 .foregroundColor(.primary)
-            
+
             if let imageURL = imageURL, let url = URL(string: imageURL) {
                 AsyncImage(url: url) { image in
                     image
@@ -192,7 +304,7 @@ import FirebaseAuth
                         .cornerRadius(8)
                         .contentShape(Rectangle())
                         .overlay(RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.gray, lineWidth: 2)) // Add outline around the image
+                                    .stroke(Color.gray, lineWidth: 2)) // Add outline around the image
                         .onLongPressGesture {
                             showingFullImage = true
                         }
@@ -221,8 +333,9 @@ import FirebaseAuth
                 .foregroundColor(.primary)
         }
     }
+
     
-    private func MarketPostContent(marketPost: MarketPost, imageURL: String?) -> some View {
+    func MarketPostContent(marketPost: MarketPost, imageURL: String?) -> some View {
         VStack(alignment: .leading, spacing: 1) {
             switch marketPost.type {
             case .hardware(let hardware):
@@ -267,8 +380,7 @@ import FirebaseAuth
                         .cornerRadius(8)
                         .contentShape(Rectangle())
                         .overlay(RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.gray, lineWidth: 2)) // Add outline around the image
-                    ```swift
+                                    .stroke(Color.gray, lineWidth: 2)) // Add outline around the image
                         .onLongPressGesture {
                             showingFullImage = true
                         }
@@ -286,9 +398,9 @@ import FirebaseAuth
                             ProgressView()
                         }
                         .ignoresSafeArea()
-                        .onTapGesture {
-                            showingFullImage = false
-                        }
+                    }
+                    .onTapGesture {
+                        showingFullImage = false
                     }
                 }
             }
@@ -302,13 +414,4 @@ import FirebaseAuth
                 .foregroundColor(.primary)
         }
     }
-    
-    private var canLike: Bool {
-        canLike()
-    }
-    
-    private var canDislike: Bool {
-        canDislike()
-    }
 }
-*/

@@ -72,8 +72,6 @@ class KobraViewModel: ObservableObject {
         }
     }
     
-
-    
     func updateLikeCount(_ post: Post, likeCount: Int, userId: String, isAdding: Bool) {
         postManager.updateLikeCount(post, likeCount: likeCount, userId: userId, isAdding: isAdding)
         guard let user = Auth.auth().currentUser else {
@@ -89,7 +87,9 @@ class KobraViewModel: ObservableObject {
                 let senderId = user.uid
                 let timestamp = Date()
                 let seen = false
-                let postId = post.id.uuidString
+                let postIdString = post.id
+                let postId = postIdString.uuidString
+                print(postId)
                 let likerUsername = username
                 let postNotiType: PostNotification.PostNotiType
                 let like = LikeNotification(postId: postId, likerUsername: likerUsername)
@@ -120,7 +120,9 @@ class KobraViewModel: ObservableObject {
                 let senderId = user.uid
                 let timestamp = Date()
                 let seen = false
-                let postId = post.id.uuidString
+                let postIdString = post.id
+                let postId = postIdString.uuidString
+                print(postId)
                 let dislikerUsername = username
                 let postNotiType: PostNotification.PostNotiType
                 let dislike = DislikeNotification(postId: postId, dislikerUsername: dislikerUsername)
@@ -213,7 +215,9 @@ class KobraViewModel: ObservableObject {
         let senderId = user.uid
         let timestamp = Date()
         let seen = false
-        let postId = post.id.uuidString
+        let postIdString = post.id
+        let postId = postIdString.uuidString
+        print(postId)
         let commentId = comment.id.uuidString
         let commentText = comment.text
         let authorUsername = comment.commenter

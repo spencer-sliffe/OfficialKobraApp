@@ -19,7 +19,6 @@
 		451CAE032A55DBC6009BC1F7 /* NotificationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CAE022A55DBC6009BC1F7 /* NotificationViewModel.swift */; };
 		451CAE052A55DDF5009BC1F7 /* FSNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CAE042A55DDF5009BC1F7 /* FSNotificationManager.swift */; };
 		451CAE072A55F4B1009BC1F7 /* NotificationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CAE062A55F4B1009BC1F7 /* NotificationCell.swift */; };
-		451CAE092A5646A4009BC1F7 /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CAE082A5646A3009BC1F7 /* PostViewModel.swift */; };
 		451CAE0B2A5646B2009BC1F7 /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 451CAE0A2A5646B2009BC1F7 /* PostView.swift */; };
 		452430FA29DAA0E40000B5AB /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452430F929DAA0E40000B5AB /* SearchBar.swift */; };
 		4525CFC429DB407E005C0CE8 /* KobraPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4525CFC329DB407E005C0CE8 /* KobraPicker.swift */; };
@@ -102,7 +101,6 @@
 		451CAE022A55DBC6009BC1F7 /* NotificationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewModel.swift; sourceTree = "<group>"; };
 		451CAE042A55DDF5009BC1F7 /* FSNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FSNotificationManager.swift; sourceTree = "<group>"; };
 		451CAE062A55F4B1009BC1F7 /* NotificationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCell.swift; sourceTree = "<group>"; };
-		451CAE082A5646A3009BC1F7 /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
 		451CAE0A2A5646B2009BC1F7 /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		452430F929DAA0E40000B5AB /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		4525CFC329DB407E005C0CE8 /* KobraPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KobraPicker.swift; sourceTree = "<group>"; };
@@ -308,7 +306,6 @@
 				459246B12A2FE0FD00D564AE /* AccountProfileViewModel.swift */,
 				45BB7BC62A51EE4D00A95831 /* FollowCellViewModel.swift */,
 				451CAE022A55DBC6009BC1F7 /* NotificationViewModel.swift */,
-				451CAE082A5646A3009BC1F7 /* PostViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -537,7 +534,6 @@
 				45895C092A1B25CB0022DF98 /* Food.swift in Sources */,
 				45895C0B2A1B27300022DF98 /* FoodRow.swift in Sources */,
 				455B2B242A317E0800136D6D /* AccountSearchBar.swift in Sources */,
-				451CAE092A5646A4009BC1F7 /* PostViewModel.swift in Sources */,
 				451C33F42A0168A500259B86 /* gradientOptions.swift in Sources */,
 				4527837929D8AB3D00B633FB /* FSPostManager.swift in Sources */,
 				45BB7BC92A51F62200A95831 /* String.swift in Sources */,
