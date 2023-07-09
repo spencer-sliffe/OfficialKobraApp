@@ -16,6 +16,10 @@ class NotificationViewModel: ObservableObject {
     @Published var post: Post?
     private let postManager = FSPostManager.shared
     
+    var unseenNotificationsCount: Int {
+        notifications.filter { $0.seen == false }.count
+    }
+    
     init() {
         fetchNotifications()
     }
@@ -67,6 +71,12 @@ class NotificationViewModel: ObservableObject {
                     print("Error fetching post: \(error.localizedDescription)")
                 }
             }
+        }
+    }
+    
+    func markAllAsSeen() {
+        for notification in notifications where !notification.seen {
+            updateNotificationAsSeen(notificationId: notification.id)
         }
     }
 }

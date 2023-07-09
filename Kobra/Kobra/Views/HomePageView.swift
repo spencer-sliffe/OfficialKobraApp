@@ -13,6 +13,7 @@ struct HomePageView: View {
     @ObservedObject var authViewModel = AuthenticationViewModel()
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
     @StateObject var kobraViewModel = KobraViewModel()
+    @StateObject var notificationViewModel = NotificationViewModel()
 
     var body: some View {
         NavigationView {
@@ -37,6 +38,7 @@ struct HomePageView: View {
                             }
                         }
                         .padding(.bottom, 16)
+                        .padding(.horizontal, 5)
                     }
                     .navigationBarHidden(true)
                     .edgesIgnoringSafeArea(.bottom)
@@ -99,16 +101,29 @@ struct HomePageView: View {
             EmptyView()
         }
     }
-    
+
     @ViewBuilder
     private func createTabButton(icon: String, tabIndex: Int) -> some View {
         Button(action: {
             withAnimation { selectedTab = tabIndex }
         }) {
-            Image(systemName: icon)
-                .resizable()
-                .frame(width: selectedTab == tabIndex ? 28 : 24, height: selectedTab == tabIndex ? 26 : 22)
-                .foregroundColor(selectedTab == tabIndex ? .yellow : .white)
+            ZStack {
+                Image(systemName: icon)
+                    .resizable()
+                    .frame(width: selectedTab == tabIndex ? 28 : 24, height: selectedTab == tabIndex ? 26 : 22)
+                    .foregroundColor(selectedTab == tabIndex ? .yellow : .white)
+                
+                // add a badge for notifications
+                if tabIndex == 4 && notificationViewModel.unseenNotificationsCount > 0 {
+                    Text("\(notificationViewModel.unseenNotificationsCount)")
+                        .font(.caption2)
+                        .foregroundColor(.white)
+                        .padding(2)
+                        .background(Color.red)
+                        .clipShape(Circle())
+                        .offset(x: 10, y: -10)
+                }
+            }
         }
         .frame(maxWidth: .infinity)
     }

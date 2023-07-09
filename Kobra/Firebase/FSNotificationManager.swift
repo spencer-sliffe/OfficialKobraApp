@@ -2,7 +2,7 @@
 //  FSNotificationManager.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 7/5/23.
+//  Created by Spencer Sliffe on 7/5/23.
 //
 
 import Foundation
@@ -142,14 +142,27 @@ class FSNotificationManager {
     }
     
     func updateNotificationAsSeen(accountId: String, notificationId: UUID, completion: @escaping (Result<Void, Error>) -> Void) {
-        let docRef = db.collection(Collection).document(accountId).collection("Notifications").document(notificationId.uuidString)
-        docRef.updateData(["seen" : true]) { error in
-            if let error = error {
-                completion(.failure(error))
+        let query = db.collection(Collection).document(accountId).collection("Notifications").whereField("id", isEqualTo: notificationId.uuidString)
+
+        query.getDocuments { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting documents: \(err)")
+                completion(.failure(err))
             } else {
-                completion(.success(()))
+                guard let document = querySnapshot?.documents.first else {
+                    print("No matching document")
+                    completion(.failure(NSError(domain: "", code: -1, userInfo: nil)))  // Change this to a suitable error
+                    return
+                }
+                
+                document.reference.updateData(["seen" : true]) { error in
+                    if let error = error {
+                        completion(.failure(error))
+                    } else {
+                        completion(.success(()))
+                    }
+                }
             }
         }
     }
-
 }

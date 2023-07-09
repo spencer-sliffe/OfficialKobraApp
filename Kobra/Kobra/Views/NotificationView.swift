@@ -1,4 +1,3 @@
-//
 //  NotificationView.swift
 //  Kobra
 //
@@ -13,23 +12,26 @@ struct NotificationView: View {
     
     var body: some View {
         VStack(spacing: 0) {
+            Text("Unseen Notifications: \(viewModel.unseenNotificationsCount)")
+                .padding()
+                .foregroundColor(.white)
             if viewModel.isLoading {
                Spacer()
-              ProgressView()
+               ProgressView()
                Spacer()
-           } else {
+            } else {
                 ScrollView {
-                        ForEach(viewModel.notifications.sorted(by: { $0.timestamp > $1.timestamp })) {
-                            notification in
-                            NotificationCell(notification: notification)
-                        }
-                    
+                    ForEach(viewModel.notifications.sorted(by: { $0.timestamp > $1.timestamp })) { notification in
+                        NotificationCell(notification: notification)
+                    }
                 }
-                .refreshable{
+                .refreshable {
                     viewModel.fetchNotifications()
                 }
             }
         }
+        .onDisappear {
+            viewModel.markAllAsSeen()
+        }
     }
 }
-

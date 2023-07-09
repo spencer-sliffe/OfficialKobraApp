@@ -4,20 +4,21 @@
 //
 //  Created by Spencer Sliffe on 3/14/23.
 //
+import Foundation
 
 struct Chat: Identifiable {
-    let id: String
-    let participants: [String]
-    let lastMessage: ChatMessage?
+    var id = UUID()
+    var participants: [String]
+    var lastMessage: Message?
+    var timestamp: Date
+    var recentUsername: String
 
-    init(id: String, participants: [String], lastMessage: ChatMessage? = nil) {
+    init(id: UUID = UUID(), participants: [String], lastMessage: Message? = nil, timestamp: Date, recentUsername: String) {
         self.id = id
         self.participants = participants
         self.lastMessage = lastMessage
-    }
-
-    func otherParticipantEmail(for currentUserEmail: String) -> String {
-        return participants.filter({ $0 != currentUserEmail }).first ?? ""
+        self.timestamp = timestamp
+        self.recentUsername = recentUsername
     }
 }
 

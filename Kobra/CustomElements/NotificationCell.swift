@@ -24,27 +24,28 @@ struct NotificationCell: View {
                         .padding(.trailing, 5)
                 }
                 
-                switch notification.type {
-                case .post(let postNoti):
-                    switch postNoti.type {
-                    case .like(let like):
-                        NotificationLink(username: like.likerUsername, text: "liked your post", senderId: notification.senderId)
-                    case .dislike(let dislike):
-                        NotificationLink(username: dislike.dislikerUsername, text: "disliked your post", senderId: notification.senderId)
-                    case .comment(let comment):
-                        NotificationLink(username: comment.authorUsername, text: "commented on your post: \(comment.commentText)", senderId: notification.senderId)
+                // Add icon based on notification type
+                Image(systemName: getIcon())
+                    .resizable()
+                    .frame(width: 20, height: 20)
+                    .padding(.trailing, 5)
+                
+                VStack(alignment: .leading, spacing: 2) {
+                    switch notification.type {
+                    case .post(let postNoti):
+                        postNotificationTypeView(from: postNoti)
+                    case .chat(let chatNoti):
+                        NotificationLink(username: chatNoti.senderUsername, text: "messaged you", senderId: notification.senderId)
+                    case .follower(let follower):
+                        NotificationLink(username: follower.followerUsername, text: "started following you", senderId: notification.senderId)
                     }
-                case .chat(let chatNoti):
-                    NotificationLink(username: chatNoti.senderUsername, text: "messaged you", senderId: notification.senderId)
-                case .follower(let follower):
-                    NotificationLink(username: follower.followerUsername, text: "started following you", senderId: notification.senderId)
+                    
+                    Text(getFormattedDate())
+                        .font(.system(size: 10))
+                        .foregroundColor(.gray)
                 }
                 
                 Spacer()
-                
-                Text(getFormattedDate())
-                    .font(.system(size: 10))
-                    .foregroundColor(.gray)
             }
             .padding()
             .background(Color.white)
@@ -66,6 +67,7 @@ struct NotificationCell: View {
                 }
             }
         }
+        .padding(.horizontal)
     }
     
     // Helper function to format the Date
@@ -90,6 +92,19 @@ struct NotificationCell: View {
             }
         }
     }
+
+    
+    @ViewBuilder
+    func postNotificationTypeView(from postNoti: PostNotification) -> some View {
+        switch postNoti.type {
+        case .like(let like):
+            NotificationLink(username: like.likerUsername, text: "liked your post", senderId: notification.senderId)
+        case .dislike(let dislike):
+            NotificationLink(username: dislike.dislikerUsername, text: "disliked your post", senderId: notification.senderId)
+        case .comment(let comment):
+            NotificationLink(username: comment.authorUsername, text: "commented on your post: \(comment.commentText)", senderId: notification.senderId)
+        }
+    }
     
     func getPostId(from postNoti: PostNotification) -> String? {
         switch postNoti.type {
@@ -101,4 +116,16 @@ struct NotificationCell: View {
             return comment.postId
         }
     }
+
+    func getIcon() -> String {
+        switch notification.type {
+        case .post(_):
+            return "doc.text.below.ecg"
+        case .chat(_):
+            return "message"
+        case .follower(_):
+            return "person.2"
+        }
+    }
 }
+
