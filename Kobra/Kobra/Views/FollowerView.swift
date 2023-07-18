@@ -10,15 +10,36 @@ import SwiftUI
 
 struct FollowerView: View {
     @ObservedObject var viewModel: AccountProfileViewModel
+    @EnvironmentObject private var settingsViewModel: SettingsViewModel
 
     var body: some View {
-        List {
-            ForEach(viewModel.followers, id: \.self) { follower in
-                FollowCell(accountId: follower)
+        VStack{
+            NavigationView {
+                List {
+                    ForEach(viewModel.followers, id: \.self) { follower in
+                        NavigationLink(destination: AccountProfileView(accountId: follower)) {
+                            FollowCell(accountId: follower)
+                        }
+                    }
+                }
             }
         }
+        .background(
+            LinearGradient(
+                gradient: Gradient(
+                    colors: [
+                        gradientOptions[settingsViewModel.gradientIndex].0,
+                        gradientOptions[settingsViewModel.gradientIndex].1
+                    ]
+                ),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .edgesIgnoringSafeArea(.all)
+        )
     }
 }
+
 
 
 

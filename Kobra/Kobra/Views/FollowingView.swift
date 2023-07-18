@@ -10,11 +10,16 @@ import SwiftUI
 
 struct FollowingView: View {
     @ObservedObject var viewModel: AccountProfileViewModel
+    @EnvironmentObject var settingsViewModel: SettingsViewModel
 
     var body: some View {
-        List {
-            ForEach(viewModel.following, id: \.self) { followed in
-                FollowCell(accountId: followed)
+        NavigationView {
+            List {
+                ForEach(viewModel.following, id: \.self) { followed in
+                    NavigationLink(destination: AccountProfileView(accountId: followed)) {
+                        FollowCell(accountId: followed)
+                    }
+                }
             }
         }
     }

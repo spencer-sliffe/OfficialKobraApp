@@ -172,7 +172,6 @@ struct AccountView: View {
                                 }
                             }
                             .foregroundColor(.white)
-                            
                         }
                     }
                 }

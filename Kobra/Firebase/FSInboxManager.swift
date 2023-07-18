@@ -13,7 +13,7 @@ class FSInboxManager {
     private let db = Firestore.firestore()
     static let shared = FSInboxManager()
     
-    /*func fetchInbox(accountId: String, completion: @escaping (Result<[Chat], Error>) -> Void){
+    func fetchInbox(accountId: String, completion: @escaping (Result<[Chat], Error>) -> Void) {
         let query = db.collection("Accounts").document(accountId).collection("Inbox")
         query.getDocuments { (querySnapshot, error) in
             if let error = error {
@@ -28,24 +28,38 @@ class FSInboxManager {
             }
             completion(.success(chats))
         }
-    }*/
+    }
     
-   /* struct Inbox: Identifiable {
-     var id = UUID()
-     var accountId: String
-     var chats: [Chat]
-     
-     init(id: UUID = UUID(), accountId: String, chats: [Chat]) {
-         self.id = id
-         self.accountId = accountId
-         self.chats = chats
-     }
- }*/
-    
-    /*private func createChatFrom(data: [String: Any]) -> Chat {
+    private func createChatFrom(data: [String: Any]) -> Chat {
         let id = UUID(uuidString: data["id"] as? String ?? "") ?? UUID()
-        let accountId = data["accountId"] as? String ?? ""
+        let participants = data["participants"] as? [String] ?? [""]
         let lastMessage = data["lastMessage"] as? Message ?? nil
-        //let
-    }*/
+        let timestamp = (data["timestamp"] as? Timestamp)?.dateValue() ?? Date()
+        let recentUsername = data["recentUsername"] as? String ?? ""
+        
+        return Chat(id: id, participants: participants, lastMessage: lastMessage, timestamp: timestamp, recentUsername: recentUsername)
+    }
+    
+    func addChat(_ chat: Chat, accountId: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        let data = self.convertChatToData(chat)
+        let query = db.collection("Accounts").document(accountId).collection("Inbox")
+        query.addDocument(data: data) { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(()))
+            }
+        }
+    }
+    
+    private func convertChatToData(_ chat: Chat) -> [String: Any] {
+        let data: [String: Any] = [
+            "id": chat.id.uuidString,
+            "participantA": chat.participants,
+            "lastMessage": chat.lastMessage ?? "",  // this line might need further modification
+            "timestamp": chat.timestamp,
+            "recentUsername": chat.recentUsername
+        ]
+        return data
+    }
 }

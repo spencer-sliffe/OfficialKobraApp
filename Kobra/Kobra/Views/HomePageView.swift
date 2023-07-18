@@ -13,7 +13,7 @@ struct HomePageView: View {
     @ObservedObject var authViewModel = AuthenticationViewModel()
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
     @StateObject var kobraViewModel = KobraViewModel()
-    @StateObject var notificationViewModel = NotificationViewModel()
+    @ObservedObject var notificationViewModel = NotificationViewModel()
 
     var body: some View {
         NavigationView {
@@ -31,7 +31,6 @@ struct HomePageView: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                         .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .never))
-
                         HStack(spacing: 0) {
                             ForEach(0..<7) { index in
                                 self.createTabButton(icon: self.getIcon(for: index), tabIndex: index)
@@ -91,10 +90,16 @@ struct HomePageView: View {
             DiscoverView()
         case 3:
             KobraView()
+                .onAppear(){
+                    notificationViewModel.markAllAsSeen()
+                }
         case 4:
             NotificationView()
         case 5:
-            EmptyView()
+            InboxView()
+                .onAppear(){
+                    notificationViewModel.markAllAsSeen()
+                }
         case 6:
             FoodView()
         default:
