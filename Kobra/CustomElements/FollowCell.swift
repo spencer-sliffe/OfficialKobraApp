@@ -69,6 +69,6 @@ struct FollowCell: View {
             }
         }
         .background(Color.white)
-        .cornerRadius(10)
+        .cornerRadius(1)
     }
 }

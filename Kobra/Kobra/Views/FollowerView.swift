@@ -11,10 +11,10 @@ import SwiftUI
 struct FollowerView: View {
     @ObservedObject var viewModel: AccountProfileViewModel
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
-
+    
     var body: some View {
-        VStack{
-            NavigationView {
+        NavigationView {
+            VStack {
                 List {
                     ForEach(viewModel.followers, id: \.self) { follower in
                         NavigationLink(destination: AccountProfileView(accountId: follower)) {
@@ -23,20 +23,20 @@ struct FollowerView: View {
                     }
                 }
             }
-        }
-        .background(
-            LinearGradient(
-                gradient: Gradient(
-                    colors: [
-                        gradientOptions[settingsViewModel.gradientIndex].0,
-                        gradientOptions[settingsViewModel.gradientIndex].1
-                    ]
-                ),
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
+            .background(
+                LinearGradient(
+                    gradient: Gradient(
+                        colors: [
+                            gradientOptions[settingsViewModel.gradientIndex].0,
+                            gradientOptions[settingsViewModel.gradientIndex].1
+                        ]
+                    ),
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                .edgesIgnoringSafeArea(.all)
             )
-            .edgesIgnoringSafeArea(.all)
-        )
+        }
     }
 }
 

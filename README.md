@@ -18,16 +18,82 @@
 
 # Functionality 
 
-- Account creation (Complete)
-- Sign in (Complete)
-- Log out (Complete)
+    # Account
+        - Creation (Complete)
+        - Sign in (Complete)
+        - Log out (Complete)
+        - Delete (To be Implemented)
+        - Create Bio (Complete)
+        - Edit Bio (Complete)
+        - Follow Users (Complete)
+        - Unfollow Users (Complete)
+        - View Followers (Complete)
+        - View Following (Complete)
+        - Profile Picture (Complete)
+        - View/Delete Posts (Complete)
+
+    # Create Post
+        - Memes (Complete)
+        - News (Complete)
+        - Advertisements (Complete)
+        - Bugs (Complete)
+        - Help (Complete)
+        - Market (Needs Functionality)
+        - Personal (Needs Implementation)
+        - Takes (Needs Implementation)
+        - Replace Category with HashTags (Needs to be Completed)
+        
+    # Post Interaction
+        - Liking (Complete)
+        - Disliking (Complete)
+        - Commenting (Fix Username Bug)
+        - View Image (Complete)
+        - View Account (Complete)
+        - Share Post via Chat (Needs Implementation)
+        - Delete Post (Complete)
+        - View External Link (Needs Implementation)
+        
+    # Post Feed (KobraView)
+        - Memes (Complete)
+        - News (Complete)
+        - Advertisements (Complete)
+        - Bugs (Complete)
+        - Help (Complete)
+        - Market (Needs Functionality)
+        - Personal (Needs Implementation)
+        - Takes (Needs Implementation) 
+        - Hot Feed (Needs Implementation)
+        - Following (Needs Implementation)
+        
+    # Notifications
+        - New Follower (Complete)
+        - New Like on Post (Complete)
+        - New Dislike on Post (Complete)
+        - New Comment on Post (Fix Username Bug)
+        - Notification to Phones Lock Screen (Needs Implementation)
+    
+- Chat System 
+    - Add Chat
+    - Send Messages
+    - Send Posts
+    - Send Images
+    - Send Videos
+    - Delete Chats
+    - Delete Messages
+
+- Food
+    - Post Recipes
+    - Like Recipe
+    - Dislike Recipe
 - View Account Details (Complete)
-- Edit Account
+- Edit Account (Complete)
+- Make Posts With Account (Complete)
 - View Subscription Status (Complete)
-- Purchase Subscription
-- Upgrade Subscription
+- Purchase Subscription (Needs System)
+- Upgrade Subscription (Needs System)
 - Cancel Subscription
-- Direct Messaging system to communicate with kobracoding.com developers
+- Chat System (Underway)
+- 
 
 # Language
 
