@@ -16,63 +16,62 @@
 - Expand marketplace and allow users to sell hardware and software/solutions to eachother (similar to facebook marketplace but focused)
 - Forums of communities surrounding the topics I care about: Computers, Software, Coding, Music, American Sports, Video Games, World News, Celebrities
 
-# Functionality 
 
-    # Account
-        - Creation (Complete)
-        - Sign in (Complete)
-        - Log out (Complete)
-        - Delete (To be Implemented)
-        - Create Bio (Complete)
-        - Edit Bio (Complete)
-        - Follow Users (Complete)
-        - Unfollow Users (Complete)
-        - View Followers (Complete)
-        - View Following (Complete)
-        - Profile Picture (Complete)
-        - View/Delete Posts (Complete)
+# Account
+    - Creation (Complete)
+    - Sign in (Complete)
+    - Log out (Complete)
+    - Delete (To be Implemented)
+    - Create Bio (Complete)
+    - Edit Bio (Complete)
+    - Follow Users (Complete)
+    - Unfollow Users (Complete)
+    - View Followers (Complete)
+    - View Following (Complete)
+    - Profile Picture (Complete)
+    - View/Delete Posts (Complete)
 
-    # Create Post
-        - Memes (Complete)
-        - News (Complete)
-        - Advertisements (Complete)
-        - Bugs (Complete)
-        - Help (Complete)
-        - Market (Needs Functionality)
-        - Personal (Needs Implementation)
-        - Takes (Needs Implementation)
-        - Replace Category with HashTags (Needs to be Completed)
+# Create Post
+    - Memes (Complete)
+    - News (Complete)
+    - Advertisements (Complete)
+    - Bugs (Complete)
+    - Help (Complete)
+    - Market (Needs Functionality)
+    - Personal (Needs Implementation)
+    - Takes (Needs Implementation)
+    - Replace Category with HashTags (Needs to be Completed)
         
-    # Post Interaction
-        - Liking (Complete)
-        - Disliking (Complete)
-        - Commenting (Fix Username Bug)
-        - View Image (Complete)
-        - View Account (Complete)
-        - Share Post via Chat (Needs Implementation)
-        - Delete Post (Complete)
-        - View External Link (Needs Implementation)
+# Post Interaction
+    - Liking (Complete)
+    - Disliking (Complete)
+    - Commenting (Fix Username Bug)
+    - View Image (Complete)
+    - View Account (Complete)
+    - Share Post via Chat (Needs Implementation)
+    - Delete Post (Complete)
+    - View External Link (Needs Implementation)
         
-    # Post Feed (KobraView)
-        - Memes (Complete)
-        - News (Complete)
-        - Advertisements (Complete)
-        - Bugs (Complete)
-        - Help (Complete)
-        - Market (Needs Functionality)
-        - Personal (Needs Implementation)
-        - Takes (Needs Implementation) 
-        - Hot Feed (Needs Implementation)
-        - Following (Needs Implementation)
+# Post Feed (KobraView)
+    - Memes (Complete)
+    - News (Complete)
+    - Advertisements (Complete)
+    - Bugs (Complete)
+    - Help (Complete)
+    - Market (Needs Functionality)
+    - Personal (Needs Implementation)
+    - Takes (Needs Implementation) 
+    - Hot Feed (Needs Implementation)
+    - Following (Needs Implementation)
         
-    # Notifications
-        - New Follower (Complete)
-        - New Like on Post (Complete)
-        - New Dislike on Post (Complete)
-        - New Comment on Post (Fix Username Bug)
-        - Notification to Phones Lock Screen (Needs Implementation)
+# Notifications
+    - New Follower (Complete)
+    - New Like on Post (Complete)
+    - New Dislike on Post (Complete)
+    - New Comment on Post (Fix Username Bug)
+    - Notification to Phones Lock Screen (Needs Implementation)
     
-- Chat System 
+# Chat System 
     - Add Chat
     - Send Messages
     - Send Posts
@@ -81,7 +80,7 @@
     - Delete Chats
     - Delete Messages
 
-- Food
+# Food
     - Post Recipes
     - Like Recipe
     - Dislike Recipe
