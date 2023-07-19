@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import FirebaseAuth
+import Firebase
 
 struct CommentView: View {
     @EnvironmentObject var viewModel: KobraViewModel
@@ -54,22 +55,38 @@ struct CommentView: View {
     
     func addComment() {
         if !newCommentText.isEmpty {
-            guard let userEmail = Auth.auth().currentUser?.email else {
-                print("Error: User not logged in or email not found")
+            guard let currentUserId = Auth.auth().currentUser?.uid else {
+                print("Error: User not logged in or uid not found")
                 return
             }
-            let username = userEmail.components(separatedBy: "@")[0]
-            let newComment = Comment(text: newCommentText, commenter: username, timestamp: Date())
-            viewModel.addComment(newComment, to: post) { result in
-                switch result {
-                case .success:
-                    print("Comment added successfully")
-                    newCommentText = ""
-                    viewModel.fetchComments(for: post) { _ in }
-                case .failure(let error):
-                    print("Error adding comment: \(error.localizedDescription)")
+            
+            let accountRef = Firestore.firestore().collection("Accounts").document(currentUserId)
+            
+            accountRef.getDocument { (document, error) in
+                if let error = error {
+                    print("Error getting user data: \(error.localizedDescription)")
+                    return
+                }
+                
+                guard let document = document, document.exists, let userData = document.data(), let username = userData["username"] as? String else {
+                    print("Error: User data not found or username field is missing")
+                    return
+                }
+                
+                let newComment = Comment(text: newCommentText, commenter: username, timestamp: Date())
+                
+                viewModel.addComment(newComment, to: post) { result in
+                    switch result {
+                    case .success:
+                        print("Comment added successfully")
+                        newCommentText = ""
+                        viewModel.fetchComments(for: post) { _ in }
+                    case .failure(let error):
+                        print("Error adding comment: \(error.localizedDescription)")
+                    }
                 }
             }
         }
     }
+
 }

@@ -21,6 +21,7 @@ struct FollowCell: View {
     var body: some View {
         HStack(spacing: 16) {
             // Circle view for the profile picture
+
             if viewModel.isLoading {
                 ProgressView()
             } else if let account = viewModel.account {
@@ -50,6 +51,8 @@ struct FollowCell: View {
                             .foregroundColor(.gray)
                     }
                 }
+                .padding(.vertical, 3)
+                .padding(.leading, 3)
                 VStack(alignment: .leading) {
                     // Display only the part of the email before the '@'
                     Text(account.username.uppercased())
@@ -65,10 +68,10 @@ struct FollowCell: View {
                             .foregroundColor(Color.black.opacity(0.7))
                     }
                 }
-                Spacer() // Add this line
+                Spacer()
             }
+            
         }
         .background(Color.white)
-        .cornerRadius(1)
     }
 }

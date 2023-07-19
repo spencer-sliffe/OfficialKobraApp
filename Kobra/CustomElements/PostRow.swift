@@ -168,11 +168,11 @@ struct PostRow: View {
         }
         .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
         .background(
-            RoundedRectangle(cornerRadius: 10)
+            RoundedRectangle(cornerRadius: 5)
                 .fill(Color(.systemBackground))
         )
         .overlay(
-            RoundedRectangle(cornerRadius: 10)
+            RoundedRectangle(cornerRadius: 5)
                 .stroke(Color.gray.opacity(0.2), lineWidth: 1)
         )
         .sheet(isPresented: $showingComments) {

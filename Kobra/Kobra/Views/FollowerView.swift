@@ -15,10 +15,12 @@ struct FollowerView: View {
     var body: some View {
         NavigationView {
             VStack {
-                List {
-                    ForEach(viewModel.followers, id: \.self) { follower in
-                        NavigationLink(destination: AccountProfileView(accountId: follower)) {
-                            FollowCell(accountId: follower)
+                ScrollView {
+                    VStack {
+                        ForEach(viewModel.followers, id: \.self) { follower in
+                            NavigationLink(destination: AccountProfileView(accountId: follower)) {
+                                FollowCell(accountId: follower)
+                            }
                         }
                     }
                 }

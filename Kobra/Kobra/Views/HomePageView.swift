@@ -10,6 +10,7 @@ import Foundation
 
 struct HomePageView: View {
     @State private var selectedTab = 3
+    @State private var previousTab = 3
     @ObservedObject var authViewModel = AuthenticationViewModel()
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
     @StateObject var kobraViewModel = KobraViewModel()
@@ -31,6 +32,12 @@ struct HomePageView: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                         .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .never))
+                        .onChange(of: selectedTab) { newValue in
+                            if previousTab == 4 {
+                                notificationViewModel.markAllAsSeen()
+                            }
+                            previousTab = newValue
+                        }
                         HStack(spacing: 0) {
                             ForEach(0..<7) { index in
                                 self.createTabButton(icon: self.getIcon(for: index), tabIndex: index)
@@ -57,6 +64,7 @@ struct HomePageView: View {
             }
         }
     }
+
 
     private func getIcon(for index: Int) -> String {
         switch index {
@@ -90,16 +98,13 @@ struct HomePageView: View {
             DiscoverView()
         case 3:
             KobraView()
-                .onAppear(){
-                    notificationViewModel.markAllAsSeen()
-                }
         case 4:
             NotificationView()
-        case 5:
-            InboxView()
-                .onAppear(){
+                .onDisappear(){
                     notificationViewModel.markAllAsSeen()
                 }
+        case 5:
+            InboxView()
         case 6:
             FoodView()
         default:
