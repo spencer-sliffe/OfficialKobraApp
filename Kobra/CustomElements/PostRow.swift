@@ -331,15 +331,12 @@ struct PostRow: View {
                 }
             }
             if let videoURL = videoURL, let url = URL(string: videoURL) {
-                        VideoPlayerView(videoURL: url, shouldPlay: $shouldPlayVideo)
-                            .frame(height: 300)
-                            .onAppear {
-                                shouldPlayVideo = true
-                            }
-                            .onDisappear {
-                                shouldPlayVideo = false
-                            }
+                VideoPlayerView(videoURL: url, shouldPlay: $shouldPlayVideo)
+                    .frame(height: 300)
+                    .isInView { inView in
+                        shouldPlayVideo = inView
                     }
+            }
             Text(content)
                 .font(.subheadline)
                 .foregroundColor(.primary)
@@ -416,15 +413,12 @@ struct PostRow: View {
                 }
             }
             if let videoURL = videoURL, let url = URL(string: videoURL) {
-                        VideoPlayerView(videoURL: url, shouldPlay: $shouldPlayVideo)
-                            .frame(height: 300)
-                            .onAppear {
-                                shouldPlayVideo = true
-                            }
-                            .onDisappear {
-                                shouldPlayVideo = false
-                            }
+                VideoPlayerView(videoURL: url, shouldPlay: $shouldPlayVideo)
+                    .frame(height: 300)
+                    .isInView { inView in
+                        shouldPlayVideo = inView
                     }
+            }
             Text("Price: \(priceFormatter.string(from: NSNumber(value: marketPost.price)) ?? "")")
                 .font(.subheadline)
                 .foregroundColor(.primary)

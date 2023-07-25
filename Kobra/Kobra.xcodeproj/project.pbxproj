@@ -28,8 +28,6 @@
 		4528556229B1AED800F088CD /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4528556129B1AED800F088CD /* AuthenticationViewModel.swift */; };
 		452CB79A2A030BDE001D8195 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452CB7992A030BDE001D8195 /* CustomButton.swift */; };
 		453314062A23245800DEE73E /* CreateFoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453314052A23245800DEE73E /* CreateFoodView.swift */; };
-		453849EB2A6C4A4C00568478 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453849EA2A6C4A4C00568478 /* PlayerView.swift */; };
-		453849ED2A6C4C6F00568478 /* PlayerUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453849EC2A6C4C6F00568478 /* PlayerUIView.swift */; };
 		4543FE6129DB4A0C003B3CCC /* CustomTextFieldUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543FE6029DB4A0C003B3CCC /* CustomTextFieldUI.swift */; };
 		4543FE6329DB4A24003B3CCC /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543FE6229DB4A24003B3CCC /* CustomTextField.swift */; };
 		4546248E2A6849EE0062316A /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4546248D2A6849EE0062316A /* ImagePicker.swift */; };
@@ -67,6 +65,7 @@
 		45AD933F29B130E900D153AF /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD933E29B130E900D153AF /* AccountViewModel.swift */; };
 		45AD934129B130F600D153AF /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD934029B130F600D153AF /* AccountView.swift */; };
 		45AD934329B1AAB800D153AF /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD934229B1AAB800D153AF /* AuthenticationView.swift */; };
+		45B26BA02A7062F5001708C1 /* IsInViewKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B26B9F2A7062F5001708C1 /* IsInViewKey.swift */; };
 		45BB7BC12A4FE85A00A95831 /* FollowerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BB7BC02A4FE85A00A95831 /* FollowerView.swift */; };
 		45BB7BC32A4FE86700A95831 /* FollowingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BB7BC22A4FE86700A95831 /* FollowingView.swift */; };
 		45BB7BC52A51EE1700A95831 /* FollowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BB7BC42A51EE1700A95831 /* FollowCell.swift */; };
@@ -117,8 +116,6 @@
 		4528556129B1AED800F088CD /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		452CB7992A030BDE001D8195 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		453314052A23245800DEE73E /* CreateFoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFoodView.swift; sourceTree = "<group>"; };
-		453849EA2A6C4A4C00568478 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
-		453849EC2A6C4C6F00568478 /* PlayerUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerUIView.swift; sourceTree = "<group>"; };
 		4543FE6029DB4A0C003B3CCC /* CustomTextFieldUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFieldUI.swift; sourceTree = "<group>"; };
 		4543FE6229DB4A24003B3CCC /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		4546248D2A6849EE0062316A /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
@@ -158,6 +155,7 @@
 		45AD933E29B130E900D153AF /* AccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewModel.swift; sourceTree = "<group>"; };
 		45AD934029B130F600D153AF /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		45AD934229B1AAB800D153AF /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
+		45B26B9F2A7062F5001708C1 /* IsInViewKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsInViewKey.swift; sourceTree = "<group>"; };
 		45BB7BC02A4FE85A00A95831 /* FollowerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerView.swift; sourceTree = "<group>"; };
 		45BB7BC22A4FE86700A95831 /* FollowingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingView.swift; sourceTree = "<group>"; };
 		45BB7BC42A51EE1700A95831 /* FollowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowCell.swift; sourceTree = "<group>"; };
@@ -226,10 +224,9 @@
 				451CAE062A55F4B1009BC1F7 /* NotificationCell.swift */,
 				45998F5B2A59C0F7001EE549 /* ChatCell.swift */,
 				4546248D2A6849EE0062316A /* ImagePicker.swift */,
-				453849EA2A6C4A4C00568478 /* PlayerView.swift */,
-				453849EC2A6C4C6F00568478 /* PlayerUIView.swift */,
 				459A366E2A6F0047002914CD /* VideoPlayerView.swift */,
 				459A36702A6F191B002914CD /* VideoPlayerStatus.swift */,
+				45B26B9F2A7062F5001708C1 /* IsInViewKey.swift */,
 			);
 			path = CustomElements;
 			sourceTree = "<group>";
@@ -554,6 +551,7 @@
 				459B43782A169BAE0029D90B /* DiscoverView.swift in Sources */,
 				45998F5A2A59BF8A001EE549 /* Inbox.swift in Sources */,
 				45CFE93629C04EF6003806D5 /* Chat.swift in Sources */,
+				45B26BA02A7062F5001708C1 /* IsInViewKey.swift in Sources */,
 				45A908CB29B037FE00792FC2 /* FSAccountManager.swift in Sources */,
 				45895C092A1B25CB0022DF98 /* Food.swift in Sources */,
 				45895C0B2A1B27300022DF98 /* FoodRow.swift in Sources */,
@@ -567,7 +565,6 @@
 				45BB7BC12A4FE85A00A95831 /* FollowerView.swift in Sources */,
 				459BE6082A180F7600625E53 /* FSFoodManager.swift in Sources */,
 				45BB7BC32A4FE86700A95831 /* FollowingView.swift in Sources */,
-				453849EB2A6C4A4C00568478 /* PlayerView.swift in Sources */,
 				456429EF29FAFB1D00BC5D8F /* FSChatManager.swift in Sources */,
 				455C6E5929D7E9B700446520 /* Post.swift in Sources */,
 				45EA727F29B7B74C000FD738 /* PackageView.swift in Sources */,
@@ -575,7 +572,6 @@
 				4590144A2A2E2C0100A778A6 /* AccountProfileView.swift in Sources */,
 				4543FE6129DB4A0C003B3CCC /* CustomTextFieldUI.swift in Sources */,
 				45998F5C2A59C0F7001EE549 /* ChatCell.swift in Sources */,
-				453849ED2A6C4C6F00568478 /* PlayerUIView.swift in Sources */,
 				45C7171E29C63AF700679626 /* InboxViewModel.swift in Sources */,
 				459BE6042A18032100625E53 /* FoodViewModel.swift in Sources */,
 				459246B22A2FE0FD00D564AE /* AccountProfileViewModel.swift in Sources */,
