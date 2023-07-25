@@ -10,6 +10,7 @@ import Combine
 import SwiftUI
 import FirebaseAuth
 import Firebase
+import AVKit
 
 class KobraViewModel: ObservableObject {
     @Published var posts: [Post] = []
@@ -17,15 +18,43 @@ class KobraViewModel: ObservableObject {
     private let postManager = FSPostManager.shared
     private let notificationManager = FSNotificationManager.shared
     private var cancellables: Set<AnyCancellable> = []
-    
+    @Published var uploadProgress: Double = 0.0
+    @Published var isUploadInProgress: Bool = false
+    @Published var currentlyPlaying: AVPlayer?
+
     init() {
         fetchPosts()
     }
-    
+
     func uploadImage(_ image: UIImage, postId: String, completion: @escaping (Result<String, Error>) -> Void) {
-        postManager.uploadImage(image, postId: postId, completion: completion)
+        isUploadInProgress = true
+        postManager.uploadImage(image, postId: postId, progress: { [weak self] progress in
+            DispatchQueue.main.async {
+                self?.uploadProgress = progress // adjust the scale
+            }
+        }, completion: { result in
+            DispatchQueue.main.async {
+                self.isUploadInProgress = false
+                completion(result)
+            }
+        })
     }
-    
+
+    func uploadVideo(_ videoURL: URL, postId: String, completion: @escaping (Result<String, Error>) -> Void) {
+        isUploadInProgress = true
+        postManager.uploadVideo(videoURL, postId: postId, progress: { [weak self] progress in
+            DispatchQueue.main.async {
+                self?.uploadProgress = progress // adjust the scale
+            }
+        }, completion: { result in
+            DispatchQueue.main.async {
+                self.isUploadInProgress = false
+                completion(result)
+            }
+        })
+    }
+
+
     func fetchPosts() {
         postManager.fetchPosts { [weak self] result in
             DispatchQueue.main.async {
@@ -38,10 +67,10 @@ class KobraViewModel: ObservableObject {
             }
         }
     }
-    
-    func addPost(_ post: Post, image: UIImage? = nil, completion: ((Result<Void, Error>) -> Void)? = nil) {
+
+    func addPost(_ post: Post, image: UIImage? = nil, videoURL: URL? = nil, completion: ((Result<Void, Error>) -> Void)? = nil) {
         if let image = image {
-            postManager.uploadImage(image, postId: post.id.uuidString) { [weak self] result in
+            uploadImage(image, postId: post.id.uuidString) { [weak self] result in
                 switch result {
                 case .success(let imageURL):
                     let newPost = post
@@ -52,11 +81,23 @@ class KobraViewModel: ObservableObject {
                     completion?(.failure(error))
                 }
             }
+        } else if let videoURL = videoURL {
+            uploadVideo(videoURL, postId: post.id.uuidString) { [weak self] result in
+                switch result {
+                case .success(let videoURL):
+                    let newPost = post
+                    newPost.videoURL = videoURL
+                    self?.addPostToDatabase(newPost, completion: completion)
+                case .failure(let error):
+                    print("Error uploading video: \(error.localizedDescription)")
+                    completion?(.failure(error))
+                }
+            }
         } else {
             addPostToDatabase(post, completion: completion)
         }
     }
-    
+
     private func addPostToDatabase(_ post: Post, completion: ((Result<Void, Error>) -> Void)? = nil) {
         postManager.addPost(post) { [weak self] result in
             DispatchQueue.main.async {

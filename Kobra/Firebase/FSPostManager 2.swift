@@ -10,8 +10,6 @@ import FirebaseFirestore
 import Firebase
 import UIKit
 import FirebaseStorage
-import AVFoundation
-
 
 class FSPostManager {
     private init() {}
@@ -51,14 +49,14 @@ class FSPostManager {
             }
     }
 
-    func uploadImage(_ image: UIImage, postId: String, progress: @escaping (Double) -> Void, completion: @escaping (Result<String, Error>) -> Void) {
+    func uploadImage(_ image: UIImage, postId: String, completion: @escaping (Result<String, Error>) -> Void) {
         guard let imageData = image.jpegData(compressionQuality: 0.5) else {
             completion(.failure(NSError(domain: "Kobra", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to convert image to data"])))
             return
         }
         
         let storageRef = Storage.storage().reference().child("post_images/\(postId).jpg")
-        let uploadTask = storageRef.putData(imageData, metadata: nil) { metadata, error in
+        storageRef.putData(imageData, metadata: nil) { metadata, error in
             if let error = error {
                 completion(.failure(error))
                 return
@@ -76,47 +74,12 @@ class FSPostManager {
                     completion(.failure(NSError(domain: "Kobra", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to get download URL"])))
                 }
             }
-        }
-        uploadTask.observe(.progress) { snapshot in
-            let percentComplete = 100.0 * Double(snapshot.progress!.completedUnitCount)
-                / Double(snapshot.progress!.totalUnitCount)
-            progress(percentComplete)
         }
     }
     
-    func uploadVideo(_ videoUrl: URL, postId: String, progress: @escaping (Double) -> Void, completion: @escaping (Result<String, Error>) -> Void) {
-        let avAsset = AVURLAsset(url: videoUrl)
-        
-        let exportSession = AVAssetExportSession(asset: avAsset, presetName: AVAssetExportPresetMediumQuality)
-        
-        guard exportSession != nil else {
-            completion(.failure(NSError(domain: "Kobra", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to start export session"])))
-            return
-        }
-
-        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let newVideoUrl = documentsDirectory.appendingPathComponent("\(postId).mp4")
-
-        exportSession?.outputURL = newVideoUrl
-        exportSession?.outputFileType = .mp4
-
-        exportSession?.exportAsynchronously(completionHandler: {
-            switch exportSession?.status {
-            case .completed:
-                self.uploadConvertedVideo(newVideoUrl, postId: postId, progress: progress, completion: completion)
-            case .failed, .cancelled:
-                completion(.failure(NSError(domain: "Kobra", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to convert video to MP4"])))
-            default:
-                break
-            }
-        })
-    }
-
-
-    private func uploadConvertedVideo(_ videoUrl: URL, postId: String, progress: @escaping (Double) -> Void, completion: @escaping (Result<String, Error>) -> Void) {
-        let storageRef = Storage.storage().reference().child("post_videos/\(postId).mp4")
-        
-        let uploadTask = storageRef.putFile(from: videoUrl, metadata: nil) { metadata, error in
+    func uploadVideo(_ videoURL: URL, postId: String, completion: @escaping (Result<String, Error>) -> Void) {
+        let storageRef = Storage.storage().reference().child("post_videos/\(postId).mov")
+        storageRef.putFile(from: videoURL, metadata: nil) { metadata, error in
             if let error = error {
                 completion(.failure(error))
                 return
@@ -135,14 +98,7 @@ class FSPostManager {
                 }
             }
         }
-        
-        uploadTask.observe(.progress) { snapshot in
-            let percentComplete = 100.0 * Double(snapshot.progress!.completedUnitCount)
-                / Double(snapshot.progress!.totalUnitCount)
-            progress(percentComplete)
-        }
     }
-
 
     
     private func createPostFrom(data: [String: Any]) -> Post {
@@ -230,8 +186,7 @@ class FSPostManager {
             fatalError("Unknown post type")
         }
         let imageURL = data["imageURL"] as? String
-        let videoURL = data["videoURL"] as? String
-        return Post(id: id, type: postType, likes: likes, timestamp: timestamp, imageURL: imageURL, videoURL: videoURL, likingUsers: likingUsers, dislikingUsers: dislikingUsers, comments: comments, dislikes: dislikes, posterId: posterId, numComments: numComments)
+        return Post(id: id, type: postType, likes: likes, timestamp: timestamp, imageURL: imageURL, likingUsers: likingUsers, dislikingUsers: dislikingUsers, comments: comments, dislikes: dislikes, posterId: posterId, numComments: numComments)
     }
     
     func addPost(_ post: Post, completion: @escaping (Result<Void, Error>) -> Void) {
@@ -323,9 +278,6 @@ class FSPostManager {
         data["postType"] = postTypeString
         if let imageURL = post.imageURL {
             data["imageURL"] = imageURL
-        }
-        if let videoURL = post.videoURL {
-            data["videoURL"] = videoURL
         }
         return data
     }
@@ -495,6 +447,25 @@ class FSPostManager {
                 } else {
                     print("Dislike count updated successfully")
                 }
+            }
+        }
+    }
+
+    
+    func addPostWithImage(_ post: Post, image: UIImage, completion: @escaping (Result<Void, Error>) -> Void) {
+        self.addPost(post) { result in
+            switch result {
+            case .success:
+                self.uploadImage(image, postId: post.id.uuidString) { result in
+                    switch result {
+                    case .success(let imageURL):
+                        self.updateImageURLForPost(post, imageURL: imageURL, completion: completion)
+                    case .failure(let error):
+                        completion(.failure(error))
+                    }
+                }
+            case .failure(let error):
+                completion(.failure(error))
             }
         }
     }

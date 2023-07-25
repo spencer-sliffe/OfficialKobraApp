@@ -19,7 +19,6 @@ struct AccountView: View {
     @State var showFollowerView = false
     @State var showFollowingView = false
     
-    
     var body: some View {
         VStack {
             if viewModel.isLoading {

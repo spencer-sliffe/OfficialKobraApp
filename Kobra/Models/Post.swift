@@ -21,6 +21,7 @@ class Post: Identifiable, ObservableObject {
     var likes: Int = 0
     var timestamp: Date
     var imageURL: String?
+    var videoURL: String?
     var dislikes: Int = 0
     @Published var likingUsers: [String]
     @Published var dislikingUsers: [String]
@@ -28,12 +29,13 @@ class Post: Identifiable, ObservableObject {
     var posterId: String // new property
     var numComments: Int = 0
     
-    init(id: UUID = UUID(), type: PostType, likes: Int = 0, timestamp: Date, imageURL: String? = nil, likingUsers: [String] = [], dislikingUsers: [String] = [], comments: [Comment], dislikes: Int = 0, posterId: String, numComments: Int = 0) {
+    init(id: UUID = UUID(), type: PostType, likes: Int = 0, timestamp: Date, imageURL: String? = nil, videoURL: String? = nil, likingUsers: [String] = [], dislikingUsers: [String] = [], comments: [Comment], dislikes: Int = 0, posterId: String, numComments: Int = 0) {
         self.id = id
         self.type = type
         self.likes = likes
         self.timestamp = timestamp
         self.imageURL = imageURL
+        self.videoURL = videoURL
         self.likingUsers = likingUsers
         self.dislikingUsers = dislikingUsers
         self.comments = comments

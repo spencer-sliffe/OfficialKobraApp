@@ -7,8 +7,6 @@
 import Foundation
 import SwiftUI
 import FirebaseAuth
-import AVKit
-import AVFoundation
 
 struct PostRow: View {
     @ObservedObject var post: Post
@@ -22,9 +20,7 @@ struct PostRow: View {
     let currentUserId: String = Auth.auth().currentUser?.uid ?? ""
     @State private var showingDeleteConfirmation = false
     @State private var profilePictureURL: URL?
-    @State private var playerStatus: AVPlayer.Status = .unknown
-    @State private var shouldPlayVideo = false
-
+    
     init(post: Post) {
         self.post = post
         _likes = State(initialValue: post.likes)
@@ -66,25 +62,25 @@ struct PostRow: View {
                 case .advertisement(let advertisementPost):
                     PostContent(title: advertisementPost.title,
                                 content: advertisementPost.content,
-                                imageURL: post.imageURL, videoURL: post.videoURL)
+                                imageURL: post.imageURL)
                 case .help(let helpPost):
                     PostContent(title: helpPost.question,
                                 content: helpPost.details,
-                                imageURL: post.imageURL, videoURL: post.videoURL)
+                                imageURL: post.imageURL)
                 case .news(let newsPost):
                     PostContent(title: newsPost.headline,
                                 content: newsPost.article,
-                                imageURL: post.imageURL, videoURL: post.videoURL)
+                                imageURL: post.imageURL)
                 case .bug(let bugPost):
                     PostContent(title: bugPost.title,
                                 content: bugPost.content,
-                                imageURL: post.imageURL, videoURL: post.videoURL)
+                                imageURL: post.imageURL)
                 case .meme(let memePost):
                     PostContent(title: memePost.title,
                                 content: memePost.content,
-                                imageURL: post.imageURL, videoURL: post.videoURL)
+                                imageURL: post.imageURL)
                 case .market(let marketPost):
-                    MarketPostContent(marketPost: marketPost, imageURL: post.imageURL, videoURL: post.videoURL)
+                    MarketPostContent(marketPost: marketPost, imageURL: post.imageURL)
                 }
             }
             
@@ -291,7 +287,7 @@ struct PostRow: View {
         return !post.dislikingUsers.contains(currentUserId)
     }
     
-    func PostContent(title: String, content: String, imageURL: String?, videoURL: String?) -> some View {
+    func PostContent(title: String, content: String, imageURL: String?) -> some View {
         VStack(alignment: .leading, spacing: 1) {
             Text(title)
                 .font(.title2)
@@ -330,23 +326,13 @@ struct PostRow: View {
                     }
                 }
             }
-            if let videoURL = videoURL, let url = URL(string: videoURL) {
-                        VideoPlayerView(videoURL: url, shouldPlay: $shouldPlayVideo)
-                            .frame(height: 300)
-                            .onAppear {
-                                shouldPlayVideo = true
-                            }
-                            .onDisappear {
-                                shouldPlayVideo = false
-                            }
-                    }
             Text(content)
                 .font(.subheadline)
                 .foregroundColor(.primary)
         }
     }
     
-    func MarketPostContent(marketPost: MarketPost, imageURL: String?, videoURL: String?) -> some View {
+    func MarketPostContent(marketPost: MarketPost, imageURL: String?) -> some View {
         VStack(alignment: .leading, spacing: 1) {
             switch marketPost.type {
             case .hardware(let hardware):
@@ -415,16 +401,7 @@ struct PostRow: View {
                     }
                 }
             }
-            if let videoURL = videoURL, let url = URL(string: videoURL) {
-                        VideoPlayerView(videoURL: url, shouldPlay: $shouldPlayVideo)
-                            .frame(height: 300)
-                            .onAppear {
-                                shouldPlayVideo = true
-                            }
-                            .onDisappear {
-                                shouldPlayVideo = false
-                            }
-                    }
+            
             Text("Price: \(priceFormatter.string(from: NSNumber(value: marketPost.price)) ?? "")")
                 .font(.subheadline)
                 .foregroundColor(.primary)

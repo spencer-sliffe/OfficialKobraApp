@@ -207,4 +207,3 @@ private struct ListBackgroundModifier: ViewModifier {
             }
     }
 }
-

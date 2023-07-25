@@ -28,6 +28,8 @@
 		4528556229B1AED800F088CD /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4528556129B1AED800F088CD /* AuthenticationViewModel.swift */; };
 		452CB79A2A030BDE001D8195 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452CB7992A030BDE001D8195 /* CustomButton.swift */; };
 		453314062A23245800DEE73E /* CreateFoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453314052A23245800DEE73E /* CreateFoodView.swift */; };
+		453849EB2A6C4A4C00568478 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453849EA2A6C4A4C00568478 /* PlayerView.swift */; };
+		453849ED2A6C4C6F00568478 /* PlayerUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453849EC2A6C4C6F00568478 /* PlayerUIView.swift */; };
 		4543FE6129DB4A0C003B3CCC /* CustomTextFieldUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543FE6029DB4A0C003B3CCC /* CustomTextFieldUI.swift */; };
 		4543FE6329DB4A24003B3CCC /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543FE6229DB4A24003B3CCC /* CustomTextField.swift */; };
 		4546248E2A6849EE0062316A /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4546248D2A6849EE0062316A /* ImagePicker.swift */; };
@@ -35,7 +37,7 @@
 		455C6E5729D7E72600446520 /* KobraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455C6E5629D7E72600446520 /* KobraViewModel.swift */; };
 		455C6E5929D7E9B700446520 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455C6E5829D7E9B700446520 /* Post.swift */; };
 		456429EF29FAFB1D00BC5D8F /* FSChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456429EE29FAFB1D00BC5D8F /* FSChatManager.swift */; };
-		457D1F5129DF4D9B00EF722D /* ImageMoviePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457D1F5029DF4D9B00EF722D /* ImageMoviePicker.swift */; };
+		457D1F5129DF4D9B00EF722D /* ImageVideoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457D1F5029DF4D9B00EF722D /* ImageVideoPicker.swift */; };
 		457EFD3929F8AECB006F53F2 /* DropDownMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457EFD3829F8AECB006F53F2 /* DropDownMenu.swift */; };
 		45895C092A1B25CB0022DF98 /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45895C082A1B25CB0022DF98 /* Food.swift */; };
 		45895C0B2A1B27300022DF98 /* FoodRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45895C0A2A1B272F0022DF98 /* FoodRow.swift */; };
@@ -51,6 +53,8 @@
 		4594204129AEF00500A100F1 /* HomePageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4594204029AEF00500A100F1 /* HomePageViewModel.swift */; };
 		45998F5A2A59BF8A001EE549 /* Inbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45998F592A59BF8A001EE549 /* Inbox.swift */; };
 		45998F5C2A59C0F7001EE549 /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45998F5B2A59C0F7001EE549 /* ChatCell.swift */; };
+		459A366F2A6F0047002914CD /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459A366E2A6F0047002914CD /* VideoPlayerView.swift */; };
+		459A36712A6F191B002914CD /* VideoPlayerStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459A36702A6F191B002914CD /* VideoPlayerStatus.swift */; };
 		459B43782A169BAE0029D90B /* DiscoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459B43772A169BAE0029D90B /* DiscoverView.swift */; };
 		459B437A2A169BC20029D90B /* DiscoverViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459B43792A169BC20029D90B /* DiscoverViewModel.swift */; };
 		459B437C2A16C2750029D90B /* GradientDropDownMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459B437B2A16C2750029D90B /* GradientDropDownMenu.swift */; };
@@ -113,6 +117,8 @@
 		4528556129B1AED800F088CD /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		452CB7992A030BDE001D8195 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		453314052A23245800DEE73E /* CreateFoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFoodView.swift; sourceTree = "<group>"; };
+		453849EA2A6C4A4C00568478 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
+		453849EC2A6C4C6F00568478 /* PlayerUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerUIView.swift; sourceTree = "<group>"; };
 		4543FE6029DB4A0C003B3CCC /* CustomTextFieldUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFieldUI.swift; sourceTree = "<group>"; };
 		4543FE6229DB4A24003B3CCC /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		4546248D2A6849EE0062316A /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
@@ -120,7 +126,7 @@
 		455C6E5629D7E72600446520 /* KobraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KobraViewModel.swift; sourceTree = "<group>"; };
 		455C6E5829D7E9B700446520 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		456429EE29FAFB1D00BC5D8F /* FSChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FSChatManager.swift; sourceTree = "<group>"; };
-		457D1F5029DF4D9B00EF722D /* ImageMoviePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageMoviePicker.swift; sourceTree = "<group>"; };
+		457D1F5029DF4D9B00EF722D /* ImageVideoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageVideoPicker.swift; sourceTree = "<group>"; };
 		457EFD3829F8AECB006F53F2 /* DropDownMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownMenu.swift; sourceTree = "<group>"; };
 		45895C082A1B25CB0022DF98 /* Food.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
 		45895C0A2A1B272F0022DF98 /* FoodRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodRow.swift; sourceTree = "<group>"; };
@@ -134,6 +140,8 @@
 		4594204029AEF00500A100F1 /* HomePageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageViewModel.swift; sourceTree = "<group>"; };
 		45998F592A59BF8A001EE549 /* Inbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Inbox.swift; sourceTree = "<group>"; };
 		45998F5B2A59C0F7001EE549 /* ChatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCell.swift; sourceTree = "<group>"; };
+		459A366E2A6F0047002914CD /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
+		459A36702A6F191B002914CD /* VideoPlayerStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerStatus.swift; sourceTree = "<group>"; };
 		459B43772A169BAE0029D90B /* DiscoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverView.swift; sourceTree = "<group>"; };
 		459B43792A169BC20029D90B /* DiscoverViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewModel.swift; sourceTree = "<group>"; };
 		459B437B2A16C2750029D90B /* GradientDropDownMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientDropDownMenu.swift; sourceTree = "<group>"; };
@@ -203,7 +211,7 @@
 				4525CFC329DB407E005C0CE8 /* KobraPicker.swift */,
 				4543FE6029DB4A0C003B3CCC /* CustomTextFieldUI.swift */,
 				4543FE6229DB4A24003B3CCC /* CustomTextField.swift */,
-				457D1F5029DF4D9B00EF722D /* ImageMoviePicker.swift */,
+				457D1F5029DF4D9B00EF722D /* ImageVideoPicker.swift */,
 				45074EE829E8681C0096C82A /* CommentRow.swift */,
 				457EFD3829F8AECB006F53F2 /* DropDownMenu.swift */,
 				451C33F32A0168A500259B86 /* gradientOptions.swift */,
@@ -218,6 +226,10 @@
 				451CAE062A55F4B1009BC1F7 /* NotificationCell.swift */,
 				45998F5B2A59C0F7001EE549 /* ChatCell.swift */,
 				4546248D2A6849EE0062316A /* ImagePicker.swift */,
+				453849EA2A6C4A4C00568478 /* PlayerView.swift */,
+				453849EC2A6C4C6F00568478 /* PlayerUIView.swift */,
+				459A366E2A6F0047002914CD /* VideoPlayerView.swift */,
+				459A36702A6F191B002914CD /* VideoPlayerStatus.swift */,
 			);
 			path = CustomElements;
 			sourceTree = "<group>";
@@ -502,6 +514,7 @@
 			files = (
 				4525CFC429DB407E005C0CE8 /* KobraPicker.swift in Sources */,
 				45EA728129B7BA5B000FD738 /* Account.swift in Sources */,
+				459A36712A6F191B002914CD /* VideoPlayerStatus.swift in Sources */,
 				45AD933F29B130E900D153AF /* AccountViewModel.swift in Sources */,
 				45C7171C29C63ABE00679626 /* Message.swift in Sources */,
 				459B437A2A169BC20029D90B /* DiscoverViewModel.swift in Sources */,
@@ -511,7 +524,7 @@
 				457EFD3929F8AECB006F53F2 /* DropDownMenu.swift in Sources */,
 				45074EE929E8681C0096C82A /* CommentRow.swift in Sources */,
 				4594204129AEF00500A100F1 /* HomePageViewModel.swift in Sources */,
-				457D1F5129DF4D9B00EF722D /* ImageMoviePicker.swift in Sources */,
+				457D1F5129DF4D9B00EF722D /* ImageVideoPicker.swift in Sources */,
 				4527837B29D8B2FB00B633FB /* PostRow.swift in Sources */,
 				45AD934129B130F600D153AF /* AccountView.swift in Sources */,
 				4592E55B29BD35E900FF76E2 /* ChatView.swift in Sources */,
@@ -544,6 +557,7 @@
 				45A908CB29B037FE00792FC2 /* FSAccountManager.swift in Sources */,
 				45895C092A1B25CB0022DF98 /* Food.swift in Sources */,
 				45895C0B2A1B27300022DF98 /* FoodRow.swift in Sources */,
+				459A366F2A6F0047002914CD /* VideoPlayerView.swift in Sources */,
 				455B2B242A317E0800136D6D /* AccountSearchBar.swift in Sources */,
 				451C33F42A0168A500259B86 /* gradientOptions.swift in Sources */,
 				4527837929D8AB3D00B633FB /* FSPostManager.swift in Sources */,
@@ -553,6 +567,7 @@
 				45BB7BC12A4FE85A00A95831 /* FollowerView.swift in Sources */,
 				459BE6082A180F7600625E53 /* FSFoodManager.swift in Sources */,
 				45BB7BC32A4FE86700A95831 /* FollowingView.swift in Sources */,
+				453849EB2A6C4A4C00568478 /* PlayerView.swift in Sources */,
 				456429EF29FAFB1D00BC5D8F /* FSChatManager.swift in Sources */,
 				455C6E5929D7E9B700446520 /* Post.swift in Sources */,
 				45EA727F29B7B74C000FD738 /* PackageView.swift in Sources */,
@@ -560,6 +575,7 @@
 				4590144A2A2E2C0100A778A6 /* AccountProfileView.swift in Sources */,
 				4543FE6129DB4A0C003B3CCC /* CustomTextFieldUI.swift in Sources */,
 				45998F5C2A59C0F7001EE549 /* ChatCell.swift in Sources */,
+				453849ED2A6C4C6F00568478 /* PlayerUIView.swift in Sources */,
 				45C7171E29C63AF700679626 /* InboxViewModel.swift in Sources */,
 				459BE6042A18032100625E53 /* FoodViewModel.swift in Sources */,
 				459246B22A2FE0FD00D564AE /* AccountProfileViewModel.swift in Sources */,

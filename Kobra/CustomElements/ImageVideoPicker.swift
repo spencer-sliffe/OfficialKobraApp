@@ -9,9 +9,13 @@ import Foundation
 import SwiftUI
 import UIKit
 
-struct ImageMoviePicker: UIViewControllerRepresentable {
+import SwiftUI
+import UIKit
+
+struct ImageVideoPicker: UIViewControllerRepresentable {
     @Environment(\.presentationMode) private var presentationMode
-    @Binding var media: URL?
+    @Binding var image: UIImage?
+    @Binding var video: URL?
 
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
@@ -20,6 +24,7 @@ struct ImageMoviePicker: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let picker = UIImagePickerController()
         picker.delegate = context.coordinator
+        picker.allowsEditing = true // This allows basic editing like scaling and cropping to a square
         picker.mediaTypes = ["public.image", "public.movie"]
         return picker
     }
@@ -27,23 +32,17 @@ struct ImageMoviePicker: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
 
     class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-        let parent: ImageMoviePicker
+        let parent: ImageVideoPicker
 
-        init(_ parent: ImageMoviePicker) {
+        init(_ parent: ImageVideoPicker) {
             self.parent = parent
         }
 
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
             if let url = info[.mediaURL] as? URL {
-                parent.media = url
-            } else if let image = info[.originalImage] as? UIImage, let data = image.jpegData(compressionQuality: 1.0) {
-                let tempUrl = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".jpg")
-                do {
-                    try data.write(to: tempUrl)
-                    parent.media = tempUrl
-                } catch {
-                    print(error)
-                }
+                parent.video = url
+            } else if let editedImage = info[.editedImage] as? UIImage {  // Use editedImage key instead of originalImage
+                parent.image = editedImage
             }
             parent.presentationMode.wrappedValue.dismiss()
         }
