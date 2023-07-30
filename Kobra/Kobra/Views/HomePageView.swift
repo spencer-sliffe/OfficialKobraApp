@@ -15,57 +15,52 @@ struct HomePageView: View {
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
     @StateObject var kobraViewModel = KobraViewModel()
     @ObservedObject var notificationViewModel = NotificationViewModel()
-
+    @State private var viewsCache: [Int: AnyView] = [:]
+    
     var body: some View {
         NavigationView {
-            ZStack {
-                if !authViewModel.isAuthenticated {
-                    AuthenticationView(authViewModel: authViewModel)
-                } else {
-                    VStack {
-                        TabView(selection: $selectedTab) {
-                            ForEach(0..<7) { index in
-                                self.getView(for: index)
-                                    .tag(index)
-                            }
+            if !authViewModel.isAuthenticated {
+                AuthenticationView(authViewModel: authViewModel)
+            } else {
+                VStack {
+                    TabView(selection: $selectedTab) {
+                        ForEach(0..<7) { index in
+                            self.getView(for: index)
+                                .tag(index)
                         }
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                        .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .never))
-                        .onChange(of: selectedTab) { newValue in
-                            if previousTab == 4 {
-                                notificationViewModel.markAllAsSeen()
-                            }
-                            previousTab = newValue
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                    .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .never))
+                    .onChange(of: selectedTab) { newValue in
+                        if previousTab == 4 {
+                            notificationViewModel.markAllAsSeen()
                         }
-                        HStack(spacing: 0) {
-                            ForEach(0..<7) { index in
-                                self.createTabButton(icon: self.getIcon(for: index), tabIndex: index)
-                            }
-                        }
+                        previousTab = newValue
+                    }
+                    
+                    CustomTabView(selectedTab: $selectedTab, notificationViewModel: notificationViewModel)
                         .padding(.bottom, 16)
                         .padding(.horizontal, 5)
-                    }
-                    .navigationBarHidden(true)
-                    .edgesIgnoringSafeArea(.bottom)
-                    .background(
-                        LinearGradient(
-                            gradient: Gradient(
-                                colors: [
-                                    gradientOptions[settingsViewModel.gradientIndex].0,
-                                    gradientOptions[settingsViewModel.gradientIndex].1
-                                ]
-                            ),
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
                 }
+                .navigationBarHidden(true)
+                .edgesIgnoringSafeArea(.bottom)
+                .background(
+                    LinearGradient(
+                        gradient: Gradient(
+                            colors: [
+                                gradientOptions[settingsViewModel.gradientIndex].0,
+                                gradientOptions[settingsViewModel.gradientIndex].1
+                            ]
+                        ),
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
             }
         }
     }
-
-
+    
     private func getIcon(for index: Int) -> String {
         switch index {
         case 0:
@@ -87,35 +82,75 @@ struct HomePageView: View {
         }
     }
     
-    @ViewBuilder
     private func getView(for index: Int) -> some View {
+         viewsCache[index] ?? createAndCacheView(for: index)
+     }
+
+     private func createAndCacheView(for index: Int) -> AnyView {
+         let newView = generateView(for: index)
+         viewsCache[index] = newView
+         return newView
+     }
+
+     private func generateView(for index: Int) -> AnyView {
+         switch index {
+         case 0:
+             return AnyView(SettingsView(authViewModel: authViewModel))
+         case 1:
+             return AnyView(AccountView())
+         case 2:
+             return AnyView(DiscoverView())
+         case 3:
+             return AnyView(KobraView())
+         case 4:
+             return AnyView(NotificationView())
+         case 5:
+             return AnyView(InboxView())
+         case 6:
+             return AnyView(FoodView())
+         default:
+             return AnyView(EmptyView())
+         }
+     }
+}
+
+struct CustomTabView: View {
+    @Binding var selectedTab: Int
+    @ObservedObject var notificationViewModel: NotificationViewModel
+    
+    private func getIcon(for index: Int) -> String {
         switch index {
         case 0:
-            SettingsView(authViewModel: authViewModel)
+            return "gear"
         case 1:
-            AccountView()
+            return "person"
         case 2:
-            DiscoverView()
+            return "magnifyingglass"
         case 3:
-            KobraView()
+            return "house"
         case 4:
-            NotificationView()
-                .onDisappear(){
-                    notificationViewModel.markAllAsSeen()
-                }
+            return "bell"
         case 5:
-            InboxView()
+            return "envelope"
         case 6:
-            FoodView()
+            return "leaf"
         default:
-            EmptyView()
+            return "questionmark"
         }
     }
-
+    
+    var body: some View {
+        HStack(spacing: 0) {
+            ForEach(0..<7) { index in
+                self.createTabButton(icon: self.getIcon(for: index), tabIndex: index)
+            }
+        }
+    }
+    
     @ViewBuilder
     private func createTabButton(icon: String, tabIndex: Int) -> some View {
         Button(action: {
-            withAnimation { selectedTab = tabIndex }
+            selectedTab = tabIndex
         }) {
             ZStack {
                 Image(systemName: icon)
