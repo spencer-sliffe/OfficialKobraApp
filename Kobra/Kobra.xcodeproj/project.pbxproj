@@ -35,6 +35,8 @@
 		455C6E5729D7E72600446520 /* KobraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455C6E5629D7E72600446520 /* KobraViewModel.swift */; };
 		455C6E5929D7E9B700446520 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455C6E5829D7E9B700446520 /* Post.swift */; };
 		456429EF29FAFB1D00BC5D8F /* FSChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456429EE29FAFB1D00BC5D8F /* FSChatManager.swift */; };
+		45799C952A7AD3350078A3D0 /* AccountProfilePostRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45799C942A7AD3350078A3D0 /* AccountProfilePostRow.swift */; };
+		45799C972A7AE9A20078A3D0 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45799C962A7AE9A20078A3D0 /* Launch Screen.storyboard */; };
 		457D1F5129DF4D9B00EF722D /* ImageVideoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457D1F5029DF4D9B00EF722D /* ImageVideoPicker.swift */; };
 		457EFD3929F8AECB006F53F2 /* DropDownMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457EFD3829F8AECB006F53F2 /* DropDownMenu.swift */; };
 		45895C092A1B25CB0022DF98 /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45895C082A1B25CB0022DF98 /* Food.swift */; };
@@ -125,6 +127,8 @@
 		455C6E5629D7E72600446520 /* KobraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KobraViewModel.swift; sourceTree = "<group>"; };
 		455C6E5829D7E9B700446520 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		456429EE29FAFB1D00BC5D8F /* FSChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FSChatManager.swift; sourceTree = "<group>"; };
+		45799C942A7AD3350078A3D0 /* AccountProfilePostRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountProfilePostRow.swift; sourceTree = "<group>"; };
+		45799C962A7AE9A20078A3D0 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		457D1F5029DF4D9B00EF722D /* ImageVideoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageVideoPicker.swift; sourceTree = "<group>"; };
 		457EFD3829F8AECB006F53F2 /* DropDownMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownMenu.swift; sourceTree = "<group>"; };
 		45895C082A1B25CB0022DF98 /* Food.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
@@ -233,6 +237,7 @@
 				45B26B9F2A7062F5001708C1 /* IsInViewKey.swift */,
 				45AF89932A7AB2CC00DEA4EC /* FeedType.swift */,
 				45AF89952A7AB53E00DEA4EC /* AccountPostRow.swift */,
+				45799C942A7AD3350078A3D0 /* AccountProfilePostRow.swift */,
 			);
 			path = CustomElements;
 			sourceTree = "<group>";
@@ -285,6 +290,7 @@
 				45E5ABDA299D8AC300DFFDC8 /* KobraApp.swift */,
 				45E5ABDE299D8AC500DFFDC8 /* Assets.xcassets */,
 				45E5ABE0299D8AC500DFFDC8 /* Preview Content */,
+				45799C962A7AE9A20078A3D0 /* Launch Screen.storyboard */,
 			);
 			path = Kobra;
 			sourceTree = "<group>";
@@ -462,6 +468,7 @@
 				459B438B2A16DD9A0029D90B /* Localizable.strings in Resources */,
 				45E5ABE2299D8AC500DFFDC8 /* Preview Assets.xcassets in Resources */,
 				45E5ABDF299D8AC500DFFDC8 /* Assets.xcassets in Resources */,
+				45799C972A7AE9A20078A3D0 /* Launch Screen.storyboard in Resources */,
 				4591810229AECFD3000FB066 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -549,6 +556,7 @@
 				45EC905429B8475900E0A3A3 /* PackageWithImage.swift in Sources */,
 				451CAE0B2A5646B2009BC1F7 /* PostView.swift in Sources */,
 				459B437C2A16C2750029D90B /* GradientDropDownMenu.swift in Sources */,
+				45799C952A7AD3350078A3D0 /* AccountProfilePostRow.swift in Sources */,
 				45EC905029B8360F00E0A3A3 /* PackageViewModel.swift in Sources */,
 				4528556229B1AED800F088CD /* AuthenticationViewModel.swift in Sources */,
 				45EC904C29B8217100E0A3A3 /* StorageManager.swift in Sources */,
@@ -664,7 +672,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -720,7 +728,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -745,13 +753,13 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Kobra/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Kobra;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = A;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -780,13 +788,13 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Kobra/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Kobra;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = A;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

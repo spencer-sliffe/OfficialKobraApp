@@ -19,9 +19,14 @@ struct DiscoverView: View {
                 // Only show the list when searchText is not empty
                 if !searchText.isEmpty {
                     LazyVStack(spacing: 0) {
-                        ForEach(viewModel.accounts.filter({$0.email.lowercased().contains(searchText.lowercased())}), id: \.id) { account in
+                        ForEach(viewModel.searchResults.filter({$0.email.lowercased().contains(searchText.lowercased())}), id: \.id) { account in
                             NavigationLink(
-                                destination: AccountProfileView(accountId: account.id),
+                                destination: AccountProfileView(accountId: account.id)
+                                    .onAppear {
+                                        // Clear out the search state when navigating away
+                                        viewModel.clearSearchResults()
+                                        hideKeyboard()
+                                    },
                                 label: {
                                     AccountCell(account: account)
                                 })
@@ -39,4 +44,9 @@ struct DiscoverView: View {
             }
         }
     }
+    // function to hide keyboard
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
 }
+

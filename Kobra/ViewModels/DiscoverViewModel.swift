@@ -11,17 +11,19 @@ import Firebase
 
 class DiscoverViewModel: ObservableObject {
     @Published var accounts = [Account]()
+    @Published var searchResults = [Account]()
     private var db = Firestore.firestore()
-    
+
     init() {
         fetchAccounts()
     }
-    
+
     func fetchAccounts() {
         db.collection("Accounts").getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
             } else {
+                self.accounts = []
                 for document in querySnapshot!.documents {
                     let data = document.data()
                     let newAccount = Account(
@@ -40,12 +42,17 @@ class DiscoverViewModel: ObservableObject {
             }
         }
     }
-    
+
     func searchAccounts(query: String) {
         if query.isEmpty {
             fetchAccounts()
         } else {
-            self.accounts = self.accounts.filter({$0.email.lowercased().contains(query.lowercased())})
+            searchResults = self.accounts.filter({$0.email.lowercased().contains(query.lowercased())})
         }
     }
+    
+    func clearSearchResults() {
+        searchResults = []
+    }
 }
+

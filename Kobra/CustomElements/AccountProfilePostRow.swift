@@ -1,5 +1,5 @@
 //
-//  AccountPostRow.swift
+//  AccountProfilePostRow.swift
 //  Kobra
 //
 //  Created by Spencer SLiffe on 8/2/23.
@@ -11,7 +11,7 @@ import FirebaseAuth
 import AVKit
 import AVFoundation
 
-struct AccountPostRow: View {
+struct AccountProfilePostRow: View {
     @ObservedObject var post: Post
     @State private var isLiked = false
     @State private var likes = 0

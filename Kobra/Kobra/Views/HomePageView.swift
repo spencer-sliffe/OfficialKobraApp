@@ -57,8 +57,18 @@ struct HomePageView: View {
                         endPoint: .bottomTrailing
                     )
                 )
+                .onTapGesture {
+                    // dismiss keyboard
+                    if selectedTab == 2 {
+                        hideKeyboard()
+                    }
+                }
             }
         }
+    }
+    
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
     
     private func getIcon(for index: Int) -> String {
