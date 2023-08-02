@@ -22,10 +22,6 @@ class KobraViewModel: ObservableObject {
     @Published var isUploadInProgress: Bool = false
     @Published var currentlyPlaying: AVPlayer?
 
-    init() {
-        fetchPosts()
-    }
-
     func uploadImage(_ image: UIImage, postId: String, completion: @escaping (Result<String, Error>) -> Void) {
         isUploadInProgress = true
         postManager.uploadImage(image, postId: postId, progress: { [weak self] progress in

@@ -65,6 +65,8 @@
 		45AD933F29B130E900D153AF /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD933E29B130E900D153AF /* AccountViewModel.swift */; };
 		45AD934129B130F600D153AF /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD934029B130F600D153AF /* AccountView.swift */; };
 		45AD934329B1AAB800D153AF /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD934229B1AAB800D153AF /* AuthenticationView.swift */; };
+		45AF89942A7AB2CD00DEA4EC /* FeedType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AF89932A7AB2CC00DEA4EC /* FeedType.swift */; };
+		45AF89962A7AB53E00DEA4EC /* AccountPostRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AF89952A7AB53E00DEA4EC /* AccountPostRow.swift */; };
 		45B26BA02A7062F5001708C1 /* IsInViewKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B26B9F2A7062F5001708C1 /* IsInViewKey.swift */; };
 		45BB7BC12A4FE85A00A95831 /* FollowerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BB7BC02A4FE85A00A95831 /* FollowerView.swift */; };
 		45BB7BC32A4FE86700A95831 /* FollowingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BB7BC22A4FE86700A95831 /* FollowingView.swift */; };
@@ -155,6 +157,8 @@
 		45AD933E29B130E900D153AF /* AccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewModel.swift; sourceTree = "<group>"; };
 		45AD934029B130F600D153AF /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		45AD934229B1AAB800D153AF /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
+		45AF89932A7AB2CC00DEA4EC /* FeedType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedType.swift; sourceTree = "<group>"; };
+		45AF89952A7AB53E00DEA4EC /* AccountPostRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountPostRow.swift; sourceTree = "<group>"; };
 		45B26B9F2A7062F5001708C1 /* IsInViewKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsInViewKey.swift; sourceTree = "<group>"; };
 		45BB7BC02A4FE85A00A95831 /* FollowerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerView.swift; sourceTree = "<group>"; };
 		45BB7BC22A4FE86700A95831 /* FollowingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingView.swift; sourceTree = "<group>"; };
@@ -227,6 +231,8 @@
 				459A366E2A6F0047002914CD /* VideoPlayerView.swift */,
 				459A36702A6F191B002914CD /* VideoPlayerStatus.swift */,
 				45B26B9F2A7062F5001708C1 /* IsInViewKey.swift */,
+				45AF89932A7AB2CC00DEA4EC /* FeedType.swift */,
+				45AF89952A7AB53E00DEA4EC /* AccountPostRow.swift */,
 			);
 			path = CustomElements;
 			sourceTree = "<group>";
@@ -519,6 +525,7 @@
 				4527837D29D8B56D00B633FB /* CreatePostView.swift in Sources */,
 				459BE6062A18033300625E53 /* FoodView.swift in Sources */,
 				457EFD3929F8AECB006F53F2 /* DropDownMenu.swift in Sources */,
+				45AF89962A7AB53E00DEA4EC /* AccountPostRow.swift in Sources */,
 				45074EE929E8681C0096C82A /* CommentRow.swift in Sources */,
 				4594204129AEF00500A100F1 /* HomePageViewModel.swift in Sources */,
 				457D1F5129DF4D9B00EF722D /* ImageVideoPicker.swift in Sources */,
@@ -528,6 +535,7 @@
 				451C33F62A01691B00259B86 /* SettingsViewModel.swift in Sources */,
 				451CAE072A55F4B1009BC1F7 /* NotificationCell.swift in Sources */,
 				45D5110329D0AB9100290720 /* SettingsView.swift in Sources */,
+				45AF89942A7AB2CD00DEA4EC /* FeedType.swift in Sources */,
 				45CAAA2429DA7EF500BBD9FE /* SwipeableTabView.swift in Sources */,
 				4592E55D29BD361200FF76E2 /* ChatViewModel.swift in Sources */,
 				451CAE052A55DDF5009BC1F7 /* FSNotificationManager.swift in Sources */,
@@ -656,7 +664,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -712,7 +720,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -743,7 +751,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = A;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -778,7 +786,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = A;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -1,7 +1,8 @@
-//  PostRow.swift
+//
+//  AccountPostRow.swift
 //  Kobra
 //
-//  Created by Spencer Sliffe on 4/1/23.
+//  Created by Spencer SLiffe on 8/2/23.
 //
 
 import Foundation
@@ -10,7 +11,7 @@ import FirebaseAuth
 import AVKit
 import AVFoundation
 
-struct PostRow: View {
+struct AccountPostRow: View {
     @ObservedObject var post: Post
     @State private var isLiked = false
     @State private var likes = 0
@@ -24,11 +25,9 @@ struct PostRow: View {
     @State private var profilePictureURL: URL?
     @State private var playerStatus: AVPlayer.Status = .unknown
     @State private var shouldPlayVideo = false
-    @Binding var selectedFeed: FeedType
 
-    init(post: Post, selectedFeed: Binding<FeedType>) {
+    init(post: Post) {
         self.post = post
-        self._selectedFeed = selectedFeed
         _likes = State(initialValue: post.likes)
         _dislikes = State(initialValue: post.dislikes)
         _isLiked = State(initialValue: post.likingUsers.contains(currentUserId))
@@ -333,7 +332,7 @@ struct PostRow: View {
                 }
             }
             if let videoURL = videoURL, let url = URL(string: videoURL) {
-                VideoPlayerView(videoURL: url, shouldPlay: .constant(post.type.feedType == selectedFeed && shouldPlayVideo))
+                VideoPlayerView(videoURL: url, shouldPlay: $shouldPlayVideo)
                     .frame(height: 300)
                     .isInView { inView in
                         shouldPlayVideo = inView
@@ -415,7 +414,7 @@ struct PostRow: View {
                 }
             }
             if let videoURL = videoURL, let url = URL(string: videoURL) {
-                VideoPlayerView(videoURL: url, shouldPlay: .constant(post.type.feedType == selectedFeed && shouldPlayVideo))
+                VideoPlayerView(videoURL: url, shouldPlay: $shouldPlayVideo)
                     .frame(height: 300)
                     .isInView { inView in
                         shouldPlayVideo = inView

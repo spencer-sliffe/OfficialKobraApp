@@ -10,26 +10,13 @@ import Foundation
 
 struct KobraView: View {
     @State private var isPresentingCreatePostView = false
-    @ObservedObject var viewModel = KobraViewModel()
+    @EnvironmentObject var viewModel: KobraViewModel
     @State private var selectedFeed: FeedType = .market
     
     func isPostTypeVisible(post: Post) -> Bool {
-        switch selectedFeed {
-        case .advertisement:
-            if case .advertisement = post.type { return true }
-        case .help:
-            if case .help = post.type { return true }
-        case .news:
-            if case .news = post.type { return true }
-        case .market:
-            if case .market = post.type { return true }
-        case .bug:
-            if case .bug = post.type { return true }
-        case .meme:
-            if case .meme = post.type { return true }
-        }
-        return false
+        return post.type.feedType == selectedFeed
     }
+
     
     private func customToolbar() -> some View {
         HStack(spacing: 20) {
@@ -94,17 +81,6 @@ struct KobraView: View {
         .edgesIgnoringSafeArea(.bottom)
     }
     
-    
-    enum FeedType: String, CaseIterable, Identifiable {
-        case advertisement = "Advertisement"
-        case help = "Help"
-        case news = "News"
-        case market = "Market"
-        case bug = "Bug"
-        case meme = "Meme"
-        var id: String { self.rawValue }
-    }
-    
     var timeFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "hh:mm a"
@@ -161,7 +137,7 @@ struct KobraView: View {
                 ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading, spacing: 10) {
                         ForEach(viewModel.posts.sorted(by: { $0.timestamp > $1.timestamp }).filter(isPostTypeVisible)) { post in
-                            PostRow(post: post)
+                            PostRow(post: post, selectedFeed: $selectedFeed)
                                 .environmentObject(viewModel)
                                 .background(Color.clear)
                         }

@@ -101,7 +101,11 @@ struct HomePageView: View {
          case 2:
              return AnyView(DiscoverView())
          case 3:
-             return AnyView(KobraView())
+             return AnyView(KobraView()
+                .environmentObject(kobraViewModel)
+                .onAppear(){
+                 kobraViewModel.fetchPosts()
+             })
          case 4:
              return AnyView(NotificationView())
          case 5:
@@ -145,6 +149,7 @@ struct CustomTabView: View {
                 self.createTabButton(icon: self.getIcon(for: index), tabIndex: index)
             }
         }
+        .padding(.bottom, 8)
     }
     
     @ViewBuilder

@@ -163,7 +163,7 @@ struct AccountProfileView: View {
                                 .padding(.top, 20)
                         } else {
                             ForEach(viewModel.userPosts.sorted(by: { $0.timestamp.compare($1.timestamp) == .orderedDescending })) { post in
-                                PostRow(post: post)
+                                AccountPostRow(post: post)
                                     .environmentObject(kobraViewModel)
                                     .background(Color.clear)
                             }

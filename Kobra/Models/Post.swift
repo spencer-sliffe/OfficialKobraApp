@@ -14,6 +14,23 @@ class Post: Identifiable, ObservableObject {
         case market(MarketPost)
         case bug(AppBugPost)
         case meme(MemePost)
+        
+        var feedType: FeedType {
+            switch self {
+            case .advertisement(_):
+                return .advertisement
+            case .help(_):
+                return .help
+            case .news(_):
+                return .news
+            case .market(_):
+                return .market
+            case .bug(_):
+                return .bug
+            case .meme(_):
+                return .meme
+            }
+        }
     }
     
     var id = UUID()

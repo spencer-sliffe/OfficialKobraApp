@@ -23,6 +23,12 @@ struct VideoPlayerView: UIViewControllerRepresentable {
                 player.play()
             }
         }
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print(error)
+        }
         playerViewController.player = player
         return playerViewController
     }
@@ -35,4 +41,3 @@ struct VideoPlayerView: UIViewControllerRepresentable {
         }
     }
 }
-
