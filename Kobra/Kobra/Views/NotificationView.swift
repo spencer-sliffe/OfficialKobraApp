@@ -9,6 +9,7 @@ import SwiftUI
 
 struct NotificationView: View {
     @ObservedObject var viewModel = NotificationViewModel()
+    @EnvironmentObject var homePageViewModel: HomePageViewModel
     
     var body: some View {
         VStack(spacing: 0) {

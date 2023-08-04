@@ -16,6 +16,7 @@ struct HomePageView: View {
     @StateObject var kobraViewModel = KobraViewModel()
     @ObservedObject var notificationViewModel = NotificationViewModel()
     @State private var viewsCache: [Int: AnyView] = [:]
+    @StateObject private var homePageViewModel = HomePageViewModel()
     
     var body: some View {
         NavigationView {
@@ -107,21 +108,22 @@ struct HomePageView: View {
          case 0:
              return AnyView(SettingsView(authViewModel: authViewModel))
          case 1:
-             return AnyView(AccountView())
+             return AnyView(AccountView().environmentObject(homePageViewModel))
          case 2:
-             return AnyView(DiscoverView())
+             return AnyView(DiscoverView().environmentObject(homePageViewModel))
          case 3:
              return AnyView(KobraView()
                 .environmentObject(kobraViewModel)
+                .environmentObject(homePageViewModel)
                 .onAppear(){
                  kobraViewModel.fetchPosts()
              })
          case 4:
-             return AnyView(NotificationView())
+             return AnyView(NotificationView()                .environmentObject(homePageViewModel))
          case 5:
-             return AnyView(InboxView())
+             return AnyView(InboxView()                .environmentObject(homePageViewModel))
          case 6:
-             return AnyView(FoodView())
+             return AnyView(FoodView()                .environmentObject(homePageViewModel))
          default:
              return AnyView(EmptyView())
          }

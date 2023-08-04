@@ -11,7 +11,8 @@ import SwiftUI
 struct DiscoverView: View {
     @ObservedObject var viewModel = DiscoverViewModel()
     @State var searchText = ""
-
+    @EnvironmentObject var homePageViewModel: HomePageViewModel
+    
     var body: some View {
         VStack(spacing: 0) {
             AccountSearchBar(text: $searchText)
@@ -22,6 +23,16 @@ struct DiscoverView: View {
                         ForEach(viewModel.searchResults.filter({$0.email.lowercased().contains(searchText.lowercased())}), id: \.id) { account in
                             NavigationLink(
                                 destination: AccountProfileView(accountId: account.id)
+                                    .environmentObject(homePageViewModel)
+                                    .isInView { isInView in
+                                        // Perform action depending on whether the view is in view or not
+                                        if isInView {
+                                            homePageViewModel.accProViewActive = true
+                                        } else {
+                                            print("AccountProfileView is not in view")
+                                            homePageViewModel.accProViewActive = false
+                                        }
+                                    }
                                     .onAppear {
                                         // Clear out the search state when navigating away
                                         viewModel.clearSearchResults()

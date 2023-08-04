@@ -12,6 +12,7 @@ struct KobraView: View {
     @State private var isPresentingCreatePostView = false
     @EnvironmentObject var viewModel: KobraViewModel
     @State private var selectedFeed: FeedType = .market
+    @EnvironmentObject var homePageViewModel: HomePageViewModel
     
     func isPostTypeVisible(post: Post) -> Bool {
         return post.type.feedType == selectedFeed

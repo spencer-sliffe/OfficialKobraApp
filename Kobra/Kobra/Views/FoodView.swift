@@ -13,6 +13,7 @@ struct FoodView: View {
     @State private var isPresentingCreateFoodView = false
     @State private var selectedMealType: MealType = .breakfast
     @State private var selectedCuisineType: CuisineType = .italian
+    @EnvironmentObject var homePageViewModel: HomePageViewModel
     
     var timeFormatter: DateFormatter {
         let formatter = DateFormatter()

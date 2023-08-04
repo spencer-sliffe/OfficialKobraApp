@@ -18,6 +18,7 @@ struct AccountView: View {
     @State private var bioInput: String = ""
     @State var showFollowerView = false
     @State var showFollowingView = false
+    @EnvironmentObject var homePageViewModel: HomePageViewModel
     
     var body: some View {
         VStack {

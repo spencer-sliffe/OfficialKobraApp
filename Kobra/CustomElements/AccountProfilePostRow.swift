@@ -25,7 +25,8 @@ struct AccountProfilePostRow: View {
     @State private var profilePictureURL: URL?
     @State private var playerStatus: AVPlayer.Status = .unknown
     @State private var shouldPlayVideo = false
-
+    @EnvironmentObject var homePageViewModel: HomePageViewModel
+    
     init(post: Post) {
         self.post = post
         _likes = State(initialValue: post.likes)
@@ -299,7 +300,7 @@ struct AccountProfilePostRow: View {
                 .font(.title2)
                 .fontWeight(.bold)
                 .foregroundColor(.primary)
-
+            
             if let imageURL = imageURL, let url = URL(string: imageURL) {
                 AsyncImage(url: url) { image in
                     image
@@ -308,7 +309,7 @@ struct AccountProfilePostRow: View {
                         .cornerRadius(8)
                         .contentShape(Rectangle())
                         .overlay(RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.gray, lineWidth: 2)) // Add outline around the image
+                            .stroke(Color.gray, lineWidth: 2)) // Add outline around the image
                         .onLongPressGesture {
                             showingFullImage = true
                         }
@@ -336,7 +337,12 @@ struct AccountProfilePostRow: View {
                 VideoPlayerView(videoURL: url, shouldPlay: $shouldPlayVideo)
                     .frame(height: 300)
                     .isInView { inView in
-                        shouldPlayVideo = inView
+                        // Only play the video if AccountProfileView is active
+                        if homePageViewModel.accProViewActive {
+                            shouldPlayVideo = inView
+                        } else {
+                            shouldPlayVideo = false
+                        }
                     }
             }
             Text(content)
@@ -390,7 +396,7 @@ struct AccountProfilePostRow: View {
                         .cornerRadius(8)
                         .contentShape(Rectangle())
                         .overlay(RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.gray, lineWidth: 2)) // Add outline around the image
+                            .stroke(Color.gray, lineWidth: 2)) // Add outline around the image
                         .onLongPressGesture {
                             showingFullImage = true
                         }
@@ -418,7 +424,12 @@ struct AccountProfilePostRow: View {
                 VideoPlayerView(videoURL: url, shouldPlay: $shouldPlayVideo)
                     .frame(height: 300)
                     .isInView { inView in
-                        shouldPlayVideo = inView
+                        // Only play the video if AccountProfileView is active
+                        if homePageViewModel.accProViewActive {
+                            shouldPlayVideo = inView
+                        } else {
+                            shouldPlayVideo = false
+                        }
                     }
             }
             Text("Price: \(priceFormatter.string(from: NSNumber(value: marketPost.price)) ?? "")")

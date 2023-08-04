@@ -16,11 +16,13 @@ struct AccountProfileView: View {
     @ObservedObject var kobraViewModel = KobraViewModel()
     @State var showFollowerView = false
     @State var showFollowingView = false
+    @EnvironmentObject var homePageViewModel: HomePageViewModel
     
     init(accountId: String) {
         self.accountId = accountId
         self.viewModel = AccountProfileViewModel(accountId: accountId)
         self.viewModel.fetchAccount()
+        
     }
     
     var body: some View {

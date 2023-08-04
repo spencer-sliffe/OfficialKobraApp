@@ -11,7 +11,8 @@ import FirebaseFirestore
 
 struct InboxView: View {
     @ObservedObject var viewModel = InboxViewModel()
-    
+    @EnvironmentObject var homePageViewModel: HomePageViewModel
+
     var body: some View {
         VStack(spacing: 0) {
             if viewModel.isLoading {
