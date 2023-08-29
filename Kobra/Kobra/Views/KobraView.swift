@@ -140,6 +140,7 @@ struct KobraView: View {
                         ForEach(viewModel.posts.sorted(by: { $0.timestamp > $1.timestamp }).filter(isPostTypeVisible)) { post in
                             PostRow(post: post, selectedFeed: $selectedFeed)
                                 .environmentObject(viewModel)
+                                .environmentObject(homePageViewModel)
                                 .background(Color.clear)
                         }
                     }

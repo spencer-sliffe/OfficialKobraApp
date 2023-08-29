@@ -24,6 +24,7 @@ struct NotificationView: View {
                 ScrollView {
                     ForEach(viewModel.notifications.sorted(by: { $0.timestamp > $1.timestamp })) { notification in
                         NotificationCell(notification: notification)
+                            .environmentObject(homePageViewModel)
                     }
                 }
                 .refreshable {

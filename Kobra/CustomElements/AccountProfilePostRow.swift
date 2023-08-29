@@ -48,7 +48,8 @@ struct AccountProfilePostRow: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
-                NavigationLink(destination: AccountProfileView(accountId: post.posterId)) {
+                NavigationLink(destination: AccountProfileView(accountId: post.posterId)
+                    .environmentObject(homePageViewModel)) {
                     getPosterName()
                 }
                 Spacer()

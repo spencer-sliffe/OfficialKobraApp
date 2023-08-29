@@ -11,6 +11,7 @@ import SwiftUI
 struct NotificationCell: View {
     var notification: Notification
     @ObservedObject var viewModel = NotificationViewModel()
+    @EnvironmentObject var homePageViewModel: HomePageViewModel
     @State private var isPostSelected = false
     
     var body: some View {
@@ -84,7 +85,8 @@ struct NotificationCell: View {
         
         var body: some View {
             HStack {
-                NavigationLink(destination: AccountProfileView(accountId: senderId)) {
+                NavigationLink(destination: AccountProfileView(accountId: senderId)
+                    ) {
                     Text(username)
                         .foregroundColor(.blue)
                 }
@@ -93,7 +95,6 @@ struct NotificationCell: View {
         }
     }
 
-    
     @ViewBuilder
     func postNotificationTypeView(from postNoti: PostNotification) -> some View {
         switch postNoti.type {

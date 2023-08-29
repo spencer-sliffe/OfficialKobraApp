@@ -188,6 +188,7 @@ struct AccountView: View {
                         AccountPostRow(post: post)
                             .background(Color.clear)
                             .environmentObject(kobraViewModel)
+                            .environmentObject(homePageViewModel)
                     }
                 }
             }

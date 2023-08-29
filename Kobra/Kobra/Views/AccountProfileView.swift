@@ -167,6 +167,7 @@ struct AccountProfileView: View {
                             ForEach(viewModel.userPosts.sorted(by: { $0.timestamp.compare($1.timestamp) == .orderedDescending })) { post in
                                 AccountProfilePostRow(post: post)
                                     .environmentObject(kobraViewModel)
+                                    .environmentObject(homePageViewModel)
                                     .background(Color.clear)
                             }
                         }
