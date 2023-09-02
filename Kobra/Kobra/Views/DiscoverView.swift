@@ -20,7 +20,7 @@ struct DiscoverView: View {
                 // Only show the list when searchText is not empty
                 if !searchText.isEmpty {
                     LazyVStack(spacing: 0) {
-                        ForEach(viewModel.searchResults.filter({$0.email.lowercased().contains(searchText.lowercased())}), id: \.id) { account in
+                        ForEach(viewModel.searchResults.filter({$0.username.lowercased().contains(searchText.lowercased())}), id: \.id) { account in
                             NavigationLink(
                                 destination: AccountProfileView(accountId: account.id)
                                     .environmentObject(homePageViewModel)

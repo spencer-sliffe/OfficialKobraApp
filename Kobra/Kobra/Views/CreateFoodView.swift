@@ -40,10 +40,34 @@ struct CreateFoodView: View {
             VStack {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
-                        CustomTextField(text: $name, placeholder: "Name")
-                        CustomTextField(text: $ingredients, placeholder: "Ingredients (comma-separated)")
-                        CustomTextField(text: $steps, placeholder: "Steps (comma-separated)")
-                        CustomTextField(text: $preparationTime, placeholder: "Preparation Time")
+                        CustomTextField(text: $name, placeholder: "Name", characterLimit: 60)
+                            .onChange(of: name) { newValue in
+                                // Truncate the title if it exceeds the character limit
+                                if newValue.count > 60 {
+                                    ingredients = String(newValue.prefix(60))
+                                }
+                            }
+                        CustomTextField(text: $ingredients, placeholder: "Ingredients (comma-separated)", characterLimit: 400)
+                            .onChange(of: ingredients) { newValue in
+                                // Truncate the title if it exceeds the character limit
+                                if newValue.count > 400 {
+                                    ingredients = String(newValue.prefix(400))
+                                }
+                            }
+                        CustomTextField(text: $steps, placeholder: "Steps (comma-separated)", characterLimit: 300)
+                            .onChange(of: steps) { newValue in
+                                // Truncate the title if it exceeds the character limit
+                                if newValue.count > 300 {
+                                    steps = String(newValue.prefix(300))
+                                }
+                            }
+                        CustomTextField(text: $preparationTime, placeholder: "Preparation Time", characterLimit: 20)
+                            .onChange(of: preparationTime) { newValue in
+                                // Truncate the title if it exceeds the character limit
+                                if newValue.count > 400 {
+                                    preparationTime = String(newValue.prefix(400))
+                                }
+                            }
                         DropDownMenu(
                             isExpanded: $isMealTypeExpanded,
                             options: MealType.allCases.map { $0.rawValue },

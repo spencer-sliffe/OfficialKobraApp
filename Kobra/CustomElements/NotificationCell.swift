@@ -35,10 +35,12 @@ struct NotificationCell: View {
                     switch notification.type {
                     case .post(let postNoti):
                         postNotificationTypeView(from: postNoti)
+                        
                     case .chat(let chatNoti):
-                        NotificationLink(username: chatNoti.senderUsername, text: "messaged you", senderId: notification.senderId)
+                        NotificationLink(username: chatNoti.senderUsername, text: "messaged you", senderId: notification.senderId, homePageViewModel: homePageViewModel)
+
                     case .follower(let follower):
-                        NotificationLink(username: follower.followerUsername, text: "started following you", senderId: notification.senderId)
+                        NotificationLink(username: follower.followerUsername, text: "started following you", senderId: notification.senderId, homePageViewModel: homePageViewModel)
                     }
                     
                     Text(getFormattedDate())
@@ -64,6 +66,7 @@ struct NotificationCell: View {
                 if let post = viewModel.post {
                     NavigationView {
                         PostView(post: post)
+                            .environmentObject(homePageViewModel)
                     }
                 }
             }
@@ -82,10 +85,11 @@ struct NotificationCell: View {
         var username: String
         var text: String
         var senderId: String
+        var homePageViewModel: HomePageViewModel // Pass the view model
         
         var body: some View {
             HStack {
-                NavigationLink(destination: AccountProfileView(accountId: senderId)
+                NavigationLink(destination: AccountProfileView(accountId: senderId).environmentObject(homePageViewModel)
                     ) {
                     Text(username)
                         .foregroundColor(.blue)
@@ -99,11 +103,11 @@ struct NotificationCell: View {
     func postNotificationTypeView(from postNoti: PostNotification) -> some View {
         switch postNoti.type {
         case .like(let like):
-            NotificationLink(username: like.likerUsername, text: "liked your post", senderId: notification.senderId)
+            NotificationLink(username: like.likerUsername, text: "liked your post", senderId: notification.senderId, homePageViewModel: homePageViewModel)
         case .dislike(let dislike):
-            NotificationLink(username: dislike.dislikerUsername, text: "disliked your post", senderId: notification.senderId)
+            NotificationLink(username: dislike.dislikerUsername, text: "disliked your post", senderId: notification.senderId, homePageViewModel: homePageViewModel)
         case .comment(let comment):
-            NotificationLink(username: comment.authorUsername, text: "commented on your post: \(comment.commentText)", senderId: notification.senderId)
+            NotificationLink(username: comment.authorUsername, text: "commented on your post: \(comment.commentText)", senderId: notification.senderId, homePageViewModel: homePageViewModel)
         }
     }
     

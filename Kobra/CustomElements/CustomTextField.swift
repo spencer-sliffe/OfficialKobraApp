@@ -11,6 +11,7 @@ import SwiftUI
 struct CustomTextField: View {
     @Binding var text: String
     var placeholder: String
+    var characterLimit: Int  // Add this line
     var onEditingChanged: (Bool) -> Void = { _ in }
     @State private var dynamicHeight: CGFloat = 40
     
@@ -21,6 +22,11 @@ struct CustomTextField: View {
                     self.onEditingChanged(true)
                     let height = value.height(withConstrainedWidth: UIScreen.main.bounds.width - 40, font: .systemFont(ofSize: 16))
                     self.dynamicHeight = max(20, height + 20)
+                    
+                    // Enforce character limit
+                    if value.count > characterLimit {
+                        text = String(value.prefix(characterLimit))
+                    }
                 }
                 .frame(height: dynamicHeight)
                 .padding(.horizontal, 8)
@@ -39,6 +45,7 @@ struct CustomTextField: View {
         }
     }
 }
+
 
 
 // String extension to calculate height of text

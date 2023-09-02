@@ -20,6 +20,7 @@ struct PostView: View {
     let currentUserId: String = Auth.auth().currentUser?.uid ?? ""
     @State private var showingDeleteConfirmation = false
     @State private var profilePictureURL: URL?
+    @EnvironmentObject var homePageViewModel: HomePageViewModel
     
     init(post: Post) {
         self.post = post
@@ -42,7 +43,8 @@ struct PostView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
-                    NavigationLink(destination: AccountProfileView(accountId: post.posterId)) {
+                    NavigationLink(destination: AccountProfileView(accountId: post.posterId)
+                        .environmentObject(homePageViewModel)) {
                         getPosterName()
                     }
                     Spacer()

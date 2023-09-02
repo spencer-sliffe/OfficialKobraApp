@@ -93,7 +93,7 @@ struct AccountView: View {
                             
                             // Bio
                             if isEditingBio {
-                                CustomTextField(text: $bioInput, placeholder: "Bio")
+                                CustomTextField(text: $bioInput, placeholder: "Bio", characterLimit: 250)
                                     .padding(2)
                                 HStack {
                                     Button(action: {

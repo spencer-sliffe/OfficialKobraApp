@@ -25,6 +25,7 @@ struct PostRow: View {
     @State private var playerStatus: AVPlayer.Status = .unknown
     @State private var shouldPlayVideo = false
     @Binding var selectedFeed: FeedType
+    @EnvironmentObject var homePageViewModel: HomePageViewModel
 
     init(post: Post, selectedFeed: Binding<FeedType>) {
         self.post = post
@@ -47,7 +48,8 @@ struct PostRow: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
-                NavigationLink(destination: AccountProfileView(accountId: post.posterId)) {
+                NavigationLink(destination: AccountProfileView(accountId: post.posterId)
+                    .environmentObject(homePageViewModel)) {
                     getPosterName()
                 }
                 Spacer()

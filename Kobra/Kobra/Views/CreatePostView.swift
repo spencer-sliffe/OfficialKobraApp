@@ -30,7 +30,7 @@ struct CreatePostView: View {
     @State private var isMediaPickerPresented = false
     
     var isPostDataValid: Bool {
-        if title.isEmpty || content.isEmpty || (postType != "Meme" && category.isEmpty) {
+        if title.isEmpty || title.count > 60 || content.isEmpty || (postType != "Meme" && category.isEmpty) {
             return false
         }
         if postType == "Market" && (stepperPrice == 0 || (marketPostType == "Hardware" && hardwareCondition.isEmpty)) {
@@ -38,6 +38,7 @@ struct CreatePostView: View {
         }
         return true
     }
+    
     
     var body: some View {
         NavigationView {
@@ -52,11 +53,30 @@ struct CreatePostView: View {
                         )
                         .frame(maxWidth: .infinity)
                         
-                        CustomTextField(text: $title, placeholder: NSLocalizedString("Title", comment: ""))
-                        CustomTextField(text: $content, placeholder: NSLocalizedString("Content", comment: ""))
+                        CustomTextField(text: $title, placeholder: NSLocalizedString("Title", comment: ""), characterLimit: 40)
+                            .onChange(of: title) { newValue in
+                                // Truncate the title if it exceeds the character limit
+                                if newValue.count > 40 {
+                                    title = String(newValue.prefix(40))
+                                }
+                            }
+                        
+                        CustomTextField(text: $content, placeholder: NSLocalizedString("Content", comment: ""), characterLimit: 300)
+                            .onChange(of: content) { newValue in
+                                // Truncate the title if it exceeds the character limit
+                                if newValue.count > 300 {
+                                    content = String(newValue.prefix(300))
+                                }
+                            }
                         
                         if postType != "Market" && postType != "Meme" {
-                            CustomTextField(text: $category, placeholder: NSLocalizedString("Category", comment: ""))
+                            CustomTextField(text: $category, placeholder: NSLocalizedString("Category", comment: ""), characterLimit: 20)
+                                .onChange(of: category) { newValue in
+                                    // Truncate the title if it exceeds the character limit
+                                    if newValue.count > 20 {
+                                        category = String(newValue.prefix(20))
+                                    }
+                                }
                         }
                         if postType == "Market" {
                             marketPostContent()
@@ -107,7 +127,7 @@ struct CreatePostView: View {
                             .padding()
                     }
                 }
-
+                
                 Button(action: {
                     addPostAction()
                 })  {
@@ -220,10 +240,9 @@ struct CreatePostView: View {
                         case .success(let imageURL):
                             let updatedPost = post
                             updatedPost.imageURL = imageURL
-                            kobraViewModel.addPost(updatedPost) { _ in }
-                            DispatchQueue.main.async {
-                                        presentationMode.wrappedValue.dismiss()
-                                    }
+                            kobraViewModel.addPost(updatedPost) { _ in
+                                presentationMode.wrappedValue.dismiss()
+                            }
                         case .failure(let error):
                             print("Error uploading image: \(error.localizedDescription)")
                         }
@@ -234,16 +253,18 @@ struct CreatePostView: View {
                         case .success(let videoURLString):
                             let updatedPost = post
                             updatedPost.videoURL = videoURLString
-                            kobraViewModel.addPost(updatedPost) { _ in }
-                            DispatchQueue.main.async {
-                                        presentationMode.wrappedValue.dismiss()
-                                    }
+                            kobraViewModel.addPost(updatedPost) { _ in
+                                presentationMode.wrappedValue.dismiss()
+                            }
+                            
                         case .failure(let error):
                             print("Error uploading video: \(error.localizedDescription)")
                         }
                     }
                 } else {
-                    kobraViewModel.addPost(post) { _ in }
+                    kobraViewModel.addPost(post) { _ in
+                        presentationMode.wrappedValue.dismiss()
+                    }
                 }
                 
             case .failure(let error):
@@ -251,8 +272,6 @@ struct CreatePostView: View {
             }
         }
     }
-    
-    
     
     @ViewBuilder
     private func marketPostContent() -> some View {
@@ -279,7 +298,13 @@ struct CreatePostView: View {
                 .frame(maxWidth: .infinity)
                 
             }
-            CustomTextField(text: $category, placeholder: NSLocalizedString("Category", comment: ""))
+            CustomTextField(text: $category, placeholder: NSLocalizedString("Category", comment: ""), characterLimit: 20)
+                .onChange(of: category) { newValue in
+                    // Truncate the title if it exceeds the character limit
+                    if newValue.count > 20 {
+                        category = String(newValue.prefix(20 ))
+                    }
+                }
             VStack(alignment: .leading) {
                 Stepper(value: $stepperPrice, in: 0...Double.infinity, step: 1.0) {
                     Text(String(format: NSLocalizedString("Price: $%.2f", comment: ""), stepperPrice))
@@ -289,4 +314,3 @@ struct CreatePostView: View {
         }
     }
 }
-

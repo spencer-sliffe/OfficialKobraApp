@@ -22,7 +22,6 @@ struct AccountProfileView: View {
         self.accountId = accountId
         self.viewModel = AccountProfileViewModel(accountId: accountId)
         self.viewModel.fetchAccount()
-        
     }
     
     var body: some View {
@@ -129,11 +128,14 @@ struct AccountProfileView: View {
                                 .font(.caption)
                                 .foregroundColor(.white)
                                 .lineLimit(nil) // Allows text to wrap onto as many lines as needed
+                                .multilineTextAlignment(.center) // Center-align the text within the VStack
+                            
                         }
                         .frame(maxWidth: 200) // Adjust this to fit your needs
                         .padding(.bottom, 12)
                         .padding(.leading, 13)
                     }
+                    
                     if(viewModel.showFollowButton){
                         Button(action: {
                             if viewModel.isFollowing {
