@@ -89,7 +89,7 @@ struct AccountView: View {
                                 .foregroundColor(.white)
                                 .minimumScaleFactor(0.5)
                                 .lineLimit(1)
-                                .padding(.leading, -10)
+                                .padding(.leading, -30)
                             
                             // Bio
                             if isEditingBio {

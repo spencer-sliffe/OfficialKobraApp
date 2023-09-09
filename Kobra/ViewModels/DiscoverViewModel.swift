@@ -12,10 +12,27 @@ import Firebase
 class DiscoverViewModel: ObservableObject {
     @Published var accounts = [Account]()
     @Published var searchResults = [Account]()
+    @Published var posts: [Post] = []
+
     private var db = Firestore.firestore()
+    private let postManager = FSPostManager.shared
 
     init() {
         fetchAccounts()
+        fetchPosts()
+    }
+    
+    func fetchPosts() {
+        postManager.fetchPosts { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let posts):
+                    self?.posts = posts
+                case .failure(let error):
+                    print("Error fetching posts: \(error.localizedDescription)")
+                }
+            }
+        }
     }
 
     func fetchAccounts() {
@@ -41,6 +58,10 @@ class DiscoverViewModel: ObservableObject {
                 }
             }
         }
+    }
+    
+    func fetchHotPosts() {
+        
     }
 
     func searchAccounts(query: String) {

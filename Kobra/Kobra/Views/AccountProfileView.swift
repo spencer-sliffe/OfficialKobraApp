@@ -17,11 +17,11 @@ struct AccountProfileView: View {
     @State var showFollowerView = false
     @State var showFollowingView = false
     @EnvironmentObject var homePageViewModel: HomePageViewModel
+    @Environment(\.presentationMode) var presentationMode
     
     init(accountId: String) {
         self.accountId = accountId
         self.viewModel = AccountProfileViewModel(accountId: accountId)
-        self.viewModel.fetchAccount()
     }
     
     var body: some View {
@@ -32,7 +32,6 @@ struct AccountProfileView: View {
                 let displayName = account.username
                 
                 VStack(alignment: .center, spacing: -10) { // Reduced spacing
-                    
                     Text(displayName)
                         .font(.title)
                         .fontWeight(.bold)
@@ -155,7 +154,7 @@ struct AccountProfileView: View {
                     }
                 }
                 .foregroundColor(.white)
-                .padding(.leading, 40) // move the VStack slightly to the right
+                .padding(.leading, 50) // move the VStack slightly to the right
                 
                 // User Posts
                 Spacer()
@@ -182,6 +181,18 @@ struct AccountProfileView: View {
             }
             Spacer()
         }
+        
+        .navigationBarTitle("", displayMode: .inline)
+        .navigationBarBackButtonHidden(true) // Hide the default back button
+        .navigationBarItems(
+            leading: Button(action: {
+                presentationMode.wrappedValue.dismiss() // Dismiss the current view
+            }) {
+                Image(systemName: "arrow.left") // Use the back arrow icon
+                    .foregroundColor(.white)
+            }
+        )
+        .padding(.top, -35)
         .edgesIgnoringSafeArea(.bottom)
         .frame(maxWidth: .infinity)
         .background(

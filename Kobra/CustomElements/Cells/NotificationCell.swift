@@ -71,7 +71,6 @@ struct NotificationCell: View {
                 }
             }
         }
-        .padding(.horizontal)
     }
     
     // Helper function to format the Date

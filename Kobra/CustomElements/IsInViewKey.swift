@@ -30,6 +30,19 @@ extension View {
 extension GeometryProxy {
     var isInView: Bool {
         let frame = self.frame(in: .global)
-        return frame.intersects(UIScreen.main.bounds)
+        let screenHeight = UIScreen.main.bounds.height
+
+        // Define the top and bottom margins as percentages of the screen height
+        let topMargin = screenHeight * 0.10
+        let bottomMargin = screenHeight * 0.20
+
+        // Calculate the area that should be considered as in view
+        let visibleRect = CGRect(x: frame.origin.x,
+                                 y: frame.origin.y + topMargin,
+                                 width: frame.size.width,
+                                 height: frame.size.height - (topMargin + bottomMargin))
+
+        return visibleRect.intersects(UIScreen.main.bounds)
     }
 }
+

@@ -10,6 +10,7 @@ import SwiftUI
 
 struct DiscoverView: View {
     @ObservedObject var viewModel = DiscoverViewModel()
+    @ObservedObject private var kobraViewModel = KobraViewModel()
     @State var searchText = ""
     @EnvironmentObject var homePageViewModel: HomePageViewModel
     
@@ -43,6 +44,30 @@ struct DiscoverView: View {
                                 })
                         }
                     }
+                } else {
+                    //GeometryReader { geometry in
+                    Spacer()
+                        ScrollView(showsIndicators: false) {
+                            VStack(alignment: .leading, spacing: 10) {
+                                ForEach(viewModel.posts.sorted(by: { $0.likes > $1.likes })) { post in
+                                    DiscoverPostRow(post: post)
+                                        .environmentObject(kobraViewModel)
+                                        .environmentObject(homePageViewModel)
+                                        .background(Color.clear)
+                                }
+                            }
+                        }
+                        .refreshable {
+                            viewModel.fetchPosts()
+                        }
+                        .padding(.trailing, 1)  // Add some padding to the right side of the ScrollView
+                        .background(Color.clear)
+                        .overlay(  // Add an overlay to the right side of the ScrollView
+                            Color.clear
+                                .frame(width: 1)  // Set width to the same value as the padding above
+                                .edgesIgnoringSafeArea(.all), alignment: .trailing
+                        )
+                    //}
                 }
             }
             .onAppear {
