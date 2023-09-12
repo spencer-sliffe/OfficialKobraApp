@@ -50,12 +50,9 @@ struct PostRow: View {
             HStack {
                 NavigationLink(destination: AccountProfileView(accountId: post.posterId)
                     .environmentObject(homePageViewModel)) {
-                    getPosterName()
+                        getPosterName()
                 }
                 Spacer()
-                Text(post.timestamp.formatted())
-                    .font(.caption)
-                    .foregroundColor(.secondary)
                 
                 if currentUserId == post.posterId {
                     Button(action: deletePost) {
@@ -64,28 +61,25 @@ struct PostRow: View {
                     }
                 }
             }
-            
+            Divider()
+                .frame(height: 1)
+                .background(.gray)
             VStack {
                 switch post.type {
                 case .advertisement(let advertisementPost):
-                    PostContent(title: advertisementPost.title,
-                                content: advertisementPost.content,
+                    PostContent(content: advertisementPost.content,
                                 imageURL: post.imageURL, videoURL: post.videoURL)
                 case .help(let helpPost):
-                    PostContent(title: helpPost.question,
-                                content: helpPost.details,
+                    PostContent(content: helpPost.details,
                                 imageURL: post.imageURL, videoURL: post.videoURL)
                 case .news(let newsPost):
-                    PostContent(title: newsPost.headline,
-                                content: newsPost.article,
+                    PostContent(content: newsPost.article,
                                 imageURL: post.imageURL, videoURL: post.videoURL)
                 case .bug(let bugPost):
-                    PostContent(title: bugPost.title,
-                                content: bugPost.content,
+                    PostContent(content: bugPost.content,
                                 imageURL: post.imageURL, videoURL: post.videoURL)
                 case .meme(let memePost):
-                    PostContent(title: memePost.title,
-                                content: memePost.content,
+                    PostContent(content: memePost.content,
                                 imageURL: post.imageURL, videoURL: post.videoURL)
                 case .market(let marketPost):
                     MarketPostContent(marketPost: marketPost, imageURL: post.imageURL, videoURL: post.videoURL)
@@ -113,10 +107,10 @@ struct PostRow: View {
                         Image(systemName: isLiked ? "heart.fill" : "heart")
                             .foregroundColor(isLiked ? .red : .gray)
                         Text("\(likes)")
-                            .foregroundColor(.primary)
+                            .foregroundColor(.white)
                             .font(.caption)
                             .padding(5)
-                            .background(Color.red.opacity(0.1))
+                            .background(Color.red.opacity(0.5))
                             .clipShape(Circle())
                             .overlay(
                                 Circle().stroke(Color.red, lineWidth: 1)
@@ -144,40 +138,43 @@ struct PostRow: View {
                         Image(systemName: isDisliked ? "hand.thumbsdown.fill" : "hand.thumbsdown")
                             .foregroundColor(isDisliked ? .black : .gray)
                         Text("\(dislikes)")
-                            .foregroundColor(.primary)
+                            .foregroundColor(.white)
                             .font(.caption)
                             .padding(5)
-                            .background(Color.black.opacity(0.1))
+                            .background(Color.black.opacity(0.5))
                             .clipShape(Circle())
                             .overlay(
                                 Circle().stroke(Color.black, lineWidth: 1)
                             )
                     }
                 }
-                Spacer()
                 Button(action: {
                     showingComments.toggle()
                 }) {
                     HStack {
+                        Image(systemName: "bubble.right")
+                            .foregroundColor(.blue)
                         Text("\(post.numComments)")
-                            .foregroundColor(.primary)
+                            .foregroundColor(.white)
                             .font(.caption)
                             .padding(5)
-                            .background(Color.blue.opacity(0.1))
+                            .background(Color.blue.opacity(0.5))
                             .clipShape(Circle())
                             .overlay(
                                 Circle().stroke(Color.blue, lineWidth: 1)
                             )
-                        Image(systemName: "bubble.right")
-                            .foregroundColor(.blue)
                     }
                 }
+                Spacer()
+                Text(post.timestamp.formatted())
+                    .font(.caption)
+                    .foregroundColor(.white)
             }
         }
         .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
         .background(
             RoundedRectangle(cornerRadius: 5)
-                .fill(Color(.systemBackground))
+                .fill(getBackgroundColor(for: post.type))
         )
         .overlay(
             RoundedRectangle(cornerRadius: 5)
@@ -197,6 +194,23 @@ struct PostRow: View {
             )
         }
     }
+
+    func getBackgroundColor(for postType: Post.PostType) -> Color {
+        switch postType {
+        case .advertisement:
+            return Color.purple.opacity(0.2)
+        case .help:
+            return Color.green.opacity(0.2)
+        case .news:
+            return Color.red.opacity(0.2)
+        case .bug:
+            return Color.teal.opacity(0.2)
+        case .meme:
+            return Color.mint.opacity(0.2)
+        case .market:
+            return Color.yellow.opacity(0.2)
+        }
+    }
     
     func deletePost() {
         showingDeleteConfirmation = true
@@ -209,62 +223,62 @@ struct PostRow: View {
                     image
                         .resizable()
                         .aspectRatio(contentMode: .fill)
-                        .frame(width: 30, height: 30)
+                        .frame(width: 20, height: 20)
                         .clipShape(Circle())
                 } placeholder: {
                     Image(systemName: "person.circle")
                         .resizable()
-                        .frame(width: 30, height: 30)
+                        .frame(width: 20, height: 20)
                         .foregroundColor(Color(.gray))
                 }
             } else {
                 Image(systemName: "person.circle")
                     .resizable()
-                    .frame(width: 30, height: 30)
+                    .frame(width: 20, height: 20)
                     .foregroundColor(Color(.gray))
             }
             
             switch post.type {
             case .advertisement(let advertisementPost):
-                Text("Ad : ")
-                    .font(.headline)
+                Text(advertisementPost.poster + ":  ")
+                    .font(.subheadline)
+                    .foregroundColor(.blue) +
+                Text(advertisementPost.title)
+                    .font(.subheadline)
                     .fontWeight(.bold)
-                    .foregroundColor(.purple) +
-                Text(advertisementPost.poster)
-                    .font(.headline)
-                    .foregroundColor(.blue)
+                    .foregroundColor(.white)
             case .help(let helpPost):
-                Text("Help : ")
-                    .font(.headline)
+                Text(helpPost.poster + ":  ")
+                    .font(.subheadline)
+                    .foregroundColor(.blue) +
+                Text(helpPost.question + "?")
+                    .font(.subheadline)
                     .fontWeight(.bold)
-                    .foregroundColor(.green) +
-                Text(helpPost.poster)
-                    .font(.headline)
-                    .foregroundColor(.blue)
+                    .foregroundColor(.white)
             case .news(let newsPost):
-                Text("News : ")
-                    .font(.headline)
+                Text(newsPost.poster + ":  ")
+                    .font(.subheadline)
+                    .foregroundColor(.blue) +
+                Text(newsPost.headline)
+                    .font(.subheadline)
                     .fontWeight(.bold)
-                    .foregroundColor(.red) +
-                Text(newsPost.poster)
-                    .font(.headline)
-                    .foregroundColor(.blue)
+                    .foregroundColor(.white)
             case .bug(let bugPost):
-                Text("Bug : ")
-                    .font(.headline)
+                Text(bugPost.poster + ":  ")
+                    .font(.subheadline)
+                    .foregroundColor(.blue) +
+                Text(bugPost.title)
+                    .font(.subheadline)
                     .fontWeight(.bold)
-                    .foregroundColor(.orange) +
-                Text(bugPost.poster)
-                    .font(.headline)
-                    .foregroundColor(.blue)
+                    .foregroundColor(.white)
             case .meme(let memePost):
-                Text("Meme : ")
-                    .font(.headline)
+                Text(memePost.poster + ":  ")
+                    .font(.subheadline)
+                    .foregroundColor(.blue) +
+                Text(memePost.title)
+                    .font(.subheadline)
                     .fontWeight(.bold)
-                    .foregroundColor(.pink) +
-                Text(memePost.poster)
-                    .font(.headline)
-                    .foregroundColor(.blue)
+                    .foregroundColor(.white)
             case .market(let marketPost):
                 Text("Item : ")
                     .font(.headline)
@@ -295,22 +309,15 @@ struct PostRow: View {
         return !post.dislikingUsers.contains(currentUserId)
     }
     
-    func PostContent(title: String, content: String, imageURL: String?, videoURL: String?) -> some View {
-        VStack(alignment: .leading, spacing: 1) {
-            Text(title)
-                .font(.title2)
-                .fontWeight(.bold)
-                .foregroundColor(.primary)
-
+    func PostContent(content: String, imageURL: String?, videoURL: String?) -> some View {
+        VStack(alignment: .center, spacing: 2) {
             if let imageURL = imageURL, let url = URL(string: imageURL) {
                 AsyncImage(url: url) { image in
                     image
                         .resizable()
                         .scaledToFit()
-                        .cornerRadius(8)
+                        .cornerRadius(5)
                         .contentShape(Rectangle())
-                        .overlay(RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.gray, lineWidth: 2)) // Add outline around the image
                         .onLongPressGesture {
                             showingFullImage = true
                         }
@@ -335,7 +342,7 @@ struct PostRow: View {
                 }
             }
             if let videoURL = videoURL, let url = URL(string: videoURL) {
-                VideoPlayerView(videoURL: url, shouldPlay: .constant(post.type.feedType == selectedFeed && shouldPlayVideo))
+                VideoPlayerView(videoURL: url, shouldPlay: .constant((post.type.feedType == selectedFeed || selectedFeed == .all) && shouldPlayVideo))
                     .frame(height: 300)
                     .isInView { inView in
                         shouldPlayVideo = inView
@@ -343,7 +350,8 @@ struct PostRow: View {
             }
             Text(content)
                 .font(.subheadline)
-                .foregroundColor(.primary)
+                .foregroundColor(.white)
+                .multilineTextAlignment(.center)
         }
     }
     
@@ -354,34 +362,34 @@ struct PostRow: View {
                 Text("Hardware: \(hardware.name)")
                     .font(.title2)
                     .fontWeight(.bold)
-                    .foregroundColor(.primary)
+                    .foregroundColor(.white)
                 Text(hardware.description)
                     .font(.subheadline)
-                    .foregroundColor(.primary)
+                    .foregroundColor(.white)
             case .software(let software):
                 Text("Software: \(software.name)")
                     .font(.title2)
                     .fontWeight(.bold)
-                    .foregroundColor(.primary)
+                    .foregroundColor(.white)
                 Text(software.description)
                     .font(.subheadline)
-                    .foregroundColor(.primary)
+                    .foregroundColor(.white)
             case .service(let service):
                 Text("Service: \(service.name)")
                     .font(.title2)
                     .fontWeight(.bold)
-                    .foregroundColor(.primary)
+                    .foregroundColor(.white)
                 Text(service.description)
                     .font(.subheadline)
-                    .foregroundColor(.primary)
+                    .foregroundColor(.white)
             case .other(let other):
                 Text("Other: \(other.title)")
                     .font(.title2)
                     .fontWeight(.bold)
-                    .foregroundColor(.primary)
+                    .foregroundColor(.white)
                 Text(other.description)
                     .font(.subheadline)
-                    .foregroundColor(.primary)
+                    .foregroundColor(.white)
             }
             
             if let imageURL = imageURL, let url = URL(string: imageURL) {
@@ -389,10 +397,8 @@ struct PostRow: View {
                     image
                         .resizable()
                         .scaledToFit()
-                        .cornerRadius(8)
+                        .cornerRadius(5)
                         .contentShape(Rectangle())
-                        .overlay(RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.gray, lineWidth: 2)) // Add outline around the image
                         .onLongPressGesture {
                             showingFullImage = true
                         }
@@ -417,7 +423,7 @@ struct PostRow: View {
                 }
             }
             if let videoURL = videoURL, let url = URL(string: videoURL) {
-                VideoPlayerView(videoURL: url, shouldPlay: .constant(post.type.feedType == selectedFeed && shouldPlayVideo))
+                VideoPlayerView(videoURL: url, shouldPlay: .constant((post.type.feedType == selectedFeed || selectedFeed == .all) && shouldPlayVideo))
                     .frame(height: 300)
                     .isInView { inView in
                         shouldPlayVideo = inView
@@ -425,11 +431,7 @@ struct PostRow: View {
             }
             Text("Price: \(priceFormatter.string(from: NSNumber(value: marketPost.price)) ?? "")")
                 .font(.subheadline)
-                .foregroundColor(.primary)
-            
-            Text("Category: \(marketPost.category)")
-                .font(.subheadline)
-                .foregroundColor(.primary)
+                .foregroundColor(.white)
         }
     }
 }

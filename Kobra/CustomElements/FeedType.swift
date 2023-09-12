@@ -8,6 +8,7 @@
 import Foundation
 
 public enum FeedType: String, CaseIterable, Identifiable {
+    case all = "All"
     case advertisement = "Advertisement"
     case help = "Help"
     case news = "News"

@@ -15,9 +15,8 @@ struct KobraView: View {
     @EnvironmentObject var homePageViewModel: HomePageViewModel
     
     func isPostTypeVisible(post: Post) -> Bool {
-        return post.type.feedType == selectedFeed
+        return selectedFeed == .all || post.type.feedType == selectedFeed
     }
-
     
     private func customToolbar() -> some View {
         HStack(spacing: 20) {
@@ -26,7 +25,13 @@ struct KobraView: View {
                     selectedFeed = feedType
                 }) {
                     VStack {
-                        if(feedType.rawValue == "Advertisement") {
+                        if(feedType.rawValue == "All") {
+                            Image(systemName: "clock")
+                                .resizable()
+                                .frame(width: selectedFeed == feedType ? 26 : 22, height: selectedFeed == feedType ? 26 : 22)
+                                .foregroundColor(selectedFeed == feedType ? .yellow : .white)
+                                .padding(0)
+                        } else if(feedType.rawValue == "Advertisement") {
                             Image(systemName: "radio") // Replace with appropriate icons
                                 .resizable()
                                 .frame(width: selectedFeed == feedType ? 26 : 22, height: selectedFeed == feedType ? 26 : 22)
@@ -102,7 +107,11 @@ struct KobraView: View {
                         .foregroundColor(.white)
                     Spacer()
                     // Add a new condition to handle the title of the meme feed
-                    if(selectedFeed.rawValue == "Meme") {
+                    if(selectedFeed.rawValue == "All") {
+                        Text("Recent Feed")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                    } else if(selectedFeed.rawValue == "Meme") {
                         Text("Meme Feed")
                             .font(.headline)
                             .foregroundColor(.white)

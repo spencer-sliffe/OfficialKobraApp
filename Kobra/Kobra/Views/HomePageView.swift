@@ -79,7 +79,7 @@ struct HomePageView: View {
         case 1:
             return "person"
         case 2:
-            return "magnifyingglass"
+            return "doc.text.magnifyingglass"
         case 3:
             return "house"
         case 4:
@@ -141,7 +141,7 @@ struct CustomTabView: View {
         case 1:
             return "person"
         case 2:
-            return "magnifyingglass"
+            return "doc.text.magnifyingglass"
         case 3:
             return "house"
         case 4:
