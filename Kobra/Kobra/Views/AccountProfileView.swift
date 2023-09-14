@@ -12,7 +12,7 @@ import FirebaseAuth
 struct AccountProfileView: View {
     let accountId: String
     @ObservedObject var viewModel: AccountProfileViewModel
-    @EnvironmentObject var settingsViewModel: SettingsViewModel
+    @EnvironmentObject private var settingsViewModel: SettingsViewModel
     @ObservedObject var kobraViewModel = KobraViewModel()
     @State var showFollowerView = false
     @State var showFollowingView = false
@@ -169,6 +169,7 @@ struct AccountProfileView: View {
                                 AccountProfilePostRow(post: post)
                                     .environmentObject(kobraViewModel)
                                     .environmentObject(homePageViewModel)
+                                    .environmentObject(settingsViewModel)
                                     .background(Color.clear)
                             }
                         }

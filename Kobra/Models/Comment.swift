@@ -12,4 +12,5 @@ struct Comment: Codable, Identifiable {
     var text: String
     var commenter: String
     var timestamp: Date
+    var commenterId: String
 }

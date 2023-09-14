@@ -12,7 +12,9 @@ struct KobraView: View {
     @State private var isPresentingCreatePostView = false
     @EnvironmentObject var viewModel: KobraViewModel
     @State private var selectedFeed: FeedType = .market
-    @EnvironmentObject var homePageViewModel: HomePageViewModel
+    @EnvironmentObject private var homePageViewModel: HomePageViewModel
+    @EnvironmentObject private var settingsViewModel: SettingsViewModel
+
     
     func isPostTypeVisible(post: Post) -> Bool {
         return selectedFeed == .all || post.type.feedType == selectedFeed
@@ -150,6 +152,7 @@ struct KobraView: View {
                             PostRow(post: post, selectedFeed: $selectedFeed)
                                 .environmentObject(viewModel)
                                 .environmentObject(homePageViewModel)
+                                .environmentObject(settingsViewModel)
                                 .background(Color.clear)
                         }
                     }

@@ -12,8 +12,9 @@ struct DiscoverView: View {
     @ObservedObject var viewModel = DiscoverViewModel()
     @ObservedObject private var kobraViewModel = KobraViewModel()
     @State var searchText = ""
-    @EnvironmentObject var homePageViewModel: HomePageViewModel
-    
+    @EnvironmentObject private var homePageViewModel: HomePageViewModel
+    @EnvironmentObject private var settingsViewModel: SettingsViewModel
+
     var body: some View {
         VStack(spacing: 0) {
             AccountSearchBar(text: $searchText)
@@ -25,6 +26,7 @@ struct DiscoverView: View {
                             NavigationLink(
                                 destination: AccountProfileView(accountId: account.id)
                                     .environmentObject(homePageViewModel)
+                                    .environmentObject(settingsViewModel)
                                     .isInView { isInView in
                                         // Perform action depending on whether the view is in view or not
                                         if isInView {
@@ -53,6 +55,7 @@ struct DiscoverView: View {
                                     DiscoverPostRow(post: post)
                                         .environmentObject(kobraViewModel)
                                         .environmentObject(homePageViewModel)
+                                        .environmentObject(settingsViewModel)
                                         .background(Color.clear)
                                 }
                             }

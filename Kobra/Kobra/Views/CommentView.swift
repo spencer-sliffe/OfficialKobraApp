@@ -14,21 +14,28 @@ struct CommentView: View {
     @EnvironmentObject var viewModel: KobraViewModel
     @ObservedObject var post: Post
     @State private var newCommentText = ""
+    @EnvironmentObject private var settingsViewModel: SettingsViewModel
+    @EnvironmentObject private var homePageViewModel: HomePageViewModel
     
     var currentUserId: String = Auth.auth().currentUser?.uid ?? ""
     
     var body: some View {
         NavigationView {
             VStack {
-                List {
-                    ForEach(viewModel.comments) { comment in
-                        CommentRow(comment: comment)
+                GeometryReader { geometry in
+                    ScrollView(showsIndicators: false) {
+                        VStack(alignment: .leading, spacing: 1) {
+                            ForEach(viewModel.comments) { comment in
+                                CommentRow(comment: comment)
+                                    .environmentObject(settingsViewModel)
+                                    .environmentObject(homePageViewModel)
+                            }
+                        }
                     }
                 }
                 .onAppear {
                     viewModel.fetchComments(for: post) { _ in }
                 }
-                .listStyle(InsetGroupedListStyle())
                 
                 HStack {
                     TextField("Add a comment...", text: $newCommentText)
@@ -50,6 +57,18 @@ struct CommentView: View {
                 }
                 .padding()
             }
+            .background(
+                LinearGradient(
+                    gradient: Gradient(
+                        colors: [
+                            gradientOptions[settingsViewModel.gradientIndex].0,
+                            gradientOptions[settingsViewModel.gradientIndex].1
+                        ]
+                    ),
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            )
         }
     }
     
@@ -73,7 +92,7 @@ struct CommentView: View {
                     return
                 }
                 
-                let newComment = Comment(text: newCommentText, commenter: username, timestamp: Date())
+                let newComment = Comment(text: newCommentText, commenter: username, timestamp: Date(), commenterId: currentUserId)
                 
                 viewModel.addComment(newComment, to: post) { result in
                     switch result {
@@ -88,5 +107,5 @@ struct CommentView: View {
             }
         }
     }
-
+    
 }

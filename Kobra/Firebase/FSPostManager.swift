@@ -359,8 +359,9 @@ class FSPostManager {
                         let text = data["text"] as! String
                         let commenter = data["commenter"] as! String
                         let timestamp = (data["timestamp"] as! Timestamp).dateValue() // Update this line
+                        let commenterId = data["commenterId"] as! String
                         
-                        let comment = Comment(id: id!, text: text, commenter: commenter, timestamp: timestamp)
+                        let comment = Comment(id: id!, text: text, commenter: commenter, timestamp: timestamp, commenterId: commenterId)
                         comments.append(comment)
                     }
                     completion(comments)
@@ -422,7 +423,8 @@ class FSPostManager {
                 "id": comment.id.uuidString,
                 "text": comment.text,
                 "commenter": comment.commenter,
-                "timestamp": comment.timestamp
+                "timestamp": comment.timestamp,
+                "commenterId": comment.commenterId
             ]
             
             document.reference.collection("comments").addDocument(data: commentData) { error in
@@ -562,7 +564,8 @@ class FSPostManager {
                 "id": comment.id.uuidString,
                 "text": comment.text,
                 "commenter": comment.commenter,
-                "timestamp": Timestamp(date: comment.timestamp)
+                "timestamp": Timestamp(date: comment.timestamp),
+                "commenterId": comment.commenterId
             ]
             
             document.reference.collection("comments").addDocument(data: commentData) { error in

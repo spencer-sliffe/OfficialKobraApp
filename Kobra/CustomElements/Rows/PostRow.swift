@@ -25,7 +25,8 @@ struct PostRow: View {
     @State private var playerStatus: AVPlayer.Status = .unknown
     @State private var shouldPlayVideo = false
     @Binding var selectedFeed: FeedType
-    @EnvironmentObject var homePageViewModel: HomePageViewModel
+    @EnvironmentObject private var homePageViewModel: HomePageViewModel
+    @EnvironmentObject private var settingsViewModel: SettingsViewModel
 
     init(post: Post, selectedFeed: Binding<FeedType>) {
         self.post = post
@@ -186,7 +187,10 @@ struct PostRow: View {
                 .stroke(Color.gray.opacity(0.2), lineWidth: 1)
         )
         .sheet(isPresented: $showingComments) {
-            CommentView(post: post).environmentObject(kobraViewModel)
+            CommentView(post: post)
+                .environmentObject(kobraViewModel)
+                .environmentObject(settingsViewModel)
+                .environmentObject(homePageViewModel)
         }
         .alert(isPresented: $showingDeleteConfirmation) {
             Alert(
@@ -344,7 +348,7 @@ struct PostRow: View {
                     }
                 }
                 if let videoURL = videoURL, let url = URL(string: videoURL) {
-                    VideoPlayerView(videoURL: url, shouldPlay: .constant((post.type.feedType == selectedFeed || selectedFeed == .all) && shouldPlayVideo && !homePageViewModel.accProViewActive))
+                    VideoPlayerView(videoURL: url, shouldPlay: .constant((post.type.feedType == selectedFeed || selectedFeed == .all) && shouldPlayVideo && homePageViewModel.accProViewActive == false))
                         .frame(height: 300)
                         .isInView { inView in
                             shouldPlayVideo = inView
@@ -428,7 +432,7 @@ struct PostRow: View {
                 }
             }
             if let videoURL = videoURL, let url = URL(string: videoURL) {
-                VideoPlayerView(videoURL: url, shouldPlay: .constant((post.type.feedType == selectedFeed || selectedFeed == .all) && shouldPlayVideo && !homePageViewModel.accProViewActive))
+                VideoPlayerView(videoURL: url, shouldPlay: .constant((post.type.feedType == selectedFeed || selectedFeed == .all) && shouldPlayVideo && homePageViewModel.accProViewActive == false))
                     .frame(height: 300)
                     .isInView { inView in
                         shouldPlayVideo = inView

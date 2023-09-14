@@ -24,7 +24,9 @@ struct DiscoverPostRow: View {
     @State private var profilePictureURL: URL?
     @State private var playerStatus: AVPlayer.Status = .unknown
     @State private var shouldPlayVideo = false
-    @EnvironmentObject var homePageViewModel: HomePageViewModel
+    @EnvironmentObject private var homePageViewModel: HomePageViewModel
+    @EnvironmentObject private var settingsViewModel: SettingsViewModel
+
 
     init(post: Post) {
         self.post = post
@@ -184,7 +186,10 @@ struct DiscoverPostRow: View {
                 .stroke(Color.gray.opacity(0.2), lineWidth: 1)
         )
         .sheet(isPresented: $showingComments) {
-            CommentView(post: post).environmentObject(kobraViewModel)
+            CommentView(post: post)
+                .environmentObject(kobraViewModel)
+                .environmentObject(settingsViewModel)
+                .environmentObject(homePageViewModel)
         }
         .alert(isPresented: $showingDeleteConfirmation) {
             Alert(
@@ -426,7 +431,7 @@ struct DiscoverPostRow: View {
                 }
             }
             if let videoURL = videoURL, let url = URL(string: videoURL) {
-                VideoPlayerView(videoURL: url, shouldPlay: .constant(shouldPlayVideo && !homePageViewModel.accProViewActive))
+                VideoPlayerView(videoURL: url, shouldPlay: .constant(shouldPlayVideo && homePageViewModel.accProViewActive == false))
                     .frame(height: 300)
                     .isInView { inView in
                         shouldPlayVideo = inView

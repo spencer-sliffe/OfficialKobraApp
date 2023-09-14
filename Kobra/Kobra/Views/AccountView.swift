@@ -10,6 +10,8 @@ import Firebase
 struct AccountView: View {
     @ObservedObject var viewModel = AccountViewModel()
     @ObservedObject var kobraViewModel = KobraViewModel()
+    @EnvironmentObject private var settingsViewModel: SettingsViewModel
+    @EnvironmentObject private var homePageViewModel: HomePageViewModel
     @State var isLoggedOut = false
     @State private var isShowingImagePicker = false
     @State private var inputImage: UIImage?
@@ -18,7 +20,6 @@ struct AccountView: View {
     @State private var bioInput: String = ""
     @State var showFollowerView = false
     @State var showFollowingView = false
-    @EnvironmentObject var homePageViewModel: HomePageViewModel
     
     var body: some View {
         VStack {
@@ -115,6 +116,7 @@ struct AccountView: View {
                                         .font(.subheadline)
                                         .fontWeight(.medium)
                                         .foregroundColor(.white)
+                                        .multilineTextAlignment(.center)
                                 }
                                 Button(action: {
                                     isEditingBio = true
@@ -189,6 +191,7 @@ struct AccountView: View {
                             .background(Color.clear)
                             .environmentObject(kobraViewModel)
                             .environmentObject(homePageViewModel)
+                            .environmentObject(settingsViewModel)
                     }
                 }
             }

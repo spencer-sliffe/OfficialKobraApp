@@ -108,18 +108,24 @@ struct HomePageView: View {
          case 0:
              return AnyView(SettingsView(authViewModel: authViewModel))
          case 1:
-             return AnyView(AccountView().environmentObject(homePageViewModel))
+             return AnyView(AccountView()
+                .environmentObject(homePageViewModel)
+                .environmentObject(settingsViewModel))
          case 2:
-             return AnyView(DiscoverView().environmentObject(homePageViewModel))
+             return AnyView(DiscoverView()
+                .environmentObject(homePageViewModel)
+                .environmentObject(settingsViewModel))
          case 3:
              return AnyView(KobraView()
                 .environmentObject(kobraViewModel)
                 .environmentObject(homePageViewModel)
+                .environmentObject(settingsViewModel)
                 .onAppear(){
                  kobraViewModel.fetchPosts()
              })
          case 4:
-             return AnyView(NotificationView()                .environmentObject(homePageViewModel))
+             return AnyView(NotificationView()              .environmentObject(homePageViewModel)
+                .environmentObject(settingsViewModel))
          case 5:
              return AnyView(InboxView()                .environmentObject(homePageViewModel))
          case 6:

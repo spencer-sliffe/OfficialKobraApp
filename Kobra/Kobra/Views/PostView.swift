@@ -20,7 +20,9 @@ struct PostView: View {
     let currentUserId: String = Auth.auth().currentUser?.uid ?? ""
     @State private var showingDeleteConfirmation = false
     @State private var profilePictureURL: URL?
-    @EnvironmentObject var homePageViewModel: HomePageViewModel
+    @EnvironmentObject private var homePageViewModel: HomePageViewModel
+    @EnvironmentObject private var settingsViewModel: SettingsViewModel
+
     
     init(post: Post) {
         self.post = post
@@ -44,7 +46,8 @@ struct PostView: View {
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
                     NavigationLink(destination: AccountProfileView(accountId: post.posterId)
-                        .environmentObject(homePageViewModel)) {
+                        .environmentObject(homePageViewModel)
+                        .environmentObject(settingsViewModel)) {
                         getPosterName()
                     }
                     Spacer()
@@ -179,7 +182,10 @@ struct PostView: View {
                     .stroke(Color.gray.opacity(0.2), lineWidth: 1)
             )
             .sheet(isPresented: $showingComments) {
-                CommentView(post: post).environmentObject(kobraViewModel)
+                CommentView(post: post)
+                    .environmentObject(kobraViewModel)
+                    .environmentObject(homePageViewModel)
+                    .environmentObject(settingsViewModel)
             }
             .alert(isPresented: $showingDeleteConfirmation) {
                 Alert(
