@@ -67,19 +67,24 @@ struct PostRow: View {
             VStack {
                 switch post.type {
                 case .advertisement(let advertisementPost):
-                    PostContent(content: advertisementPost.content,
+                    let content = "Advertisement: " + advertisementPost.content
+                    PostContent(content: content,
                                 imageURL: post.imageURL, videoURL: post.videoURL)
                 case .help(let helpPost):
-                    PostContent(content: helpPost.details,
+                    let content = "Help: " + helpPost.details
+                    PostContent(content: content,
                                 imageURL: post.imageURL, videoURL: post.videoURL)
                 case .news(let newsPost):
-                    PostContent(content: newsPost.article,
+                    let content = newsPost.category + " News: " + newsPost.article
+                    PostContent(content: content,
                                 imageURL: post.imageURL, videoURL: post.videoURL)
                 case .bug(let bugPost):
-                    PostContent(content: bugPost.content,
+                    let content = "App Bug: " + bugPost.content
+                    PostContent(content: content,
                                 imageURL: post.imageURL, videoURL: post.videoURL)
                 case .meme(let memePost):
-                    PostContent(content: memePost.content,
+                    let content = "Meme: " + memePost.content
+                    PostContent(content: content,
                                 imageURL: post.imageURL, videoURL: post.videoURL)
                 case .market(let marketPost):
                     MarketPostContent(marketPost: marketPost, imageURL: post.imageURL, videoURL: post.videoURL)
@@ -153,7 +158,7 @@ struct PostRow: View {
                 }) {
                     HStack {
                         Image(systemName: "bubble.right")
-                            .foregroundColor(.blue)
+                            .foregroundColor(.gray)
                         Text("\(post.numComments)")
                             .foregroundColor(.white)
                             .font(.caption)
@@ -198,17 +203,17 @@ struct PostRow: View {
     func getBackgroundColor(for postType: Post.PostType) -> Color {
         switch postType {
         case .advertisement:
-            return Color.purple.opacity(0.2)
+            return Color.purple.opacity(0.35)
         case .help:
-            return Color.green.opacity(0.2)
+            return Color.green.opacity(0.35)
         case .news:
-            return Color.red.opacity(0.2)
+            return Color.red.opacity(0.35)
         case .bug:
-            return Color.teal.opacity(0.2)
+            return Color.teal.opacity(0.35)
         case .meme:
-            return Color.mint.opacity(0.2)
+            return Color.indigo.opacity(0.35)
         case .market:
-            return Color.yellow.opacity(0.2)
+            return Color.yellow.opacity(0.35)
         }
     }
     
@@ -280,12 +285,8 @@ struct PostRow: View {
                     .fontWeight(.bold)
                     .foregroundColor(.white)
             case .market(let marketPost):
-                Text("Item : ")
-                    .font(.headline)
-                    .fontWeight(.bold)
-                    .foregroundColor(.yellow) +
                 Text(marketPost.vendor)
-                    .font(.headline)
+                    .font(.subheadline)
                     .foregroundColor(.blue)
             }
         }
@@ -310,48 +311,52 @@ struct PostRow: View {
     }
     
     func PostContent(content: String, imageURL: String?, videoURL: String?) -> some View {
-        VStack(alignment: .center, spacing: 2) {
-            if let imageURL = imageURL, let url = URL(string: imageURL) {
-                AsyncImage(url: url) { image in
-                    image
-                        .resizable()
-                        .scaledToFit()
-                        .cornerRadius(5)
-                        .contentShape(Rectangle())
-                        .onLongPressGesture {
-                            showingFullImage = true
-                        }
-                } placeholder: {
-                    ProgressView()
-                }
-                .frame(maxHeight: 300)
-                .fullScreenCover(isPresented: $showingFullImage) {
-                    ZStack {
-                        AsyncImage(url: url) { image in
-                            image
-                                .resizable()
-                                .scaledToFit()
-                        } placeholder: {
-                            ProgressView()
-                        }
-                        .ignoresSafeArea()
-                        .onTapGesture {
-                            showingFullImage = false
+        VStack(alignment: .leading, spacing: 2) {
+            VStack(alignment:.center){
+                if let imageURL = imageURL, let url = URL(string: imageURL) {
+                    AsyncImage(url: url) { image in
+                        image
+                            .resizable()
+                            .scaledToFit()
+                            .cornerRadius(5)
+                            .contentShape(Rectangle())
+                            .onLongPressGesture {
+                                showingFullImage = true
+                            }
+                    } placeholder: {
+                        ProgressView()
+                    }
+                    .frame(maxHeight: 300)
+                    .fullScreenCover(isPresented: $showingFullImage) {
+                        ZStack {
+                            AsyncImage(url: url) { image in
+                                image
+                                    .resizable()
+                                    .scaledToFit()
+                            } placeholder: {
+                                ProgressView()
+                            }
+                            .ignoresSafeArea()
+                            .onTapGesture {
+                                showingFullImage = false
+                            }
                         }
                     }
                 }
+                if let videoURL = videoURL, let url = URL(string: videoURL) {
+                    VideoPlayerView(videoURL: url, shouldPlay: .constant((post.type.feedType == selectedFeed || selectedFeed == .all) && shouldPlayVideo && !homePageViewModel.accProViewActive))
+                        .frame(height: 300)
+                        .isInView { inView in
+                            shouldPlayVideo = inView
+                        }
+                }
             }
-            if let videoURL = videoURL, let url = URL(string: videoURL) {
-                VideoPlayerView(videoURL: url, shouldPlay: .constant((post.type.feedType == selectedFeed || selectedFeed == .all) && shouldPlayVideo))
-                    .frame(height: 300)
-                    .isInView { inView in
-                        shouldPlayVideo = inView
-                    }
+            HStack(){
+                Text(content)
+                    .font(.subheadline)
+                    .foregroundColor(.white)
+                    .multilineTextAlignment(.center)
             }
-            Text(content)
-                .font(.subheadline)
-                .foregroundColor(.white)
-                .multilineTextAlignment(.center)
         }
     }
     
@@ -423,7 +428,7 @@ struct PostRow: View {
                 }
             }
             if let videoURL = videoURL, let url = URL(string: videoURL) {
-                VideoPlayerView(videoURL: url, shouldPlay: .constant((post.type.feedType == selectedFeed || selectedFeed == .all) && shouldPlayVideo))
+                VideoPlayerView(videoURL: url, shouldPlay: .constant((post.type.feedType == selectedFeed || selectedFeed == .all) && shouldPlayVideo && !homePageViewModel.accProViewActive))
                     .frame(height: 300)
                     .isInView { inView in
                         shouldPlayVideo = inView

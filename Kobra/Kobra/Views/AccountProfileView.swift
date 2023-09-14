@@ -209,6 +209,14 @@ struct AccountProfileView: View {
             .edgesIgnoringSafeArea(.all)
         )
         .foregroundColor(.white)
+        .onAppear {
+            // When the view appears, set accProViewActive to true
+            homePageViewModel.accProViewActive = true
+        }
+        .onDisappear {
+            // When the view disappears (e.g., when navigating away), set accProViewActive to false
+            homePageViewModel.accProViewActive = false
+        }
     }
 }
 
