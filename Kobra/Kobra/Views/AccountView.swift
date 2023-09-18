@@ -9,7 +9,7 @@ import Firebase
 
 struct AccountView: View {
     @ObservedObject var viewModel = AccountViewModel()
-    @ObservedObject var kobraViewModel = KobraViewModel()
+    @EnvironmentObject private var kobraViewModel: KobraViewModel
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
     @EnvironmentObject private var homePageViewModel: HomePageViewModel
     @State var isLoggedOut = false
@@ -91,7 +91,6 @@ struct AccountView: View {
                                 .minimumScaleFactor(0.5)
                                 .lineLimit(1)
                                 .padding(.leading, -30)
-                            
                             // Bio
                             if isEditingBio {
                                 CustomTextField(text: $bioInput, placeholder: "Bio", characterLimit: 250)
@@ -127,7 +126,6 @@ struct AccountView: View {
                                         .foregroundColor(.blue)
                                 }
                             }
-                            
                             HStack {
                                 Button(action: {
                                     showFollowerView = true

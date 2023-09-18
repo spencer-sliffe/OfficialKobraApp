@@ -10,34 +10,29 @@ import SwiftUI
 
 struct ChatCell: View {
     var chat: Chat
-
+    
     var body: some View {
-       // NavigationLink(destination: ChatDetailView(chat: chat)) {
+        VStack(alignment: .leading){
             HStack {
                 Circle()
                     .frame(width: 50, height: 50)
                     .foregroundColor(.gray)  // replace this with your custom user's avatar
-
-                VStack(alignment: .leading) {
-                    Text(chat.recentUsername)
-                        .font(.headline)
-                        .foregroundColor(.white)
-
-                    if let lastMessage = chat.lastMessage {
-                        Text(lastMessage.text)
-                            .font(.subheadline)
-                            .foregroundColor(.white)
-                            .lineLimit(1)
-                    }
-
-                    Text(chat.timestamp, style: .date)
+                Text(chat.recentUsername)
+                    .font(.headline)
+                    .foregroundColor(.white)
+                
+                if let lastMessage = chat.lastMessage {
+                    Text(lastMessage.text)
                         .font(.subheadline)
                         .foregroundColor(.white)
+                        .lineLimit(1)
                 }
-                .padding(.leading, 8)
+                Text(chat.timestamp, style: .date)
+                    .font(.subheadline)
+                    .foregroundColor(.white)
             }
             .padding(.vertical, 8)
-        //}
+        }
     }
 }
 

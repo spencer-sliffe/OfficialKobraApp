@@ -26,7 +26,7 @@ struct CommentView: View {
                     ScrollView(showsIndicators: false) {
                         VStack(alignment: .leading, spacing: 1) {
                             ForEach(viewModel.comments) { comment in
-                                CommentRow(comment: comment)
+                                CommentRow(comment: comment, post: post) // Pass the post as a parameter
                                     .environmentObject(settingsViewModel)
                                     .environmentObject(homePageViewModel)
                             }
@@ -107,5 +107,4 @@ struct CommentView: View {
             }
         }
     }
-    
 }

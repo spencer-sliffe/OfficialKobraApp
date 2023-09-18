@@ -28,10 +28,11 @@ struct NotificationCell: View {
                 // Add icon based on notification type
                 Image(systemName: getIcon())
                     .resizable()
-                    .frame(width: 20, height: 20)
+                    .frame(width: 30, height: 30)
                     .padding(.trailing, 5)
+                    .foregroundColor(.white)
                 
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading) {
                     switch notification.type {
                     case .post(let postNoti):
                         postNotificationTypeView(from: postNoti)
@@ -45,15 +46,14 @@ struct NotificationCell: View {
                     
                     Text(getFormattedDate())
                         .font(.system(size: 10))
-                        .foregroundColor(.gray)
+                        .foregroundColor(.white)
                 }
-                
-                Spacer()
+                Spacer(minLength:5)
             }
-            .padding()
-            .background(Color.white)
-            .cornerRadius(8)
-            .shadow(color: .gray.opacity(0.2), radius: 2, x: 0, y: 2)
+            .padding(5)
+            .frame(maxWidth: .infinity)
+            .background(Color.black.opacity(0.35))
+            .cornerRadius(2)
             .onTapGesture {
                 if case let .post(postNoti) = notification.type {
                     isPostSelected = true
@@ -88,12 +88,16 @@ struct NotificationCell: View {
         
         var body: some View {
             HStack {
-                NavigationLink(destination: AccountProfileView(accountId: senderId).environmentObject(homePageViewModel)
+                NavigationLink(destination: AccountProfileView(accountId: senderId)
+                    .environmentObject(homePageViewModel)
                     ) {
                     Text(username)
                         .foregroundColor(.blue)
+                        .font(.subheadline)
                 }
                 Text(text)
+                    .font(.subheadline)
+                    .foregroundColor(.white)
             }
         }
     }
@@ -106,7 +110,7 @@ struct NotificationCell: View {
         case .dislike(let dislike):
             NotificationLink(username: dislike.dislikerUsername, text: "disliked your post", senderId: notification.senderId, homePageViewModel: homePageViewModel)
         case .comment(let comment):
-            NotificationLink(username: comment.authorUsername, text: "commented on your post: \(comment.commentText)", senderId: notification.senderId, homePageViewModel: homePageViewModel)
+            NotificationLink(username: comment.authorUsername, text:  "'\(comment.commentText)'", senderId: notification.senderId, homePageViewModel: homePageViewModel)
         }
     }
     
@@ -123,13 +127,21 @@ struct NotificationCell: View {
 
     func getIcon() -> String {
         switch notification.type {
-        case .post(_):
-            return "doc.text.below.ecg"
+        case .post(let postNoti):
+            switch postNoti.type {
+            case .like:
+                return "heart" // Use a heart icon for like notifications
+            case .dislike:
+                return "hand.thumbsdown" // Use a thumbs down icon for dislike notifications
+            case .comment:
+                return "message" // Use a message icon for comment notifications
+            }
         case .chat(_):
             return "message"
         case .follower(_):
-            return "person.2"
+            return "person.badge.plus"
         }
     }
 }
+
 

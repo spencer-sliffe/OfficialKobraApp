@@ -110,7 +110,8 @@ struct HomePageView: View {
          case 1:
              return AnyView(AccountView()
                 .environmentObject(homePageViewModel)
-                .environmentObject(settingsViewModel))
+                .environmentObject(settingsViewModel)
+                .environmentObject(kobraViewModel))
          case 2:
              return AnyView(DiscoverView()
                 .environmentObject(homePageViewModel)

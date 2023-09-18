@@ -15,8 +15,12 @@ struct NotificationView: View {
     var body: some View {
         VStack(spacing: 0) {
             Text("Unseen Notifications: \(viewModel.unseenNotificationsCount)")
-                .padding()
+                .padding(.horizontal)
                 .foregroundColor(.white)
+            Divider()
+                .frame(height: 1)
+                .background(.gray)
+                .padding(.bottom, 4)
             if viewModel.isLoading {
                Spacer()
                ProgressView()
@@ -37,5 +41,6 @@ struct NotificationView: View {
         .onDisappear {
             viewModel.markAllAsSeen()
         }
+        .edgesIgnoringSafeArea(.all)
     }
 }
