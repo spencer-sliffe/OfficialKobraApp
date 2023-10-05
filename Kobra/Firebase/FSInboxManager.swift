@@ -1,7 +1,5 @@
-//
 //  FireStoreManager.swift
 //  Kobra
-//
 //  Created by Spencer Sliffe on 3/18/23.
 //
 
@@ -12,7 +10,8 @@ import Firebase
 class FSInboxManager {
     private let db = Firestore.firestore()
     static let shared = FSInboxManager()
-    
+    private let accountCollection = "Accounts"
+
     func fetchInbox(accountId: String, completion: @escaping (Result<[Chat], Error>) -> Void) {
         let query = db.collection("Accounts").document(accountId).collection("Inbox")
         query.getDocuments { (querySnapshot, error) in
@@ -30,14 +29,27 @@ class FSInboxManager {
         }
     }
     
+    /*private func fetchProfilePicture(accountId: String, completion: @escaping (Result<String, Error>)-> String) {
+        let query = db.collection("Accounts").document(accountId)
+        query.getDocuments { (querySnapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            var profilePicture = ""
+            
+        }
+    }*/
+    
     private func createChatFrom(data: [String: Any]) -> Chat {
         let id = UUID(uuidString: data["id"] as? String ?? "") ?? UUID()
         let participants = data["participants"] as? [String] ?? [""]
-        let lastMessage = data["lastMessage"] as? Message ?? nil
+        let lastMessage = data["lastMessage"] as? String ?? ""
         let timestamp = (data["timestamp"] as? Timestamp)?.dateValue() ?? Date()
-        let recentUsername = data["recentUsername"] as? String ?? ""
+        let username = data["username"] as? String ?? ""
+        let profilePicture = data["profilePicture"] as? String ?? ""
         
-        return Chat(id: id, participants: participants, lastMessage: lastMessage, timestamp: timestamp, recentUsername: recentUsername)
+        return Chat(id: id, participants: participants, lastMessage: lastMessage, timestamp: timestamp, username: username, profilePicture: profilePicture)
     }
     
     func addChat(_ chat: Chat, accountId: String, completion: @escaping (Result<Void, Error>) -> Void) {
@@ -55,10 +67,11 @@ class FSInboxManager {
     private func convertChatToData(_ chat: Chat) -> [String: Any] {
         let data: [String: Any] = [
             "id": chat.id.uuidString,
-            "participantA": chat.participants,
+            "participants": chat.participants,
             "lastMessage": chat.lastMessage ?? "",  // this line might need further modification
             "timestamp": chat.timestamp,
-            "recentUsername": chat.recentUsername
+            "username": chat.username,
+            "profilePicture": chat.profilePicture ?? ""
         ]
         return data
     }

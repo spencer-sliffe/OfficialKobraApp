@@ -21,7 +21,6 @@ struct FollowCell: View {
     var body: some View {
         HStack(spacing: 16) {
             // Circle view for the profile picture
-
             if viewModel.isLoading {
                 ProgressView()
             } else if let account = viewModel.account {
@@ -70,7 +69,6 @@ struct FollowCell: View {
                 }
                 Spacer()
             }
-            
         }
         .background(Color.white)
     }

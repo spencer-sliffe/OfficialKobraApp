@@ -11,6 +11,7 @@ import SwiftUI
 struct FollowerView: View {
     @ObservedObject var viewModel: AccountProfileViewModel
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
+    @EnvironmentObject private var homePageViewModel: HomePageViewModel
     
     var body: some View {
         NavigationView {
@@ -18,7 +19,7 @@ struct FollowerView: View {
                 ScrollView {
                     VStack {
                         ForEach(viewModel.followers, id: \.self) { follower in
-                            NavigationLink(destination: AccountProfileView(accountId: follower)) {
+                            NavigationLink(destination: AccountProfileView(accountId: follower).environmentObject(settingsViewModel).environmentObject(homePageViewModel)) {
                                 FollowCell(accountId: follower)
                             }
                         }

@@ -9,16 +9,18 @@ import Foundation
 struct Chat: Identifiable {
     var id = UUID()
     var participants: [String]
-    var lastMessage: Message?
+    var lastMessage: String?
     var timestamp: Date
-    var recentUsername: String
+    var username: String
+    var profilePicture: URL?
 
-    init(id: UUID = UUID(), participants: [String], lastMessage: Message? = nil, timestamp: Date, recentUsername: String) {
+    init(id: UUID = UUID(), participants: [String], lastMessage: String = "", timestamp: Date, username: String, profilePicture: String?) {
         self.id = id
         self.participants = participants
         self.lastMessage = lastMessage
         self.timestamp = timestamp
-        self.recentUsername = recentUsername
+        self.username = username
+        self.profilePicture = profilePicture.flatMap { URL(string: $0) }
     }
 }
 

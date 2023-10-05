@@ -165,4 +165,23 @@ class FSNotificationManager {
             }
         }
     }
+    
+    func setupNotificationListener(accountId: String, completion: @escaping (Result<[Notification], Error>) -> Void) -> ListenerRegistration {
+        let query = db.collection(Collection).document(accountId).collection("Notifications")
+        
+        return query.addSnapshotListener { (querySnapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            
+            var notifs: [Notification] = []
+            querySnapshot?.documents.forEach { document in
+                let data = document.data()
+                let notification = self.createNotiFrom(data: data)
+                notifs.append(notification)
+            }
+            completion(.success(notifs))
+        }
+    }
 }

@@ -17,12 +17,12 @@ struct ChatCell: View {
                 Circle()
                     .frame(width: 50, height: 50)
                     .foregroundColor(.gray)  // replace this with your custom user's avatar
-                Text(chat.recentUsername)
+                Text(chat.username)
                     .font(.headline)
                     .foregroundColor(.white)
                 
                 if let lastMessage = chat.lastMessage {
-                    Text(lastMessage.text)
+                    Text(lastMessage)
                         .font(.subheadline)
                         .foregroundColor(.white)
                         .lineLimit(1)
