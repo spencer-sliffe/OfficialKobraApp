@@ -324,9 +324,6 @@ struct PostRow: View {
                             .scaledToFit()
                             .cornerRadius(5)
                             .contentShape(Rectangle())
-                            .onLongPressGesture {
-                                showingFullImage = true
-                            }
                     } placeholder: {
                         ProgressView()
                     }
@@ -337,6 +334,7 @@ struct PostRow: View {
                                 image
                                     .resizable()
                                     .scaledToFit()
+                                    .contentShape(Rectangle())
                             } placeholder: {
                                 ProgressView()
                             }
@@ -353,6 +351,7 @@ struct PostRow: View {
                         .isInView { inView in
                             shouldPlayVideo = inView
                         }
+                        .contentShape(Rectangle())
                 }
             }
             HStack(){
@@ -408,14 +407,14 @@ struct PostRow: View {
                         .scaledToFit()
                         .cornerRadius(5)
                         .contentShape(Rectangle())
-                        .onLongPressGesture {
+                        /*.onLongPressGesture {
                             showingFullImage = true
-                        }
+                        }*/
                 } placeholder: {
                     ProgressView()
                 }
                 .frame(maxHeight: 300)
-                .fullScreenCover(isPresented: $showingFullImage) {
+                /*.fullScreenCover(isPresented: $showingFullImage) {
                     ZStack {
                         AsyncImage(url: url) { image in
                             image
@@ -429,7 +428,7 @@ struct PostRow: View {
                     .onTapGesture {
                         showingFullImage = false
                     }
-                }
+                }*/
             }
             if let videoURL = videoURL, let url = URL(string: videoURL) {
                 VideoPlayerView(videoURL: url, shouldPlay: .constant((post.type.feedType == selectedFeed || selectedFeed == .all) && shouldPlayVideo && homePageViewModel.accProViewActive == false))
@@ -437,6 +436,7 @@ struct PostRow: View {
                     .isInView { inView in
                         shouldPlayVideo = inView
                     }
+                    .contentShape(Rectangle())
             }
             Text("Price: \(priceFormatter.string(from: NSNumber(value: marketPost.price)) ?? "")")
                 .font(.subheadline)

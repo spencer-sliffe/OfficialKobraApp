@@ -54,6 +54,7 @@ struct AuthenticationView: View {
                         
                     } else if selection == 1 {
                         TextField("Email", text: $authViewModel.email)
+                            .keyboardType(.emailAddress)
                             .padding()
                             .background(Color.white.opacity(0.5))
                             .cornerRadius(10)

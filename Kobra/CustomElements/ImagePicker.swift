@@ -2,7 +2,7 @@
 //  ImagePicker.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 7/19/23.
+//  Created by Spencer Sliffe on 7/19/23.
 //
 
 import Foundation

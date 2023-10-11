@@ -325,14 +325,14 @@ struct AccountPostRow: View {
                             .scaledToFit()
                             .cornerRadius(5)
                             .contentShape(Rectangle())
-                            .onLongPressGesture {
+                            /*.onLongPressGesture {
                                 showingFullImage = true
-                            }
+                            }*/
                     } placeholder: {
                         ProgressView()
                     }
                     .frame(maxHeight: 300)
-                    .fullScreenCover(isPresented: $showingFullImage) {
+                    /*.fullScreenCover(isPresented: $showingFullImage) {
                         ZStack {
                             AsyncImage(url: url) { image in
                                 image
@@ -346,7 +346,7 @@ struct AccountPostRow: View {
                                 showingFullImage = false
                             }
                         }
-                    }
+                    }*/
                 }
                 if let videoURL = videoURL, let url = URL(string: videoURL) {
                     VideoPlayerView(videoURL: url, shouldPlay: .constant(shouldPlayVideo && homePageViewModel.accProViewActive == false))
@@ -409,14 +409,14 @@ struct AccountPostRow: View {
                         .scaledToFit()
                         .cornerRadius(5)
                         .contentShape(Rectangle())
-                        .onLongPressGesture {
+                        /*.onLongPressGesture {
                             showingFullImage = true
-                        }
+                        }*/
                 } placeholder: {
                     ProgressView()
                 }
                 .frame(maxHeight: 300)
-                .fullScreenCover(isPresented: $showingFullImage) {
+                /*.fullScreenCover(isPresented: $showingFullImage) {
                     ZStack {
                         AsyncImage(url: url) { image in
                             image
@@ -430,7 +430,7 @@ struct AccountPostRow: View {
                     .onTapGesture {
                         showingFullImage = false
                     }
-                }
+                }*/
             }
             if let videoURL = videoURL, let url = URL(string: videoURL) {
                 VideoPlayerView(videoURL: url, shouldPlay: .constant(shouldPlayVideo && homePageViewModel.accProViewActive == false))

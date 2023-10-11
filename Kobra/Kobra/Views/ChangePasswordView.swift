@@ -22,6 +22,7 @@ struct ChangePasswordView: View {
                 .padding(.bottom, 20)
             
             TextField("Email", text: $email)
+                .keyboardType(.emailAddress)
                 .padding()
                 .background(Color.white.opacity(0.5))
                 .cornerRadius(10)

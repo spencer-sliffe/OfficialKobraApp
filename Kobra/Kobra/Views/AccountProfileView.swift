@@ -221,6 +221,14 @@ struct AccountProfileView: View {
             // When the view disappears (e.g., when navigating away), set accProViewActive to false
             homePageViewModel.accProViewActive = false
         }
+        .gesture(DragGesture()
+            .onEnded { gesture in
+                if gesture.translation.width > 100 {
+                    // Swipe to the right, dismiss the view
+                    presentationMode.wrappedValue.dismiss()
+                }
+            }
+        )
     }
 }
 

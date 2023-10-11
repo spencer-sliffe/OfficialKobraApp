@@ -1,9 +1,7 @@
-//
 //  FollowerView.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 6/30/23.
-//
+//  Created by Spencer Sliffe on 6/30/23.
 
 import Foundation
 import SwiftUI
@@ -42,7 +40,3 @@ struct FollowerView: View {
         }
     }
 }
-
-
-
-

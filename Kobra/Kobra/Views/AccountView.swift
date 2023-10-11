@@ -28,69 +28,70 @@ struct AccountView: View {
             } else if let account = viewModel.account {
                 let displayName = account.username
                 HStack {
-                    ZStack {
-                        if let profilePicture = account.profilePicture {
-                            AsyncImage(url: profilePicture) { image in
-                                image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 120, height: 120)
-                                    .clipShape(Circle())
-                            } placeholder: {
+                    HStack{
+                        ZStack {
+                            if let profilePicture = account.profilePicture {
+                                AsyncImage(url: profilePicture) { image in
+                                    image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: 100, height: 100)
+                                        .clipShape(Circle())
+                                } placeholder: {
+                                    Image(systemName: "person.circle.fill")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .foregroundColor(.gray)
+                                        .frame(width: 100, height: 100)
+                                        .clipShape(Circle())
+                                }
+                            } else {
                                 Image(systemName: "person.circle.fill")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .foregroundColor(.gray)
-                                    .frame(width: 120, height: 120)
+                                    .frame(width: 100, height: 100)
                                     .clipShape(Circle())
                             }
-                            .padding(.leading, 20)
-                        } else {
-                            Image(systemName: "person.circle.fill")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .foregroundColor(.gray)
-                                .frame(width: 120, height: 120)
-                                .clipShape(Circle())
-                                .padding(.leading, 20)
-                        }
-                        Button(action: {
-                            showingActionSheet = true
-                        }) {
-                            Image(systemName: "ellipsis")
-                                .resizable()
-                                .frame(width: 20, height: 20)
-                                .foregroundColor(.blue)
-                                .padding()
-                                .background(Color.white)
-                                .clipShape(Circle())
-                                .shadow(radius: 10)
-                        }
-                        .offset(x: 40, y: 40)
-                        .actionSheet(isPresented: $showingActionSheet) {
-                            ActionSheet(title: Text("Profile Picture Options"), buttons: [
-                                .default(Text("Upload a new picture")) {
-                                    isShowingImagePicker = true
-                                },
-                                .destructive(Text("Delete current picture")) {
-                                    viewModel.deleteProfilePicture()
-                                },
-                                .cancel()
-                            ])
-                        }
-                        .sheet(isPresented: $isShowingImagePicker, onDismiss: loadImage) {
-                            ImagePicker(image: $inputImage)
+                            Button(action: {
+                                showingActionSheet = true
+                            }) {
+                                Image(systemName: "ellipsis")
+                                    .resizable()
+                                    .frame(width: 10, height: 10)
+                                    .foregroundColor(.blue)
+                                    .padding()
+                                    .background(Color.white)
+                                    .clipShape(Circle())
+                            }
+                            .offset(x: 30, y: 30)
+                            .actionSheet(isPresented: $showingActionSheet) {
+                                ActionSheet(title: Text("Profile Picture Options"), buttons: [
+                                    .default(Text("Upload a new picture")) {
+                                        isShowingImagePicker = true
+                                    },
+                                    .destructive(Text("Delete current picture")) {
+                                        viewModel.deleteProfilePicture()
+                                    },
+                                    .cancel()
+                                ])
+                            }
+                            .sheet(isPresented: $isShowingImagePicker, onDismiss: loadImage) {
+                                ImagePicker(image: $inputImage)
+                            }
                         }
                     }
-                    VStack(alignment: .leading, spacing: 10) {
-                        VStack(alignment: .leading, spacing: 5) {
+                    .padding(.trailing, 10)
+                    .padding(.leading, 10)
+                    VStack(alignment: .leading, spacing: 0) {
+                        VStack(alignment: .center, spacing: 0) {
                             Text(displayName)
                                 .font(.largeTitle)
                                 .fontWeight(.bold)
                                 .foregroundColor(.white)
                                 .minimumScaleFactor(0.5)
                                 .lineLimit(1)
-                                .padding(.leading, -30)
+                                .padding(.leading, -18)
                             // Bio
                             if isEditingBio {
                                 CustomTextField(text: $bioInput, placeholder: "Bio", characterLimit: 250)
@@ -110,20 +111,23 @@ struct AccountView: View {
                                     }
                                 }
                             } else {
-                                if let bio = account.bio {
-                                    Text(bio)
-                                        .font(.subheadline)
-                                        .fontWeight(.medium)
-                                        .foregroundColor(.white)
-                                        .multilineTextAlignment(.center)
-                                }
-                                Button(action: {
-                                    isEditingBio = true
-                                    bioInput = account.bio ?? ""
-                                }) {
-                                    Text("Edit Bio")
-                                        .font(.caption)
-                                        .foregroundColor(.blue)
+                                HStack{
+                                    if let bio = account.bio {
+                                        Text(bio)
+                                            .font(.subheadline)
+                                            .fontWeight(.medium)
+                                            .foregroundColor(.white)
+                                            .multilineTextAlignment(.center)
+                                            .padding(.trailing, 12)
+                                    }
+                                    Button(action: {
+                                        isEditingBio = true
+                                        bioInput = account.bio ?? ""
+                                    }) {
+                                        Image(systemName: "pencil.circle") // You can change "pencil.circle" to any image name you prefer.
+                                            .font(.caption)
+                                            .foregroundColor(.white)
+                                    }
                                 }
                             }
                             HStack {
@@ -143,7 +147,7 @@ struct AccountView: View {
                                         RoundedRectangle(cornerRadius: 5)
                                             .stroke(Color.white, lineWidth: 2)
                                     )
-                                    .padding(.trailing)
+                                    .padding(.trailing, 20)
                                 }
                                 .sheet(isPresented: $showFollowerView) {
                                     FollowerView(viewModel: AccountProfileViewModel(accountId: viewModel.accountId))
@@ -165,13 +169,14 @@ struct AccountView: View {
                                         RoundedRectangle(cornerRadius: 5)
                                             .stroke(Color.white, lineWidth: 2)
                                     )
-                                    .padding(.trailing)
                                 }
                                 .sheet(isPresented: $showFollowingView) {
                                     FollowingView(viewModel: AccountProfileViewModel(accountId: viewModel.accountId)) 
                                 }
                             }
                             .foregroundColor(.white)
+                            .padding(.top, 4)
+                            .padding(.leading, -33)
                         }
                     }
                 }
