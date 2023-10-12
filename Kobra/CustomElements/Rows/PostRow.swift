@@ -68,11 +68,11 @@ struct PostRow: View {
             VStack {
                 switch post.type {
                 case .advertisement(let advertisementPost):
-                    let content = "Advertisement: " + advertisementPost.content
+                    let content = advertisementPost.content
                     PostContent(content: content,
                                 imageURL: post.imageURL, videoURL: post.videoURL)
                 case .help(let helpPost):
-                    let content = "Help: " + helpPost.details
+                    let content = helpPost.details
                     PostContent(content: content,
                                 imageURL: post.imageURL, videoURL: post.videoURL)
                 case .news(let newsPost):
@@ -84,7 +84,7 @@ struct PostRow: View {
                     PostContent(content: content,
                                 imageURL: post.imageURL, videoURL: post.videoURL)
                 case .meme(let memePost):
-                    let content = "Meme: " + memePost.content
+                    let content = memePost.content
                     PostContent(content: content,
                                 imageURL: post.imageURL, videoURL: post.videoURL)
                 case .market(let marketPost):

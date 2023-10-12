@@ -60,6 +60,9 @@ struct CreatePostView: View {
                                     title = String(newValue.prefix(40))
                                 }
                             }
+                            .onTapGesture {
+                                postTypeExpanded = false
+                            }
                         
                         CustomTextField(text: $content, placeholder: NSLocalizedString("Content", comment: ""), characterLimit: 300)
                             .onChange(of: content) { newValue in
@@ -67,6 +70,9 @@ struct CreatePostView: View {
                                 if newValue.count > 300 {
                                     content = String(newValue.prefix(300))
                                 }
+                            }
+                            .onTapGesture {
+                                postTypeExpanded = false
                             }
                         
                         if postType != "Market" && postType != "Meme" {
@@ -76,6 +82,9 @@ struct CreatePostView: View {
                                     if newValue.count > 20 {
                                         category = String(newValue.prefix(20))
                                     }
+                                }
+                                .onTapGesture {
+                                    postTypeExpanded = false
                                 }
                         }
                         if postType == "Market" {
@@ -304,6 +313,9 @@ struct CreatePostView: View {
                     if newValue.count > 20 {
                         category = String(newValue.prefix(20 ))
                     }
+                }
+                .onTapGesture {
+                    postTypeExpanded = false
                 }
             VStack(alignment: .leading) {
                 Stepper(value: $stepperPrice, in: 0...Double.infinity, step: 1.0) {

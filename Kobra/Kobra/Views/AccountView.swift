@@ -94,7 +94,7 @@ struct AccountView: View {
                                 .padding(.leading, -18)
                             // Bio
                             if isEditingBio {
-                                CustomTextField(text: $bioInput, placeholder: "Bio", characterLimit: 250)
+                                CustomTextField(text: $bioInput, placeholder: "Bio", characterLimit: 125)
                                     .padding(2)
                                 HStack {
                                     Button(action: {
@@ -114,11 +114,11 @@ struct AccountView: View {
                                 HStack{
                                     if let bio = account.bio {
                                         Text(bio)
-                                            .font(.subheadline)
+                                            .font(bio.count > 63 ? .callout : .subheadline) // Change the font size as needed
                                             .fontWeight(.medium)
                                             .foregroundColor(.white)
                                             .multilineTextAlignment(.center)
-                                            .padding(.trailing, 12)
+
                                     }
                                     Button(action: {
                                         isEditingBio = true
@@ -129,6 +129,7 @@ struct AccountView: View {
                                             .foregroundColor(.white)
                                     }
                                 }
+                                .padding(.trailing, 12)
                             }
                             HStack {
                                 Button(action: {
@@ -147,7 +148,7 @@ struct AccountView: View {
                                         RoundedRectangle(cornerRadius: 5)
                                             .stroke(Color.white, lineWidth: 2)
                                     )
-                                    .padding(.trailing, 20)
+                                    .padding(.trailing, 30)
                                 }
                                 .sheet(isPresented: $showFollowerView) {
                                     FollowerView(viewModel: AccountProfileViewModel(accountId: viewModel.accountId))

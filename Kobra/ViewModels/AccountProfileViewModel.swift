@@ -21,6 +21,7 @@ class AccountProfileViewModel: ObservableObject {
     @Published var followers: [String] = []
     @Published var following: [String] = []
     @Published var showFollowButton = true
+    
     init(accountId: String) {
         self.accountId = accountId
         fetchAccount()

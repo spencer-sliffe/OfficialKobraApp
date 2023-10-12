@@ -20,7 +20,7 @@ struct AccountSearchBar: View {
         .padding(10)
         .background(Color(.systemGray6))
         .cornerRadius(10)
-        .padding(.horizontal, 10)
+        .padding(.horizontal, 0)
     }
 }
 

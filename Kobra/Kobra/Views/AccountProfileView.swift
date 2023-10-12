@@ -8,7 +8,6 @@
 import Foundation
 import SwiftUI
 import FirebaseAuth
-
 struct AccountProfileView: View {
     let accountId: String
     @ObservedObject var viewModel: AccountProfileViewModel
@@ -18,25 +17,25 @@ struct AccountProfileView: View {
     @State var showFollowingView = false
     @EnvironmentObject private var homePageViewModel: HomePageViewModel
     @Environment(\.presentationMode) var presentationMode
-    
+
     init(accountId: String) {
         self.accountId = accountId
         self.viewModel = AccountProfileViewModel(accountId: accountId)
     }
-    
+
     var body: some View {
         VStack {
             if viewModel.isLoading {
                 ProgressView()
             } else if let account = viewModel.account {
                 let displayName = account.username
-                
+
                 VStack(alignment: .center, spacing: -10) { // Reduced spacing
                     Text(displayName)
                         .font(.title)
                         .fontWeight(.bold)
-                        .padding(.bottom, -10)
-                        .padding(.leading, 10)
+                        .padding(.bottom, -19)
+                        .padding(.leading, 18)
                     HStack {
                         // Profile picture
                         if let profilePictureString = account.profilePicture {
@@ -46,7 +45,7 @@ struct AccountProfileView: View {
                                     .aspectRatio(contentMode: .fill)
                                     .frame(width: 80, height: 80) // Instagram's profile picture size is smaller
                                     .clipShape(Circle())
-                                    .padding(.top, 10)
+                                    .padding(.top, 16)
                             } placeholder: {
                                 Image(systemName: "person.circle.fill")
                                     .resizable()
@@ -54,7 +53,7 @@ struct AccountProfileView: View {
                                     .foregroundColor(.gray)
                                     .frame(width: 80, height: 80) // Same size for placeholder
                                     .clipShape(Circle())
-                                    .padding(.top, 10)
+                                    .padding(.top, 16)
                             }
                         } else {
                             Image(systemName: "person.circle.fill")
@@ -63,7 +62,7 @@ struct AccountProfileView: View {
                                 .foregroundColor(.gray)
                                 .frame(width: 80, height: 80) // Same size even if no picture
                                 .clipShape(Circle())
-                                .padding(.top, 10)
+                                .padding(.top, 16)
                         }
                         Spacer()
                         VStack {
@@ -92,7 +91,7 @@ struct AccountProfileView: View {
                                     .environmentObject(settingsViewModel)
                             }
                         }
-                        
+
                         VStack {
                             Button(action: {
                                 showFollowingView = true
@@ -123,7 +122,7 @@ struct AccountProfileView: View {
                         Spacer()
                     }
                     .padding(.bottom, -12)
-                    
+
                     if let bio = account.bio {
                         VStack(alignment: .leading) {
                             Text(bio)
@@ -131,14 +130,15 @@ struct AccountProfileView: View {
                                 .foregroundColor(.white)
                                 .lineLimit(nil) // Allows text to wrap onto as many lines as needed
                                 .multilineTextAlignment(.center) // Center-align the text within the VStack
-                            
+
                         }
                         .frame(maxWidth: 200) // Adjust this to fit your needs
                         .padding(.bottom, 12)
-                        .padding(.leading, 13)
+                        .padding(.top, -3)
+                        .padding(.leading, 20)
                     }
-                    
-                    if(viewModel.showFollowButton){
+
+                    if (viewModel.showFollowButton) {
                         Button(action: {
                             if viewModel.isFollowing {
                                 viewModel.unfollowAccountById()
@@ -153,12 +153,12 @@ struct AccountProfileView: View {
                                 .background(viewModel.isFollowing ? Color.gray : Color.blue)
                                 .cornerRadius(5)
                         }
-                        .padding(.leading, 14)
+                        .padding(.leading, 20)
                     }
                 }
                 .foregroundColor(.white)
-                .padding(.leading, 50) // move the VStack slightly to the right
-                
+                .padding(.leading, 60) // move the VStack slightly to the right
+
                 // User Posts
                 Spacer()
                 ScrollView {
@@ -185,7 +185,7 @@ struct AccountProfileView: View {
             }
             Spacer()
         }
-        
+
         .navigationBarTitle("", displayMode: .inline)
         .navigationBarBackButtonHidden(true) // Hide the default back button
         .navigationBarItems(
@@ -231,4 +231,5 @@ struct AccountProfileView: View {
         )
     }
 }
+
 
