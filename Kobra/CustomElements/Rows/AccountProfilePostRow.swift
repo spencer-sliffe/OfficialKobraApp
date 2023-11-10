@@ -330,6 +330,7 @@ struct AccountProfilePostRow: View {
                             }*/
                     } placeholder: {
                         ProgressView()
+                            .accentColor(.white)
                     }
                     .frame(maxHeight: 300)
                     /*.fullScreenCover(isPresented: $showingFullImage) {

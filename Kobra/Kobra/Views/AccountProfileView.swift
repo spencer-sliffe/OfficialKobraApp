@@ -10,7 +10,7 @@ import SwiftUI
 import FirebaseAuth
 struct AccountProfileView: View {
     let accountId: String
-    @ObservedObject var viewModel: AccountProfileViewModel
+    @StateObject var viewModel: AccountProfileViewModel
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
     @ObservedObject var kobraViewModel = KobraViewModel()
     @State var showFollowerView = false
@@ -20,13 +20,14 @@ struct AccountProfileView: View {
 
     init(accountId: String) {
         self.accountId = accountId
-        self.viewModel = AccountProfileViewModel(accountId: accountId)
+        self._viewModel = StateObject(wrappedValue: AccountProfileViewModel(accountId: accountId))
     }
 
     var body: some View {
         VStack {
             if viewModel.isLoading {
                 ProgressView()
+                    .accentColor(.white)
             } else if let account = viewModel.account {
                 let displayName = account.username
 

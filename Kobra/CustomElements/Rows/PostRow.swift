@@ -326,6 +326,7 @@ struct PostRow: View {
                             .contentShape(Rectangle())
                     } placeholder: {
                         ProgressView()
+                            .accentColor(.white)
                     }
                     .frame(maxHeight: 300)
                     .fullScreenCover(isPresented: $showingFullImage) {
@@ -337,6 +338,7 @@ struct PostRow: View {
                                     .contentShape(Rectangle())
                             } placeholder: {
                                 ProgressView()
+                                    .accentColor(.white)
                             }
                             .ignoresSafeArea()
                             .onTapGesture {
@@ -412,6 +414,7 @@ struct PostRow: View {
                         }*/
                 } placeholder: {
                     ProgressView()
+                        .accentColor(.white)
                 }
                 .frame(maxHeight: 300)
                 /*.fullScreenCover(isPresented: $showingFullImage) {
