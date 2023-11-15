@@ -8,7 +8,7 @@ import SwiftUI
 import Firebase
 
 struct AccountView: View {
-    @ObservedObject var viewModel = AccountViewModel()
+    @StateObject var viewModel = AccountViewModel()
     @EnvironmentObject private var kobraViewModel: KobraViewModel
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
     @EnvironmentObject private var homePageViewModel: HomePageViewModel
@@ -25,6 +25,7 @@ struct AccountView: View {
         VStack {
             if viewModel.isLoading {
                 ProgressView()
+                    .accentColor(.white)
             } else if let account = viewModel.account {
                 let displayName = account.username
                 HStack {
@@ -152,6 +153,8 @@ struct AccountView: View {
                                 }
                                 .sheet(isPresented: $showFollowerView) {
                                     FollowerView(viewModel: AccountProfileViewModel(accountId: viewModel.accountId))
+                                        .environmentObject(homePageViewModel)
+                                        .environmentObject(settingsViewModel)
                                 }
                                 
                                 Button(action: {
@@ -172,7 +175,9 @@ struct AccountView: View {
                                     )
                                 }
                                 .sheet(isPresented: $showFollowingView) {
-                                    FollowingView(viewModel: AccountProfileViewModel(accountId: viewModel.accountId)) 
+                                    FollowingView(viewModel: AccountProfileViewModel(accountId: viewModel.accountId))
+                                        .environmentObject(homePageViewModel)
+                                        .environmentObject(settingsViewModel)
                                 }
                             }
                             .foregroundColor(.white)

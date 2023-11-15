@@ -125,12 +125,15 @@ struct HomePageView: View {
                  kobraViewModel.fetchPosts()
              })
          case 4:
-             return AnyView(NotificationView()              .environmentObject(homePageViewModel)
+             return AnyView(NotificationView()
+                .environmentObject(homePageViewModel)
                 .environmentObject(settingsViewModel))
          case 5:
-             return AnyView(InboxView()                .environmentObject(homePageViewModel))
+             return AnyView(InboxView()
+                .environmentObject(homePageViewModel))
          case 6:
-             return AnyView(FoodView()                .environmentObject(homePageViewModel))
+             return AnyView(FoodView()
+                .environmentObject(homePageViewModel))
          default:
              return AnyView(EmptyView())
          }
