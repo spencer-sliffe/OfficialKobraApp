@@ -126,6 +126,7 @@ struct HomePageView: View {
              })
          case 4:
              return AnyView(NotificationView()
+                .environmentObject(kobraViewModel)
                 .environmentObject(homePageViewModel)
                 .environmentObject(settingsViewModel))
          case 5:

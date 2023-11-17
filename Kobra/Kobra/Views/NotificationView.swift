@@ -11,6 +11,7 @@ struct NotificationView: View {
     @ObservedObject var viewModel = NotificationViewModel()
     @EnvironmentObject var homePageViewModel: HomePageViewModel
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
+    @EnvironmentObject var kobraViewModel: KobraViewModel
     
     var body: some View {
         VStack(spacing: 0) {
@@ -31,6 +32,7 @@ struct NotificationView: View {
                         NotificationCell(notification: notification)
                             .environmentObject(homePageViewModel)
                             .environmentObject(settingsViewModel)
+                            .environmentObject(kobraViewModel)
                     }
                 }
                 .refreshable {

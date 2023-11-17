@@ -10,8 +10,10 @@ import SwiftUI
 
 struct NotificationCell: View {
     var notification: Notification
-    @ObservedObject var viewModel = NotificationViewModel()
+    @StateObject var viewModel = NotificationViewModel()
     @EnvironmentObject var homePageViewModel: HomePageViewModel
+    @EnvironmentObject var kobraViewModel: KobraViewModel
+    @EnvironmentObject var settingsViewModel: SettingsViewModel
     @State private var isPostSelected = false
     
     var body: some View {
@@ -38,10 +40,10 @@ struct NotificationCell: View {
                         postNotificationTypeView(from: postNoti)
                         
                     case .chat(let chatNoti):
-                        NotificationLink(username: chatNoti.senderUsername, text: "messaged you", senderId: notification.senderId, homePageViewModel: homePageViewModel)
+                        NotificationLink(username: chatNoti.senderUsername, text: "messaged you", senderId: notification.senderId, homePageViewModel: homePageViewModel, settingsViewModel: settingsViewModel, kobraViewModel: kobraViewModel)
 
                     case .follower(let follower):
-                        NotificationLink(username: follower.followerUsername, text: "started following you", senderId: notification.senderId, homePageViewModel: homePageViewModel)
+                        NotificationLink(username: follower.followerUsername, text: "started following you", senderId: notification.senderId, homePageViewModel: homePageViewModel, settingsViewModel: settingsViewModel, kobraViewModel: kobraViewModel)
                     }
                     
                     Text(getFormattedDate())
@@ -85,11 +87,15 @@ struct NotificationCell: View {
         var text: String
         var senderId: String
         var homePageViewModel: HomePageViewModel // Pass the view model
+        var settingsViewModel: SettingsViewModel
+        var kobraViewModel: KobraViewModel
         
         var body: some View {
             HStack {
                 NavigationLink(destination: AccountProfileView(accountId: senderId)
                     .environmentObject(homePageViewModel)
+                    .environmentObject(kobraViewModel)
+                    .environmentObject(settingsViewModel)
                     ) {
                     Text(username)
                         .foregroundColor(.blue)
@@ -106,11 +112,11 @@ struct NotificationCell: View {
     func postNotificationTypeView(from postNoti: PostNotification) -> some View {
         switch postNoti.type {
         case .like(let like):
-            NotificationLink(username: like.likerUsername, text: "liked your post", senderId: notification.senderId, homePageViewModel: homePageViewModel)
+            NotificationLink(username: like.likerUsername, text: "liked your post", senderId: notification.senderId, homePageViewModel: homePageViewModel, settingsViewModel: settingsViewModel, kobraViewModel: kobraViewModel)
         case .dislike(let dislike):
-            NotificationLink(username: dislike.dislikerUsername, text: "disliked your post", senderId: notification.senderId, homePageViewModel: homePageViewModel)
+            NotificationLink(username: dislike.dislikerUsername, text: "disliked your post", senderId: notification.senderId, homePageViewModel: homePageViewModel, settingsViewModel: settingsViewModel, kobraViewModel: kobraViewModel)
         case .comment(let comment):
-            NotificationLink(username: comment.authorUsername, text:  "'\(comment.commentText)'", senderId: notification.senderId, homePageViewModel: homePageViewModel)
+            NotificationLink(username: comment.authorUsername, text:  "'\(comment.commentText)'", senderId: notification.senderId, homePageViewModel: homePageViewModel, settingsViewModel: settingsViewModel, kobraViewModel: kobraViewModel)
         }
     }
     

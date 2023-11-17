@@ -14,7 +14,7 @@ struct PostView: View {
     @State private var likes = 0
     @State private var isDisliked = false
     @State private var dislikes = 0
-    @ObservedObject var kobraViewModel = KobraViewModel()
+    @StateObject var kobraViewModel = KobraViewModel()
     @State private var showingComments = false
     @State private var showingFullImage = false // new state for full screen image
     let currentUserId: String = Auth.auth().currentUser?.uid ?? ""
