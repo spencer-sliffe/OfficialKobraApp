@@ -15,12 +15,7 @@ class DiscoverViewModel: ObservableObject {
     @Published var posts: [Post] = []
 
     private var db = Firestore.firestore()
-    private let postManager = FSPostManager.shared
-
-    init() {
-        fetchAccounts()
-        fetchPosts()
-    }
+    private var postManager = FSPostManager.shared
     
     func fetchPosts() {
         postManager.fetchPosts { [weak self] result in

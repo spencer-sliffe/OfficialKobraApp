@@ -8,7 +8,7 @@ import SwiftUI
 import Firebase
 
 struct AccountView: View {
-    @StateObject var viewModel = AccountViewModel()
+    @EnvironmentObject private var viewModel: AccountViewModel
     @EnvironmentObject private var kobraViewModel: KobraViewModel
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
     @EnvironmentObject private var homePageViewModel: HomePageViewModel
@@ -18,8 +18,8 @@ struct AccountView: View {
     @State private var showingActionSheet = false
     @State private var isEditingBio = false
     @State private var bioInput: String = ""
-    @State var showFollowerView = false
-    @State var showFollowingView = false
+    @State private var showFollowerView = false
+    @State private var showFollowingView = false
     
     var body: some View {
         VStack {

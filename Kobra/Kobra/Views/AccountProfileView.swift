@@ -12,7 +12,7 @@ struct AccountProfileView: View {
     let accountId: String
     @StateObject var viewModel: AccountProfileViewModel
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
-    @ObservedObject var kobraViewModel = KobraViewModel()
+    @EnvironmentObject private var kobraViewModel: KobraViewModel
     @State var showFollowerView = false
     @State var showFollowingView = false
     @EnvironmentObject private var homePageViewModel: HomePageViewModel
@@ -90,6 +90,7 @@ struct AccountProfileView: View {
                                 FollowerView(viewModel: viewModel) // Provide necessary inputs if needed
                                     .environmentObject(homePageViewModel)
                                     .environmentObject(settingsViewModel)
+                                    .environmentObject(kobraViewModel)
                             }
                         }
 
@@ -114,8 +115,10 @@ struct AccountProfileView: View {
                                 )
                             }
                             .sheet(isPresented: $showFollowingView) {
-                                FollowingView(viewModel: viewModel).environmentObject(homePageViewModel)
+                                FollowingView(viewModel: viewModel)
+                                    .environmentObject(homePageViewModel)
                                     .environmentObject(settingsViewModel)
+                                    .environmentObject(kobraViewModel)
                             }
                         }
                         Spacer()

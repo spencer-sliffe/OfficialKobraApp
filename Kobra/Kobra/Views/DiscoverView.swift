@@ -9,8 +9,8 @@ import Foundation
 import SwiftUI
 
 struct DiscoverView: View {
-    @ObservedObject var viewModel = DiscoverViewModel()
-    @ObservedObject private var kobraViewModel = KobraViewModel()
+    @EnvironmentObject var viewModel: DiscoverViewModel
+    @EnvironmentObject private var kobraViewModel: KobraViewModel
     @State var searchText = ""
     @EnvironmentObject private var homePageViewModel: HomePageViewModel
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
@@ -27,6 +27,7 @@ struct DiscoverView: View {
                                 destination: AccountProfileView(accountId: account.id)
                                     .environmentObject(homePageViewModel)
                                     .environmentObject(settingsViewModel)
+                                    .environmentObject(kobraViewModel)
                                     .isInView { isInView in
                                         // Perform action depending on whether the view is in view or not
                                         if isInView {

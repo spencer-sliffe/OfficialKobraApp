@@ -18,10 +18,6 @@ class AccountViewModel: ObservableObject {
     
     private var cancellables: Set<AnyCancellable> = []
     
-    init() {
-        fetchAccount()
-    }
-    
     func fetchAccount() {
         Publishers.CombineLatest(fetchUserData(), fetchUserPosts())
             .receive(on: DispatchQueue.main)

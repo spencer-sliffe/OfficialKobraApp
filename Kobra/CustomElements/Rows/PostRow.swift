@@ -16,7 +16,6 @@ struct PostRow: View {
     @State private var likes = 0
     @State private var isDisliked = false
     @State private var dislikes = 0
-    @EnvironmentObject var kobraViewModel: KobraViewModel
     @State private var showingComments = false
     @State private var showingFullImage = false // new state for full screen image
     let currentUserId: String = Auth.auth().currentUser?.uid ?? ""
@@ -25,6 +24,7 @@ struct PostRow: View {
     @State private var playerStatus: AVPlayer.Status = .unknown
     @State private var shouldPlayVideo = false
     @Binding var selectedFeed: FeedType
+    @EnvironmentObject private var kobraViewModel: KobraViewModel
     @EnvironmentObject private var homePageViewModel: HomePageViewModel
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
 
@@ -50,7 +50,9 @@ struct PostRow: View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
                 NavigationLink(destination: AccountProfileView(accountId: post.posterId)
-                    .environmentObject(homePageViewModel)) {
+                    .environmentObject(homePageViewModel)
+                    .environmentObject(kobraViewModel)
+                    .environmentObject(settingsViewModel)) {
                         getPosterName()
                 }
                 Spacer()

@@ -20,10 +20,6 @@ class NotificationViewModel: ObservableObject {
         notifications.filter { $0.seen == false }.count
     }
     
-    init() {
-        fetchNotifications()
-    }
-    
     func fetchNotifications() {
         isLoading = true
         guard let user = Auth.auth().currentUser else {

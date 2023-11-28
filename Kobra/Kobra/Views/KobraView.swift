@@ -10,8 +10,8 @@ import Foundation
 
 struct KobraView: View {
     @State private var isPresentingCreatePostView = false
-    @EnvironmentObject var viewModel: KobraViewModel
     @State private var selectedFeed: FeedType = .market
+    @EnvironmentObject private var viewModel: KobraViewModel
     @EnvironmentObject private var homePageViewModel: HomePageViewModel
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
 

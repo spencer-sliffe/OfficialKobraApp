@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import FirebaseAuth
 import Firebase
+import UIKit
 
 struct CommentView: View {
     @EnvironmentObject var viewModel: KobraViewModel
@@ -69,6 +70,10 @@ struct CommentView: View {
                     endPoint: .bottomTrailing
                 )
             )
+            .onTapGesture {
+                            // Dismiss the keyboard when tapped outside the keyboard area
+                            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+                        }
         }
     }
     

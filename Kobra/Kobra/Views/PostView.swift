@@ -14,7 +14,7 @@ struct PostView: View {
     @State private var likes = 0
     @State private var isDisliked = false
     @State private var dislikes = 0
-    @StateObject var kobraViewModel = KobraViewModel()
+    @EnvironmentObject private var kobraViewModel: KobraViewModel
     @State private var showingComments = false
     @State private var showingFullImage = false // new state for full screen image
     let currentUserId: String = Auth.auth().currentUser?.uid ?? ""
@@ -47,7 +47,8 @@ struct PostView: View {
                 HStack {
                     NavigationLink(destination: AccountProfileView(accountId: post.posterId)
                         .environmentObject(homePageViewModel)
-                        .environmentObject(settingsViewModel)) {
+                        .environmentObject(settingsViewModel)
+                        .environmentObject(kobraViewModel)) {
                         getPosterName()
                     }
                     Spacer()

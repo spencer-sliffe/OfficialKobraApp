@@ -10,10 +10,10 @@ import SwiftUI
 
 struct NotificationCell: View {
     var notification: Notification
-    @StateObject var viewModel = NotificationViewModel()
-    @EnvironmentObject var homePageViewModel: HomePageViewModel
-    @EnvironmentObject var kobraViewModel: KobraViewModel
-    @EnvironmentObject var settingsViewModel: SettingsViewModel
+    @EnvironmentObject private var viewModel: NotificationViewModel
+    @EnvironmentObject private var homePageViewModel: HomePageViewModel
+    @EnvironmentObject private var kobraViewModel: KobraViewModel
+    @EnvironmentObject private var settingsViewModel: SettingsViewModel
     @State private var isPostSelected = false
     
     var body: some View {
@@ -69,6 +69,7 @@ struct NotificationCell: View {
                     NavigationView {
                         PostView(post: post)
                             .environmentObject(homePageViewModel)
+                            .environmentObject(kobraViewModel)
                     }
                 }
             }

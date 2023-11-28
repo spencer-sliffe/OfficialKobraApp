@@ -12,6 +12,7 @@ struct FollowingView: View {
     @StateObject var viewModel: AccountProfileViewModel
     @EnvironmentObject var settingsViewModel: SettingsViewModel
     @EnvironmentObject private var homePageViewModel: HomePageViewModel
+    @EnvironmentObject private var kobraViewModel: KobraViewModel
     
     var body: some View {
         NavigationView {
@@ -21,7 +22,8 @@ struct FollowingView: View {
                         ForEach(viewModel.following, id: \.self) { followed in
                             NavigationLink(destination: AccountProfileView(accountId: followed)
                                 .environmentObject(settingsViewModel)
-                                .environmentObject(homePageViewModel)) {
+                                .environmentObject(homePageViewModel)
+                                .environmentObject(kobraViewModel)) {
                                 FollowCell(accountId: followed)
                             }
                         }

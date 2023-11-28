@@ -11,18 +11,19 @@ import Foundation
 struct HomePageView: View {
     @State private var selectedTab = 3
     @State private var previousTab = 3
-    @ObservedObject var authViewModel = AuthenticationViewModel()
-    @EnvironmentObject private var settingsViewModel: SettingsViewModel
-    @StateObject var kobraViewModel = KobraViewModel()
-    @ObservedObject var notificationViewModel = NotificationViewModel()
     @State private var viewsCache: [Int: AnyView] = [:]
-    @StateObject private var homePageViewModel = HomePageViewModel()
+    
+    @EnvironmentObject var authViewModel: AuthenticationViewModel
+    @EnvironmentObject private var settingsViewModel: SettingsViewModel
+    @EnvironmentObject private var kobraViewModel: KobraViewModel
+    @EnvironmentObject private var notificationViewModel: NotificationViewModel
+    @EnvironmentObject private var homePageViewModel: HomePageViewModel
+    @EnvironmentObject private var accountViewModel: AccountViewModel
+    @EnvironmentObject private var discoverViewModel: DiscoverViewModel
     
     var body: some View {
         NavigationView {
-            if !authViewModel.isAuthenticated {
-                AuthenticationView(authViewModel: authViewModel)
-            } else {
+            
                 VStack {
                     TabView(selection: $selectedTab) {
                         ForEach(0..<7) { index in
@@ -40,7 +41,8 @@ struct HomePageView: View {
                         previousTab = newValue
                     }
                     
-                    CustomTabView(selectedTab: $selectedTab, notificationViewModel: notificationViewModel)
+                    CustomTabView(selectedTab: $selectedTab)
+                        .environmentObject(notificationViewModel)
                         .padding(.bottom, 16)
                         .padding(.horizontal, 5)
                 }
@@ -58,14 +60,7 @@ struct HomePageView: View {
                         endPoint: .bottomTrailing
                     )
                 )
-                .onTapGesture {
-                    // dismiss keyboard
-                    if selectedTab == 2 {
-                        hideKeyboard()
-                    }
-                }
             }
-        }
     }
     
     func hideKeyboard() {
@@ -111,25 +106,31 @@ struct HomePageView: View {
              return AnyView(AccountView()
                 .environmentObject(homePageViewModel)
                 .environmentObject(settingsViewModel)
-                .environmentObject(kobraViewModel))
+                .environmentObject(kobraViewModel)
+                .environmentObject(accountViewModel))
          case 2:
              return AnyView(DiscoverView()
                 .environmentObject(homePageViewModel)
-                .environmentObject(settingsViewModel))
+                .environmentObject(settingsViewModel)
+                .environmentObject(discoverViewModel)
+                .environmentObject(kobraViewModel)
+                .onTapGesture {
+                    // dismiss keyboard
+                        hideKeyboard()
+                    
+                })
          case 3:
              return AnyView(KobraView()
                 .environmentObject(kobraViewModel)
                 .environmentObject(homePageViewModel)
-                .environmentObject(settingsViewModel)
-                .onAppear(){
-                 kobraViewModel.fetchPosts()
-             })
+                .environmentObject(settingsViewModel))
          case 4:
              return AnyView(NotificationView()
                 .environmentObject(kobraViewModel)
                 .environmentObject(homePageViewModel)
-                .environmentObject(settingsViewModel))
-         case 5:
+                .environmentObject(settingsViewModel)
+                .environmentObject(notificationViewModel))
+        case 5:
              return AnyView(InboxView()
                 .environmentObject(homePageViewModel))
          case 6:
@@ -143,7 +144,7 @@ struct HomePageView: View {
 
 struct CustomTabView: View {
     @Binding var selectedTab: Int
-    @ObservedObject var notificationViewModel: NotificationViewModel
+    @EnvironmentObject private var notificationViewModel: NotificationViewModel
     
     private func getIcon(for index: Int) -> String {
         switch index {

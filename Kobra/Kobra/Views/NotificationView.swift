@@ -8,10 +8,10 @@ import Foundation
 import SwiftUI
 
 struct NotificationView: View {
-    @ObservedObject var viewModel = NotificationViewModel()
-    @EnvironmentObject var homePageViewModel: HomePageViewModel
+    @EnvironmentObject private var viewModel: NotificationViewModel
+    @EnvironmentObject private var homePageViewModel: HomePageViewModel
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
-    @EnvironmentObject var kobraViewModel: KobraViewModel
+    @EnvironmentObject private var kobraViewModel: KobraViewModel
     
     var body: some View {
         VStack(spacing: 0) {
@@ -33,15 +33,13 @@ struct NotificationView: View {
                             .environmentObject(homePageViewModel)
                             .environmentObject(settingsViewModel)
                             .environmentObject(kobraViewModel)
+                            .environmentObject(viewModel)
                     }
                 }
                 .refreshable {
                     viewModel.fetchNotifications()
                 }
             }
-        }
-        .onDisappear {
-            viewModel.markAllAsSeen()
         }
         .edgesIgnoringSafeArea(.all)
     }

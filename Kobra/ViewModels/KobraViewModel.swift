@@ -15,8 +15,8 @@ import AVKit
 class KobraViewModel: ObservableObject {
     @Published var posts: [Post] = []
     @Published var comments: [Comment] = []
-    private let postManager = FSPostManager.shared
-    private let notificationManager = FSNotificationManager.shared
+    private var postManager = FSPostManager.shared
+    private var notificationManager = FSNotificationManager.shared
     private var cancellables: Set<AnyCancellable> = []
     @Published var uploadProgress: Double = 0.0
     @Published var isUploadInProgress: Bool = false

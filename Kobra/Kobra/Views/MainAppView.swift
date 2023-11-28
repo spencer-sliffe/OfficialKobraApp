@@ -11,18 +11,36 @@ import Firebase
 
 struct MainAppView: View {
     @EnvironmentObject var authViewModel: AuthenticationViewModel
-    @StateObject private var settingsViewModel = SettingsViewModel()
+    @ObservedObject var settingsViewModel = SettingsViewModel()
+    @ObservedObject private var kobraViewModel = KobraViewModel()
+    @ObservedObject private var notificationViewModel = NotificationViewModel()
+    @ObservedObject private var homePageViewModel = HomePageViewModel()
+    @ObservedObject private var accountViewModel = AccountViewModel()
+    @ObservedObject private var discoverViewModel = DiscoverViewModel()
     
     var body: some View {
         Group {
             if authViewModel.isAuthenticated {
-                HomePageView().environmentObject(settingsViewModel)
+                HomePageView()
+                    .environmentObject(settingsViewModel)
+                    .environmentObject(kobraViewModel)
+                    .environmentObject(notificationViewModel)
+                    .environmentObject(authViewModel)
+                    .environmentObject(homePageViewModel)
+                    .environmentObject(accountViewModel)
+                    .environmentObject(discoverViewModel)
             } else {
-                AuthenticationView(authViewModel: authViewModel)
+                AuthenticationView()
+                    .environmentObject(authViewModel)
             }
         }
         .onAppear {
             authViewModel.startListening()
+            kobraViewModel.fetchPosts()
+            notificationViewModel.fetchNotifications()
+            discoverViewModel.fetchPosts()
+            discoverViewModel.fetchAccounts()
+            accountViewModel.fetchAccount()
         }
         .onDisappear {
             authViewModel.stopListening()

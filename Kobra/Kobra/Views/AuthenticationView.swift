@@ -9,7 +9,7 @@ import SwiftUI
 import Firebase
 
 struct AuthenticationView: View {
-    @ObservedObject var authViewModel: AuthenticationViewModel
+    @EnvironmentObject var authViewModel: AuthenticationViewModel
     @State private var selection = 0
     @State private var signInSuccess = false
     @State private var isNavigating = false
