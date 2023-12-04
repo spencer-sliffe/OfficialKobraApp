@@ -27,7 +27,7 @@ struct AccountProfilePostRow: View {
     @State private var shouldPlayVideo = false
     @EnvironmentObject private var homePageViewModel: HomePageViewModel
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
-
+    @State private var isInView = false
     
     init(post: Post) {
         self.post = post
@@ -350,10 +350,13 @@ struct AccountProfilePostRow: View {
                     }*/
                 }
                 if let videoURL = videoURL, let url = URL(string: videoURL) {
-                    VideoPlayerView(videoURL: url, shouldPlay: $shouldPlayVideo)
+                    VideoPlayerView(videoURL: url, shouldPlay: $shouldPlayVideo, isInView: $isInView)
                         .frame(height: 300)
                         .isInView { inView in
-                            // Only play the video if AccountProfileView is active
+                            // Update the isInView state
+                            isInView = inView
+
+                            // Only play the video if AccountProfileView is active and the video is in view
                             if homePageViewModel.accProViewActive {
                                 shouldPlayVideo = inView
                             } else {
@@ -361,6 +364,7 @@ struct AccountProfilePostRow: View {
                             }
                         }
                 }
+
             }
             HStack(){
                 Text(content)
@@ -439,10 +443,13 @@ struct AccountProfilePostRow: View {
                 }*/
             }
             if let videoURL = videoURL, let url = URL(string: videoURL) {
-                VideoPlayerView(videoURL: url, shouldPlay: $shouldPlayVideo)
+                VideoPlayerView(videoURL: url, shouldPlay: $shouldPlayVideo, isInView: $isInView)
                     .frame(height: 300)
                     .isInView { inView in
-                        // Only play the video if AccountProfileView is active
+                        // Update the isInView state
+                        isInView = inView
+
+                        // Only play the video if AccountProfileView is active and the video is in view
                         if homePageViewModel.accProViewActive {
                             shouldPlayVideo = inView
                         } else {

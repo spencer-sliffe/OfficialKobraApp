@@ -23,21 +23,23 @@ struct NotificationView: View {
                 .background(.gray)
                 .padding(.bottom, 4)
             if viewModel.isLoading {
-               Spacer()
-               ProgressView()
-               Spacer()
+                Spacer()
+                ProgressView()
+                Spacer()
             } else {
                 ScrollView {
-                    ForEach(viewModel.notifications.sorted(by: { $0.timestamp > $1.timestamp })) { notification in
-                        NotificationCell(notification: notification)
-                            .environmentObject(homePageViewModel)
-                            .environmentObject(settingsViewModel)
-                            .environmentObject(kobraViewModel)
-                            .environmentObject(viewModel)
+                    LazyVStack(alignment: .leading, spacing: 10) {
+                        ForEach(viewModel.notifications.sorted(by: { $0.timestamp > $1.timestamp })) { notification in
+                            NotificationCell(notification: notification)
+                                .environmentObject(homePageViewModel)
+                                .environmentObject(settingsViewModel)
+                                .environmentObject(kobraViewModel)
+                                .environmentObject(viewModel)
+                        }
+                        .refreshable {
+                            viewModel.fetchNotifications()
+                        }
                     }
-                }
-                .refreshable {
-                    viewModel.fetchNotifications()
                 }
             }
         }

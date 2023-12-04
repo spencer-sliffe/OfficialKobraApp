@@ -2,7 +2,7 @@
 //  FeedType.swift
 //  Kobra
 //
-//  Created by Spencer SLiffe on 8/2/23.
+//  Created by Spencer Sliffe on 8/2/23.
 //
 
 import Foundation

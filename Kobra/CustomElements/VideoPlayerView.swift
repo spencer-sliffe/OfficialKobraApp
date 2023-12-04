@@ -12,6 +12,7 @@ import SwiftUI
 struct VideoPlayerView: UIViewControllerRepresentable {
     var videoURL: URL
     @Binding var shouldPlay: Bool
+    @Binding var isInView: Bool // Binding to track if the video is in view
 
     func makeUIViewController(context: Context) -> AVPlayerViewController {
         let playerViewController = AVPlayerViewController()
@@ -19,7 +20,7 @@ struct VideoPlayerView: UIViewControllerRepresentable {
         player.actionAtItemEnd = .none
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: .main) { _ in
             player.seek(to: .zero)
-            if shouldPlay {
+            if shouldPlay && isInView { // Check both conditions
                 player.play()
             }
         }
@@ -34,7 +35,7 @@ struct VideoPlayerView: UIViewControllerRepresentable {
     }
 
     func updateUIViewController(_ playerViewController: AVPlayerViewController, context: Context) {
-        if shouldPlay {
+        if shouldPlay && isInView { // Check both conditions
             playerViewController.player?.play()
         } else {
             playerViewController.player?.pause()

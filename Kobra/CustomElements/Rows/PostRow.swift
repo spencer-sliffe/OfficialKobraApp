@@ -27,7 +27,8 @@ struct PostRow: View {
     @EnvironmentObject private var kobraViewModel: KobraViewModel
     @EnvironmentObject private var homePageViewModel: HomePageViewModel
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
-
+    @State private var isInView = false
+    
     init(post: Post, selectedFeed: Binding<FeedType>) {
         self.post = post
         self._selectedFeed = selectedFeed
@@ -317,6 +318,7 @@ struct PostRow: View {
     }
     
     func PostContent(content: String, imageURL: String?, videoURL: String?) -> some View {
+        
         VStack(alignment: .leading, spacing: 2) {
             VStack(alignment:.center){
                 if let imageURL = imageURL, let url = URL(string: imageURL) {
@@ -350,13 +352,15 @@ struct PostRow: View {
                     }
                 }
                 if let videoURL = videoURL, let url = URL(string: videoURL) {
-                    VideoPlayerView(videoURL: url, shouldPlay: .constant((post.type.feedType == selectedFeed || selectedFeed == .all) && shouldPlayVideo && homePageViewModel.accProViewActive == false))
-                        .frame(height: 300)
-                        .isInView { inView in
-                            shouldPlayVideo = inView
-                        }
-                        .contentShape(Rectangle())
-                }
+                                VideoPlayerView(videoURL: url,
+                                                shouldPlay: .constant((post.type.feedType == selectedFeed || selectedFeed == .all) && shouldPlayVideo && homePageViewModel.accProViewActive == false),
+                                                isInView: $isInView) // Pass the isInView binding
+                                    .frame(height: 300)
+                                    .isInView { inView in
+                                        isInView = inView // Update the isInView state
+                                    }
+                                    .contentShape(Rectangle())
+                            }
             }
             HStack(){
                 Text(content)
@@ -436,7 +440,7 @@ struct PostRow: View {
                 }*/
             }
             if let videoURL = videoURL, let url = URL(string: videoURL) {
-                VideoPlayerView(videoURL: url, shouldPlay: .constant((post.type.feedType == selectedFeed || selectedFeed == .all) && shouldPlayVideo && homePageViewModel.accProViewActive == false))
+                VideoPlayerView(videoURL: url, shouldPlay: .constant((post.type.feedType == selectedFeed || selectedFeed == .all) && shouldPlayVideo && homePageViewModel.accProViewActive == false), isInView: $shouldPlayVideo)
                     .frame(height: 300)
                     .isInView { inView in
                         shouldPlayVideo = inView

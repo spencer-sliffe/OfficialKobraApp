@@ -26,6 +26,7 @@ struct DiscoverPostRow: View {
     @EnvironmentObject private var kobraViewModel: KobraViewModel
     @EnvironmentObject private var homePageViewModel: HomePageViewModel
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
+    @State private var isInView = false // Add this line
 
 
     init(post: Post) {
@@ -349,12 +350,16 @@ struct DiscoverPostRow: View {
                     }*/
                 }
                 if let videoURL = videoURL, let url = URL(string: videoURL) {
-                    VideoPlayerView(videoURL: url, shouldPlay: .constant(shouldPlayVideo && !homePageViewModel.accProViewActive))
+                    VideoPlayerView(videoURL: url, shouldPlay: .constant(shouldPlayVideo && homePageViewModel.accProViewActive == false), isInView: $isInView)
                         .frame(height: 300)
                         .isInView { inView in
-                            shouldPlayVideo = inView
+                            isInView = inView // Update the isInView state
+
+                            // Set shouldPlayVideo based on inView and other conditions
+                            shouldPlayVideo = inView && homePageViewModel.accProViewActive == false
                         }
                 }
+
             }
             HStack(){
                 Text(content)
@@ -433,12 +438,16 @@ struct DiscoverPostRow: View {
                 }*/
             }
             if let videoURL = videoURL, let url = URL(string: videoURL) {
-                VideoPlayerView(videoURL: url, shouldPlay: .constant(shouldPlayVideo && homePageViewModel.accProViewActive == false))
+                VideoPlayerView(videoURL: url, shouldPlay: .constant(shouldPlayVideo && homePageViewModel.accProViewActive == false), isInView: $isInView)
                     .frame(height: 300)
                     .isInView { inView in
-                        shouldPlayVideo = inView
+                        isInView = inView // Update the isInView state
+
+                        // Set shouldPlayVideo based on inView and other conditions
+                        shouldPlayVideo = inView && homePageViewModel.accProViewActive == false
                     }
             }
+
             Text("Price: \(priceFormatter.string(from: NSNumber(value: marketPost.price)) ?? "")")
                 .font(.subheadline)
                 .foregroundColor(.white)

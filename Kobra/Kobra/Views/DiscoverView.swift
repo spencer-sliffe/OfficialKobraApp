@@ -51,7 +51,7 @@ struct DiscoverView: View {
                     //GeometryReader { geometry in
                     Spacer()
                         ScrollView(showsIndicators: false) {
-                            VStack(alignment: .leading, spacing: 10) {
+                            LazyVStack(alignment: .leading, spacing: 10) {
                                 ForEach(viewModel.posts.sorted(by: { $0.likes > $1.likes })) { post in
                                     DiscoverPostRow(post: post)
                                         .environmentObject(kobraViewModel)

@@ -14,7 +14,6 @@ struct KobraView: View {
     @EnvironmentObject private var viewModel: KobraViewModel
     @EnvironmentObject private var homePageViewModel: HomePageViewModel
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
-
     
     func isPostTypeVisible(post: Post) -> Bool {
         return selectedFeed == .all || post.type.feedType == selectedFeed
@@ -145,28 +144,66 @@ struct KobraView: View {
                 .padding(.horizontal)
             }.frame(height: 20)
             Spacer()
-            GeometryReader { geometry in
-                ScrollView(showsIndicators: false) {
-                    VStack(alignment: .leading, spacing: 10) {
-                        ForEach(viewModel.posts.sorted(by: { $0.timestamp > $1.timestamp }).filter(isPostTypeVisible)) { post in
-                            PostRow(post: post, selectedFeed: $selectedFeed)
-                                .environmentObject(viewModel)
-                                .environmentObject(homePageViewModel)
-                                .environmentObject(settingsViewModel)
-                                .background(Color.clear)
+            if(selectedFeed.rawValue != "All") {
+                GeometryReader { geometry in
+                    TabView(selection: $selectedFeed) {
+                        ForEach(FeedType.allCases, id: \.self) { feedType in
+                            ScrollView(showsIndicators: false) {
+                                LazyVStack(alignment: .leading, spacing: 10) {
+                                    ForEach(viewModel.posts.filter { $0.type.feedType == feedType }) { post in
+                                        PostRow(post: post, selectedFeed: $selectedFeed)
+                                            .environmentObject(viewModel)
+                                            .environmentObject(homePageViewModel)
+                                            .environmentObject(settingsViewModel)
+                                    }
+                                }
+                            }
+                            .tag(feedType)
                         }
                     }
+                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                    
+                    .refreshable {
+                        viewModel.fetchPosts()
+                    }
+                    .padding(.trailing, 1)  // Add some padding to the right side of the ScrollView
+                    .background(Color.clear)
+                    .overlay(  // Add an overlay to the right side of the ScrollView
+                        Color.clear
+                            .frame(width: 1)  // Set width to the same value as the padding above
+                            .edgesIgnoringSafeArea(.all), alignment: .trailing
+                    )
                 }
-                .refreshable {
-                    viewModel.fetchPosts()
+            } else {
+                GeometryReader { geometry in
+                    TabView(selection: $selectedFeed) {
+                        ForEach(FeedType.allCases, id: \.self) { feedType in
+                            ScrollView(showsIndicators: false) {
+                                LazyVStack(alignment: .leading, spacing: 10) {
+                                    ForEach(viewModel.posts.sorted(by: { $0.timestamp > $1.timestamp }).filter(isPostTypeVisible)) { post in
+                                        PostRow(post: post, selectedFeed: $selectedFeed)
+                                            .environmentObject(viewModel)
+                                            .environmentObject(homePageViewModel)
+                                            .environmentObject(settingsViewModel)
+                                    }
+                                }
+                            }
+                            .tag(feedType)
+                        }
+                    }
+                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                    
+                    .refreshable {
+                        viewModel.fetchPosts()
+                    }
+                    .padding(.trailing, 1)  // Add some padding to the right side of the ScrollView
+                    .background(Color.clear)
+                    .overlay(  // Add an overlay to the right side of the ScrollView
+                        Color.clear
+                            .frame(width: 1)  // Set width to the same value as the padding above
+                            .edgesIgnoringSafeArea(.all), alignment: .trailing
+                    )
                 }
-                .padding(.trailing, 1)  // Add some padding to the right side of the ScrollView
-                .background(Color.clear)
-                .overlay(  // Add an overlay to the right side of the ScrollView
-                    Color.clear
-                        .frame(width: 1)  // Set width to the same value as the padding above
-                        .edgesIgnoringSafeArea(.all), alignment: .trailing
-                )
             }
             customToolbar()
         }
