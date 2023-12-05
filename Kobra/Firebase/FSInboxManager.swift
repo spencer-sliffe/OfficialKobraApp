@@ -1,4 +1,4 @@
-//  FireStoreManager.swift
+//  FSInboxManager.swift
 //  Kobra
 //  Created by Spencer Sliffe on 3/18/23.
 //
@@ -74,5 +74,30 @@ class FSInboxManager {
             "profilePicture": chat.profilePicture ?? ""
         ]
         return data
+    }
+    
+    func deleteChat(chatId: String, accountId: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        db.collection("Accounts").document(accountId).collection("Inbox").document(chatId).delete() { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(()))
+            }
+        }
+    }
+
+    func checkIfUserNameValid(username: String, completion: @escaping (Result<String, Error>) -> Void) {
+        db.collection("Accounts").whereField("username", isEqualTo: username).getDocuments { (querySnapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            if let document = querySnapshot?.documents.first {
+                let accountId = document.documentID
+                completion(.success(accountId))
+            } else {
+                completion(.failure(NSError(domain: "", code: 404, userInfo: [NSLocalizedDescriptionKey: "Username not found"])))
+            }
+        }
     }
 }

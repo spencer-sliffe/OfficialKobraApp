@@ -38,4 +38,49 @@ class InboxViewModel: ObservableObject {
             }
         }
     }
+    
+    func addChat(participants: [String], completion: @escaping (Result<Void, Error>) -> Void) {
+        guard let user = Auth.auth().currentUser else {
+            print("No user is currently signed in.")
+            completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No user signed in"])))
+            return
+        }
+        let newChat = Chat(id: UUID(), participants: participants, lastMessage: "", timestamp: Date(), username: "", profilePicture: "")
+        inboxManager.addChat(newChat, accountId: user.uid) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success():
+                    self?.chats.append(newChat)
+                    completion(.success(()))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
+    
+    func deleteChat(chatId: String) {
+        guard let user = Auth.auth().currentUser else {
+            print("No user is currently signed in.")
+            return
+        }
+        inboxManager.deleteChat(chatId: chatId, accountId: user.uid) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success():
+                    self?.chats.removeAll { $0.id.uuidString == chatId }
+                case .failure(let error):
+                    print("Error deleting chat: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+    
+    func checkIfUserNameValid(username: String, completion: @escaping (Result<String, Error>) -> Void) {
+        inboxManager.checkIfUserNameValid(username: username) { result in
+            DispatchQueue.main.async {
+                completion(result)
+            }
+        }
+    }
 }

@@ -62,6 +62,7 @@
 		459BE6042A18032100625E53 /* FoodViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459BE6032A18032100625E53 /* FoodViewModel.swift */; };
 		459BE6062A18033300625E53 /* FoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459BE6052A18033300625E53 /* FoodView.swift */; };
 		459BE6082A180F7600625E53 /* FSFoodManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459BE6072A180F7600625E53 /* FSFoodManager.swift */; };
+		459FC6692B1FB19100DD1C30 /* CreateChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 459FC6682B1FB19100DD1C30 /* CreateChatView.swift */; };
 		45A908CB29B037FE00792FC2 /* FSAccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A908CA29B037FE00792FC2 /* FSAccountManager.swift */; };
 		45A908CD29B0386400792FC2 /* Package.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A908CC29B0386400792FC2 /* Package.swift */; };
 		45AD933F29B130E900D153AF /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AD933E29B130E900D153AF /* AccountViewModel.swift */; };
@@ -156,6 +157,7 @@
 		459BE6032A18032100625E53 /* FoodViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodViewModel.swift; sourceTree = "<group>"; };
 		459BE6052A18033300625E53 /* FoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodView.swift; sourceTree = "<group>"; };
 		459BE6072A180F7600625E53 /* FSFoodManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FSFoodManager.swift; sourceTree = "<group>"; };
+		459FC6682B1FB19100DD1C30 /* CreateChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateChatView.swift; sourceTree = "<group>"; };
 		45A908C829B034A300792FC2 /* Kobra.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Kobra.entitlements; sourceTree = "<group>"; };
 		45A908CA29B037FE00792FC2 /* FSAccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FSAccountManager.swift; sourceTree = "<group>"; };
 		45A908CC29B0386400792FC2 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
@@ -391,6 +393,7 @@
 				45BB7BC22A4FE86700A95831 /* FollowingView.swift */,
 				451CAE002A55DBB3009BC1F7 /* NotificationView.swift */,
 				451CAE0A2A5646B2009BC1F7 /* PostView.swift */,
+				459FC6682B1FB19100DD1C30 /* CreateChatView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -571,6 +574,7 @@
 				451CADFF2A55D360009BC1F7 /* Notification.swift in Sources */,
 				452430FA29DAA0E40000B5AB /* SearchBar.swift in Sources */,
 				453314062A23245800DEE73E /* CreateFoodView.swift in Sources */,
+				459FC6692B1FB19100DD1C30 /* CreateChatView.swift in Sources */,
 				451CAE032A55DBC6009BC1F7 /* NotificationViewModel.swift in Sources */,
 				4594203F29AEEFF400A100F1 /* HomePageView.swift in Sources */,
 				45EC905429B8475900E0A3A3 /* PackageWithImage.swift in Sources */,
