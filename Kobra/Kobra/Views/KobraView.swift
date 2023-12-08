@@ -192,7 +192,6 @@ struct KobraView: View {
                         }
                     }
                     .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                    
                     .refreshable {
                         viewModel.fetchPosts()
                     }

@@ -12,7 +12,7 @@ class FSInboxManager {
     static let shared = FSInboxManager()
     private let accountCollection = "Accounts"
 
-    func fetchInbox(accountId: String, completion: @escaping (Result<[Chat], Error>) -> Void) {
+    private func fetchInbox(accountId: String, completion: @escaping (Result<[Chat], Error>) -> Void) {
         let query = db.collection("Accounts").document(accountId).collection("Inbox")
         query.getDocuments { (querySnapshot, error) in
             if let error = error {
@@ -26,6 +26,36 @@ class FSInboxManager {
                 chats.append(chat)
             }
             completion(.success(chats))
+        }
+    }
+    
+    func fetchInboxWithUnreadCount(accountId: String, completion: @escaping (Result<([Chat], Int), Error>) -> Void) {
+        fetchInbox(accountId: accountId) { result in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success(let chats):
+                let group = DispatchGroup()
+                var totalUnreadCount = 0
+
+                for chat in chats {
+                    group.enter()
+                    FSChatManager.shared.fetchMessages(accountId: accountId, chatId: chat.id.uuidString) { result in
+                        switch result {
+                        case .failure(let error):
+                            print("Error fetching messages: \(error)")
+                        case .success(let messages):
+                            let unreadCount = messages.filter { !$0.isRead }.count
+                            totalUnreadCount += unreadCount
+                        }
+                        group.leave()
+                    }
+                }
+
+                group.notify(queue: .main) {
+                    completion(.success((chats, totalUnreadCount)))
+                }
+            }
         }
     }
     
@@ -53,22 +83,113 @@ class FSInboxManager {
     }
     
     func addChat(_ chat: Chat, accountId: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        let data = self.convertChatToData(chat)
-        let query = db.collection("Accounts").document(accountId).collection("Inbox")
-        query.addDocument(data: data) { error in
+        // First, get the username of the user who is adding the chat
+        self.db.collection("Accounts").document(accountId).getDocument { [weak self] (documentSnapshot, error) in
             if let error = error {
                 completion(.failure(error))
-            } else {
-                completion(.success(()))
+                return
+            }
+
+            guard let document = documentSnapshot, let initiatorUsername = document.data()?["username"] as? String else {
+                completion(.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Account not found or username missing"])))
+                return
+            }
+
+            // Continue with adding the chat
+            self?.processAddChat(chat, initiatorUsername: initiatorUsername, initiatorAccountId: accountId, completion: completion)
+        }
+    }
+
+    private func processAddChat(_ chat: Chat, initiatorUsername: String, initiatorAccountId: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        // Fetch account IDs for each participant
+        let group = DispatchGroup()
+        var accountIds: [String: String] = [:] // Mapping usernames to account IDs
+        var firstError: Error?
+
+        for username in chat.participants {
+            group.enter()
+            self.fetchAccountIdForUsername(username: username) { result in
+                switch result {
+                case .failure(let error):
+                    if firstError == nil {
+                        firstError = error
+                    }
+                case .success(let fetchedAccountId):
+                    accountIds[username] = fetchedAccountId
+                }
+                group.leave()
+            }
+        }
+
+        // After fetching all account IDs, add chat to each participant's Inbox
+        group.notify(queue: .main) {
+            if let error = firstError {
+                completion(.failure(error))
+                return
+            }
+
+            for (username, participantAccountId) in accountIds {
+                group.enter()
+                // Adjust the participants list and username for each chat
+                var modifiedChat = chat
+                modifiedChat.participants = chat.participants.filter { $0 != username } // Use usernames
+                if participantAccountId != initiatorAccountId {
+                    modifiedChat.username = initiatorUsername // Set initiator's username
+                }
+
+                let data = self.convertChatToData(modifiedChat)
+                self.db.collection("Accounts").document(participantAccountId).collection("Inbox").addDocument(data: data) { error in
+                    if let error = error, firstError == nil {
+                        firstError = error
+                    }
+                    group.leave()
+                }
+            }
+
+            // Additionally, add the chat to the initiator's own Inbox
+            group.enter()
+            var initiatorChat = chat
+            initiatorChat.participants = chat.participants.filter { $0 != initiatorUsername } // Use usernames, exclude initiator's username
+            let initiatorData = self.convertChatToData(initiatorChat)
+            self.db.collection("Accounts").document(initiatorAccountId).collection("Inbox").addDocument(data: initiatorData) { error in
+                if let error = error, firstError == nil {
+                    firstError = error
+                }
+                group.leave()
+            }
+
+            group.notify(queue: .main) {
+                if let error = firstError {
+                    completion(.failure(error))
+                } else {
+                    completion(.success(()))
+                }
             }
         }
     }
-    
+
+
+
+    private func fetchAccountIdForUsername(username: String, completion: @escaping (Result<String, Error>) -> Void) {
+        db.collection("Accounts").whereField("username", isEqualTo: username).getDocuments { (querySnapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            if let document = querySnapshot?.documents.first {
+                let accountId = document.documentID
+                completion(.success(accountId))
+            } else {
+                completion(.failure(NSError(domain: "", code: 404, userInfo: [NSLocalizedDescriptionKey: "Username not found"])))
+            }
+        }
+    }
+
     private func convertChatToData(_ chat: Chat) -> [String: Any] {
         let data: [String: Any] = [
             "id": chat.id.uuidString,
             "participants": chat.participants,
-            "lastMessage": chat.lastMessage ?? "",  // this line might need further modification
+            "lastMessage": chat.lastMessage ?? "",
             "timestamp": chat.timestamp,
             "username": chat.username,
             "profilePicture": chat.profilePicture ?? ""

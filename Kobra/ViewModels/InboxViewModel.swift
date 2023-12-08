@@ -39,13 +39,16 @@ class InboxViewModel: ObservableObject {
         }
     }
     
-    func addChat(participants: [String], completion: @escaping (Result<Void, Error>) -> Void) {
+    func addChat(participants: [String], chatName: String? = nil, completion: @escaping (Result<Void, Error>) -> Void) {
         guard let user = Auth.auth().currentUser else {
             print("No user is currently signed in.")
             completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No user signed in"])))
             return
         }
-        let newChat = Chat(id: UUID(), participants: participants, lastMessage: "", timestamp: Date(), username: "", profilePicture: "")
+
+        let finalChatName = participants.count > 1 ? chatName ?? "Group Chat" : participants.first ?? "New Chat"
+        let newChat = Chat(id: UUID(), participants: participants, lastMessage: "", timestamp: Date(), username: finalChatName, profilePicture: "")
+
         inboxManager.addChat(newChat, accountId: user.uid) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
@@ -58,6 +61,7 @@ class InboxViewModel: ObservableObject {
             }
         }
     }
+
     
     func deleteChat(chatId: String) {
         guard let user = Auth.auth().currentUser else {

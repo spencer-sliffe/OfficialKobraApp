@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct Message: Identifiable {
-    var id = UUID()
+struct Message: Identifiable, Equatable {
+    var id: UUID
     var senderId: String
     var receiverId: String
     var text: String
@@ -23,5 +23,10 @@ struct Message: Identifiable {
         self.timestamp = timestamp
         self.isRead = isRead
     }
+
+    static func ==(lhs: Message, rhs: Message) -> Bool {
+        lhs.id == rhs.id
+    }
 }
+
 

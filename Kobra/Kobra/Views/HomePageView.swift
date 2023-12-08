@@ -20,7 +20,7 @@ struct HomePageView: View {
     @EnvironmentObject private var homePageViewModel: HomePageViewModel
     @EnvironmentObject private var accountViewModel: AccountViewModel
     @EnvironmentObject private var discoverViewModel: DiscoverViewModel
-    
+    @ObservedObject var inboxViewModel = InboxViewModel()
     var body: some View {
         NavigationView {
             
@@ -132,7 +132,9 @@ struct HomePageView: View {
                 .environmentObject(notificationViewModel))
         case 5:
              return AnyView(InboxView()
-                .environmentObject(homePageViewModel))
+                .environmentObject(homePageViewModel)
+                .environmentObject(inboxViewModel))
+             
          case 6:
              return AnyView(FoodView()
                 .environmentObject(homePageViewModel))

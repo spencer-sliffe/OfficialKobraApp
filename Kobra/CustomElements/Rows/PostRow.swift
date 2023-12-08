@@ -55,7 +55,7 @@ struct PostRow: View {
                     .environmentObject(kobraViewModel)
                     .environmentObject(settingsViewModel)) {
                         getPosterName()
-                }
+                    }
                 Spacer()
                 
                 if currentUserId == post.posterId {
@@ -206,7 +206,7 @@ struct PostRow: View {
             )
         }
     }
-
+    
     func getBackgroundColor(for postType: Post.PostType) -> Color {
         switch postType {
         case .advertisement:
@@ -318,7 +318,6 @@ struct PostRow: View {
     }
     
     func PostContent(content: String, imageURL: String?, videoURL: String?) -> some View {
-        
         VStack(alignment: .leading, spacing: 2) {
             VStack(alignment:.center){
                 if let imageURL = imageURL, let url = URL(string: imageURL) {
@@ -352,15 +351,15 @@ struct PostRow: View {
                     }
                 }
                 if let videoURL = videoURL, let url = URL(string: videoURL) {
-                                VideoPlayerView(videoURL: url,
-                                                shouldPlay: .constant((post.type.feedType == selectedFeed || selectedFeed == .all) && shouldPlayVideo && homePageViewModel.accProViewActive == false),
-                                                isInView: $isInView) // Pass the isInView binding
-                                    .frame(height: 300)
-                                    .isInView { inView in
-                                        isInView = inView // Update the isInView state
-                                    }
-                                    .contentShape(Rectangle())
-                            }
+                    VideoPlayerView(videoURL: url,
+                                    shouldPlay: .constant((post.type.feedType == selectedFeed || selectedFeed == .all) && shouldPlayVideo && homePageViewModel.accProViewActive == false),
+                                    isInView: $isInView) // Pass the isInView binding
+                    .frame(height: 300)
+                    .isInView { inView in
+                        isInView = inView // Update the isInView state
+                    }
+                    .contentShape(Rectangle())
+                }
             }
             HStack(){
                 Text(content)
@@ -415,29 +414,29 @@ struct PostRow: View {
                         .scaledToFit()
                         .cornerRadius(5)
                         .contentShape(Rectangle())
-                        /*.onLongPressGesture {
-                            showingFullImage = true
-                        }*/
+                    /*.onLongPressGesture {
+                     showingFullImage = true
+                     }*/
                 } placeholder: {
                     ProgressView()
                         .accentColor(.white)
                 }
                 .frame(maxHeight: 300)
                 /*.fullScreenCover(isPresented: $showingFullImage) {
-                    ZStack {
-                        AsyncImage(url: url) { image in
-                            image
-                                .resizable()
-                                .scaledToFit()
-                        } placeholder: {
-                            ProgressView()
-                        }
-                        .ignoresSafeArea()
-                    }
-                    .onTapGesture {
-                        showingFullImage = false
-                    }
-                }*/
+                 ZStack {
+                 AsyncImage(url: url) { image in
+                 image
+                 .resizable()
+                 .scaledToFit()
+                 } placeholder: {
+                 ProgressView()
+                 }
+                 .ignoresSafeArea()
+                 }
+                 .onTapGesture {
+                 showingFullImage = false
+                 }
+                 }*/
             }
             if let videoURL = videoURL, let url = URL(string: videoURL) {
                 VideoPlayerView(videoURL: url, shouldPlay: .constant((post.type.feedType == selectedFeed || selectedFeed == .all) && shouldPlayVideo && homePageViewModel.accProViewActive == false), isInView: $shouldPlayVideo)

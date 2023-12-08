@@ -10,25 +10,58 @@ import Firebase
 import FirebaseFirestore
 
 struct InboxView: View {
-    @ObservedObject var viewModel = InboxViewModel()
+    @EnvironmentObject var inboxViewModel: InboxViewModel
     @EnvironmentObject var homePageViewModel: HomePageViewModel
-
+    @State private var showingCreateChat = false
+    
     var body: some View {
         VStack(spacing: 0) {
-            if viewModel.isLoading {
-               Spacer()
-               ProgressView()
-               Spacer()
+            if inboxViewModel.isLoading {
+                Spacer()
+                ProgressView()
+                Spacer()
             } else {
                 ScrollView {
-                    ForEach(viewModel.chats.sorted(by: { $0.timestamp > $1.timestamp })) { chat in
-                        ChatCell(chat: chat)
+                    LazyVStack {
+                        ForEach(inboxViewModel.chats.sorted(by: { $0.timestamp > $1.timestamp })) { chat in
+                            NavigationLink(destination: ChatView(viewModel: ChatViewModel(chatId: chat.id.uuidString))) {
+                                ChatCell(chat: chat)
+                            }
+                        }
                     }
                 }
                 .refreshable {
-                    viewModel.fetchInbox()
+                    inboxViewModel.fetchInbox()
                 }
             }
+            Spacer()
+            
+            // Floating Action Button
+            HStack {
+                Spacer()
+                Button(action: { showingCreateChat = true }) {
+                    Image(systemName: "plus.message")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 24, height: 24)
+                        .padding()
+                        .foregroundColor(.white)
+                        .background(Color.blue)
+                        .clipShape(Circle())
+                        .shadow(radius: 10)
+                }
+                .padding(.trailing, 16)
+                .padding(.bottom, 16)
+                .accessibilityLabel("Create new chat")
+            }
+        }
+        .sheet(isPresented: $showingCreateChat) {
+            CreateChatView()
+                .environmentObject(inboxViewModel)
+        }
+        .onAppear() {
+            inboxViewModel.fetchInbox()
         }
     }
 }
+
