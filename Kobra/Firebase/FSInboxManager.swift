@@ -45,7 +45,7 @@ class FSInboxManager {
                         case .failure(let error):
                             print("Error fetching messages: \(error)")
                         case .success(let messages):
-                            let unreadCount = messages.filter { !$0.isRead }.count
+                            let unreadCount = messages.filter { !$0.isRead && $0.senderId != accountId }.count
                             totalUnreadCount += unreadCount
                         }
                         group.leave()

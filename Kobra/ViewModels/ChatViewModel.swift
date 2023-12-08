@@ -40,7 +40,7 @@ class ChatViewModel: ObservableObject {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let messages):
-                    self?.messages = messages
+                    self?.messages = messages.sorted(by: { $0.timestamp < $1.timestamp })
                 case .failure(let error):
                     print("Error fetching messages: \(error.localizedDescription)")
                 }
@@ -55,12 +55,14 @@ class ChatViewModel: ObservableObject {
         }
 
         let newMessage = Message(id: UUID(), senderId: accountId, receiverId: "", text: text, timestamp: Date(), isRead: false)
-        chatManager.addMessage(newMessage, accountId: accountId, chatId: chatId) { result in
-            switch result {
-            case .success():
-                self.messages.append(newMessage)
-            case .failure(let error):
-                print("Error sending message: \(error.localizedDescription)")
+        chatManager.addMessage(newMessage, accountId: accountId, chatId: chatId) { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success():
+                    self?.messages.append(newMessage)  // Appending new message
+                case .failure(let error):
+                    print("Error sending message: \(error.localizedDescription)")
+                }
             }
         }
     }

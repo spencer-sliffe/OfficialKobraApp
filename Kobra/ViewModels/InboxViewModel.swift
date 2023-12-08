@@ -11,10 +11,11 @@ import FirebaseAuth
 
 class InboxViewModel: ObservableObject {
     @Published var chats: [Chat] = []
+    @Published var unreadMessagesCount: Int = 0
     @Published var isLoading: Bool = true
     private let inboxManager = FSInboxManager.shared
     
-    init(){
+    init() {
         fetchInbox()
     }
     
@@ -25,14 +26,15 @@ class InboxViewModel: ObservableObject {
             isLoading = false
             return
         }
-        inboxManager.fetchInbox(accountId: user.uid) { [weak self]
-            result in
+
+        inboxManager.fetchInboxWithUnreadCount(accountId: user.uid) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
-                case .success(let chats):
+                case .success(let (chats, unreadCount)):
                     self?.chats = chats
+                    self?.unreadMessagesCount = unreadCount
                 case .failure(let error):
-                    print("error fetching notifications: \(error.localizedDescription)")
+                    print("Error fetching inbox: \(error.localizedDescription)")
                 }
                 self?.isLoading = false
             }

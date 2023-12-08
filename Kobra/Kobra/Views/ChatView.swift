@@ -10,46 +10,57 @@ import Combine
 struct ChatView: View {
     @ObservedObject var viewModel: ChatViewModel
     @State private var messageText = ""
-    @Environment(\.presentationMode) var presentationMode
+    @State private var isAtBottom = true
 
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             ScrollView {
-                LazyVStack {
-                    ForEach(viewModel.messages) { message in
-                        MessageCell(message: message, isCurrentUser: message.senderId == viewModel.accountId)
+                ScrollViewReader { scrollViewProxy in
+                    VStack {
+                        ForEach(viewModel.messages) { message in
+                            MessageCell(message: message, isCurrentUser: message.senderId == viewModel.accountId)
+                                .id(message.id)
+                        }
+                    }
+                    .onChange(of: viewModel.messages) { _ in
+                        scrollToBottom(with: scrollViewProxy)
+                    }
+                    .onAppear {
+                        scrollToBottom(with: scrollViewProxy)
                     }
                 }
             }
 
-            HStack {
-                TextField("Type a message", text: $messageText)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-
-                Button("Send") {
-                    viewModel.sendMessage(text: messageText)
-                    messageText = ""
-                }
-                .disabled(messageText.isEmpty)
+            MessageInputView(text: $messageText) {
+                viewModel.sendMessage(text: messageText)
+                messageText = ""
             }
-            .padding()
         }
-        .navigationBarTitle("", displayMode: .inline)
-        .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: Button(action: {
-            presentationMode.wrappedValue.dismiss()
-        }) {
-            Image(systemName: "arrow.left")
-                .foregroundColor(.primary)  // Adjust color as needed
-        })
-        .gesture(DragGesture()
-            .onEnded { gesture in
-                if gesture.translation.width > 100 {
-                    // Swipe to the right, dismiss the view
-                    presentationMode.wrappedValue.dismiss()
-                }
+        .navigationBarTitle(Text("Chat"), displayMode: .inline)
+    }
+
+    private func scrollToBottom(with scrollViewProxy: ScrollViewProxy) {
+        if let lastMessage = viewModel.messages.last {
+            scrollViewProxy.scrollTo(lastMessage.id, anchor: .bottom)
+        }
+    }
+}
+
+struct MessageInputView: View {
+    @Binding var text: String
+    var onSend: () -> Void
+
+    var body: some View {
+        HStack {
+            TextField("Message", text: $text)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding(8)
+
+            Button(action: onSend) {
+                Text("Send")
             }
-        )
+            .disabled(text.isEmpty)
+        }
+        .padding(.horizontal)
     }
 }

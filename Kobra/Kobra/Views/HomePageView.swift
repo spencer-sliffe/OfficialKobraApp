@@ -20,7 +20,7 @@ struct HomePageView: View {
     @EnvironmentObject private var homePageViewModel: HomePageViewModel
     @EnvironmentObject private var accountViewModel: AccountViewModel
     @EnvironmentObject private var discoverViewModel: DiscoverViewModel
-    @ObservedObject var inboxViewModel = InboxViewModel()
+    @EnvironmentObject private var inboxViewModel: InboxViewModel
     var body: some View {
         NavigationView {
             
@@ -43,6 +43,7 @@ struct HomePageView: View {
                     
                     CustomTabView(selectedTab: $selectedTab)
                         .environmentObject(notificationViewModel)
+                        .environmentObject(inboxViewModel)
                         .padding(.bottom, 16)
                         .padding(.horizontal, 5)
                 }
@@ -147,6 +148,7 @@ struct HomePageView: View {
 struct CustomTabView: View {
     @Binding var selectedTab: Int
     @EnvironmentObject private var notificationViewModel: NotificationViewModel
+    @EnvironmentObject private var inboxViewModel: InboxViewModel
     
     private func getIcon(for index: Int) -> String {
         switch index {
@@ -199,6 +201,15 @@ struct CustomTabView: View {
                         .clipShape(Circle())
                         .offset(x: 10, y: -10)
                 }
+                if tabIndex == 5 && inboxViewModel.unreadMessagesCount > 0 {
+                                    Text("\(inboxViewModel.unreadMessagesCount)")
+                                        .font(.caption2)
+                                        .foregroundColor(.white)
+                                        .padding(2)
+                                        .background(Color.red)
+                                        .clipShape(Circle())
+                                        .offset(x: 10, y: -10)
+                                }
             }
         }
         .frame(maxWidth: .infinity)

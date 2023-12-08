@@ -10,11 +10,7 @@ import Firebase
 import FirebaseFirestore
 import Combine
 import SwiftUI
-
-import Foundation
 import FirebaseAuth
-import Combine
-import FirebaseFirestore
 
 class AuthenticationViewModel: ObservableObject {
     @Published var email = ""

@@ -17,6 +17,7 @@ struct MainAppView: View {
     @ObservedObject private var homePageViewModel = HomePageViewModel()
     @ObservedObject private var accountViewModel = AccountViewModel()
     @ObservedObject private var discoverViewModel = DiscoverViewModel()
+    @ObservedObject private var inboxViewModel = InboxViewModel()
     
     var body: some View {
         Group {
@@ -29,6 +30,7 @@ struct MainAppView: View {
                     .environmentObject(homePageViewModel)
                     .environmentObject(accountViewModel)
                     .environmentObject(discoverViewModel)
+                    .environmentObject(inboxViewModel)
             } else {
                 AuthenticationView()
                     .environmentObject(authViewModel)
