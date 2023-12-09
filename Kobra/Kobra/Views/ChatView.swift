@@ -11,7 +11,7 @@ struct ChatView: View {
     @ObservedObject var viewModel: ChatViewModel
     @State private var messageText = ""
     @State private var isAtBottom = true
-
+    
     var body: some View {
         VStack(spacing: 0) {
             ScrollView {
@@ -36,7 +36,7 @@ struct ChatView: View {
                 messageText = ""
             }
         }
-        .navigationBarTitle(Text("Chat"), displayMode: .inline)
+        .navigationBarTitle(Text(viewModel.chatName), displayMode: .inline)
     }
 
     private func scrollToBottom(with scrollViewProxy: ScrollViewProxy) {

@@ -21,7 +21,7 @@ class KobraViewModel: ObservableObject {
     @Published var uploadProgress: Double = 0.0
     @Published var isUploadInProgress: Bool = false
     @Published var currentlyPlaying: AVPlayer?
-
+    
     func uploadImage(_ image: UIImage, postId: String, completion: @escaping (Result<String, Error>) -> Void) {
         isUploadInProgress = true
         postManager.uploadImage(image, postId: postId, progress: { [weak self] progress in
@@ -35,7 +35,7 @@ class KobraViewModel: ObservableObject {
             }
         })
     }
-
+    
     func uploadVideo(_ videoURL: URL, postId: String, completion: @escaping (Result<String, Error>) -> Void) {
         isUploadInProgress = true
         postManager.uploadVideo(videoURL, postId: postId, progress: { [weak self] progress in
@@ -49,8 +49,8 @@ class KobraViewModel: ObservableObject {
             }
         })
     }
-
-
+    
+    
     func fetchPosts() {
         postManager.fetchPosts { [weak self] result in
             DispatchQueue.main.async {
@@ -63,7 +63,7 @@ class KobraViewModel: ObservableObject {
             }
         }
     }
-
+    
     func addPost(_ post: Post, image: UIImage? = nil, videoURL: URL? = nil, completion: ((Result<Void, Error>) -> Void)? = nil) {
         if let image = image {
             uploadImage(image, postId: post.id.uuidString) { [weak self] result in
@@ -93,7 +93,7 @@ class KobraViewModel: ObservableObject {
             addPostToDatabase(post, completion: completion)
         }
     }
-
+    
     private func addPostToDatabase(_ post: Post, completion: ((Result<Void, Error>) -> Void)? = nil) {
         postManager.addPost(post) { [weak self] result in
             DispatchQueue.main.async {
@@ -174,7 +174,7 @@ class KobraViewModel: ObservableObject {
             }
         }
     }
-
+    
     
     func updateComments(_ post: Post, comment: Comment){
         postManager.updateComments(post, comment: comment)
@@ -284,22 +284,22 @@ class KobraViewModel: ObservableObject {
     }
     
     func fetchUsername(completion: @escaping (Result<String, Error>) -> Void) {
-           guard let user = Auth.auth().currentUser else {
-               completion(.failure(NSError(domain: "No user is currently signed in.", code: 0, userInfo: nil)))
-               return
-           }
-           let db = Firestore.firestore()
-           let ref = db.collection("Accounts").document(user.uid)
-           ref.getDocument { (document, error) in
-               if let error = error {
-                   completion(.failure(error))
-               } else if let document = document, document.exists, let data = document.data(), let username = data["username"] as? String {
-                   completion(.success(username))
-               } else {
-                   completion(.failure(NSError(domain: "Error fetching account data", code: 0, userInfo: nil)))
-               }
-           }
-       }
+        guard let user = Auth.auth().currentUser else {
+            completion(.failure(NSError(domain: "No user is currently signed in.", code: 0, userInfo: nil)))
+            return
+        }
+        let db = Firestore.firestore()
+        let ref = db.collection("Accounts").document(user.uid)
+        ref.getDocument { (document, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else if let document = document, document.exists, let data = document.data(), let username = data["username"] as? String {
+                completion(.success(username))
+            } else {
+                completion(.failure(NSError(domain: "Error fetching account data", code: 0, userInfo: nil)))
+            }
+        }
+    }
     
     private func sendLikeNotification(_ notification: Notification) {
         notificationManager.addNotification(notification) { result in
@@ -338,5 +338,15 @@ class KobraViewModel: ObservableObject {
                 }
             }
         }
+    }
+    
+    func resetData() {
+        posts = []
+        comments = []
+        uploadProgress = 0.0
+        isUploadInProgress = false
+        currentlyPlaying = nil
+        cancellables.forEach { $0.cancel() }
+        cancellables.removeAll()
     }
 }

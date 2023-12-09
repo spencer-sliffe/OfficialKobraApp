@@ -99,14 +99,22 @@ class AuthenticationViewModel: ObservableObject {
     }
     
     func signOut() {
-        do {
-            try Auth.auth().signOut()
-            signedOut.send()
-            isAuthenticated = false
-        } catch {
-            print("Error signing out: \(error.localizedDescription)")
+           do {
+               try Auth.auth().signOut()
+               resetAppData()
+               signedOut.send()
+               isAuthenticated = false
+           } catch {
+               print("Error signing out: \(error.localizedDescription)")
+           }
+       }
+    
+    private func resetAppData() {
+            // Assuming you have references to the view models
+            followCellViewModel.resetData()
+            notificationViewModel.resetData()
+            // Reset other view models and local storage as needed
         }
-    }
 
     func startListening() {
         handle = Auth.auth().addStateDidChangeListener { [weak self] _, user in

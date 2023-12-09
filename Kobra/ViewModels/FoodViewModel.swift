@@ -116,4 +116,12 @@ class FoodViewModel: ObservableObject {
             }
         }
     }
+    
+    func resetData() {
+        isLoading = true
+        foods = []
+        cancellables.forEach { $0.cancel() }
+        cancellables.removeAll()
+    }
+
 }

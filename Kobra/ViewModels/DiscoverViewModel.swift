@@ -70,5 +70,11 @@ class DiscoverViewModel: ObservableObject {
     func clearSearchResults() {
         searchResults = []
     }
+    
+    func resetData() {
+        accounts = []
+        searchResults = []
+        posts = []
+    }
 }
 

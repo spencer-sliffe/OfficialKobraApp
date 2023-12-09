@@ -75,5 +75,11 @@ class NotificationViewModel: ObservableObject {
             updateNotificationAsSeen(notificationId: notification.id)
         }
     }
+    
+    func resetData() {
+        notifications = []
+        isLoading = true
+        post = nil
+    }
 }
 

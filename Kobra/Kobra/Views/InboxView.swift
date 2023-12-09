@@ -24,7 +24,7 @@ struct InboxView: View {
                 ScrollView {
                     LazyVStack {
                         ForEach(inboxViewModel.chats.sorted(by: { $0.timestamp > $1.timestamp })) { chat in
-                            NavigationLink(destination: ChatView(viewModel: ChatViewModel(chatId: chat.id.uuidString))) {
+                            NavigationLink(destination: ChatView(viewModel: ChatViewModel(chatId: chat.id.uuidString, chatName: chat.username))) {
                                 ChatCell(chat: chat)
                             }
                         }

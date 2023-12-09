@@ -213,5 +213,17 @@ class AccountProfileViewModel: ObservableObject {
             }
         }
     }
+    
+    func resetData() {
+        account = nil
+        isLoading = true
+        userPosts = []
+        isFollowing = false
+        followers = []
+        following = []
+        showFollowButton = true
+        cancellables.forEach { $0.cancel() }
+        cancellables.removeAll()
+    }
 }
 

@@ -26,7 +26,7 @@ class InboxViewModel: ObservableObject {
             isLoading = false
             return
         }
-
+        
         inboxManager.fetchInboxWithUnreadCount(accountId: user.uid) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
@@ -47,10 +47,10 @@ class InboxViewModel: ObservableObject {
             completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No user signed in"])))
             return
         }
-
+        
         let finalChatName = participants.count > 1 ? chatName ?? "Group Chat" : participants.first ?? "New Chat"
         let newChat = Chat(id: UUID(), participants: participants, lastMessage: "", timestamp: Date(), username: finalChatName, profilePicture: "")
-
+        
         inboxManager.addChat(newChat, accountId: user.uid) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
@@ -63,7 +63,7 @@ class InboxViewModel: ObservableObject {
             }
         }
     }
-
+    
     
     func deleteChat(chatId: String) {
         guard let user = Auth.auth().currentUser else {
@@ -88,5 +88,11 @@ class InboxViewModel: ObservableObject {
                 completion(result)
             }
         }
+    }
+    
+    func resetData() {
+        chats = []
+        unreadMessagesCount = 0
+        isLoading = false
     }
 }

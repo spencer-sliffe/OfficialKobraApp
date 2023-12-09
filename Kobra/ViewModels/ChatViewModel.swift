@@ -14,9 +14,11 @@ class ChatViewModel: ObservableObject {
     private let chatManager = FSChatManager.shared
     var accountId: String?
     var chatId: String
+    var chatName: String
 
-    init(chatId: String) {
+    init(chatId: String, chatName: String) {
         self.chatId = chatId
+        self.chatName = chatName
         fetchCurrentUserId()
     }
 
@@ -66,5 +68,11 @@ class ChatViewModel: ObservableObject {
             }
         }
     }
+    
+    func resetData() {
+            messages = []
+            accountId = nil
+            // Other reset operations if needed
+        }
 }
 

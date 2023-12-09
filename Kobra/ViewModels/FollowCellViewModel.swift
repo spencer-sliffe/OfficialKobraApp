@@ -69,4 +69,11 @@ class FollowCellViewModel: ObservableObject {
             }
         }
     }
+    
+    func resetData() {
+        account = nil
+        isLoading = true
+        cancellables.forEach { $0.cancel() }
+        cancellables.removeAll()
+    }
 }

@@ -17,14 +17,22 @@ class SettingsViewModel: ObservableObject {
     // Here you can keep appVersion as @Published if it's something dynamic that you fetch from some server.
     // But if it's a static value that doesn't change during app runtime, you could just declare it as a let constant.
     @Published var appVersion: String = "Beta"
-
+    
     let languages: [String] = ["English", "Spanish", "French", "German"] // Just for example
-
+    
     func updateSelectedGradient(to newIndex: Int) {
         gradientIndex = newIndex
     }
-
+    
     func updateSelectedLanguage(to newIndex: Int) {
         selectedLanguage = languages[newIndex]
+    }
+    
+    func resetData() {
+        gradientIndex = 0
+        isDarkMode = false
+        selectedLanguage = "English"
+        pushNotificationsEnabled = false
+        // Don't reset appVersion as it's not user-specific
     }
 }

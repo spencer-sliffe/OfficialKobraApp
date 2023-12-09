@@ -11,7 +11,7 @@ import UIKit
 
 @main
 struct KobraApp: App {
-    typealias imagePackageTuple = (image: UIImage, package: Package)
+    //typealias imagePackageTuple = (image: UIImage, package: Package)
     
     init() {
         FirebaseApp.configure()

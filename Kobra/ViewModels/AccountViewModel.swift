@@ -188,4 +188,13 @@ class AccountViewModel: ObservableObject {
             }
         }
     }
+    
+    func resetData() {
+            account = nil
+            isLoading = false
+            userPosts = []
+            accountId = ""
+            cancellables.forEach { $0.cancel() }
+            cancellables.removeAll()
+        }
 }
