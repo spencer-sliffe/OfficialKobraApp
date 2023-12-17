@@ -12,6 +12,7 @@ import FirebaseFirestore
 struct InboxView: View {
     @EnvironmentObject var inboxViewModel: InboxViewModel
     @EnvironmentObject var homePageViewModel: HomePageViewModel
+    @EnvironmentObject var settingsViewModel: SettingsViewModel
     @State private var showingCreateChat = false
     
     var body: some View {
@@ -24,7 +25,8 @@ struct InboxView: View {
                 ScrollView {
                     LazyVStack {
                         ForEach(inboxViewModel.chats.sorted(by: { $0.timestamp > $1.timestamp })) { chat in
-                            NavigationLink(destination: ChatView(viewModel: ChatViewModel(chatId: chat.id.uuidString, chatName: chat.username))) {
+                            NavigationLink(destination: ChatView(viewModel: ChatViewModel(chatId: chat.id.uuidString, chatName: chat.username))
+                                .environmentObject(settingsViewModel)) {
                                 ChatCell(chat: chat)
                             }
                         }

@@ -12,7 +12,7 @@ struct SettingsView: View {
     @State private var isGradientExpanded = false
     @State private var isLanguageExpanded = false
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
-    @StateObject var authViewModel: AuthenticationViewModel
+    @EnvironmentObject var authViewModel: AuthenticationViewModel
     @State private var showChangePasswordView = false
     @State private var showAlert = false
     

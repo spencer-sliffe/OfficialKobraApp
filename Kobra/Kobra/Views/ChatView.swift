@@ -9,6 +9,7 @@ import Combine
 
 struct ChatView: View {
     @ObservedObject var viewModel: ChatViewModel
+    @EnvironmentObject var settingsViewModel: SettingsViewModel
     @State private var messageText = ""
     @State private var isAtBottom = true
     
@@ -30,15 +31,27 @@ struct ChatView: View {
                     }
                 }
             }
-
+            
             MessageInputView(text: $messageText) {
                 viewModel.sendMessage(text: messageText)
                 messageText = ""
             }
         }
         .navigationBarTitle(Text(viewModel.chatName), displayMode: .inline)
+        .background(
+            LinearGradient(
+                gradient: Gradient(
+                    colors: [
+                        gradientOptions[settingsViewModel.gradientIndex].0,
+                        gradientOptions[settingsViewModel.gradientIndex].1
+                    ]
+                ),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        )
     }
-
+    
     private func scrollToBottom(with scrollViewProxy: ScrollViewProxy) {
         if let lastMessage = viewModel.messages.last {
             scrollViewProxy.scrollTo(lastMessage.id, anchor: .bottom)

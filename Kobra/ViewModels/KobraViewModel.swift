@@ -128,13 +128,15 @@ class KobraViewModel: ObservableObject {
                 let postId = postIdString.uuidString
                 print(postId)
                 let likerUsername = username
-                let postNotiType: PostNotification.PostNotiType
-                let like = LikeNotification(postId: postId, likerUsername: likerUsername)
-                postNotiType = .like(like)
-                let postNotification = PostNotification(type: postNotiType)
-                let notificationType = Notification.NotificationType.post(postNotification)
-                let notification = Notification(id: id, receiverId: receiverId, senderId: senderId, type: notificationType, timestamp: timestamp, seen: seen)
-                self?.sendLikeNotification(notification)
+                if isAdding {
+                    let postNotiType: PostNotification.PostNotiType
+                    let like = LikeNotification(postId: postId, likerUsername: likerUsername)
+                    postNotiType = .like(like)
+                    let postNotification = PostNotification(type: postNotiType)
+                    let notificationType = Notification.NotificationType.post(postNotification)
+                    let notification = Notification(id: id, receiverId: receiverId, senderId: senderId, type: notificationType, timestamp: timestamp, seen: seen)
+                    self?.sendLikeNotification(notification)
+                }
                 self?.fetchPosts()
             } else {
                 print("Error fetching account data: \(error?.localizedDescription ?? "Unknown error")")
@@ -161,13 +163,16 @@ class KobraViewModel: ObservableObject {
                 let postId = postIdString.uuidString
                 print(postId)
                 let dislikerUsername = username
-                let postNotiType: PostNotification.PostNotiType
-                let dislike = DislikeNotification(postId: postId, dislikerUsername: dislikerUsername)
-                postNotiType = .dislike(dislike)
-                let postNotification = PostNotification(type: postNotiType)
-                let notificationType = Notification.NotificationType.post(postNotification)
-                let notification = Notification(id: id, receiverId: receiverId, senderId: senderId, type: notificationType, timestamp: timestamp, seen: seen)
-                self?.sendDislikeNotification(notification)
+                if isAdding {
+                    let postNotiType: PostNotification.PostNotiType
+                    let dislike = DislikeNotification(postId: postId, dislikerUsername: dislikerUsername)
+                    postNotiType = .dislike(dislike)
+                    let postNotification = PostNotification(type: postNotiType)
+                    let notificationType = Notification.NotificationType.post(postNotification)
+                    let notification = Notification(id: id, receiverId: receiverId, senderId: senderId, type: notificationType, timestamp: timestamp, seen: seen)
+                    self?.sendDislikeNotification(notification)
+                    
+                }
                 self?.fetchPosts()
             } else {
                 print("Error fetching account data: \(error?.localizedDescription ?? "Unknown error")")

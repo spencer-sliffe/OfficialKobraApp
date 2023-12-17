@@ -11,18 +11,53 @@ import UIKit
 
 @main
 struct KobraApp: App {
-    //typealias imagePackageTuple = (image: UIImage, package: Package)
+    @StateObject var authenticationViewModel = AuthenticationViewModel()
+    @StateObject var settingsViewModel = SettingsViewModel()
+    @StateObject var kobraViewModel = KobraViewModel()
+    @StateObject var notificationViewModel = NotificationViewModel()
+    @StateObject var homePageViewModel = HomePageViewModel()
+    @StateObject var accountViewModel = AccountViewModel()
+    @StateObject var discoverViewModel = DiscoverViewModel()
+    @StateObject var inboxViewModel = InboxViewModel()
+    @StateObject var foodViewModel = FoodViewModel()
     
     init() {
         FirebaseApp.configure()
     }
     
-    @StateObject private var authenticationViewModel = AuthenticationViewModel()
-    
     var body: some Scene {
         WindowGroup {
-            MainAppView()
-                .environmentObject(authenticationViewModel)
+            Group {
+                if authenticationViewModel.isAuthenticated {
+                    MainAppView()
+                        .environmentObject(authenticationViewModel)
+                        .environmentObject(settingsViewModel)
+                        .environmentObject(kobraViewModel)
+                        .environmentObject(notificationViewModel)
+                        .environmentObject(homePageViewModel)
+                        .environmentObject(accountViewModel)
+                        .environmentObject(discoverViewModel)
+                        .environmentObject(inboxViewModel)
+                } else {
+                    AuthenticationView()
+                        .environmentObject(authenticationViewModel)
+                        .onAppear(){
+                            notificationViewModel.resetData()
+                            inboxViewModel.resetData()
+                            kobraViewModel.resetData()
+                            accountViewModel.resetData()
+                            settingsViewModel.resetData()
+                            discoverViewModel.resetData()
+                            foodViewModel.resetData()
+                        }
+                }
+            }
+            .onAppear {
+                authenticationViewModel.startListening()
+            }
+            .onDisappear {
+                authenticationViewModel.stopListening()
+            }
         }
     }
 }

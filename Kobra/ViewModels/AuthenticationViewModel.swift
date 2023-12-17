@@ -27,7 +27,7 @@ class AuthenticationViewModel: ObservableObject {
     let signedOut = PassthroughSubject<Void, Never>()
     
     private var handle: AuthStateDidChangeListenerHandle?
-
+    
     func signIn() {
         isLoading1 = true
         isError = false
@@ -48,7 +48,7 @@ class AuthenticationViewModel: ObservableObject {
         isLoading1 = true
         isError = false
         errorMessage = ""
-
+        
         guard username.count >= 5 else {
             isError = true
             errorMessage = "Username must be at least 5 characters long."
@@ -62,7 +62,7 @@ class AuthenticationViewModel: ObservableObject {
             isLoading1 = false
             return
         }
-
+        
         guard password == confirmPassword else {
             isError = true
             errorMessage = "Passwords do not match."
@@ -77,7 +77,7 @@ class AuthenticationViewModel: ObservableObject {
                 self.errorMessage = error.localizedDescription
                 return
             }
-
+            
             let db = Firestore.firestore()
             db.collection("Accounts").document(authResult!.user.uid).setData([
                 "email": self.email,
@@ -99,23 +99,15 @@ class AuthenticationViewModel: ObservableObject {
     }
     
     func signOut() {
-           do {
-               try Auth.auth().signOut()
-               resetAppData()
-               signedOut.send()
-               isAuthenticated = false
-           } catch {
-               print("Error signing out: \(error.localizedDescription)")
-           }
-       }
-    
-    private func resetAppData() {
-            // Assuming you have references to the view models
-            followCellViewModel.resetData()
-            notificationViewModel.resetData()
-            // Reset other view models and local storage as needed
+        do {
+            try Auth.auth().signOut()
+            signedOut.send()
+            isAuthenticated = false
+        } catch {
+            print("Error signing out: \(error.localizedDescription)")
         }
-
+    }
+    
     func startListening() {
         handle = Auth.auth().addStateDidChangeListener { [weak self] _, user in
             self?.user = user
