@@ -101,11 +101,11 @@ class FSInboxManager {
     }
 
     private func processAddChat(_ chat: Chat, initiatorUsername: String, initiatorAccountId: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        // Fetch account IDs for each participant
         let group = DispatchGroup()
         var accountIds: [String: String] = [:] // Mapping usernames to account IDs
         var firstError: Error?
 
+        // Fetch account IDs for each participant
         for username in chat.participants {
             group.enter()
             self.fetchAccountIdForUsername(username: username) { result in
@@ -128,14 +128,13 @@ class FSInboxManager {
                 return
             }
 
-            for (username, participantAccountId) in accountIds {
+            // Process chat for non-initiator participants
+            for (username, participantAccountId) in accountIds where participantAccountId != initiatorAccountId {
                 group.enter()
-                // Adjust the participants list and username for each chat
+
                 var modifiedChat = chat
-                modifiedChat.participants = chat.participants.filter { $0 != username } // Use usernames
-                if participantAccountId != initiatorAccountId {
-                    modifiedChat.username = initiatorUsername // Set initiator's username
-                }
+                // Include the initiator's username and exclude the current participant's username
+                modifiedChat.participants = chat.participants.filter { $0 != username } + [initiatorUsername]
 
                 let data = self.convertChatToData(modifiedChat)
                 self.db.collection("Accounts").document(participantAccountId).collection("Inbox").addDocument(data: data) { error in
@@ -146,10 +145,11 @@ class FSInboxManager {
                 }
             }
 
-            // Additionally, add the chat to the initiator's own Inbox
+            // Add the chat to the initiator's own Inbox
             group.enter()
             var initiatorChat = chat
-            initiatorChat.participants = chat.participants.filter { $0 != initiatorUsername } // Use usernames, exclude initiator's username
+            // Exclude the initiator's username from the participants list
+            initiatorChat.participants = chat.participants.filter { $0 != initiatorUsername }
             let initiatorData = self.convertChatToData(initiatorChat)
             self.db.collection("Accounts").document(initiatorAccountId).collection("Inbox").addDocument(data: initiatorData) { error in
                 if let error = error, firstError == nil {
@@ -167,7 +167,6 @@ class FSInboxManager {
             }
         }
     }
-
 
 
     private func fetchAccountIdForUsername(username: String, completion: @escaping (Result<String, Error>) -> Void) {

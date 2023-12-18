@@ -108,7 +108,10 @@ struct HomePageView: View {
                 .environmentObject(homePageViewModel)
                 .environmentObject(settingsViewModel)
                 .environmentObject(kobraViewModel)
-                .environmentObject(accountViewModel))
+                .environmentObject(accountViewModel)
+                .onAppear() {
+                    accountViewModel.fetchAccount()
+                })
         case 2:
             return AnyView(DiscoverView()
                 .environmentObject(homePageViewModel)
