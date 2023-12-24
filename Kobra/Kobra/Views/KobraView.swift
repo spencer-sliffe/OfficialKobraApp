@@ -102,115 +102,128 @@ struct KobraView: View {
     
     var body: some View {
         VStack {
-            GeometryReader { geometry in
-                HStack {
-                    Text("\(Date(), formatter: dateFormatter)")
-                        .foregroundColor(.white)
-                    Spacer()
-                    // Add a new condition to handle the title of the meme feed
-                    if(selectedFeed.rawValue == "All") {
-                        Text("Recent Feed")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                    } else if(selectedFeed.rawValue == "Meme") {
-                        Text("Meme Feed")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                    } else if(selectedFeed.rawValue == "Advertisement") {
-                        Text("Advertisement Feed")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                    } else if(selectedFeed.rawValue == "Market") {
-                        Text("Market Feed")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                    } else if(selectedFeed.rawValue == "News") {
-                        Text("News Feed")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                    } else if(selectedFeed.rawValue == "Help") {
-                        Text("Help Feed")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                    } else if(selectedFeed.rawValue == "Bug") {
-                        Text("Bug Feed")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                    }
-                    Spacer()
-                    Text("\(Date(), formatter: timeFormatter)")
-                        .foregroundColor(.white)
-                }
-                .padding(.horizontal)
-            }.frame(height: 20)
-            Spacer()
-            if(selectedFeed.rawValue != "All") {
-                GeometryReader { geometry in
-                    TabView(selection: $selectedFeed) {
-                        ForEach(FeedType.allCases, id: \.self) { feedType in
-                            ScrollView(showsIndicators: false) {
-                                LazyVStack(alignment: .leading, spacing: 10) {
-                                    ForEach(viewModel.posts.filter { $0.type.feedType == feedType }) { post in
-                                        PostRow(post: post, selectedFeed: $selectedFeed)
-                                            .environmentObject(viewModel)
-                                            .environmentObject(homePageViewModel)
-                                            .environmentObject(settingsViewModel)
-                                    }
-                                }
-                            }
-                            .tag(feedType)
-                        }
-                    }
-                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                    
-                    .refreshable {
-                        viewModel.fetchPosts()
-                    }
-                    .padding(.trailing, 1)  // Add some padding to the right side of the ScrollView
-                    .background(Color.clear)
-                    .overlay(  // Add an overlay to the right side of the ScrollView
-                        Color.clear
-                            .frame(width: 1)  // Set width to the same value as the padding above
-                            .edgesIgnoringSafeArea(.all), alignment: .trailing
-                    )
-                }
+            if viewModel.isLoading {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                    .scaleEffect(1.5, anchor: .center)
             } else {
                 GeometryReader { geometry in
-                    TabView(selection: $selectedFeed) {
-                        ForEach(FeedType.allCases, id: \.self) { feedType in
-                            ScrollView(showsIndicators: false) {
-                                LazyVStack(alignment: .leading, spacing: 10) {
-                                    ForEach(viewModel.posts.sorted(by: { $0.timestamp > $1.timestamp }).filter(isPostTypeVisible)) { post in
-                                        PostRow(post: post, selectedFeed: $selectedFeed)
-                                            .environmentObject(viewModel)
-                                            .environmentObject(homePageViewModel)
-                                            .environmentObject(settingsViewModel)
+                    HStack {
+                        Text("\(Date(), formatter: dateFormatter)")
+                            .foregroundColor(.white)
+                        Spacer()
+                        // Add a new condition to handle the title of the meme feed
+                        if(selectedFeed.rawValue == "All") {
+                            Text("Recent Feed")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                        } else if(selectedFeed.rawValue == "Meme") {
+                            Text("Meme Feed")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                        } else if(selectedFeed.rawValue == "Advertisement") {
+                            Text("Advertisement Feed")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                        } else if(selectedFeed.rawValue == "Market") {
+                            Text("Market Feed")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                        } else if(selectedFeed.rawValue == "News") {
+                            Text("News Feed")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                        } else if(selectedFeed.rawValue == "Help") {
+                            Text("Help Feed")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                        } else if(selectedFeed.rawValue == "Bug") {
+                            Text("Bug Feed")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                        }
+                        Spacer()
+                        Text("\(Date(), formatter: timeFormatter)")
+                            .foregroundColor(.white)
+                    }
+                    .padding(.horizontal)
+                }.frame(height: 20)
+                Spacer()
+                if(selectedFeed.rawValue != "All") {
+                    GeometryReader { geometry in
+                        TabView(selection: $selectedFeed) {
+                            ForEach(FeedType.allCases, id: \.self) { feedType in
+                                ScrollView(showsIndicators: false) {
+                                    LazyVStack(alignment: .leading, spacing: 10) {
+                                        ForEach(viewModel.posts.filter { $0.type.feedType == feedType }) { post in
+                                            PostRow(post: post, selectedFeed: $selectedFeed)
+                                                .environmentObject(viewModel)
+                                                .environmentObject(homePageViewModel)
+                                                .environmentObject(settingsViewModel)
+                                        }
                                     }
                                 }
+                                .tag(feedType)
                             }
-                            .tag(feedType)
                         }
+                        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                        
+                        .refreshable {
+                            viewModel.fetchPosts(){}
+                        }
+                        .padding(.trailing, 1)  // Add some padding to the right side of the ScrollView
+                        .background(Color.clear)
+                        .overlay(  // Add an overlay to the right side of the ScrollView
+                            Color.clear
+                                .frame(width: 1)  // Set width to the same value as the padding above
+                                .edgesIgnoringSafeArea(.all), alignment: .trailing
+                        )
                     }
-                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-                    .refreshable {
-                        viewModel.fetchPosts()
+                } else {
+                    GeometryReader { geometry in
+                        TabView(selection: $selectedFeed) {
+                            ForEach(FeedType.allCases, id: \.self) { feedType in
+                                ScrollView(showsIndicators: false) {
+                                    LazyVStack(alignment: .leading, spacing: 10) {
+                                        ForEach(viewModel.posts.sorted(by: { $0.timestamp > $1.timestamp }).filter(isPostTypeVisible)) { post in
+                                            PostRow(post: post, selectedFeed: $selectedFeed)
+                                                .environmentObject(viewModel)
+                                                .environmentObject(homePageViewModel)
+                                                .environmentObject(settingsViewModel)
+                                        }
+                                    }
+                                }
+                                .tag(feedType)
+                            }
+                        }
+                        .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                        .refreshable {
+                            viewModel.fetchPosts(){
+                                viewModel.isLoading = true
+                                viewModel.fetchPosts() {
+                                    viewModel.isLoading = false
+                                }
+                            }
+                        }
+                        .padding(.trailing, 1)  // Add some padding to the right side of the ScrollView
+                        .background(Color.clear)
+                        .overlay(  // Add an overlay to the right side of the ScrollView
+                            Color.clear
+                                .frame(width: 1)  // Set width to the same value as the padding above
+                                .edgesIgnoringSafeArea(.all), alignment: .trailing
+                        )
                     }
-                    .padding(.trailing, 1)  // Add some padding to the right side of the ScrollView
-                    .background(Color.clear)
-                    .overlay(  // Add an overlay to the right side of the ScrollView
-                        Color.clear
-                            .frame(width: 1)  // Set width to the same value as the padding above
-                            .edgesIgnoringSafeArea(.all), alignment: .trailing
-                    )
                 }
+                customToolbar()
             }
-            customToolbar()
         }
         .background(Color.clear)
         .sheet(isPresented: $isPresentingCreatePostView) {
             CreatePostView().environmentObject(viewModel)
         }
+        
     }
+    
 }
 
 extension View {

@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import FirebaseAuth
+
 struct AccountProfileView: View {
     let accountId: String
     @StateObject var viewModel: AccountProfileViewModel
@@ -166,7 +167,7 @@ struct AccountProfileView: View {
                 // User Posts
                 Spacer()
                 ScrollView {
-                    VStack(alignment: .leading, spacing: 10) {
+                    LazyVStack(alignment: .leading, spacing: 10) {
                         if viewModel.userPosts.isEmpty {
                             Text("No posts yet")
                                 .foregroundColor(.white)

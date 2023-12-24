@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import Firebase
+import Combine
 
 struct MainAppView: View {
     @EnvironmentObject var authViewModel: AuthenticationViewModel
@@ -30,7 +31,11 @@ struct MainAppView: View {
             .environmentObject(discoverViewModel)
             .environmentObject(inboxViewModel)
             .onAppear {
-                kobraViewModel.fetchPosts()
+                kobraViewModel.fetchPosts(){
+                    kobraViewModel.isLoading = true
+                    kobraViewModel.fetchPosts() {
+                        kobraViewModel.isLoading = false
+                    }}
                 notificationViewModel.fetchNotifications()
                 discoverViewModel.fetchPosts()
                 discoverViewModel.fetchAccounts()

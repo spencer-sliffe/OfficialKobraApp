@@ -12,7 +12,8 @@ struct ChatView: View {
     @EnvironmentObject var settingsViewModel: SettingsViewModel
     @State private var messageText = ""
     @State private var isAtBottom = true
-    
+    @State private var keyboardHeight: CGFloat = 0
+
     var body: some View {
         VStack(spacing: 0) {
             ScrollView {
@@ -31,10 +32,20 @@ struct ChatView: View {
                     }
                 }
             }
-            
+
             MessageInputView(text: $messageText) {
                 viewModel.sendMessage(text: messageText)
                 messageText = ""
+            }
+        }
+        .onAppear {
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { notification in
+                if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+                    keyboardHeight = keyboardFrame.height
+                }
+            }
+            NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
+                keyboardHeight = 0
             }
         }
         .navigationBarTitle(Text(viewModel.chatName), displayMode: .inline)
@@ -51,7 +62,7 @@ struct ChatView: View {
             )
         )
     }
-    
+
     private func scrollToBottom(with scrollViewProxy: ScrollViewProxy) {
         if let lastMessage = viewModel.messages.last {
             scrollViewProxy.scrollTo(lastMessage.id, anchor: .bottom)
@@ -77,3 +88,4 @@ struct MessageInputView: View {
         .padding(.horizontal)
     }
 }
+

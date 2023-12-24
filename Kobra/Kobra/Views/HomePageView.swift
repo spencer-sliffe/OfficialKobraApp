@@ -10,9 +10,7 @@ import Foundation
 
 struct HomePageView: View {
     @State private var selectedTab = 3
-    @State private var previousTab = 3
-    @State private var viewsCache: [Int: AnyView] = [:]
-    
+
     @EnvironmentObject var authViewModel: AuthenticationViewModel
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
     @EnvironmentObject private var kobraViewModel: KobraViewModel
@@ -21,7 +19,7 @@ struct HomePageView: View {
     @EnvironmentObject private var accountViewModel: AccountViewModel
     @EnvironmentObject private var discoverViewModel: DiscoverViewModel
     @EnvironmentObject private var inboxViewModel: InboxViewModel
-    
+
     var body: some View {
         NavigationView {
             VStack {
@@ -35,10 +33,9 @@ struct HomePageView: View {
                 .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                 .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .never))
                 .onChange(of: selectedTab) { newValue in
-                    if previousTab == 4 {
+                    if selectedTab == 4 {
                         notificationViewModel.markAllAsSeen()
                     }
-                    previousTab = newValue
                 }
                 CustomTabView(selectedTab: $selectedTab)
                     .environmentObject(notificationViewModel)
@@ -62,42 +59,15 @@ struct HomePageView: View {
             )
         }
     }
-    
+
     func hideKeyboard() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
-    
-    private func getIcon(for index: Int) -> String {
-        switch index {
-        case 0:
-            return "gear"
-        case 1:
-            return "person"
-        case 2:
-            return "doc.text.magnifyingglass"
-        case 3:
-            return "house"
-        case 4:
-            return "bell"
-        case 5:
-            return "envelope"
-        case 6:
-            return "leaf"
-        default:
-            return "questionmark"
-        }
-    }
-    
+
     private func getView(for index: Int) -> some View {
-        viewsCache[index] ?? createAndCacheView(for: index)
+        generateView(for: index)
     }
-    
-    private func createAndCacheView(for index: Int) -> AnyView {
-        let newView = generateView(for: index)
-        viewsCache[index] = newView
-        return newView
-    }
-    
+
     private func generateView(for index: Int) -> AnyView {
         switch index {
         case 0:
@@ -108,10 +78,7 @@ struct HomePageView: View {
                 .environmentObject(homePageViewModel)
                 .environmentObject(settingsViewModel)
                 .environmentObject(kobraViewModel)
-                .environmentObject(accountViewModel)
-                .onAppear() {
-                    accountViewModel.fetchAccount()
-                })
+                .environmentObject(accountViewModel))
         case 2:
             return AnyView(DiscoverView()
                 .environmentObject(homePageViewModel)
@@ -119,7 +86,6 @@ struct HomePageView: View {
                 .environmentObject(discoverViewModel)
                 .environmentObject(kobraViewModel)
                 .onTapGesture {
-                    // dismiss keyboard
                     hideKeyboard()
                 })
         case 3:
@@ -138,7 +104,6 @@ struct HomePageView: View {
                 .environmentObject(homePageViewModel)
                 .environmentObject(inboxViewModel)
                 .environmentObject(settingsViewModel))
-            
         case 6:
             return AnyView(FoodView()
                 .environmentObject(homePageViewModel))

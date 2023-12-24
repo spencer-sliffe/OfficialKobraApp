@@ -21,7 +21,8 @@ class KobraViewModel: ObservableObject {
     @Published var uploadProgress: Double = 0.0
     @Published var isUploadInProgress: Bool = false
     @Published var currentlyPlaying: AVPlayer?
-    
+    @Published var isLoading = false
+
     func uploadImage(_ image: UIImage, postId: String, completion: @escaping (Result<String, Error>) -> Void) {
         isUploadInProgress = true
         postManager.uploadImage(image, postId: postId, progress: { [weak self] progress in
@@ -51,7 +52,7 @@ class KobraViewModel: ObservableObject {
     }
     
     
-    func fetchPosts() {
+    func fetchPosts(completion: @escaping () -> Void) {
         postManager.fetchPosts { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
@@ -60,6 +61,7 @@ class KobraViewModel: ObservableObject {
                 case .failure(let error):
                     print("Error fetching posts: \(error.localizedDescription)")
                 }
+                completion() // Call the completion closure here
             }
         }
     }
@@ -99,7 +101,7 @@ class KobraViewModel: ObservableObject {
             DispatchQueue.main.async {
                 switch result {
                 case .success:
-                    self?.fetchPosts()
+                    self?.fetchPosts(){}
                     completion?(.success(()))
                 case .failure(let error):
                     print("Error adding post: \(error.localizedDescription)")
@@ -137,7 +139,7 @@ class KobraViewModel: ObservableObject {
                     let notification = Notification(id: id, receiverId: receiverId, senderId: senderId, type: notificationType, timestamp: timestamp, seen: seen)
                     self?.sendLikeNotification(notification)
                 }
-                self?.fetchPosts()
+                self?.fetchPosts(){}
             } else {
                 print("Error fetching account data: \(error?.localizedDescription ?? "Unknown error")")
             }
@@ -173,7 +175,7 @@ class KobraViewModel: ObservableObject {
                     self?.sendDislikeNotification(notification)
                     
                 }
-                self?.fetchPosts()
+                self?.fetchPosts(){}
             } else {
                 print("Error fetching account data: \(error?.localizedDescription ?? "Unknown error")")
             }
@@ -183,7 +185,7 @@ class KobraViewModel: ObservableObject {
     
     func updateComments(_ post: Post, comment: Comment){
         postManager.updateComments(post, comment: comment)
-        fetchPosts()
+        fetchPosts(){}
     }
     
     func deleteComment(_ comment: Comment, from post: Post, completion: @escaping (Result<Void, Error>) -> Void) {
@@ -191,7 +193,7 @@ class KobraViewModel: ObservableObject {
             DispatchQueue.main.async {
                 switch result {
                 case .success:
-                    self?.fetchPosts()
+                    self?.fetchPosts(){}
                     completion(.success(()))
                 case .failure(let error):
                     print("Error deleting comment: \(error.localizedDescription)")
@@ -206,7 +208,7 @@ class KobraViewModel: ObservableObject {
             DispatchQueue.main.async {
                 switch result {
                 case .success:
-                    self?.fetchPosts()
+                    self?.fetchPosts(){}
                 case .failure(let error):
                     print("Error updating post: \(error.localizedDescription)")
                 }
@@ -229,7 +231,7 @@ class KobraViewModel: ObservableObject {
                             }
                         }
                     }
-                    self?.fetchPosts()
+                    self?.fetchPosts(){}
                 case .failure(let error):
                     print("Error deleting post: \(error.localizedDescription)")
                 }

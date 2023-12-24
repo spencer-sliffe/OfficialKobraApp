@@ -321,15 +321,27 @@ struct PostRow: View {
         VStack(alignment: .leading, spacing: 2) {
             VStack(alignment:.center){
                 if let imageURL = imageURL, let url = URL(string: imageURL) {
-                    AsyncImage(url: url) { image in
-                        image
-                            .resizable()
-                            .scaledToFit()
-                            .cornerRadius(5)
-                            .contentShape(Rectangle())
-                    } placeholder: {
-                        ProgressView()
-                            .accentColor(.white)
+                    AsyncImage(url: url) { phase in
+                        switch phase {
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .scaledToFit()
+                                .cornerRadius(5)
+                                .contentShape(Rectangle())
+                        case .failure(_):
+                            Image(systemName: "photo")
+                                .resizable()
+                                .scaledToFit()
+                                .cornerRadius(5)
+                                .contentShape(Rectangle())
+                        case .empty:
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                                .scaleEffect(1.5, anchor: .center)
+                        @unknown default:
+                            EmptyView()
+                        }
                     }
                     .frame(maxHeight: 300)
                     .fullScreenCover(isPresented: $showingFullImage) {
@@ -408,18 +420,27 @@ struct PostRow: View {
             }
             
             if let imageURL = imageURL, let url = URL(string: imageURL) {
-                AsyncImage(url: url) { image in
-                    image
-                        .resizable()
-                        .scaledToFit()
-                        .cornerRadius(5)
-                        .contentShape(Rectangle())
-                    /*.onLongPressGesture {
-                     showingFullImage = true
-                     }*/
-                } placeholder: {
-                    ProgressView()
-                        .accentColor(.white)
+                AsyncImage(url: url) { phase in
+                    switch phase {
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .scaledToFit()
+                            .cornerRadius(5)
+                            .contentShape(Rectangle())
+                    case .failure(_):
+                        Image(systemName: "photo")
+                            .resizable()
+                            .scaledToFit()
+                            .cornerRadius(5)
+                            .contentShape(Rectangle())
+                    case .empty:
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                            .scaleEffect(1.5, anchor: .center)
+                    @unknown default:
+                        EmptyView()
+                    }
                 }
                 .frame(maxHeight: 300)
                 /*.fullScreenCover(isPresented: $showingFullImage) {

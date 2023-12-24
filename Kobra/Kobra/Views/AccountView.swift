@@ -48,27 +48,30 @@ struct AccountView: View {
 
             VStack(alignment: .center, spacing: 4) {
                 displayNameSection(displayName: account.username)
-                    .padding(.leading, -5)
+                    .padding(.leading, -15)
                 bioSection(account: account)
                 followerFollowingSection(account: account)
-                    .padding(.leading, -5)
+                    .padding(.leading, -15)
             }
             // Ensure the padding is not causing the shift to the right
         }
         // Adjust this padding or remove it to fix alignment issues
-        .frame(height: geometry.size.height * 0.18) // 20% of the screen height for account details
+        .frame(height: geometry.size.height * 0.14) // 20% of the screen height for account details
     }
 
     
     private func postsListView(geometry: GeometryProxy) -> some View {
         ScrollView {
-            VStack {
+            LazyVStack {
                 ForEach(viewModel.userPosts.sorted(by: { $0.timestamp.compare($1.timestamp) == .orderedDescending })) { post in
                     AccountPostRow(post: post)
                         .background(Color.clear)
                         .environmentObject(viewModel)
                 }
             }
+        }
+        .refreshable {
+            viewModel.fetchAccount()
         }
         .frame(width: geometry.size.width) // 75% of the screen height for posts
     }
@@ -152,7 +155,7 @@ struct AccountView: View {
     @ViewBuilder
     private func bioSection(account: Account) -> some View {
         if isEditingBio {
-            CustomTextField(text: $bioInput, placeholder: "Bio", characterLimit: 125)
+            CustomTextField(text: $bioInput, placeholder: "Bio", characterLimit: 80)
             HStack {
                 Button(action: {
                     isEditingBio = false
@@ -172,8 +175,7 @@ struct AccountView: View {
             HStack{
                 if let bio = account.bio {
                     Text(bio)
-                        .font(bio.count > 63 ? .callout : .subheadline) // Change the font size as needed
-                        .font(.caption)
+                        .font(.caption) // Change the font size as needed
                         .foregroundColor(.white)
                         .multilineTextAlignment(.center)
                         .frame(maxWidth: .infinity) // Ensure the bio text uses the full width available

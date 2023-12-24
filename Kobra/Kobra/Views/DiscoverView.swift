@@ -14,13 +14,14 @@ struct DiscoverView: View {
     @State var searchText = ""
     @EnvironmentObject private var homePageViewModel: HomePageViewModel
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
+    @State private var isKeyboardVisible = false
 
     var body: some View {
         VStack(spacing: 0) {
             AccountSearchBar(text: $searchText)
             ScrollView {
                 // Only show the list when searchText is not empty
-                if !searchText.isEmpty {
+                if isKeyboardVisible {
                     LazyVStack(spacing: 0) {
                         ForEach(viewModel.searchResults.filter({$0.username.lowercased().contains(searchText.lowercased())}), id: \.id) { account in
                             NavigationLink(
@@ -28,15 +29,6 @@ struct DiscoverView: View {
                                     .environmentObject(homePageViewModel)
                                     .environmentObject(settingsViewModel)
                                     .environmentObject(kobraViewModel)
-                                    .isInView { isInView in
-                                        // Perform action depending on whether the view is in view or not
-                                        if isInView {
-                                            homePageViewModel.accProViewActive = true
-                                        } else {
-                                            print("AccountProfileView is not in view")
-                                            homePageViewModel.accProViewActive = false
-                                        }
-                                    }
                                     .onAppear {
                                         // Clear out the search state when navigating away
                                         viewModel.clearSearchResults()
@@ -75,6 +67,7 @@ struct DiscoverView: View {
                 }
             }
             .onAppear {
+                setupKeyboardNotifications()
                 if viewModel.accounts.isEmpty {
                     viewModel.fetchAccounts()
                 }
@@ -83,10 +76,23 @@ struct DiscoverView: View {
                 viewModel.searchAccounts(query: newValue)
             }
         }
+        .onDisappear {
+            NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+            NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        }
     }
     // function to hide keyboard
     func hideKeyboard() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+    
+    private func setupKeyboardNotifications() {
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { _ in
+            self.isKeyboardVisible = true
+        }
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
+            self.isKeyboardVisible = false
+        }
     }
 }
 
