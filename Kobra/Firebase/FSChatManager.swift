@@ -181,7 +181,38 @@ class FSChatManager {
         }
     }
 
+    func markMessagesAsRead(accountId: String, chatId: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        // Locate the specific chat for the given accountId
+        let messagesRef = db.collection("Accounts").document(accountId).collection("Inbox").document(chatId).collection("messages")
 
+        // Retrieve all unread messages
+        messagesRef.whereField("isRead", isEqualTo: false).getDocuments { (querySnapshot, error) in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+
+            guard let documents = querySnapshot?.documents else {
+                completion(.success(())) // No unread messages
+                return
+            }
+
+            // Update 'isRead' field for each unread message
+            for document in documents {
+                document.reference.updateData(["isRead": true]) { error in
+                    if let error = error {
+                        completion(.failure(error))
+                        return
+                    }
+                }
+            }
+
+            // If all updates are successful
+            completion(.success(()))
+        }
+    }
+
+    
     private func addMessageToParticipant(_ message: Message, participantAccountId: String, chatId: String, completion: @escaping (Result<Void, Error>) -> Void) {
         // Use participantAccountId to locate the specific chat and add the message
         let messagesRef = db.collection("Accounts").document(participantAccountId).collection("Inbox").document(chatId).collection("messages")

@@ -95,10 +95,14 @@ struct HomePageView: View {
                 .environmentObject(settingsViewModel))
         case 4:
             return AnyView(NotificationView()
+                .onAppear(){
+                    notificationViewModel.markAllAsSeen()
+                }
                 .environmentObject(kobraViewModel)
                 .environmentObject(homePageViewModel)
                 .environmentObject(settingsViewModel)
                 .environmentObject(notificationViewModel))
+            
         case 5:
             return AnyView(InboxView()
                 .environmentObject(homePageViewModel)
