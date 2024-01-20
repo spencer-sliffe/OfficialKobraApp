@@ -196,6 +196,7 @@ struct AccountProfileView: View {
         .navigationBarItems(
             leading: Button(action: {
                 presentationMode.wrappedValue.dismiss() // Dismiss the current view
+                homePageViewModel.accProViewActive = false
             }) {
                 Image(systemName: "arrow.left") // Use the back arrow icon
                     .foregroundColor(.white)
@@ -231,6 +232,7 @@ struct AccountProfileView: View {
                 if gesture.translation.width > 100 {
                     // Swipe to the right, dismiss the view
                     presentationMode.wrappedValue.dismiss()
+                    homePageViewModel.accProViewActive = false
                 }
             }
         )

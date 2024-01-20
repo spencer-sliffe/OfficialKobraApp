@@ -145,7 +145,7 @@ struct AccountView: View {
     @ViewBuilder
     private func displayNameSection(displayName: String) -> some View {
         Text(displayName)
-            .font(.headline)
+            .font(.title3)
             .fontWeight(.bold)
             .foregroundColor(.white)
             .lineLimit(1)

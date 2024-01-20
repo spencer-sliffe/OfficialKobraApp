@@ -437,8 +437,6 @@ class FSPostManager {
         }
     }
     
-    
-    
     func updateLikeCount(_ post: Post, likeCount: Int, userId: String, isAdding: Bool) {
         let postId = post.id
         let query = db.collection(postsCollection).whereField("id", isEqualTo: postId.uuidString)
@@ -657,5 +655,4 @@ class FSPostManager {
             }
         }
     }
-
 }
