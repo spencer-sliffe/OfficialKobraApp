@@ -33,6 +33,10 @@ struct DiscoverView: View {
                                         // Clear out the search state when navigating away
                                         viewModel.clearSearchResults()
                                         hideKeyboard()
+                                        homePageViewModel.accProViewActive = true
+                                    }
+                                    .onDisappear {
+                                        homePageViewModel.accProViewActive = false
                                     },
                                 label: {
                                     AccountCell(account: account)
