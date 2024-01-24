@@ -28,6 +28,7 @@
 		4528556229B1AED800F088CD /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4528556129B1AED800F088CD /* AuthenticationViewModel.swift */; };
 		452CB79A2A030BDE001D8195 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452CB7992A030BDE001D8195 /* CustomButton.swift */; };
 		453314062A23245800DEE73E /* CreateFoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453314052A23245800DEE73E /* CreateFoodView.swift */; };
+		453C7ECC2B61AF2200BFD478 /* ChangeBioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453C7ECB2B61AF2200BFD478 /* ChangeBioView.swift */; };
 		4543FE6129DB4A0C003B3CCC /* CustomTextFieldUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543FE6029DB4A0C003B3CCC /* CustomTextFieldUI.swift */; };
 		4543FE6329DB4A24003B3CCC /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543FE6229DB4A24003B3CCC /* CustomTextField.swift */; };
 		4546248E2A6849EE0062316A /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4546248D2A6849EE0062316A /* ImagePicker.swift */; };
@@ -122,6 +123,7 @@
 		4528556129B1AED800F088CD /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		452CB7992A030BDE001D8195 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		453314052A23245800DEE73E /* CreateFoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFoodView.swift; sourceTree = "<group>"; };
+		453C7ECB2B61AF2200BFD478 /* ChangeBioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeBioView.swift; sourceTree = "<group>"; };
 		4543FE6029DB4A0C003B3CCC /* CustomTextFieldUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFieldUI.swift; sourceTree = "<group>"; };
 		4543FE6229DB4A24003B3CCC /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		4546248D2A6849EE0062316A /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
@@ -394,6 +396,7 @@
 				451CAE002A55DBB3009BC1F7 /* NotificationView.swift */,
 				451CAE0A2A5646B2009BC1F7 /* PostView.swift */,
 				459FC6682B1FB19100DD1C30 /* CreateChatView.swift */,
+				453C7ECB2B61AF2200BFD478 /* ChangeBioView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -569,6 +572,7 @@
 				45CAAA2429DA7EF500BBD9FE /* SwipeableTabView.swift in Sources */,
 				4592E55D29BD361200FF76E2 /* ChatViewModel.swift in Sources */,
 				451CAE052A55DDF5009BC1F7 /* FSNotificationManager.swift in Sources */,
+				453C7ECC2B61AF2200BFD478 /* ChangeBioView.swift in Sources */,
 				4546248E2A6849EE0062316A /* ImagePicker.swift in Sources */,
 				45C7172029C63B0E00679626 /* InboxView.swift in Sources */,
 				451CADFF2A55D360009BC1F7 /* Notification.swift in Sources */,

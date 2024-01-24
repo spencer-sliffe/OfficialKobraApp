@@ -73,7 +73,7 @@ struct AccountView: View {
         .refreshable {
             viewModel.fetchAccount()
         }
-        .frame(width: geometry.size.width) // 75% of the screen height for posts
+        .frame(width: geometry.size.width)                  // 75% of the screen height for posts
     }
     
     private func loadingView() -> some View {
@@ -165,7 +165,7 @@ struct AccountView: View {
                 }
                 Button(action: {
                     isEditingBio = false
-                    bioInput = "" // Clear the bio input when deleting
+                    bioInput = ""                           // Clear the bio input when deleting
                     viewModel.deleteBio()
                 }) {
                     Text("Delete")
@@ -175,16 +175,16 @@ struct AccountView: View {
             HStack{
                 if let bio = account.bio {
                     Text(bio)
-                        .font(.caption) // Change the font size as needed
+                        .font(.caption)                     // Change the font size as needed
                         .foregroundColor(.white)
                         .multilineTextAlignment(.center)
-                        .frame(maxWidth: .infinity) // Ensure the bio text uses the full width available
+                        .frame(maxWidth: .infinity)         // Ensure the bio text uses the full width available
                 }
                 Button(action: {
                     isEditingBio = true
                     bioInput = account.bio ?? ""
                 }) {
-                    Image(systemName: "pencil.circle") // You can change "pencil.circle" to any image name you prefer.
+                    Image(systemName: "pencil.circle")      // You can change "pencil.circle" to any image name you prefer.
                         .font(.caption)
                         .foregroundColor(.white)
                 }
