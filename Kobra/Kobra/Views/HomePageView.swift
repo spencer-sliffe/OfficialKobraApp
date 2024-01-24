@@ -163,8 +163,7 @@ struct CustomTabView: View {
                     .frame(width: selectedTab == tabIndex ? 28 : 24, height: selectedTab == tabIndex ? 26 : 22)
                     .foregroundColor(selectedTab == tabIndex ? .yellow : .white)
                 
-                // add a badge for notifications
-                if tabIndex == 4 && notificationViewModel.unseenNotificationsCount > 0 {
+                if tabIndex == 4 && notificationViewModel.unseenNotificationsCount > 0 {            // add a badge for notifications
                     Text("\(notificationViewModel.unseenNotificationsCount)")
                         .font(.caption2)
                         .foregroundColor(.white)
