@@ -51,7 +51,9 @@ struct AccountProfilePostRow: View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
                 NavigationLink(destination: AccountProfileView(accountId: post.posterId)
-                    .environmentObject(homePageViewModel)) {
+                    .environmentObject(homePageViewModel)
+                    .environmentObject(kobraViewModel)
+                    .environmentObject(settingsViewModel)) {
                         getPosterName()
                 }
                 Spacer()

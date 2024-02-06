@@ -190,13 +190,17 @@ struct AccountProfileView: View {
             }
             Spacer()
         }
-
-        .navigationBarTitle("", displayMode: .inline)
+        .onAppear {
+            // When the view appears, set accProViewActive to true
+            homePageViewModel.accProViewActive = true
+            print("accproveviewactive true")
+        }
         .navigationBarBackButtonHidden(true) // Hide the default back button
         .navigationBarItems(
             leading: Button(action: {
-                presentationMode.wrappedValue.dismiss() // Dismiss the current view
                 homePageViewModel.accProViewActive = false
+                print("accproveviewactive false")
+                presentationMode.wrappedValue.dismiss() // Dismiss the current view
             }) {
                 Image(systemName: "arrow.left") // Use the back arrow icon
                     .foregroundColor(.white)
@@ -219,20 +223,13 @@ struct AccountProfileView: View {
             .edgesIgnoringSafeArea(.all)
         )
         .foregroundColor(.white)
-        .onAppear {
-            // When the view appears, set accProViewActive to true
-            homePageViewModel.accProViewActive = true
-        }
-        .onDisappear {
-            // When the view disappears (e.g., when navigating away), set accProViewActive to false
-            homePageViewModel.accProViewActive = false
-        }
         .gesture(DragGesture()
             .onEnded { gesture in
                 if gesture.translation.width > 20 {
                     // Swipe to the right, dismiss the view
-                    presentationMode.wrappedValue.dismiss()
                     homePageViewModel.accProViewActive = false
+                    print("accproveviewactive false")
+                    presentationMode.wrappedValue.dismiss()
                 }
             }
         )
