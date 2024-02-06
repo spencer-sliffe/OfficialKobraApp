@@ -142,8 +142,6 @@ class FSPostManager {
             progress(percentComplete)
         }
     }
-
-
     
     private func createPostFrom(data: [String: Any]) -> Post {
         let id = UUID(uuidString: data["id"] as? String ?? "") ?? UUID()

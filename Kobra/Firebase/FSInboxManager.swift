@@ -11,7 +11,7 @@ class FSInboxManager {
     private let db = Firestore.firestore()
     static let shared = FSInboxManager()
     private let accountCollection = "Accounts"
-
+    
     private func fetchInbox(accountId: String, completion: @escaping (Result<[Chat], Error>) -> Void) {
         let query = db.collection("Accounts").document(accountId).collection("Inbox")
         query.getDocuments { (querySnapshot, error) in
@@ -37,7 +37,7 @@ class FSInboxManager {
             case .success(let chats):
                 let group = DispatchGroup()
                 var totalUnreadCount = 0
-
+                
                 for chat in chats {
                     group.enter()
                     FSChatManager.shared.fetchMessages(accountId: accountId, chatId: chat.id.uuidString) { result in
@@ -51,7 +51,7 @@ class FSInboxManager {
                         group.leave()
                     }
                 }
-
+                
                 group.notify(queue: .main) {
                     completion(.success((chats, totalUnreadCount)))
                 }
@@ -60,26 +60,25 @@ class FSInboxManager {
     }
     
     /*private func fetchProfilePicture(accountId: String, completion: @escaping (Result<String, Error>)-> String) {
-        let query = db.collection("Accounts").document(accountId)
-        query.getDocuments { (querySnapshot, error) in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            var profilePicture = ""
-            
-        }
-    }*/
+     let query = db.collection("Accounts").document(accountId)
+     query.getDocuments { (querySnapshot, error) in
+     if let error = error {
+     completion(.failure(error))
+     return
+     }
+     var profilePicture = ""
+     
+     }
+     }*/
     
     private func createChatFrom(data: [String: Any]) -> Chat {
         let id = UUID(uuidString: data["id"] as? String ?? "") ?? UUID()
         let participants = data["participants"] as? [String] ?? [""]
         let lastMessage = data["lastMessage"] as? String ?? ""
         let timestamp = (data["timestamp"] as? Timestamp)?.dateValue() ?? Date()
-        let username = data["username"] as? String ?? ""
         let profilePicture = data["profilePicture"] as? String ?? ""
         
-        return Chat(id: id, participants: participants, lastMessage: lastMessage, timestamp: timestamp, username: username, profilePicture: profilePicture)
+        return Chat(id: id, participants: participants, lastMessage: lastMessage, timestamp: timestamp, profilePicture: profilePicture)
     }
     
     func addChat(_ chat: Chat, accountId: String, completion: @escaping (Result<Void, Error>) -> Void) {
@@ -89,22 +88,22 @@ class FSInboxManager {
                 completion(.failure(error))
                 return
             }
-
+            
             guard let document = documentSnapshot, let initiatorUsername = document.data()?["username"] as? String else {
                 completion(.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Account not found or username missing"])))
                 return
             }
-
+            
             // Continue with adding the chat
             self?.processAddChat(chat, initiatorUsername: initiatorUsername, initiatorAccountId: accountId, completion: completion)
         }
     }
-
+    
     private func processAddChat(_ chat: Chat, initiatorUsername: String, initiatorAccountId: String, completion: @escaping (Result<Void, Error>) -> Void) {
         let group = DispatchGroup()
         var accountIds: [String: String] = [:] // Mapping usernames to account IDs
         var firstError: Error?
-
+        
         // Fetch account IDs for each participant
         for username in chat.participants {
             group.enter()
@@ -120,22 +119,22 @@ class FSInboxManager {
                 group.leave()
             }
         }
-
+        
         // After fetching all account IDs, add chat to each participant's Inbox
         group.notify(queue: .main) {
             if let error = firstError {
                 completion(.failure(error))
                 return
             }
-
+            
             // Process chat for non-initiator participants
             for (username, participantAccountId) in accountIds where participantAccountId != initiatorAccountId {
                 group.enter()
-
+                
                 var modifiedChat = chat
                 // Include the initiator's username and exclude the current participant's username
                 modifiedChat.participants = chat.participants.filter { $0 != username } + [initiatorUsername]
-
+                
                 let data = self.convertChatToData(modifiedChat)
                 self.db.collection("Accounts").document(participantAccountId).collection("Inbox").addDocument(data: data) { error in
                     if let error = error, firstError == nil {
@@ -144,7 +143,7 @@ class FSInboxManager {
                     group.leave()
                 }
             }
-
+            
             // Add the chat to the initiator's own Inbox
             group.enter()
             var initiatorChat = chat
@@ -157,7 +156,7 @@ class FSInboxManager {
                 }
                 group.leave()
             }
-
+            
             group.notify(queue: .main) {
                 if let error = firstError {
                     completion(.failure(error))
@@ -167,7 +166,6 @@ class FSInboxManager {
             }
         }
     }
-
 
     private func fetchAccountIdForUsername(username: String, completion: @escaping (Result<String, Error>) -> Void) {
         db.collection("Accounts").whereField("username", isEqualTo: username).getDocuments { (querySnapshot, error) in
@@ -190,7 +188,6 @@ class FSInboxManager {
             "participants": chat.participants,
             "lastMessage": chat.lastMessage ?? "",
             "timestamp": chat.timestamp,
-            "username": chat.username,
             "profilePicture": chat.profilePicture ?? ""
         ]
         return data

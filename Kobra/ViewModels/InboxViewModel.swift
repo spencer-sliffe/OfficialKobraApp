@@ -48,8 +48,7 @@ class InboxViewModel: ObservableObject {
             return
         }
         
-        let finalChatName = participants.count > 1 ? chatName ?? "Group Chat" : participants.first ?? "New Chat"
-        let newChat = Chat(id: UUID(), participants: participants, lastMessage: "", timestamp: Date(), username: finalChatName, profilePicture: "")
+        let newChat = Chat(id: UUID(), participants: participants, lastMessage: "", timestamp: Date(), profilePicture: "")
         
         inboxManager.addChat(newChat, accountId: user.uid) { [weak self] result in
             DispatchQueue.main.async {

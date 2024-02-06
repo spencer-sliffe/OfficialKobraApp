@@ -22,8 +22,8 @@ struct ChatCell: View {
                 .foregroundColor(.gray) // Placeholder color
             
             VStack(alignment: .leading, spacing: 4) {
-                // Username
-                Text(chat.username)
+                // ChatName
+                Text(chat.formattedParticipants) // Use formattedParticipants
                     .font(.headline)
                     .foregroundColor(.primary)
                 
@@ -62,3 +62,4 @@ struct ChatCell: View {
         )
     }
 }
+

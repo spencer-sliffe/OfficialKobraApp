@@ -93,7 +93,6 @@ struct CreatePostView: View {
                     }
                     .padding()
                 }
-                
                 if let image = selectedImage {
                     Image(uiImage: image)
                         .resizable()
@@ -105,7 +104,6 @@ struct CreatePostView: View {
                         .frame(maxWidth: 200, maxHeight: 200)
                         .shadow(radius: 10)
                 }
-                
                 Button(action: {
                     isMediaPickerPresented = true
                 }) {
@@ -122,7 +120,6 @@ struct CreatePostView: View {
                 .sheet(isPresented: $isMediaPickerPresented, onDismiss: loadMedia) {
                     ImageVideoPicker(image: $selectedImage, video: $selectedVideoURL)
                 }
-                
                 Spacer()
                 if kobraViewModel.isUploadInProgress {
                     VStack {
@@ -136,7 +133,6 @@ struct CreatePostView: View {
                             .padding()
                     }
                 }
-                
                 Button(action: {
                     addPostAction()
                 })  {
@@ -155,7 +151,6 @@ struct CreatePostView: View {
                 .disabled(!isPostDataValid) // Disable the button if post data is not valid
                 .opacity(isPostDataValid ? 1 : 0.5) // Reduce opacity if post data is not valid
                 .padding()
-                
             }
             .background(
                 LinearGradient(

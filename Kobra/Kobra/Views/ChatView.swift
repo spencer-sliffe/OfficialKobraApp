@@ -39,7 +39,6 @@ struct ChatView: View {
             }
         }
         .onAppear {
-            viewModel.markMessagesAsRead()
             NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { notification in
                 if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
                     keyboardHeight = keyboardFrame.height
@@ -49,7 +48,7 @@ struct ChatView: View {
                 keyboardHeight = 0
             }
         }
-        .navigationBarTitle(Text(viewModel.chatName), displayMode: .inline)
+        .navigationBarTitle(Text(viewModel.formattedChatName), displayMode: .inline) 
         .background(
             LinearGradient(
                 gradient: Gradient(
@@ -62,6 +61,9 @@ struct ChatView: View {
                 endPoint: .bottomTrailing
             )
         )
+        .onAppear() {
+            viewModel.markMessagesAsRead()
+        }
     }
 
     private func scrollToBottom(with scrollViewProxy: ScrollViewProxy) {

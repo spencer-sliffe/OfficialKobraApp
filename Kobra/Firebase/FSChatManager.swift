@@ -20,12 +20,10 @@ class FSChatManager {
                 completion(.failure(error))
                 return
             }
-
             guard let document = querySnapshot?.documents.first else {
                 completion(.failure(NSError(domain: "", code: 0, userInfo: [NSLocalizedDescriptionKey: "Chat document not found"])))
                 return
             }
-
             // Now fetch messages from the 'messages' subcollection of the found chat document
             let messagesQuery = document.reference.collection("messages")
             messagesQuery.getDocuments { (messagesSnapshot, error) in
@@ -95,7 +93,6 @@ class FSChatManager {
         }
     }
 
-   
     private func createMessageFrom(data: [String: Any]) -> Message {
         let id = UUID(uuidString: data["id"] as? String ?? "") ?? UUID()
         let senderId = data["senderId"] as? String ?? ""
@@ -146,7 +143,6 @@ class FSChatManager {
                             if let error = error, firstError == nil {
                                 firstError = error
                             }
-
                             // Update the 'lastMessage' and 'timestamp' fields of the Chat document
                             document.reference.updateData([
                                 "lastMessage": message.text,
@@ -184,19 +180,16 @@ class FSChatManager {
     func markMessagesAsRead(accountId: String, chatId: String, completion: @escaping (Result<Void, Error>) -> Void) {
         // Locate the specific chat for the given accountId
         let messagesRef = db.collection("Accounts").document(accountId).collection("Inbox").document(chatId).collection("messages")
-
         // Retrieve all unread messages
         messagesRef.whereField("isRead", isEqualTo: false).getDocuments { (querySnapshot, error) in
             if let error = error {
                 completion(.failure(error))
                 return
             }
-
             guard let documents = querySnapshot?.documents else {
                 completion(.success(())) // No unread messages
                 return
             }
-
             // Update 'isRead' field for each unread message
             for document in documents {
                 document.reference.updateData(["isRead": true]) { error in
@@ -206,24 +199,20 @@ class FSChatManager {
                     }
                 }
             }
-
             // If all updates are successful
             completion(.success(()))
         }
     }
 
-    
     private func addMessageToParticipant(_ message: Message, participantAccountId: String, chatId: String, completion: @escaping (Result<Void, Error>) -> Void) {
         // Use participantAccountId to locate the specific chat and add the message
         let messagesRef = db.collection("Accounts").document(participantAccountId).collection("Inbox").document(chatId).collection("messages")
-        
         // Add the new message document to the 'messages' collection
         messagesRef.addDocument(data: self.convertMessageToData(message)) { error in
             if let error = error {
                 completion(.failure(error))
                 return
             }
-            
             // Update the 'lastMessage' and 'timestamp' fields of the Chat document
             let chatRef = self.db.collection("Accounts").document(participantAccountId).collection("Inbox").document(chatId)
             chatRef.updateData([
@@ -239,7 +228,6 @@ class FSChatManager {
         }
     }
 
-    
     private func convertMessageToData(_ message: Message) -> [String: Any] {
         let data: [String: Any] = [
             "id": message.id.uuidString,

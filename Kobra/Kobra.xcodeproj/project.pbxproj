@@ -32,6 +32,7 @@
 		4543FE6129DB4A0C003B3CCC /* CustomTextFieldUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543FE6029DB4A0C003B3CCC /* CustomTextFieldUI.swift */; };
 		4543FE6329DB4A24003B3CCC /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4543FE6229DB4A24003B3CCC /* CustomTextField.swift */; };
 		4546248E2A6849EE0062316A /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4546248D2A6849EE0062316A /* ImagePicker.swift */; };
+		4551D4342B716A7D0053E0BB /* CustomTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4551D4332B716A7D0053E0BB /* CustomTabView.swift */; };
 		455B2B242A317E0800136D6D /* AccountSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455B2B232A317E0800136D6D /* AccountSearchBar.swift */; };
 		455C6E5729D7E72600446520 /* KobraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455C6E5629D7E72600446520 /* KobraViewModel.swift */; };
 		455C6E5929D7E9B700446520 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455C6E5829D7E9B700446520 /* Post.swift */; };
@@ -127,6 +128,7 @@
 		4543FE6029DB4A0C003B3CCC /* CustomTextFieldUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextFieldUI.swift; sourceTree = "<group>"; };
 		4543FE6229DB4A24003B3CCC /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		4546248D2A6849EE0062316A /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		4551D4332B716A7D0053E0BB /* CustomTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabView.swift; sourceTree = "<group>"; };
 		455B2B232A317E0800136D6D /* AccountSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSearchBar.swift; sourceTree = "<group>"; };
 		455C6E5629D7E72600446520 /* KobraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KobraViewModel.swift; sourceTree = "<group>"; };
 		455C6E5829D7E9B700446520 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 				459A36702A6F191B002914CD /* VideoPlayerStatus.swift */,
 				45B26B9F2A7062F5001708C1 /* IsInViewKey.swift */,
 				45AF89932A7AB2CC00DEA4EC /* FeedType.swift */,
+				4551D4332B716A7D0053E0BB /* CustomTabView.swift */,
 			);
 			path = CustomElements;
 			sourceTree = "<group>";
@@ -570,6 +573,7 @@
 				45D5110329D0AB9100290720 /* SettingsView.swift in Sources */,
 				45AF89942A7AB2CD00DEA4EC /* FeedType.swift in Sources */,
 				45CAAA2429DA7EF500BBD9FE /* SwipeableTabView.swift in Sources */,
+				4551D4342B716A7D0053E0BB /* CustomTabView.swift in Sources */,
 				4592E55D29BD361200FF76E2 /* ChatViewModel.swift in Sources */,
 				451CAE052A55DDF5009BC1F7 /* FSNotificationManager.swift in Sources */,
 				453C7ECC2B61AF2200BFD478 /* ChangeBioView.swift in Sources */,

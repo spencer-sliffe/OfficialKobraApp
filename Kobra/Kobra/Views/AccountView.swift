@@ -18,10 +18,10 @@ struct AccountView: View {
     @State private var isShowingImagePicker = false
     @State private var inputImage: UIImage?
     @State private var showingActionSheet = false
-    @State private var isEditingBio = false
     @State private var bioInput: String = ""
     @State private var showFollowerView = false
     @State private var showFollowingView = false
+    @State private var showChangeBioView = false // New state
     
     var body: some View {
         GeometryReader { geometry in
@@ -38,14 +38,22 @@ struct AccountView: View {
                 }
             }
             .navigationBarHidden(true)
+            .sheet(isPresented: $showChangeBioView, onDismiss: {
+                // Perform any necessary actions when ChangeBioView is dismissed
+                viewModel.fetchAccount() // Example: Refresh account data
+            }) {
+                ChangeBioView(bioInput: $bioInput, showChangeBioView: $showChangeBioView)
+                    .environmentObject(viewModel)
+                    .environmentObject(settingsViewModel)
+            }
         }
     }
     
     private func accountDetailsView(account: Account, geometry: GeometryProxy) -> some View {
         HStack(alignment: .top) {
             profilePictureSection(account: account)
-                // Remove any explicit padding here if it's causing the shift
-
+            // Remove any explicit padding here if it's causing the shift
+            
             VStack(alignment: .center, spacing: 4) {
                 displayNameSection(displayName: account.username)
                     .padding(.leading, -15)
@@ -58,7 +66,6 @@ struct AccountView: View {
         // Adjust this padding or remove it to fix alignment issues
         .frame(height: geometry.size.height * 0.14) // 20% of the screen height for account details
     }
-
     
     private func postsListView(geometry: GeometryProxy) -> some View {
         ScrollView {
@@ -154,42 +161,23 @@ struct AccountView: View {
     
     @ViewBuilder
     private func bioSection(account: Account) -> some View {
-        if isEditingBio {
-            CustomTextField(text: $bioInput, placeholder: "Bio", characterLimit: 80)
-            HStack {
-                Button(action: {
-                    isEditingBio = false
-                    viewModel.updateBio(bio: bioInput)
-                }) {
-                    Text("Save")
-                }
-                Button(action: {
-                    isEditingBio = false
-                    bioInput = ""                           // Clear the bio input when deleting
-                    viewModel.deleteBio()
-                }) {
-                    Text("Delete")
-                }
+        HStack{
+            if let bio = account.bio {
+                Text(bio)
+                    .font(bio.count < 40 ? .body : .caption) // Apply different font sizes based on the bio length
+                    .foregroundColor(.white)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)         // Ensure the bio text uses the full width available
             }
-        } else {
-            HStack{
-                if let bio = account.bio {
-                    Text(bio)
-                        .font(.caption)                     // Change the font size as needed
-                        .foregroundColor(.white)
-                        .multilineTextAlignment(.center)
-                        .frame(maxWidth: .infinity)         // Ensure the bio text uses the full width available
-                }
-                Button(action: {
-                    isEditingBio = true
-                    bioInput = account.bio ?? ""
-                }) {
-                    Image(systemName: "pencil.circle")      // You can change "pencil.circle" to any image name you prefer.
-                        .font(.caption)
-                        .foregroundColor(.white)
-                }
+            Button(action: {
+                showChangeBioView = true // Added line to show the ChangeBioView
+            }) {
+                Image(systemName: "pencil.circle")      // You can change "pencil.circle" to any image name you prefer.
+                    .font(.body)
+                    .foregroundColor(.white)
             }
         }
+        .padding(.bottom, 5)
     }
     
     @ViewBuilder
@@ -248,5 +236,3 @@ struct AccountView: View {
         viewModel.updateProfilePicture(image: inputImage)
     }
 }
-
-// Define other custom views like CustomTextField, FollowerView, FollowingView, ImagePicker as needed

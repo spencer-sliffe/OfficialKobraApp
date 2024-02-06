@@ -71,8 +71,7 @@ struct CreateChatView: View {
     }
 
     private func createChat() {
-        let finalChatName = addedUsers.count > 1 ? chatName : addedUsers.first ?? "New Chat"
-        viewModel.addChat(participants: addedUsers, chatName: finalChatName) { result in
+        viewModel.addChat(participants: addedUsers) { result in
             switch result {
             case .success():
                 print("Chat created successfully.")

@@ -14,9 +14,9 @@ struct AccountProfileView: View {
     @StateObject var viewModel: AccountProfileViewModel
     @EnvironmentObject private var settingsViewModel: SettingsViewModel
     @EnvironmentObject private var kobraViewModel: KobraViewModel
+    @EnvironmentObject private var homePageViewModel: HomePageViewModel
     @State var showFollowerView = false
     @State var showFollowingView = false
-    @EnvironmentObject private var homePageViewModel: HomePageViewModel
     @Environment(\.presentationMode) var presentationMode
 
     init(accountId: String) {
@@ -229,7 +229,7 @@ struct AccountProfileView: View {
         }
         .gesture(DragGesture()
             .onEnded { gesture in
-                if gesture.translation.width > 100 {
+                if gesture.translation.width > 20 {
                     // Swipe to the right, dismiss the view
                     presentationMode.wrappedValue.dismiss()
                     homePageViewModel.accProViewActive = false

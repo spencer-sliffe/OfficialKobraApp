@@ -14,9 +14,13 @@ class ChatViewModel: ObservableObject {
     private let chatManager = FSChatManager.shared
     var accountId: String?
     var chatId: String
-    var chatName: String
+    var chatName: [String]
     
-    init(chatId: String, chatName: String) {
+    var formattedChatName: String {
+        return chatName.joined(separator: ", ")
+    }
+    
+    init(chatId: String, chatName: [String]) {
         self.chatId = chatId
         self.chatName = chatName
         fetchCurrentUserId()
@@ -55,7 +59,6 @@ class ChatViewModel: ObservableObject {
             print("Account ID is not set")
             return
         }
-        
         chatManager.markMessagesAsRead(accountId: accountId, chatId: chatId) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
