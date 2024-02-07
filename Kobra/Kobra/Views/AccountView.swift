@@ -23,6 +23,10 @@ struct AccountView: View {
     @State private var showFollowingView = false
     @State private var showChangeBioView = false // New state
     
+    private func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+    
     var body: some View {
         GeometryReader { geometry in
             VStack {
@@ -45,6 +49,9 @@ struct AccountView: View {
                 ChangeBioView(bioInput: $bioInput, showChangeBioView: $showChangeBioView)
                     .environmentObject(viewModel)
                     .environmentObject(settingsViewModel)
+                    .onTapGesture {
+                        hideKeyboard()
+                    }
             }
         }
     }

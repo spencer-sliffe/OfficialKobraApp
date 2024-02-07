@@ -18,6 +18,7 @@ struct ChangeBioView: View {
         VStack {
             ScrollView {
                 CustomTextField(text: $bioInput, placeholder: "New Bio", characterLimit: 80)
+                    .padding(.bottom, 5)
                 HStack {
                     CustomButton(title: "Save", action: {
                         // Save the new bio using updateBio function in AccountViewModel
@@ -27,7 +28,7 @@ struct ChangeBioView: View {
                     })
                 }
             }
-            .padding(.top, 200)
+            .padding(.top, 300)
         }
         .background(
             LinearGradient(
