@@ -22,60 +22,61 @@
 # Current Navigation
 MainAppView (View)
 └─ HomePageView (View)
-        └─ body (some View)
-           └─ NavigationView (StackNavigationViewStyle)
-              └─ ZStack
-        	     └─ TabView (PageTabViewStyle)
-        		├─ SettingsView (Tab)
-        		├─ AccountView (Tab)
-        		|	├─ AccountPostRow (Feed Elements)
-        		|	|	└─ AccountProfileView (SubView)  
-        		|	|		├─ AccountProfilePostRow (Feed Elements)
-        		|	|		├─ FollowerView (SubView)  *See Below for FollowerView Nav/View info*
-        		|	|		└─ FollowingView (SubView) *See Below for FollowerView Nav/View info*
-        		|	├─ FollowerView (SubView)
-        		|	|	└─ FollowCell (List Element)  
-        		|	|		└─ AccountProfileView (SubView)  
-        		|	|			├─ AccountProfilePostRow (Feed Elements)
-        		|	|			|	└─ AccountProfileView (SubView)  *Preceding AccountProfileView has Nav/View info*
-        		|	|			├─ FollowerView (SubView)  *See Preceding FollowerView for Nav/View info*
-        		|	|			├─ FollowingView (SubView) *See Below FollowingView for Nav/View info*
-        		|	├─ FollowingView (SubView)	
-        		|	|	└─ FollowCell (List Element)  
-        		|	|		└─ AccountProfileView (SubView)  
-        		|	|			├─ AccountProfilePostRow (Feed Elements)
-        		|	|			|	└─ AccountProfileView (SubView)  *Preceding AccountProfileView has Nav/View info*
-        		|	|			├─ FollowerView (SubView)  *See Preceding FollowerView for Nav/View info*
-        		|	|			└─ FollowingView (SubView) *See Preceding FollowingView for Nav/View info*
-        		|	└─ ChangeBioView (SubView)	
-        		├─ DiscoverView (Tab)			
-        		|	├─ DiscoverPostRow (SubView)  	
-        		|	|	└─ AccountProfileView (SubView)  
-        		|	|		├─ FollowerView (SubView)  
-        		|	|		└─ FollowingView (SubView) 
-        		|	└─ AccountCell (Searched List Element)  
-        		|		└─ AccountProfileView (SubView)  
-        		|			├─ FollowerView (SubView)  
-        		|			└─ FollowingView (SubView) 
-        		├─ KobraView (Tab)			
-        		|	├─ Recent Feed (SubTab)		|\
-        		|	├─ Advertisement Feed (SubTab)	| \
-        		|	├─ Help Feed (SubTab)	        |  ├─ CommentView (SubView)	     
-        		|	├─ News Feed (SubTab)		|  ├─ PostRow (Feed Elements)
-        		|	├─ Bug Feed (SubTab)		|  /	   └─ AccountProfileView (SubView)
-        		|	├─ Market Feed (SubTab)		| /		├─ AccountProfilePostRow (Feed Elements)
-        		|	├─ Meme Feed (SubTab)		|/		├─ FollowerView (SubView)  
-        		|	└─ CreatePostView (SubView)			└─ FollowingView (SubView) 
-        		├─ InboxView (Tab)						└─ *See AccountVIew for Follower/FollowingView Nav/View*
-        		|	├─ ChatView (SubView)
-        		|	|	├─ ParticipantView (SubView)
-        		|	|	└─ AccountProfileView (SubView)  
-        		|	|		├─ FollowerView (SubView)  *See AccountView for FollowerView for Nav/View info*
-        		|	|		└─ FollowingView (SubView) *See AccountView for FollowingView for Nav/View info*
-        		|	└─AddChatView (SubView)
-        		└─  FoodView (Tab)
-        			├─ FoodRow (Feed Element)
-        			└─ CreateFoodView (SubView)
+    └─ body (some View)
+       └─ NavigationView (StackNavigationViewStyle)
+          └─ ZStack
+             └─ TabView (PageTabViewStyle)
+                ├─ SettingsView (Tab)
+                ├─ AccountView (Tab)
+                |    ├─ AccountPostRow (Feed Elements)
+                |    |    └─ AccountProfileView (SubView)  
+                |    |        ├─ AccountProfilePostRow (Feed Elements)
+                |    |        ├─ FollowerView (SubView)  *See Below for FollowerView Nav/View info*
+                |    |        └─ FollowingView (SubView) *See Below for FollowerView Nav/View info*
+                |    ├─ FollowerView (SubView)
+                |    |    └─ FollowCell (List Element)  
+                |    |        └─ AccountProfileView (SubView)  
+                |    |            ├─ AccountProfilePostRow (Feed Elements)
+                |    |            |    └─ AccountProfileView (SubView)  *Preceding AccountProfileView has Nav/View info*
+                |    |            ├─ FollowerView (SubView)  *See Preceding FollowerView for Nav/View info*
+                |    |            ├─ FollowingView (SubView) *See Below FollowingView for Nav/View info*
+                |    ├─ FollowingView (SubView)    
+                |    |    └─ FollowCell (List Element)  
+                |    |        └─ AccountProfileView (SubView)  
+                |    |            ├─ AccountProfilePostRow (Feed Elements)
+                |    |            |    └─ AccountProfileView (SubView)  *Preceding AccountProfileView has Nav/View info*
+                |    |            ├─ FollowerView (SubView)  *See Preceding FollowerView for Nav/View info*
+                |    |            └─ FollowingView (SubView) *See Preceding FollowingView for Nav/View info*
+                |    └─ ChangeBioView (SubView)    
+                ├─ DiscoverView (Tab)         
+                |    ├─ DiscoverPostRow (SubView)     
+                |    |    └─ AccountProfileView (SubView)  
+                |    |        ├─ FollowerView (SubView)  
+                |    |        └─ FollowingView (SubView) 
+                |    └─ AccountCell (Searched List Element)  
+                |        └─ AccountProfileView (SubView)  
+                |            ├─ FollowerView (SubView)  
+                |            └─ FollowingView (SubView) 
+                ├─ KobraView (Tab)         
+                |    ├─ Recent Feed (SubTab)      |\
+                |    ├─ Advertisement Feed (SubTab) | \
+                |    ├─ Help Feed (SubTab)         |  ├─ CommentView (SubView)        
+                |    ├─ News Feed (SubTab)         |  ├─ PostRow (Feed Elements)
+                |    ├─ Bug Feed (SubTab)          |  /       └─ AccountProfileView (SubView)
+                |    ├─ Market Feed (SubTab)       | /        ├─ AccountProfilePostRow (Feed Elements)
+                |    ├─ Meme Feed (SubTab)         |/         ├─ FollowerView (SubView)  
+                |    └─ CreatePostView (SubView)            └─ FollowingView (SubView) 
+                ├─ InboxView (Tab)                        └─ *See AccountVIew for Follower/FollowingView Nav/View*
+                |    ├─ ChatView (SubView)
+                |    |    ├─ ParticipantView (SubView)
+                |    |    └─ AccountProfileView (SubView)  
+                |    |        ├─ FollowerView (SubView)  *See AccountView for FollowerView for Nav/View info*
+                |    |        └─ FollowingView (SubView) *See AccountView for FollowingView for Nav/View info*
+                |    └─AddChatView (SubView)
+                └─  FoodView (Tab)
+                    ├─ FoodRow (Feed Element)
+                    └─ CreateFoodView (SubView)
+
 
 # Account
 
