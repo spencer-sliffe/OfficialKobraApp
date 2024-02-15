@@ -66,11 +66,7 @@ MainAppView (View)
                 |    ├─ Market Feed (SubTab)       | /        ├─ AccountProfilePostRow (Feed Elements)
                 |    ├─ Meme Feed (SubTab)         |/         ├─ FollowerView (SubView)  
                 |    └─ CreatePostView (SubView)            └─ FollowingView (SubView) 
-<<<<<<< Updated upstream
                 ├─ InboxView (Tab)                        └─ *See AccountVIew for Follower/FollowingView Nav/View*
-=======
-                ├─ InboxView (Tab)                        └─ *See AccountView for Follower/FollowingView Nav/View*
->>>>>>> Stashed changes
                 |    ├─ ChatView (SubView)
                 |    |    ├─ ParticipantView (SubView)
                 |    |    └─ AccountProfileView (SubView)  
@@ -80,10 +76,7 @@ MainAppView (View)
                 └─  FoodView (Tab)
                     ├─ FoodRow (Feed Element)
                     └─ CreateFoodView (SubView)
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
 
 # Account
 
