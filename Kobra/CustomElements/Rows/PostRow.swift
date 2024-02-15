@@ -363,12 +363,14 @@ struct PostRow: View {
                     }
                 }
                 if let videoURL = videoURL, let url = URL(string: videoURL) {
-                    VideoPlayerView(videoURL: url, shouldPlay: .constant((post.type.feedType == selectedFeed || selectedFeed == .all) && shouldPlayVideo && homePageViewModel.accProViewActive == false), isInView: $shouldPlayVideo)
-                        .frame(height: 300)
-                        .isInView { inView in
-                            shouldPlayVideo = inView
-                        }
-                        .contentShape(Rectangle())
+                    VideoPlayerView(videoURL: url,
+                                    shouldPlay: .constant((post.type.feedType == selectedFeed || selectedFeed == .all) && shouldPlayVideo && homePageViewModel.accProViewActive == false),
+                                    isInView: $isInView) // Pass the isInView binding
+                    .frame(height: 300)
+                    .isInView { inView in
+                        isInView = inView // Update the isInView state
+                    }
+                    .contentShape(Rectangle())
                 }
             }
             HStack(){
