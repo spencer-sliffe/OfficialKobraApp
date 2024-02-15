@@ -1,11 +1,10 @@
 # Kobra
 
 - The iOS application counterpart of https://kobracoding.com
-        -  https://kobracoding.com is currently down to be recoded in React
+-  https://kobracoding.com is currently down to be recoded in React
 - Currently being developed by the Creator of KobraCoding / https://kobracoding.com
-- Created with
-        - Swift
-        - FireBase
+- Swift
+- FireBase
 
 # Final Goal
 
@@ -20,7 +19,7 @@
 - Forums of communities surrounding the topics: Computers, Software, Coding, Music, American Sports, Video Games, World News, etc...
 
 # Current Navigation
-        - SEE NAVIGATION.TXT
+- SEE NAVIGATION.TXT
 
 # Account
 
