@@ -3,7 +3,7 @@
 - The iOS application counterpart of https://kobracoding.com
         -  https://kobracoding.com is currently down to be recoded in React
 - Currently being developed by the Creator of KobraCoding / https://kobracoding.com
-- Created with:
+- Created with
         - Swift
         - FireBase
 
