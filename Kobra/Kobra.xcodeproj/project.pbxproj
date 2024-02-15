@@ -73,6 +73,8 @@
 		45AF89942A7AB2CD00DEA4EC /* FeedType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AF89932A7AB2CC00DEA4EC /* FeedType.swift */; };
 		45AF89962A7AB53E00DEA4EC /* AccountPostRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AF89952A7AB53E00DEA4EC /* AccountPostRow.swift */; };
 		45B26BA02A7062F5001708C1 /* IsInViewKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B26B9F2A7062F5001708C1 /* IsInViewKey.swift */; };
+		45B9D6762B7425B5007A3C40 /* ParticipantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B9D6752B7425B5007A3C40 /* ParticipantView.swift */; };
+		45B9D6782B7425C1007A3C40 /* ParticipantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B9D6772B7425C1007A3C40 /* ParticipantCell.swift */; };
 		45BB7BC12A4FE85A00A95831 /* FollowerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BB7BC02A4FE85A00A95831 /* FollowerView.swift */; };
 		45BB7BC32A4FE86700A95831 /* FollowingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BB7BC22A4FE86700A95831 /* FollowingView.swift */; };
 		45BB7BC52A51EE1700A95831 /* FollowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BB7BC42A51EE1700A95831 /* FollowCell.swift */; };
@@ -171,6 +173,8 @@
 		45AF89932A7AB2CC00DEA4EC /* FeedType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedType.swift; sourceTree = "<group>"; };
 		45AF89952A7AB53E00DEA4EC /* AccountPostRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountPostRow.swift; sourceTree = "<group>"; };
 		45B26B9F2A7062F5001708C1 /* IsInViewKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsInViewKey.swift; sourceTree = "<group>"; };
+		45B9D6752B7425B5007A3C40 /* ParticipantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantView.swift; sourceTree = "<group>"; };
+		45B9D6772B7425C1007A3C40 /* ParticipantCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantCell.swift; sourceTree = "<group>"; };
 		45BB7BC02A4FE85A00A95831 /* FollowerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerView.swift; sourceTree = "<group>"; };
 		45BB7BC22A4FE86700A95831 /* FollowingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingView.swift; sourceTree = "<group>"; };
 		45BB7BC42A51EE1700A95831 /* FollowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowCell.swift; sourceTree = "<group>"; };
@@ -251,6 +255,7 @@
 				45DBF7162A441F0100F0C904 /* MessageCell.swift */,
 				45BB7BC42A51EE1700A95831 /* FollowCell.swift */,
 				459014472A2E2A6F00A778A6 /* AccountCell.swift */,
+				45B9D6772B7425C1007A3C40 /* ParticipantCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -400,6 +405,7 @@
 				451CAE0A2A5646B2009BC1F7 /* PostView.swift */,
 				459FC6682B1FB19100DD1C30 /* CreateChatView.swift */,
 				453C7ECB2B61AF2200BFD478 /* ChangeBioView.swift */,
+				45B9D6752B7425B5007A3C40 /* ParticipantView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -613,6 +619,7 @@
 				45BB7BC12A4FE85A00A95831 /* FollowerView.swift in Sources */,
 				459BE6082A180F7600625E53 /* FSFoodManager.swift in Sources */,
 				45BB7BC32A4FE86700A95831 /* FollowingView.swift in Sources */,
+				45B9D6782B7425C1007A3C40 /* ParticipantCell.swift in Sources */,
 				456429EF29FAFB1D00BC5D8F /* FSChatManager.swift in Sources */,
 				455C6E5929D7E9B700446520 /* Post.swift in Sources */,
 				45EA727F29B7B74C000FD738 /* PackageView.swift in Sources */,
@@ -623,6 +630,7 @@
 				45C7171E29C63AF700679626 /* InboxViewModel.swift in Sources */,
 				459BE6042A18032100625E53 /* FoodViewModel.swift in Sources */,
 				459246B22A2FE0FD00D564AE /* AccountProfileViewModel.swift in Sources */,
+				45B9D6762B7425B5007A3C40 /* ParticipantView.swift in Sources */,
 				45074EE729E866590096C82A /* Comment.swift in Sources */,
 				45BB7BC52A51EE1700A95831 /* FollowCell.swift in Sources */,
 				451C33FA2A0175FD00259B86 /* MainAppView.swift in Sources */,
