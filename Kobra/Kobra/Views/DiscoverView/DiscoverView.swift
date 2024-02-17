@@ -45,7 +45,7 @@ struct DiscoverView: View {
                         ScrollView(showsIndicators: false) {
                             LazyVStack(alignment: .leading, spacing: 10) {
                                 ForEach(viewModel.posts.sorted(by: { $0.likes > $1.likes })) { post in
-                                    DiscoverPostRow(post: post)
+                                    DiscoverPostRow(post: post, currentUserId: kobraViewModel.accountId)
                                         .environmentObject(kobraViewModel)
                                         .environmentObject(homePageViewModel)
                                         .environmentObject(settingsViewModel)

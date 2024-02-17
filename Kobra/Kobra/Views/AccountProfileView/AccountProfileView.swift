@@ -174,7 +174,7 @@ struct AccountProfileView: View {
                                 .padding(.top, 20)
                         } else {
                             ForEach(viewModel.userPosts.sorted(by: { $0.timestamp.compare($1.timestamp) == .orderedDescending })) { post in
-                                AccountProfilePostRow(post: post)
+                                AccountProfilePostRow(post: post, currentUserId: kobraViewModel.accountId)
                                     .environmentObject(kobraViewModel)
                                     .environmentObject(homePageViewModel)
                                     .environmentObject(settingsViewModel)

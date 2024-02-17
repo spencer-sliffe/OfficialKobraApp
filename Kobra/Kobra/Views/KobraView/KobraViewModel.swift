@@ -22,6 +22,15 @@ class KobraViewModel: ObservableObject {
     @Published var isUploadInProgress: Bool = false
     @Published var currentlyPlaying: AVPlayer?
     @Published var isLoading = false
+    @Published var accountId = ""
+    
+    init() {
+        guard let user = Auth.auth().currentUser else {
+            print("No user is currently signed in.")
+            return
+        }
+        self.accountId = user.uid
+    }
 
     func uploadImage(_ image: UIImage, postId: String, completion: @escaping (Result<String, Error>) -> Void) {
         isUploadInProgress = true

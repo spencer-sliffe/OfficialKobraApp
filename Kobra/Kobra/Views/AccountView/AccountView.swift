@@ -78,7 +78,7 @@ struct AccountView: View {
         ScrollView {
             LazyVStack {
                 ForEach(viewModel.userPosts.sorted(by: { $0.timestamp.compare($1.timestamp) == .orderedDescending })) { post in
-                    AccountPostRow(post: post)
+                    AccountPostRow(post: post, currentUserId: kobraViewModel.accountId)
                         .background(Color.clear)
                         .environmentObject(viewModel)
                 }

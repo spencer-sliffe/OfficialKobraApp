@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Foundation
+import FirebaseAuth
 
 struct KobraView: View {
     @State private var isPresentingCreatePostView = false
@@ -156,7 +157,7 @@ struct KobraView: View {
                                 ScrollView(showsIndicators: false) {
                                     LazyVStack(alignment: .leading, spacing: 10) {
                                         ForEach(viewModel.posts.filter { $0.type.feedType == feedType }) { post in
-                                            PostRow(post: post, selectedFeed: $selectedFeed)
+                                            PostRow(post: post, selectedFeed: $selectedFeed, currentUserId: viewModel.accountId)
                                                 .environmentObject(viewModel)
                                                 .environmentObject(homePageViewModel)
                                                 .environmentObject(settingsViewModel)
@@ -186,7 +187,7 @@ struct KobraView: View {
                                 ScrollView(showsIndicators: false) {
                                     LazyVStack(alignment: .leading, spacing: 10) {
                                         ForEach(viewModel.posts.sorted(by: { $0.timestamp > $1.timestamp }).filter(isPostTypeVisible)) { post in
-                                            PostRow(post: post, selectedFeed: $selectedFeed)
+                                            PostRow(post: post, selectedFeed: $selectedFeed, currentUserId: viewModel.accountId)
                                                 .environmentObject(viewModel)
                                                 .environmentObject(homePageViewModel)
                                                 .environmentObject(settingsViewModel)
