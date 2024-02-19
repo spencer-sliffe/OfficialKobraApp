@@ -29,6 +29,46 @@ struct AccountProfileMarketPostContent: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 1) {
+            if let imageURL = imageURL, let url = URL(string: imageURL) {
+                AsyncImage(url: url) { phase in
+                    switch phase {
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .scaledToFit()
+                            .cornerRadius(5)
+                            .contentShape(Rectangle())
+                    case .failure(_):
+                        Image(systemName: "photo")
+                            .resizable()
+                            .scaledToFit()
+                            .cornerRadius(5)
+                            .contentShape(Rectangle())
+                    case .empty:
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                            .scaleEffect(1.5, anchor: .center)
+                    @unknown default:
+                        EmptyView()
+                    }
+                }
+                .frame(maxHeight: 300)
+            }
+            if let videoURL = videoURL, let url = URL(string: videoURL) {
+                VideoPlayerView(videoURL: url, shouldPlay: $shouldPlayVideo, isInView: $isInView)
+                    .frame(height: 300)
+                    .isInView { inView in
+                        // Update the isInView state
+                        isInView = inView
+                        
+                        // Only play the video if AccountProfileView is active and the video is in view
+                        if homePageViewModel.accProViewActive {
+                            shouldPlayVideo = inView
+                        } else {
+                            shouldPlayVideo = false
+                        }
+                    }
+            }
             switch marketPost.type {
             case .hardware(let hardware):
                 Text("Hardware: \(hardware.name)")
@@ -63,49 +103,6 @@ struct AccountProfileMarketPostContent: View {
                     .font(.subheadline)
                     .foregroundColor(.white)
             }
-            
-            if let imageURL = imageURL, let url = URL(string: imageURL) {
-                AsyncImage(url: url) { phase in
-                    switch phase {
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .scaledToFit()
-                            .cornerRadius(5)
-                            .contentShape(Rectangle())
-                    case .failure(_):
-                        Image(systemName: "photo")
-                            .resizable()
-                            .scaledToFit()
-                            .cornerRadius(5)
-                            .contentShape(Rectangle())
-                    case .empty:
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                            .scaleEffect(1.5, anchor: .center)
-                    @unknown default:
-                        EmptyView()
-                    }
-                }
-                .frame(maxHeight: 300)
-            }
-            
-            if let videoURL = videoURL, let url = URL(string: videoURL) {
-                VideoPlayerView(videoURL: url, shouldPlay: $shouldPlayVideo, isInView: $isInView)
-                    .frame(height: 300)
-                    .isInView { inView in
-                        // Update the isInView state
-                        isInView = inView
-                        
-                        // Only play the video if AccountProfileView is active and the video is in view
-                        if homePageViewModel.accProViewActive {
-                            shouldPlayVideo = inView
-                        } else {
-                            shouldPlayVideo = false
-                        }
-                    }
-            }
-            
             Text("Price: \(priceFormatter.string(from: NSNumber(value: marketPost.price)) ?? "")")
                 .font(.subheadline)
                 .foregroundColor(.white)

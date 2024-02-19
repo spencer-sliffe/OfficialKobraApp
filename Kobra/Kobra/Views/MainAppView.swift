@@ -32,10 +32,8 @@ struct MainAppView: View {
             .environmentObject(inboxViewModel)
             .onAppear {
                 kobraViewModel.fetchPosts(){
-                    kobraViewModel.isLoading = true
-                    kobraViewModel.fetchPosts() {
-                        kobraViewModel.isLoading = false
-                    }}
+                    kobraViewModel.isLoading = false
+                }
                 notificationViewModel.fetchNotifications()
                 discoverViewModel.fetchPosts()
                 discoverViewModel.fetchAccounts()

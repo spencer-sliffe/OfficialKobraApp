@@ -13,7 +13,7 @@ class DiscoverViewModel: ObservableObject {
     @Published var accounts = [Account]()
     @Published var searchResults = [Account]()
     @Published var posts: [Post] = []
-
+    
     private var db = Firestore.firestore()
     private var postManager = FSPostManager.shared
     
@@ -22,6 +22,7 @@ class DiscoverViewModel: ObservableObject {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let posts):
+                    // Reset posts array before assigning new posts
                     self?.posts = posts
                 case .failure(let error):
                     print("Error fetching posts: \(error.localizedDescription)")
@@ -29,7 +30,7 @@ class DiscoverViewModel: ObservableObject {
             }
         }
     }
-
+    
     func fetchAccounts() {
         db.collection("Accounts").getDocuments() { (querySnapshot, err) in
             if let err = err {
@@ -58,7 +59,7 @@ class DiscoverViewModel: ObservableObject {
     func fetchHotPosts() {
         
     }
-
+    
     func searchAccounts(query: String) {
         if query.isEmpty {
             fetchAccounts()

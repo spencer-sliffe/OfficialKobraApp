@@ -18,33 +18,6 @@ struct AccountPostContentView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
-            VStack(alignment:.center){
-                switch post.type {
-                case .advertisement(let advertisementPost):
-                    Text(advertisementPost.content)
-                        .font(.subheadline)
-                        .foregroundColor(.white)
-                case .help(let helpPost):
-                    Text(helpPost.details)
-                        .font(.subheadline)
-                        .foregroundColor(.white)
-                case .news(let newsPost):
-                    Text(newsPost.category + " News: " + newsPost.article)
-                        .font(.subheadline)
-                        .foregroundColor(.white)
-                case .bug(let bugPost):
-                    Text("App Bug: " + bugPost.content)
-                        .font(.subheadline)
-                        .foregroundColor(.white)
-                case .meme(let memePost):
-                    Text(memePost.content)
-                        .font(.subheadline)
-                        .foregroundColor(.white)
-                case .market(let marketPost):
-                    AccountMarketPostContent(marketPost: marketPost, imageURL: post.imageURL, videoURL: post.videoURL)
-                        .environmentObject(homePageViewModel)
-                }
-            }
             if let imageURL = post.imageURL, let url = URL(string: imageURL) {
                 AsyncImage(url: url) { phase in
                     switch phase {
@@ -77,6 +50,33 @@ struct AccountPostContentView: View {
                         // Set shouldPlayVideo based on inView and other conditions
                         shouldPlayVideo = inView && homePageViewModel.accProViewActive == false
                     }
+            }
+            VStack(alignment:.center){
+                switch post.type {
+                case .advertisement(let advertisementPost):
+                    Text(advertisementPost.content)
+                        .font(.subheadline)
+                        .foregroundColor(.white)
+                case .help(let helpPost):
+                    Text(helpPost.details)
+                        .font(.subheadline)
+                        .foregroundColor(.white)
+                case .news(let newsPost):
+                    Text(newsPost.category + " News: " + newsPost.article)
+                        .font(.subheadline)
+                        .foregroundColor(.white)
+                case .bug(let bugPost):
+                    Text("App Bug: " + bugPost.content)
+                        .font(.subheadline)
+                        .foregroundColor(.white)
+                case .meme(let memePost):
+                    Text(memePost.content)
+                        .font(.subheadline)
+                        .foregroundColor(.white)
+                case .market(let marketPost):
+                    AccountMarketPostContent(marketPost: marketPost, imageURL: post.imageURL, videoURL: post.videoURL)
+                        .environmentObject(homePageViewModel)
+                }
             }
         }
     }

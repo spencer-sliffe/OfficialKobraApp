@@ -24,6 +24,37 @@ struct DiscoverMarketPostContent: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 1) {
+            if let imageURL = imageURL, let url = URL(string: imageURL) {
+                AsyncImage(url: url) { phase in
+                    switch phase {
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .scaledToFit()
+                            .cornerRadius(5)
+                            .contentShape(Rectangle())
+                    case .failure(_):
+                        Image(systemName: "photo")
+                            .resizable()
+                            .scaledToFit()
+                            .cornerRadius(5)
+                            .contentShape(Rectangle())
+                    case .empty:
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                            .scaleEffect(1.5, anchor: .center)
+                    @unknown default:
+                        EmptyView()
+                    }
+                }
+                .frame(maxHeight: 300)
+            }
+            
+            if let videoURL = videoURL, let url = URL(string: videoURL) {
+                VideoPlayerView(videoURL: url, shouldPlay: .constant(false), isInView: .constant(false))
+                    .frame(height: 300)
+                    .contentShape(Rectangle())
+            }
             switch marketPost.type {
             case .hardware(let hardware):
                 Text("Hardware: \(hardware.name)")
@@ -58,39 +89,6 @@ struct DiscoverMarketPostContent: View {
                     .font(.subheadline)
                     .foregroundColor(.white)
             }
-            
-            if let imageURL = imageURL, let url = URL(string: imageURL) {
-                AsyncImage(url: url) { phase in
-                    switch phase {
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .scaledToFit()
-                            .cornerRadius(5)
-                            .contentShape(Rectangle())
-                    case .failure(_):
-                        Image(systemName: "photo")
-                            .resizable()
-                            .scaledToFit()
-                            .cornerRadius(5)
-                            .contentShape(Rectangle())
-                    case .empty:
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                            .scaleEffect(1.5, anchor: .center)
-                    @unknown default:
-                        EmptyView()
-                    }
-                }
-                .frame(maxHeight: 300)
-            }
-            
-            if let videoURL = videoURL, let url = URL(string: videoURL) {
-                VideoPlayerView(videoURL: url, shouldPlay: .constant(false), isInView: .constant(false))
-                    .frame(height: 300)
-                    .contentShape(Rectangle())
-            }
-            
             Text("Price: \(priceFormatter.string(from: NSNumber(value: marketPost.price)) ?? "")")
                 .font(.subheadline)
                 .foregroundColor(.white)

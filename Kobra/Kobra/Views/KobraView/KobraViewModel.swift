@@ -21,7 +21,7 @@ class KobraViewModel: ObservableObject {
     @Published var uploadProgress: Double = 0.0
     @Published var isUploadInProgress: Bool = false
     @Published var currentlyPlaying: AVPlayer?
-    @Published var isLoading = false
+    @Published var isLoading = true
     @Published var accountId = ""
     
     init() {
@@ -60,17 +60,17 @@ class KobraViewModel: ObservableObject {
         })
     }
     
-    
     func fetchPosts(completion: @escaping () -> Void) {
         postManager.fetchPosts { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let posts):
                     self?.posts = posts
+                    //self?.isLoading = false // Set isLoading to false when posts are successfully fetched
                 case .failure(let error):
                     print("Error fetching posts: \(error.localizedDescription)")
                 }
-                completion() // Call the completion closure here
+                completion() // Call the completion handler after fetching posts
             }
         }
     }

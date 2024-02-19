@@ -116,5 +116,3 @@ struct HomePageView: View {
         }
     }
 }
-
-
