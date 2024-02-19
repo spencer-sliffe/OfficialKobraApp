@@ -266,8 +266,6 @@
 				459A366E2A6F0047002914CD /* VideoPlayerView.swift */,
 				459A36702A6F191B002914CD /* VideoPlayerStatus.swift */,
 				45B26B9F2A7062F5001708C1 /* IsInViewKey.swift */,
-				45AF89932A7AB2CC00DEA4EC /* FeedType.swift */,
-				4551D4332B716A7D0053E0BB /* CustomTabView.swift */,
 			);
 			path = CustomElements;
 			sourceTree = "<group>";
@@ -394,6 +392,7 @@
 			children = (
 				4594204029AEF00500A100F1 /* HomePageViewModel.swift */,
 				4594203E29AEEFF400A100F1 /* HomePageView.swift */,
+				4551D4332B716A7D0053E0BB /* CustomTabView.swift */,
 			);
 			path = HomePageView;
 			sourceTree = "<group>";
@@ -542,6 +541,7 @@
 		45E98484299D8BAE00B3A56A /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				45AF89932A7AB2CC00DEA4EC /* FeedType.swift */,
 				45A908CC29B0386400792FC2 /* Package.swift */,
 				45EA728029B7BA5B000FD738 /* Account.swift */,
 				45EC905329B8475900E0A3A3 /* PackageWithImage.swift */,
