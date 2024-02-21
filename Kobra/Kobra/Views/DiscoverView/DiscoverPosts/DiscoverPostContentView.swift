@@ -12,7 +12,7 @@ struct DiscoverPostContentView: View {
     @EnvironmentObject var homePageViewModel: HomePageViewModel
     let post: Post
     @Binding var showingComments: Bool // Add a binding for showingComments
-    
+
     @State private var shouldPlayVideo = false // State to control video playback
     @State private var isInView = false // State to track if the video is in view
     
@@ -46,7 +46,6 @@ struct DiscoverPostContentView: View {
                     .frame(height: 300)
                     .isInView { inView in
                         isInView = inView // Update the isInView state
-                        
                         // Set shouldPlayVideo based on inView and other conditions
                         shouldPlayVideo = inView && homePageViewModel.accProViewActive == false
                     }

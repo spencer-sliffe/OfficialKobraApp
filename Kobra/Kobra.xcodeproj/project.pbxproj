@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4502FC0D2B86887A00390218 /* SwipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4502FC0C2B86887A00390218 /* SwipeView.swift */; };
+		4502FC102B86A3FF00390218 /* SwipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4502FC0F2B86A3FF00390218 /* SwipeViewModel.swift */; };
 		45074EE729E866590096C82A /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45074EE629E866590096C82A /* Comment.swift */; };
 		45074EE929E8681C0096C82A /* CommentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45074EE829E8681C0096C82A /* CommentRow.swift */; };
 		45074EEB29E8699B0096C82A /* CommentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45074EEA29E8699B0096C82A /* CommentView.swift */; };
@@ -119,6 +121,8 @@
 /* Begin PBXFileReference section */
 		282C022F31C00540FC0513A8 /* Pods-Kobra.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kobra.debug.xcconfig"; path = "Target Support Files/Pods-Kobra/Pods-Kobra.debug.xcconfig"; sourceTree = "<group>"; };
 		4416BB8B9604E5EFA9033790 /* Pods-Kobra.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kobra.release.xcconfig"; path = "Target Support Files/Pods-Kobra/Pods-Kobra.release.xcconfig"; sourceTree = "<group>"; };
+		4502FC0C2B86887A00390218 /* SwipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeView.swift; sourceTree = "<group>"; };
+		4502FC0F2B86A3FF00390218 /* SwipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeViewModel.swift; sourceTree = "<group>"; };
 		45074EE629E866590096C82A /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		45074EE829E8681C0096C82A /* CommentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentRow.swift; sourceTree = "<group>"; };
 		45074EEA29E8699B0096C82A /* CommentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentView.swift; sourceTree = "<group>"; };
@@ -223,7 +227,7 @@
 		45E5ABE1299D8AC500DFFDC8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		45E98487299D8BFD00B3A56A /* Exo-Italic-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Exo-Italic-VariableFont_wght.ttf"; sourceTree = "<group>"; };
 		45E98488299D8BFD00B3A56A /* Exo-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Exo-VariableFont_wght.ttf"; sourceTree = "<group>"; };
-		45E98489299D8C1100B3A56A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		45E98489299D8C1100B3A56A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		45EA727E29B7B74C000FD738 /* PackageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageView.swift; sourceTree = "<group>"; };
 		45EA728029B7BA5B000FD738 /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		45EC3A182AACE4F4003137B8 /* DiscoverPostRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverPostRow.swift; sourceTree = "<group>"; };
@@ -248,6 +252,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4502FC0E2B86A3DA00390218 /* SwipeView */ = {
+			isa = PBXGroup;
+			children = (
+				4502FC0C2B86887A00390218 /* SwipeView.swift */,
+				4502FC0F2B86A3FF00390218 /* SwipeViewModel.swift */,
+			);
+			path = SwipeView;
+			sourceTree = "<group>";
+		};
 		4543FE5F29DB499E003B3CCC /* CustomElements */ = {
 			isa = PBXGroup;
 			children = (
@@ -568,6 +581,7 @@
 		45E9848E299D909D00B3A56A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4502FC0E2B86A3DA00390218 /* SwipeView */,
 				451C33F92A0175FD00259B86 /* MainAppView.swift */,
 				45442C182B8119AA002DDD2A /* PostElements */,
 				4592F0CB2B7FC6BD00820F92 /* CommentView */,
@@ -745,6 +759,7 @@
 				45BB7BC72A51EE4D00A95831 /* FollowCellViewModel.swift in Sources */,
 				45442C2E2B812441002DDD2A /* AccountPostContentView.swift in Sources */,
 				4527837D29D8B56D00B633FB /* CreatePostView.swift in Sources */,
+				4502FC102B86A3FF00390218 /* SwipeViewModel.swift in Sources */,
 				459BE6062A18033300625E53 /* FoodView.swift in Sources */,
 				457EFD3929F8AECB006F53F2 /* DropDownMenu.swift in Sources */,
 				45AF89962A7AB53E00DEA4EC /* AccountPostRow.swift in Sources */,
@@ -758,6 +773,7 @@
 				451CAE072A55F4B1009BC1F7 /* NotificationCell.swift in Sources */,
 				45D5110329D0AB9100290720 /* SettingsView.swift in Sources */,
 				45AF89942A7AB2CD00DEA4EC /* FeedType.swift in Sources */,
+				4502FC0D2B86887A00390218 /* SwipeView.swift in Sources */,
 				45CAAA2429DA7EF500BBD9FE /* SwipeableTabView.swift in Sources */,
 				4551D4342B716A7D0053E0BB /* CustomTabView.swift in Sources */,
 				4592E55D29BD361200FF76E2 /* ChatViewModel.swift in Sources */,
